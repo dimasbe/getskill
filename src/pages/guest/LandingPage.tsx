@@ -1,8 +1,14 @@
 import React from 'react';
-//import Navbar from '../../components/protected/guest/Navbar';//
 import HeroSection from './HeroSection';
 import FeaturesSection from './FeaturesSection';
 import AboutUsSection from './AboutUsSection';
+import KursusTerpopuler from './KursusTerpopuler';
+import BenefitPage from './BenefitPage';
+import FiturUnggulanPage from './FiturUnggulanPage';
+import KursusTerlarisPage from './KursusTerlarisPage';
+import KelasIndustriPage from './KelasIndustriPage';
+import MitraKamiPage from './MitraKamiPage';
+import BeritaTerbaruPage from './BeritaTerbaruPage';
 
 const LandingPage: React.FC = () => {
     return (
@@ -28,12 +34,16 @@ const LandingPage: React.FC = () => {
           }
         `}
             </style>
-            
             <HeroSection />
-            <div className="relative z-10 -mt-20 md:-mt-32 lg:-mt-30"> 
-                <FeaturesSection />
-            </div>
+            <FeaturesSection />
             <AboutUsSection />
+            <KursusTerpopuler />
+            <BenefitPage />
+            <FiturUnggulanPage />
+            <KursusTerlarisPage />
+            <KelasIndustriPage />
+            <MitraKamiPage />
+            <BeritaTerbaruPage />
         </div>
     );
 };

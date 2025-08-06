@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
-// import Dashboard from '../pages/guest/Dashboard';
-import Kursus from '../pages/guest/kursus';
+import LandingPage from "../pages/guest/LandingPage";
+import Kursus from '../pages/guest/Kursus';
 import Event from '../pages/guest/Event';
 import Berita from '../pages/guest/Berita';
 import HubKa from '../pages/guest/HubKa';
@@ -28,7 +28,7 @@ function App() {
     <Router>
       <Routes>
         <Route element={<GuestLayout />}>
-          {/* <Route path="/" element={<Dashboard />} /> */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/kursus" element={<Kursus />} />
           <Route path="/event" element={<Event />} />
           <Route path="/berita" element={<Berita />} />
