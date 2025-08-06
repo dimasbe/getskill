@@ -56,7 +56,7 @@ const HeroSection: React.FC = () => {
           <img
             src={panah}
             alt="panah"
-            className="absolute right-[308px] top-[10px] w-[80px] rotate-38"
+            className="absolute right-[325px] top-[25px] w-[90px] rotate-20"
           />
 
 
