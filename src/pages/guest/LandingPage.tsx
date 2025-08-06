@@ -12,7 +12,7 @@ import BeritaTerbaruPage from './landingpage/BeritaTerbaruPage';
 
 const LandingPage: React.FC = () => {
     return (
-        <div className="min-h-screen bg-gray-100 font-sans antialiased p-4">
+        <div className="font-sans antialiased">
             <HeroSection />
             <FeaturesSection />
             <AboutUsSection />
