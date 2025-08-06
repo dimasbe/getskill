@@ -6,7 +6,7 @@ const GuestLayout = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      <main>
+      <main className='py-18'>
         <Outlet />
       </main>
       <Footer />

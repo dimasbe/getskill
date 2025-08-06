@@ -7,7 +7,7 @@ import dotsPattern from '../../../assets/landingpage/beranda/dots.png';
 const HeroSection: React.FC = () => {
   return (
     <section className="relative bg-gradient-to-br from-[#f3eaff] to-white overflow-hidden min-h-screen m-0 pt-0">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-14 pt-10">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-14 pt-22">
         {/* Bagian Kiri */}
         <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20">
           <h1 className="text-[46px] font-bold text-gray-900 leading-snug mb-3">
