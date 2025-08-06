@@ -5,7 +5,7 @@ import LandingPage from "../pages/guest/LandingPage";
 import Kursus from '../pages/guest/Kursus';
 import Event from '../pages/guest/Event';
 import Berita from '../pages/guest/Berita';
-import HubKa from '../pages/guest/HubKa';
+import KelasIndustri from '../pages/guest/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
 
@@ -31,9 +31,9 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/kursus" element={<Kursus />} />
           <Route path="/event" element={<Event />} />
+          <Route path="/kelas-industri" element={<KelasIndustri />} />
           <Route path="/berita" element={<Berita />} />
           <Route path="/FAQ" element={<Faq />} />
-          <Route path="/hubungi" element={<HubKa />} />
         </Route>
       </Routes>
     </Router>
