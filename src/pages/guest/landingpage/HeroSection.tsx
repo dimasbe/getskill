@@ -1,5 +1,5 @@
 import React from 'react';
-import fotomodel1 from '../../assets/landingpage/beranda/fotomodel1.png';
+import fotomodel1 from '../../../assets/landingpage/beranda/fotomodel1.png';
 
 const HeroSection: React.FC = () => {
   return (
