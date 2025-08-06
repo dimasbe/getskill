@@ -13,7 +13,6 @@ import BeritaTerbaruPage from './landingpage/BeritaTerbaruPage';
 const LandingPage: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-100 font-sans antialiased p-4">
-            {/* Tailwind CSS dan style kustom diasumsikan diatur di konfigurasi proyek atau file CSS global */}
             <HeroSection />
             <FeaturesSection />
             <AboutUsSection />
