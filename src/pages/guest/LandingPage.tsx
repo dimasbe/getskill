@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../components/protected/guest/Navbar';
+//import Navbar from '../../components/protected/guest/Navbar';//
 import HeroSection from './HeroSection';
 import FeaturesSection from './FeaturesSection';
 import AboutUsSection from './AboutUsSection';
@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
           }
         `}
             </style>
-            <Navbar />
+            
             <HeroSection />
             <div className="relative z-10 -mt-20 md:-mt-32 lg:-mt-30"> 
                 <FeaturesSection />
