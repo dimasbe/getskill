@@ -7,9 +7,9 @@ const navLinks = [
     { name: "Beranda", to: "/" },
     { name: "Kursus", to: "/kursus" },
     { name: "Event", to: "/event" },
+    { name: "Kelas Industri", to: "/kelas-industri" },
     { name: "Berita", to: "/berita" },
     { name: "FAQ", to: "/faq" },
-    { name: "Hubungi Kami", to: "/hubungi" },
 ];
 
 
