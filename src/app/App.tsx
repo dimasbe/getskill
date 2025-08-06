@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
-import Dashboard from '../pages/guest/Dashboard';
+// import Dashboard from '../pages/guest/Dashboard';
 import Kursus from '../pages/guest/kursus';
 import Event from '../pages/guest/Event';
 import Berita from '../pages/guest/Berita';
@@ -28,7 +28,7 @@ function App() {
     <Router>
       <Routes>
         <Route element={<GuestLayout />}>
-          <Route path="/" element={<Dashboard />} />
+          {/* <Route path="/" element={<Dashboard />} /> */}
           <Route path="/kursus" element={<Kursus />} />
           <Route path="/event" element={<Event />} />
           <Route path="/berita" element={<Berita />} />
