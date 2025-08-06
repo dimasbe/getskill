@@ -53,9 +53,9 @@ const Navbar = () => {
         }
         `}
     >
-      <div className="w-full px-6 md:px-20 h-20 flex justify-between items-center">
+      <div className="w-full px-9 md:px-25 h-18 flex justify-between items-center">
         {/* Logo & Links */}
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-10">
           <NavLink to="/">
             <img src="/src/assets/logo/logo.png" alt="Logo" className="w-11 h-12" />
           </NavLink>
@@ -79,13 +79,13 @@ const Navbar = () => {
 
         {/* Search & Login */}
         <div className="flex items-center space-x-4">
-          <div className="hidden md:flex items-center border border-gray-300 rounded-full bg-white px-2 py-1.5">
+          <div className="hidden md:flex items-center border border-gray-300 rounded-full bg-white px-2 py-2">
             <CategoryDropdown />
             <div className="h-6 border-l border-gray-200 mx-2" />
             <input
               type="text"
               placeholder="Pencarian kursus..."
-              className="py-1 px-2 w-40 lg:w-52 text-sm font-bold bg-transparent focus:outline-none placeholder-gray-400"
+              className="py-1 px-2 w-40 text-sm font-bold bg-transparent focus:outline-none placeholder-gray-400"
             />
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:opacity-90 transition">
               <HiSearch size={18} />
@@ -94,7 +94,7 @@ const Navbar = () => {
 
           <Link
             to="#"
-            className="hidden sm:block bg-yellow-500 text-black text-xs font-medium px-4 py-2 rounded-full hover:bg-purple-700 hover:text-white transition"
+            className="hidden sm:block bg-yellow-500 text-black text-xs font-medium px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
           >
             Masuk
           </Link>
