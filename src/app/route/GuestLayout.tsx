@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/protected/guest/Navbar';
+import Footer from '../../components/protected/guest/Footer';
 
 const GuestLayout = () => {
   return (
@@ -8,6 +9,7 @@ const GuestLayout = () => {
       <main className="py-10">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }
