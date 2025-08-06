@@ -1,6 +1,9 @@
 import React from 'react';
 import '../../../style/app.css';
 import fotomodel1 from '../../../assets/landingpage/beranda/fotomodel1.png';
+import avatar from '../../../assets/landingpage/beranda/avatar.png'
+import avatar2 from '../../../assets/landingpage/beranda/avatar2.png'
+import panah from "../../../assets/landingpage/beranda/panah.png"
 import arrowPattern from '../../../assets/landingpage/beranda/panah-ungu.png';
 import dotsPattern from '../../../assets/landingpage/beranda/dots.png';
 
@@ -48,11 +51,20 @@ const HeroSection: React.FC = () => {
             className="relative z-10 w-[480px]"
           />
 
+          {/* panah*/}
+
+          <img
+            src={panah}
+            alt="panah"
+            className="absolute right-[308px] top-[10px] w-[80px] rotate-38"
+          />
+
+
           {/* Bubble nama atas */}
-          <div className="absolute top-[0px] right-[360px] z-20">
+          <div className="absolute top-[5px] right-[400px] z-20">
             <div className="bg-white px-3 py-1 rounded-lg shadow-md flex items-center space-x-2">
               <img
-                src="https://via.placeholder.com/30"
+                src={avatar}
                 alt="Kenza"
                 className="w-7 h-7 rounded-full"
               />
@@ -61,10 +73,10 @@ const HeroSection: React.FC = () => {
           </div>
 
           {/* Bubble nama bawah */}
-          <div className="absolute top-[40px] right-[350px] z-20">
+          <div className="absolute top-[45px] right-[390px] z-20">
             <div className="bg-white px-3 py-1 rounded-lg shadow-md flex items-center space-x-2">
               <img
-                src="https://via.placeholder.com/30"
+                src={avatar2}
                 alt="Michel"
                 className="w-7 h-7 rounded-full"
               />
