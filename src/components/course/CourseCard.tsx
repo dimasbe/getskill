@@ -1,14 +1,15 @@
-import { useNavigate } from 'react-router-dom'
+// CourseCard.tsx
+import { useNavigate } from 'react-router-dom';
 
 interface CourseCardProps {
-  id: string
-  image: string
-  category: string
-  title: string
-  author: string
-  price: string
-  rating?: number
-  isFree?: boolean
+  id: string;
+  image: string;
+  category: string;
+  title: string;
+  author: string;
+  price: string;
+  rating?: number;
+  isFree?: boolean;
 }
 
 export default function CourseCard({
@@ -21,11 +22,11 @@ export default function CourseCard({
   rating = 0,
   isFree = false
 }: CourseCardProps) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/kursus/${id}`)
-  }
+    navigate(`/kursus/${id}`);
+  };
 
   return (
     <div
@@ -43,5 +44,5 @@ export default function CourseCard({
         <p className="text-purple-700 font-semibold">{isFree ? 'Gratis!' : `Rp ${price}`}</p>
       </div>
     </div>
-  )
+  );
 }

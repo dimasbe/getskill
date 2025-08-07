@@ -1,4 +1,5 @@
-import type { Course } from '../../types/Course'
+// CourseSyllabus.tsx
+import type { Course } from '../../types/Course';
 import { useState } from 'react';
 
 interface CourseSyllabusProps {
@@ -16,8 +17,7 @@ export default function CourseSyllabus({ courseData }: CourseSyllabusProps) {
     <section className="space-y-4">
       {courseData.syllabus?.map((item, index) => (
         <div key={index} className="border rounded-lg overflow-hidden">
-          {/* Header Modul yang dapat diklik */}
-          <div 
+          <div
             className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
             onClick={() => handleToggle(index)}
           >
@@ -50,22 +50,23 @@ export default function CourseSyllabus({ courseData }: CourseSyllabusProps) {
               <span className="text-2xl">{openModuleIndex === index ? '−' : '+'}</span>
             </button>
           </div>
-          
-          {/* Konten Modul yang diperluas */}
+
           {openModuleIndex === index && (
             <div className="bg-gray-50 p-4 border-t">
-              {/* Daftar Sub-topik */}
               {item.subtopics && (
                 <ul className="space-y-2 text-gray-700">
                   {item.subtopics.map((subtopic, subIndex) => (
-                    <li key={subIndex} className="pl-6 border-l-2 border-gray-300 relative">
+                    <li
+                      key={subIndex}
+                      className="pl-6 border-l-2 border-gray-300 relative"
+                    >
                       <span className="absolute left-0 top-0 mt-1 w-2 h-2 bg-gray-400 rounded-full"></span>
                       {subtopic}
                     </li>
                   ))}
                 </ul>
               )}
-              {/* Bagian Quiz */}
+
               {item.quiz_questions && (
                 <div className="flex justify-between items-center text-sm text-purple-600 mt-4">
                   <span>Quiz</span>
