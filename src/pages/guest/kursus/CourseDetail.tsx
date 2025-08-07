@@ -5,6 +5,7 @@ import type { Course } from '../../../types/Course';
 import CourseDescription from '../../../components/course/CourseDescription';
 import CourseSyllabus from '../../../components/course/CourseSyllabus';
 import CourseReviews from '../../../components/course/CourseReviews';
+import { FaFacebookF, FaTwitter, FaWhatsapp } from "react-icons/fa";
 
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
@@ -15,17 +16,9 @@ export default function CourseDetail() {
     return <div className="p-8">Kursus tidak ditemukan.</div>;
   }
 
-  const renderStarRating = (rating: number) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span key={i} className={`text-2xl ${i <= rating ? 'text-yellow-400' : 'text-gray-300'}`}>
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
+  // Hitung total modul dan kuis dari syllabus
+  const totalModul = courseData.syllabus?.length || 0;
+  const totalKuis = courseData.syllabus?.reduce((total, modul) => total + (modul.quizzes || 0), 0) || 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -46,7 +39,6 @@ export default function CourseDetail() {
             <div className="lg:w-2/3 w-full">
               <div className="rounded-lg overflow-hidden relative">
                 <img src={`/images/${courseData.image}`} alt={courseData.title} className="w-full h-auto" />
-                
               </div>
             </div>
             <div className="lg:w-1/3 w-full flex flex-col justify-end">
@@ -56,11 +48,13 @@ export default function CourseDetail() {
               </p>
               <div className="flex items-center gap-2 mt-2">
                 <div className="flex text-yellow-400">
-                  {renderStarRating(courseData.rating)}
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className={`text-2xl ${i < courseData.rating ? 'text-yellow-400' : 'text-gray-300'}`}>
+                      ★
+                    </span>
+                  ))}
                 </div>
-                <span className="text-gray-500 text-sm">
-                  ({courseData.rating.toFixed(1)} Ulasan)
-                </span>
+                <span className="text-gray-500 text-sm">({courseData.rating.toFixed(1)} Ulasan)</span>
               </div>
               <p className="text-sm text-gray-500 mt-2">
                 Oleh <span className="font-semibold text-gray-700">{courseData.author}</span>
@@ -81,42 +75,24 @@ export default function CourseDetail() {
               </div>
             </div>
           </div>
-          
-          {/* TABS NAVIGATION */}
+
+          {/* TABS */}
           <div className="flex border-b border-gray-200 mb-6">
-            <button
-              onClick={() => setActiveTab('deskripsi')}
-              className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${
-                activeTab === 'deskripsi'
-                  ? 'text-purple-600 border-b-2 border-purple-600'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Deskripsi
-            </button>
-            <button
-              onClick={() => setActiveTab('konten-kursus')}
-              className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${
-                activeTab === 'konten-kursus'
-                  ? 'text-purple-600 border-b-2 border-purple-600'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Konten Kursus
-            </button>
-            <button
-              onClick={() => setActiveTab('ulasan')}
-              className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${
-                activeTab === 'ulasan'
-                  ? 'text-purple-600 border-b-2 border-purple-600'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Ulasan
-            </button>
+            {['deskripsi', 'konten-kursus', 'ulasan'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${
+                  activeTab === tab
+                    ? 'text-purple-600 border-b-2 border-purple-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {tab === 'deskripsi' ? 'Deskripsi' : tab === 'konten-kursus' ? 'Konten Kursus' : 'Ulasan'}
+              </button>
+            ))}
           </div>
 
-          {/* TAB CONTENT */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             {activeTab === 'deskripsi' && <CourseDescription courseData={courseData} />}
             {activeTab === 'konten-kursus' && <CourseSyllabus courseData={courseData} />}
@@ -142,11 +118,11 @@ export default function CourseDetail() {
               <ul className="space-y-2 text-gray-600">
                 <li className="flex items-center gap-2">
                   <span>✅</span>
-                  <span>7 Modul</span>
+                  <span>{totalModul} Modul</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <span>✅</span>
-                  <span>10 Kuis</span>
+                  <span>{totalKuis} Kuis</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <span>✅</span>
@@ -157,30 +133,44 @@ export default function CourseDetail() {
                   <span>Sertifikat penyelesaian</span>
                 </li>
               </ul>
-              <div className="mt-4">
-                <h4 className="font-semibold text-gray-700 mb-2">Metode Pembayaran:</h4>
-                <div className="flex flex-wrap gap-2">
-                  <img src="https://via.placeholder.com/40x20" alt="Bank BRI" />
-                  <img src="https://via.placeholder.com/40x20" alt="Bank BCA" />
-                  <img src="https://via.placeholder.com/40x20" alt="Gopay" />
-                  <img src="https://via.placeholder.com/40x20" alt="OVO" />
-                  <img src="https://via.placeholder.com/40x20" alt="Mastercard" />
-                </div>
-              </div>
-              <div className="mt-4">
-                <h4 className="font-semibold text-gray-700 mb-2">Bagikan kursus ini:</h4>
-                <div className="flex gap-2">
-                  <button className="bg-gray-200 text-gray-600 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center">
-                    <span className="text-lg">f</span>
-                  </button>
-                  <button className="bg-gray-200 text-gray-600 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center">
-                    <span className="text-lg">t</span>
-                  </button>
-                  <button className="bg-gray-200 text-gray-600 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center">
-                    <span className="text-lg">w</span>
-                  </button>
-                </div>
-              </div>
+
+      {/* METODE PEMBAYARAN */}
+<div className="mt-4 flex flex-col items-center">
+  <h4 className="font-semibold text-gray-700 mb-2 text-center">Metode Pembayaran:</h4>
+  <div className="flex flex-wrap gap-2 justify-center">
+    <img src="/images/payments/bri.png" alt="BRI" className="w-10 h-auto object-contain" />
+    <img src="/images/payments/bca.png" alt="BCA" className="w-10 h-auto object-contain" />
+    <img src="/images/payments/gopay.png" alt="Gopay" className="w-10 h-auto object-contain" />
+    <img src="/images/payments/ovo.png" alt="OVO" className="w-10 h-auto object-contain" />
+    <img src="/images/payments/mastercard.jpeg" alt="Mastercard" className="w-10 h-auto object-contain" />
+  </div>
+</div>
+
+{/* BAGIKAN KURSUS */}
+<div className="mt-5 flex flex-col items-center">
+  <h4 className="font-semibold text-gray-800 mb-2 text-center">Bagikan kursus ini:</h4>
+  <div className="flex gap-2">
+    <a
+      href="#"
+      className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition"
+    >
+      <FaFacebookF size={16} />
+    </a>
+    <a
+      href="#"
+      className="w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full flex items-center justify-center transition"
+    >
+      <FaTwitter size={16} />
+    </a>
+    <a
+      href="#"
+      className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"
+    >
+      <FaWhatsapp size={16} />
+    </a>
+  </div>
+</div>
+
             </div>
           </div>
         </div>
