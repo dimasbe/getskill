@@ -3,7 +3,7 @@ import logo from '../../../assets/logo/logo.png';
 
 const AboutUsSection: React.FC = () => {
     return (
-        <section className="py-16 bg-white rounded-lg mt-4">
+        <section className="py-16 bg-white rounded-lg mt-0">
             <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-center">
                 <div className="md:w-1/2 flex justify-center mb-10 md:mb-0">
                     <img

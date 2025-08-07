@@ -15,29 +15,26 @@ interface FeatureCardProps {
 const FeatureCard: React.FC<FeatureCardProps> = ({ iconSrc, altText, title, description }) => {
   return (
     <div
-      // Menambahkan efek hover:scale, hover:-translate-y, dan hover:shadow-xl
-      // Transisi diterapkan pada seluruh transformasi untuk animasi yang halus
-      className="bg-white px-16 py-12 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out text-center flex flex-col items-center cursor-pointer
-                 hover:scale-105 hover:-translate-y-2" // Mengubah padding horizontal menjadi px-4
+      className="bg-white max-w-[240px] w-full mx-auto px-4 py-10 rounded-xl shadow-lg border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 ease-in-out text-center flex flex-col items-center cursor-pointer hover:scale-105 hover:-translate-y-2"
     >
-      <div className="mb-1"> {/* Mengurangi margin-bottom ikon lebih lanjut */}
+      <div className="mb-2">
         <img
           src={iconSrc}
           alt={altText}
-          className="w-10 h-10 object-contain" // Mengurangi ukuran gambar
+          className="w-12 h-12 object-contain" // ikon lebih besar (48px)
         />
       </div>
-      <h3 className="text-sm font-semibold text-gray-800 mb-1">{title}</h3> {/* Mengurangi ukuran teks judul */}
-      <p className="text-xs text-gray-600">{description}</p> {/* Ukuran teks deskripsi tetap xs */}
+      <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3> {/* font title lebih besar */}
+      <p className="text-xs text-gray-600">{description}</p> {/* deskripsi lebih besar */}
     </div>
   );
 };
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="py-16 rounded-lg mt-4">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="py-14 -mt-5 bg-white">
+      <div className="container mx-auto px-30">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 -mt-20 relative z-10">
           <FeatureCard
             iconSrc={komponen1}
             altText="Belajar Dari Ahli"
