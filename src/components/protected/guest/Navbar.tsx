@@ -43,7 +43,7 @@ const Navbar = () => {
     <nav
       className={`
           fixed top-0 left-0 w-full z-50
-          bg-white/80 backdrop-blur-md shadow-md
+          bg-white/80 backdrop-blur-md
           transition-all duration-500 ease-in-out
           ${showNavbar
           ? scrollDirection === 'down'
@@ -53,7 +53,7 @@ const Navbar = () => {
         }
         `}
     >
-      <div className="w-full px-9 md:px-25 h-18 flex justify-between items-center">
+      <div className="w-full px-9 md:px-25 h-20 flex justify-between items-center">
         {/* Logo & Links */}
         <div className="flex items-center space-x-10">
           <NavLink to="/">

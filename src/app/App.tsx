@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/LandingPage";
 import Kursus from '../pages/guest/kursus/Kursus';
-import Event from '../pages/guest/Event';
+import Event from '../pages/guest/event/Event';
 import Berita from '../pages/guest/Berita';
 import KelasIndustri from '../pages/guest/KelasIndustri';
 import Faq from '../pages/guest/Faq';

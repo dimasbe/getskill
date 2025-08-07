@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import CourseList from '../../../components/course/CourseList'
 import SidebarFilter from '../../../components/course/SidebarFilter'
+import BackgroundShapes from '../../../components/public/BackgroundShapes';
 
 export default function KursusPage() {
   const [filters, setFilters] = useState({
@@ -12,10 +13,15 @@ export default function KursusPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="px-6 py-8 bg-gradient-to-r from-purple-100 to-white">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-sm text-gray-500">Home &gt; <span className="text-purple-600">Kursus</span></p>
-          <h1 className="text-3xl font-bold text-gray-800 mt-2">Kursus</h1>
+      <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
+        <BackgroundShapes />
+
+        {/* Konten tengah */}
+        <div className="max-w-6xl mx-auto px-5 text-left relative z-10">
+          <h1 className="text-3xl font-extrabold text-gray-800">Kursus</h1>
+          <p className="mt-2 text-sm text-gray-800">
+            <a href="/" className="hover:underline">Beranda</a> &gt; <span className="text-purple-600">Kursus</span>
+          </p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-6">
