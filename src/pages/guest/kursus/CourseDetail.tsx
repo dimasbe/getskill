@@ -133,44 +133,43 @@ export default function CourseDetail() {
                   <span>Sertifikat penyelesaian</span>
                 </li>
               </ul>
+            </div>
 
-      {/* METODE PEMBAYARAN */}
-<div className="mt-4 flex flex-col items-center">
-  <h4 className="font-semibold text-gray-700 mb-2 text-center">Metode Pembayaran:</h4>
-  <div className="flex flex-wrap gap-2 justify-center">
-    <img src="/images/payments/bri.png" alt="BRI" className="w-10 h-auto object-contain" />
-    <img src="/images/payments/bca.png" alt="BCA" className="w-10 h-auto object-contain" />
-    <img src="/images/payments/gopay.png" alt="Gopay" className="w-10 h-auto object-contain" />
-    <img src="/images/payments/ovo.png" alt="OVO" className="w-10 h-auto object-contain" />
-    <img src="/images/payments/mastercard.jpeg" alt="Mastercard" className="w-10 h-auto object-contain" />
-  </div>
-</div>
+            {/* METODE PEMBAYARAN */}
+            <div className="mt-4 flex flex-col items-center">
+              <h4 className="font-semibold text-gray-700 mb-2 text-center">Metode Pembayaran:</h4>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <img src="/images/payments/bri.png" alt="BRI" className="w-10 h-auto object-contain" />
+                <img src="/images/payments/bca.png" alt="BCA" className="w-10 h-auto object-contain" />
+                <img src="/images/payments/gopay.png" alt="Gopay" className="w-10 h-auto object-contain" />
+                <img src="/images/payments/ovo.png" alt="OVO" className="w-10 h-auto object-contain" />
+                <img src="/images/payments/mastercard.jpeg" alt="Mastercard" className="w-10 h-auto object-contain" />
+              </div>
+            </div>
 
-{/* BAGIKAN KURSUS */}
-<div className="mt-5 flex flex-col items-center">
-  <h4 className="font-semibold text-gray-800 mb-2 text-center">Bagikan kursus ini:</h4>
-  <div className="flex gap-2">
-    <a
-      href="#"
-      className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition"
-    >
-      <FaFacebookF size={16} />
-    </a>
-    <a
-      href="#"
-      className="w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full flex items-center justify-center transition"
-    >
-      <FaTwitter size={16} />
-    </a>
-    <a
-      href="#"
-      className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"
-    >
-      <FaWhatsapp size={16} />
-    </a>
-  </div>
-</div>
-
+            {/* BAGIKAN KURSUS */}
+            <div className="mt-5 flex flex-col items-center">
+              <h4 className="font-semibold text-gray-800 mb-2 text-center">Bagikan kursus ini:</h4>
+              <div className="flex gap-2">
+                <a
+                  href="#"
+                  className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition"
+                >
+                  <FaFacebookF size={16} />
+                </a>
+                <a
+                  href="#"
+                  className="w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full flex items-center justify-center transition"
+                >
+                  <FaTwitter size={16} />
+                </a>
+                <a
+                  href="#"
+                  className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"
+                >
+                  <FaWhatsapp size={16} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
