@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => {
         <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20">
           <h1 className="text-[46px] font-bold text-gray-900 leading-snug mb-3">
             Selamat{' '}
-            <span className="bg-yellow-400 px-4 py-1 font-bold text-white rounded-[20px] inline-block">
+            <span className="bg-purple-700 px-4 py-1 font-bold text-white rounded-[20px] inline-block">
               Datang
             </span>
           </h1>
@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => {
           </p>
           {/* Tombol Daftar */}
           <div className="mt-6">
-            <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-[20px] flex items-center gap-2 transition-all duration-300">
+            <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
               Daftar Sekarang
               <svg
                 xmlns="http://www.w3.org/2000/svg"
