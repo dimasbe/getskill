@@ -39,9 +39,8 @@ const CategoryDropdown = () => {
         <LayoutGrid size={20} />
         <span className="text-sm ml-2">Pilih Kategori</span>
         <HiChevronDown
-          className={`ml-1 size-4 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : "rotate-0"
-          }`}
+          className={`ml-1 size-4 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
+            }`}
         />
       </div>
 
@@ -51,11 +50,12 @@ const CategoryDropdown = () => {
           {categories.map((category, index) => (
             <li
               key={index}
-              className="group relative px-4 py-2 hover:bg-gray-100 text-sm text-gray-700 cursor-pointer whitespace-nowrap"
+              className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-sm text-gray-700 cursor-pointer whitespace-nowrap text-left"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {category.name}
+
 
               {/* Submenu */}
               {hoveredIndex === index && (
@@ -63,7 +63,7 @@ const CategoryDropdown = () => {
                   {category.sub.map((sub, subIndex) => (
                     <li
                       key={subIndex}
-                      className="px-4 py-2 hover:bg-purple-100 text-sm text-purple-600 whitespace-nowrap"
+                      className="py-2 pl-4 pr-2 hover:bg-purple-100 text-sm text-purple-600 whitespace-nowrap text-left"
                       onClick={() => setIsOpen(false)}
                     >
                       {typeof sub === "string" ? (
