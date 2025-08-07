@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/LandingPage";
-import Kursus from '../pages/guest/Kursus';
+import Kursus from '../pages/guest/kursus/Kursus';
 import Event from '../pages/guest/Event';
 import Berita from '../pages/guest/Berita';
 import KelasIndustri from '../pages/guest/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
+import CourseDetail from '../pages/guest/kursus/CourseDetail'
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,7 @@ function App() {
           <Route path="/kelas-industri" element={<KelasIndustri />} />
           <Route path="/berita" element={<Berita />} />
           <Route path="/FAQ" element={<Faq />} />
+          <Route path="/kursus/:id" element={<CourseDetail />} />
         </Route>
       </Routes>
     </Router>
