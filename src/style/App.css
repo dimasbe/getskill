@@ -71,3 +71,15 @@
   will-change: transform, opacity;
 }
 
+@keyframes bounceStar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.bounce-star {
+  animation: bounceStar 3.5s ease-in-out infinite;
+}
