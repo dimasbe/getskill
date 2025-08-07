@@ -36,7 +36,7 @@ function App() {
           <Route path="/kelas-industri" element={<KelasIndustri />} />
           <Route path="/berita" element={<Berita />} />
           <Route path="/FAQ" element={<Faq />} />
-          <Route path="/hubungi" element={<HubKa />} />
+          <Route path="/kursus/:id" element={<CourseDetail />} />
         </Route>
       </Routes>
     </Router>
