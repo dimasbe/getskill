@@ -70,7 +70,7 @@ const Event: React.FC = () => {
 
             {/* Pagination */}
             <div className="flex justify-center mt-20">
-                <div className="flex gap-3">
+                <div className="flex gap-3 mb-10">
                     {Array.from({ length: totalPages }).map((_, index) => {
                         const page = index + 1;
                         return (
