@@ -31,10 +31,10 @@ const CourseCard: React.FC<CourseCardProps> = ({ image, category, title, reviews
   );
 };
 
-// Komponen KursusTerlarisPage
-const KursusTerlarisPage: React.FC = () => {
-  // Dummy data untuk kursus terlaris (contoh, bisa berbeda dari terpopuler)
-  const topSellingCourses = [
+// Komponen KursusTerpopulerPage
+const KursusTerpopulerPage: React.FC = () => {
+  // Dummy data untuk kursus terpopuler
+  const courses = [
     {
       image: 'https://placehold.co/200x150/4F46E5/FFFFFF?text=GITHUB',
       category: 'Github',
@@ -44,20 +44,20 @@ const KursusTerlarisPage: React.FC = () => {
       price: 'Gratis!',
     },
     {
+      image: 'https://placehold.co/200x150/9333EA/FFFFFF?text=PHP',
+      category: 'Pemrograman Website',
+      title: 'Pemrograman Web dengan PHP Native: Dasar hingga CRUD (Create, Read, Update Delete)',
+      reviews: '5.0 Reviews',
+      author: 'admin',
+      price: 'Rp. 150.000',
+    },
+    {
       image: 'https://placehold.co/200x150/F59E0B/FFFFFF?text=SCRATCH',
       category: 'Scratch',
       title: 'Belajar Coding Untuk Anak Menggunakan Scratch',
       reviews: '4.5 Reviews',
       author: 'admin',
       price: 'Rp. 250.000',
-    },
-    {
-      image: 'https://placehold.co/200x150/8B5CF6/FFFFFF?text=BOOTSTRAP',
-      category: 'Pemrograman Frontend',
-      title: 'Pemrograman Front End Web dengan Bootstrap',
-      reviews: '4.8 Reviews',
-      author: 'admin',
-      price: 'Rp. 300.000',
     },
     {
       image: 'https://placehold.co/200x150/EF4444/FFFFFF?text=LARAVEL',
@@ -71,23 +71,14 @@ const KursusTerlarisPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans antialiased p-4">
-      {/* Tailwind CSS CDN */}
-      <script src="https://cdn.tailwindcss.com"></script>
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-          body {
-            font-family: 'Inter', sans-serif;
-          }
-        `}
-      </style>
+      {/* Tailwind CSS dan style kustom diasumsikan diatur di konfigurasi proyek atau file CSS global */}
       <div className="container mx-auto py-12 px-6">
-        <h2 className="text-sm font-semibold text-purple-600 text-center mb-2">Kursus Terlaris</h2>
-        <h1 className="text-4xl font-bold text-gray-800 text-center mb-4">Kursus Terlaris Di Getskill</h1>
-        <p className="text-lg text-gray-600 text-center mb-10">daftar kursus yang paling laris di GetSkill</p>
+        <h2 className="text-sm font-semibold text-purple-600 text-center mb-2">Kursus Terpopuler</h2>
+        <h1 className="text-4xl font-bold text-gray-800 text-center mb-4">Jelajahi Kursus Teratas</h1>
+        <p className="text-lg text-gray-600 text-center mb-10">Kelas kursus terbaik kami</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {topSellingCourses.map((course, index) => (
+          {courses.map((course, index) => (
             <CourseCard key={index} {...course} />
           ))}
         </div>
@@ -96,4 +87,4 @@ const KursusTerlarisPage: React.FC = () => {
   );
 };
 
-export default KursusTerlarisPage;
+export default KursusTerpopulerPage;

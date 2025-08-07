@@ -24,16 +24,7 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, bgC
 const FiturUnggulanPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 font-sans antialiased p-4">
-      {/* Tailwind CSS CDN */}
-      <script src="https://cdn.tailwindcss.com"></script>
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-          body {
-            font-family: 'Inter', sans-serif;
-          }
-        `}
-      </style>
+      {/* Tailwind CSS dan style kustom diasumsikan diatur di konfigurasi proyek atau file CSS global */}
       <section className="py-16 bg-white rounded-lg mt-4">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-sm font-semibold text-purple-600 mb-2">Fitur Unggulan Kami</h2>

@@ -1,8 +1,8 @@
 import React from 'react';
-import komponen1 from '../../assets/landingpage/beranda/komponen1.png'; // Pastikan path ini benar
-import komponen2 from '../../assets/landingpage/beranda/komponen2.png'; // Pastikan path ini benar
-import komponen3 from '../../assets/landingpage/beranda/komponen3.png'; // Pastikan path ini benar
-import komponen4 from '../../assets/landingpage/beranda/komponen4.png'; // Pastikan path ini benar
+import komponen1 from '../../../assets/landingpage/beranda/komponen1.png'; // Pastikan path ini benar
+import komponen2 from '../../../assets/landingpage/beranda/komponen2.png'; // Pastikan path ini benar
+import komponen3 from '../../../assets/landingpage/beranda/komponen3.png'; // Pastikan path ini benar
+import komponen4 from '../../../assets/landingpage/beranda/komponen4.png'; // Pastikan path ini benar
 
 // Komponen Feature Card
 interface FeatureCardProps {

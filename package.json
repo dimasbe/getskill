@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ar-dacity/ardacity-text-pressure": "^1.0.7",
     "@tailwindcss/vite": "^4.1.11",
     "@types/react-router-dom": "^5.3.3",
     "flowbite": "^3.1.2",
