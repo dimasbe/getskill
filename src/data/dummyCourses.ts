@@ -1,7 +1,7 @@
 import type { Course } from '../types/Course'
 
 const dummyCourses: Course[] = [
-  // Kursus Scratch yang sudah ada
+  // Kursus Scratch
   {
     id: 'scratch',
     image: 'scratch.png',
@@ -114,7 +114,7 @@ const dummyCourses: Course[] = [
     ]
   },
   
-  // Kursus PHP yang sudah ada
+  // Kursus PHP
   {
     id: 'php-native',
     image: 'php.jpeg',
@@ -229,7 +229,7 @@ Siswa SMK, mahasiswa, atau pemula yang ingin mempelajari pemrograman web menggun
     ]
   },
   
-  // Kursus Front End Web dengan Bootstrap yang sudah ada
+  // Kursus Front End Web dengan Bootstrap
   {
     id: 'frontend-bootstrap',
     image: 'frontend.jpeg',
@@ -309,7 +309,7 @@ Setelah mengikuti pembelajaran ini, peserta diharapkan mampu membuat halaman web
     ]
   },
   
-  // Kursus Java Fundamental Programming yang sudah ada
+  // Kursus Java Fundamental Programming
   {
     id: 'java-fundamental',
     image: 'java.jpeg',
@@ -512,16 +512,16 @@ Di awal pembelajaran, peserta akan dikenalkan pada:
     ]
   },
 
-  // Tambahkan kursus GitHub
+  // kursus GitHub
   {
     id: 'github-dasar',
-    image: 'github.png', // pastikan ada file ini di folder public/images
+    image: 'github.png',
     category: 'GitHub',
     title: 'Tutorial Dasar Menggunakan GitHub',
     author: 'Get Skill',
-    price: '0', // Gratis
+    price: '0',
     rating: 4.0,
-    isFree: true, // tambahkan ini untuk menandai kursus gratis
+    isFree: true,
     date: '21 Januari 2025',
     students: 125,
     description: `Pelajari dasar-dasar GitHub, platform kontrol versi dan kolaborasi kode yang paling banyak digunakan oleh pengembang di seluruh dunia. Kursus ini dirancang untuk pemula yang ingin memahami cara kerja GitHub dari awal hingga dapat mengelola repositori mereka sendiri.
@@ -579,7 +579,7 @@ Di awal pembelajaran, peserta akan dikenalkan pada:
   },
   {
     id: 'laravel-fundamental',
-    image: 'laravel.png', // pastikan ada file ini di folder public/images
+    image: 'laravel.png',
     category: 'Pemrograman Website',
     title: 'Pemrograman Web menggunakan Framework LARAVEL',
     author: 'Get Skill',
