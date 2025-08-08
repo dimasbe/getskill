@@ -49,7 +49,8 @@ export default function CourseList({
   const startIndex = (page - 1) * COURSES_PER_PAGE
   const currentCourses = coursesToDisplay.slice(startIndex, startIndex + COURSES_PER_PAGE)
 
-  const gridClass = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns} gap-6`
+  const gridClass = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns} gap-5`;
+
 
   return (
     <div>
