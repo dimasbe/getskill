@@ -7,30 +7,39 @@ import shape05 from '../../assets/shape/breadcrumb_shape05.svg.png';
 const BackgroundShapes = () => {
     return (
         <>
+            {/* Shape 01 - Kiri Atas */}
             <img
                 src={shape01}
                 alt="Shape 1"
-                className="absolute top-15 left-20 w-14 h-auto animate-up-down"
+                className="absolute top-13 left-7 sm:left-20 w-12 sm:w-15 h-auto animate-slide-in-left animate-up-down"
             />
+
+            {/* Shape 02 - Kanan Atas */}
             <img
                 src={shape02}
                 alt="Shape 2"
-                className="absolute top-10 right-120 w-13 h-auto"
+                className="absolute top-10 right-50 sm:right-120 w-10 sm:w-12 h-auto animate-slide-in-top"
             />
+
+            {/* Shape 03 - Kanan Tengah */}
             <img
                 src={shape03}
                 alt="Shape 3"
-                className="absolute top-20 right-70 w-11 h-auto"
+                className="absolute top-20 right-25 sm:right-70 w-8 sm:w-12 h-auto animate-slide-in-bottom"
             />
+
+            {/* Shape 04 - Kanan Atas Kecil */}
             <img
                 src={shape04}
                 alt="Shape 4"
-                className="absolute top-5 right-30 w-9 h-auto"
+                className="absolute top-7 right-25 sm:right-30 w-6 sm:w-9 h-auto animate-slide-in-left"
             />
+
+            {/* Shape 05 - Kanan Pojok */}
             <img
                 src={shape05}
                 alt="Shape 5"
-                className="absolute top-1 right-1 w-100 h-auto"
+                className="absolute top-2 right-2 w-90 sm:w-100 h-auto animate-slide-in-right"
             />
         </>
     );
