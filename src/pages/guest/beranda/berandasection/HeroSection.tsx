@@ -1,12 +1,12 @@
 import React from 'react';
-import '../../../style/app.css';
-import fotomodel1 from '../../../assets/landingpage/beranda/fotomodel1.png';
-import avatar from '../../../assets/landingpage/beranda/avatar.png';
-import avatar2 from '../../../assets/landingpage/beranda/avatar2.png';
-import panah from "../../../assets/landingpage/beranda/panah.png";
-import arrowPattern from '../../../assets/landingpage/beranda/panah-ungu.png';
-import dotsPattern from '../../../assets/landingpage/beranda/dots.png';
-import garislengkung from '../../../assets/landingpage/beranda/garis lengkung.png';
+import '../../../../style/App.css';
+import fotomodel1 from '../../../../assets/landingpage/beranda/fotomodel1.png';
+import avatar from '../../../../assets/landingpage/beranda/avatar.png';
+import avatar2 from '../../../../assets/landingpage/beranda/avatar2.png';
+import panah from "../../../../assets/landingpage/beranda/panah.png";
+import arrowPattern from '../../../../assets/landingpage/beranda/panah-ungu.png';
+import dotsPattern from '../../../../assets/landingpage/beranda/dots.png';
+import garislengkung from '../../../../assets/landingpage/beranda/garis lengkung.png';
 
 const HeroSection: React.FC = () => {
   return (

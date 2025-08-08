@@ -1,11 +1,11 @@
 import React from 'react';
-import fotomodel2 from '../../../assets/landingpage/beranda/fotomodel2.png' // Pastikan path ini benar
+import fotomodel2 from '../../../../assets/landingpage/beranda/fotomodel2.png' // Pastikan path ini benar
 
 const BenefitPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 font-sans antialiased">
       {/* Tailwind CSS dan style kustom diasumsikan diatur di konfigurasi proyek atau file CSS global */}
-      <section className="py-30 bg-white mt-4">
+      <section className="py-32 bg-white">
         <div className="container mx-auto px-22 flex flex-col md:flex-row items-center justify-center gap-2">
           <div className="md:w-1/2 flex justify-center mb-10 md:mb-0">
             {/* Gambar ilustrasi benefit */}
@@ -16,8 +16,10 @@ const BenefitPage: React.FC = () => {
             />
           </div>
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-sm font-semibold text-purple-600 mb-2">Benefit Yang Didapat</h2>
-            <h3 className="text-3xl font-bold text-gray-800 mb-6">
+            <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
+              Benefit Yang Didapat
+            </span>
+            <h3 className="text-3xl font-bold text-gray-800 mt-4 mb-6">
               Tingkatkan <span className="bg-purple-700 text-white px-2 py-1 rounded-[20px]">Skillmu</span> Dengan Kursus Terbaik Di Satu Tempat
             </h3>
             <p className="text-gray-700 text-sm leading-relaxed mb-6">

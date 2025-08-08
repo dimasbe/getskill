@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from '../../../assets/logo/logo.png';
-import bintang from '../../../assets/landingpage/beranda/bintang.png';
-import layer1 from '../../../assets/landingpage/beranda/layer1.png';
-import layer2 from '../../../assets/landingpage/beranda/Layer 2.png';
+import logo from '../../../../assets/logo/logo.png';
+import bintang from '../../../../assets/landingpage/beranda/bintang.png';
+import layer1 from '../../../../assets/landingpage/beranda/layer1.png';
+import layer2 from '../../../../assets/landingpage/beranda/Layer 2.png';
 
 const AboutUsSection: React.FC = () => {
     return (
@@ -36,8 +36,10 @@ const AboutUsSection: React.FC = () => {
 
                 {/* Teks */}
                 <div className="md:w-1/2 text-center md:text-left md:-ml-40">
-                    <h2 className="text-sm font-semibold text-purple-600 mb-2">Tentang Kami</h2>
-                    <h3 className="text-3xl font-bold text-gray-800 mb-6">Apa Itu Getskill?</h3>
+                    <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
+                        Tentang Kami
+                    </span>
+                    <h3 className="text-3xl font-bold text-gray-800 mt-4 mb-6">Apa Itu Getskill?</h3>
                     <p className="text-gray-700 text-sm leading-relaxed">
                         Getskill adalah platform pembelajaran online yang dirancang untuk membantu pengguna dalam mengembangkan keterampilan, memperdalam wawasan, dan meningkatkan kompetensi di berbagai bidang. Dengan berbagai pilihan kursus yang diajarkan oleh para ahli, Getskill memberikan pengalaman belajar yang interaktif, fleksibel, dan mudah diakses kapan saja serta di mana saja. Selain itu, platform ini juga menyediakan event pelatihan eksklusif yang memungkinkan peserta untuk mendapatkan ilmu terbaru, berdiskusi dengan instruktur berpengalaman, serta memperoleh sertifikat sebagai bukti kompetensi yang dapat mendukung perkembangan karier mereka.
                     </p>

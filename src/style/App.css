@@ -83,3 +83,73 @@
 .bounce-star {
   animation: bounceStar 3.5s ease-in-out infinite;
 }
+
+/* Animasi untuk komponen 8 (Muter) */
+@keyframes rotate-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rotate {
+  animation: rotate-spin 15s linear infinite;
+}
+
+/* Animasi untuk komponen 9 (Loncat) */
+@keyframes jump-animate {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-jump {
+  animation: jump-animate 4s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+  animation-play-state: running; /* Pastikan selalu berjalan secara default */
+}
+
+/* Kunci untuk fitur pause saat kursor diarahkan */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pastikan setiap item memiliki lebar yang sama, tidak peduli berapa banyak */
+.animate-marquee > .flex-shrink-0 {
+  /* Set item untuk tumbuh dan memiliki lebar awal 20% */
+  flex-grow: 1;
+  flex-basis: 20%;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+.gradient-overlay-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 10%; /* Adjust the width as needed for the fade effect */
+  background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+  z-index: 10; /* Ensure the overlay is on top of the images */
+}
+
+.gradient-overlay-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 10%; /* Adjust the width as needed for the fade effect */
+  background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
+  z-index: 10; /* Ensure the overlay is on top of the images */
+}
