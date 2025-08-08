@@ -1,5 +1,5 @@
 import React from 'react';
-import MitraCarousel from '../../../../components/public/MitraCarousel';
+import MitraCarousel from '../../../../components/beranda/MitraCarousel';
 
 // Import gambar-gambar mitra dari folder assets
 import logosmk1 from '../../../../assets/landingpage/beranda/17muncar.png';
