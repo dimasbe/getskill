@@ -7,8 +7,13 @@ interface CourseDescriptionProps {
 
 export default function CourseDescription({ courseData }: CourseDescriptionProps) {
   return (
-    <section>
-      <p className="whitespace-pre-line text-gray-700">{courseData.description}</p>
+    <section className="text-justify">
+      <p
+        className="whitespace-pre-line text-gray-700 leading-relaxed"
+        style={{ textAlign: 'justify' }}
+      >
+        {courseData.description}
+      </p>
     </section>
   );
 }

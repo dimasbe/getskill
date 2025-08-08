@@ -315,7 +315,7 @@ Setelah mengikuti pembelajaran ini, peserta diharapkan mampu membuat halaman web
     image: 'java.jpeg',
     category: 'Pemrograman Desktop',
     title: 'Java Fundamental Programming',
-    author: 'Pennogramma Dektop',
+    author: 'Get Skill',
     price: '300.000',
     rating: 0.0,
     date: '25 April 2025',
@@ -516,7 +516,7 @@ Di awal pembelajaran, peserta akan dikenalkan pada:
   {
     id: 'github-dasar',
     image: 'github.png',
-    category: 'GitHub',
+    category: 'Github',
     title: 'Tutorial Dasar Menggunakan GitHub',
     author: 'Get Skill',
     price: '0',
