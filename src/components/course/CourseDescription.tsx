@@ -1,3 +1,4 @@
+// CourseDescription.tsx
 import type { Course } from '../../types/Course';
 
 interface CourseDescriptionProps {

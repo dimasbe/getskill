@@ -5,7 +5,8 @@ import type { Course } from '../../../types/Course';
 import CourseDescription from '../../../components/course/CourseDescription';
 import CourseSyllabus from '../../../components/course/CourseSyllabus';
 import CourseReviews from '../../../components/course/CourseReviews';
-import { FaFacebookF, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import BackgroundShapes from '../../../components/public/BackgroundShapes';
+import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
@@ -16,25 +17,31 @@ export default function CourseDetail() {
     return <div className="p-8">Kursus tidak ditemukan.</div>;
   }
 
-  // Hitung total modul dan kuis dari syllabus
   const totalModul = courseData.syllabus?.length || 0;
-  const totalKuis = courseData.syllabus?.reduce((total, modul) => total + (modul.quizzes || 0), 0) || 0;
+  const totalKuis = courseData.syllabus?.reduce(
+    (total, modul) => total + (modul.quizzes || 0),
+    0
+  ) || 0;
 
   return (
     <div className="min-h-screen bg-white">
-      {/* HEADER */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 pt-8">
-          <p className="text-sm text-gray-500">
-            Beranda &gt; Kursus &gt; <span className="text-purple-600">{courseData.title}</span>
+      {/* Header */}
+      <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
+        <BackgroundShapes />
+        <div className="max-w-6xl mx-auto px-5 text-left relative z-10">
+          <h1 className="text-3xl font-extrabold text-gray-800">{courseData.title}</h1>
+          <p className="mt-2 text-sm text-gray-800">
+            <a href="/" className="hover:underline">Beranda</a> &gt;{' '}
+            <a href="/kursus" className="hover:underline">Kursus</a> &gt;{' '}
+            <span className="text-purple-600">{courseData.title}</span>
           </p>
         </div>
       </div>
 
-      {/* MAIN CONTENT AREA */}
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          {/* COURSE IMAGE & TITLE */}
+          {/* Image & Title */}
           <div className="flex flex-col lg:flex-row gap-8 mb-8">
             <div className="lg:w-2/3 w-full">
               <div className="rounded-lg overflow-hidden relative">
@@ -49,7 +56,10 @@ export default function CourseDetail() {
               <div className="flex items-center gap-2 mt-2">
                 <div className="flex text-yellow-400">
                   {[...Array(5)].map((_, i) => (
-                    <span key={i} className={`text-2xl ${i < courseData.rating ? 'text-yellow-400' : 'text-gray-300'}`}>
+                    <span
+                      key={i}
+                      className={`text-2xl ${i < courseData.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                    >
                       ★
                     </span>
                   ))}
@@ -76,7 +86,7 @@ export default function CourseDetail() {
             </div>
           </div>
 
-          {/* TABS */}
+          {/* Tabs */}
           <div className="flex border-b border-gray-200 mb-6">
             {['deskripsi', 'konten-kursus', 'ulasan'].map((tab) => (
               <button
@@ -100,7 +110,7 @@ export default function CourseDetail() {
           </div>
         </div>
 
-        {/* SIDEBAR */}
+        {/* Sidebar */}
         <div className="lg:col-span-1">
           <div className="bg-gray-50 p-6 rounded-lg shadow-sm sticky top-4">
             <div className="mb-4">
@@ -110,65 +120,35 @@ export default function CourseDetail() {
               </p>
             </div>
             <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-lg mb-4 flex items-center justify-center gap-2">
-              Beli Sekarang
-              <span className="text-xl">→</span>
+              Beli Sekarang <span className="text-xl">→</span>
             </button>
             <div className="space-y-3 text-sm">
               <h4 className="font-semibold text-gray-700 mb-2">Kursus ini mencakup:</h4>
               <ul className="space-y-2 text-gray-600">
-                <li className="flex items-center gap-2">
-                  <span>✅</span>
-                  <span>{totalModul} Modul</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span>✅</span>
-                  <span>{totalKuis} Kuis</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span>✅</span>
-                  <span>Akses penuh seumur hidup</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span>✅</span>
-                  <span>Sertifikat penyelesaian</span>
-                </li>
+                <li className="flex items-center gap-2"><span>✅</span><span>{totalModul} Modul</span></li>
+                <li className="flex items-center gap-2"><span>✅</span><span>{totalKuis} Kuis</span></li>
+                <li className="flex items-center gap-2"><span>✅</span><span>Akses penuh seumur hidup</span></li>
+                <li className="flex items-center gap-2"><span>✅</span><span>Sertifikat penyelesaian</span></li>
               </ul>
             </div>
 
-            {/* METODE PEMBAYARAN */}
+            {/* Pembayaran */}
             <div className="mt-4 flex flex-col items-center">
               <h4 className="font-semibold text-gray-700 mb-2 text-center">Metode Pembayaran:</h4>
               <div className="flex flex-wrap gap-2 justify-center">
-                <img src="/images/payments/bri.png" alt="BRI" className="w-10 h-auto object-contain" />
-                <img src="/images/payments/bca.png" alt="BCA" className="w-10 h-auto object-contain" />
-                <img src="/images/payments/gopay.png" alt="Gopay" className="w-10 h-auto object-contain" />
-                <img src="/images/payments/ovo.png" alt="OVO" className="w-10 h-auto object-contain" />
-                <img src="/images/payments/mastercard.jpeg" alt="Mastercard" className="w-10 h-auto object-contain" />
+                {['bri.png', 'bca.png', 'gopay.png', 'ovo.png', 'mastercard.jpeg'].map((img, i) => (
+                  <img key={i} src={`/images/payments/${img}`} alt={img} className="w-10 h-auto object-contain" />
+                ))}
               </div>
             </div>
 
-            {/* BAGIKAN KURSUS */}
+            {/* Share */}
             <div className="mt-5 flex flex-col items-center">
               <h4 className="font-semibold text-gray-800 mb-2 text-center">Bagikan kursus ini:</h4>
               <div className="flex gap-2">
-                <a
-                  href="#"
-                  className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition"
-                >
-                  <FaFacebookF size={16} />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full flex items-center justify-center transition"
-                >
-                  <FaTwitter size={16} />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"
-                >
-                  <FaWhatsapp size={16} />
-                </a>
+                <a href="#" className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition"><FaFacebookF size={16} /></a>
+                <a href="#" className="w-8 h-8 bg-sky-500 hover:bg-sky-600 text-white rounded-full flex items-center justify-center transition"><FaTwitter size={16} /></a>
+                <a href="#" className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"><FaWhatsapp size={16} /></a>
               </div>
             </div>
           </div>
