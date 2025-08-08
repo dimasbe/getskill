@@ -26,12 +26,15 @@ const Event: React.FC = () => {
                 <BackgroundShapes />
 
                 {/* Konten tengah */}
-                <div className="max-w-6xl mx-auto px-5 text-left relative z-10">
-                    <h1 className="text-3xl font-extrabold text-gray-800">Event</h1>
-                    <p className="mt-2 text-sm text-gray-800">
-                        <a href="/" className="hover:underline">Beranda</a> &gt; <span className="text-purple-600">Event</span>
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center sm:text-left relative z-10">
+                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Event</h1>
+                    <p className="mt-2 text-sm sm:text-base text-gray-800">
+                        <a href="/" className="hover:underline">Beranda</a>
+                        <span className="mx-1">&gt;</span>
+                        <span className="text-purple-600">Event</span>
                     </p>
                 </div>
+
             </div>
 
 
@@ -78,8 +81,8 @@ const Event: React.FC = () => {
                                 key={page}
                                 onClick={() => setCurrentPage(page)}
                                 className={`w-8 h-8 rounded-full text-sm font-medium ${page === currentPage
-                                        ? 'bg-purple-600 text-white'
-                                        : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
+                                    ? 'bg-purple-600 text-white'
+                                    : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
                                     }`}
                             >
                                 {page}

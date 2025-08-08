@@ -4,6 +4,7 @@ import Spinner from "../../components/public/Spinner";
 import Navbar from '../../components/protected/guest/Navbar';
 import Footer from '../../components/protected/guest/Footer';
 import usePageTitle from '../../hooks/public/usePageTitle';
+import ScrollToTopButton from '../../components/public/ScrollToTopButton';
 
 const GuestLayout = () => {
   usePageTitle();
@@ -25,6 +26,7 @@ const GuestLayout = () => {
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
       <main className='pt-18'>
+        <ScrollToTopButton />
         <Outlet />
       </main>
       <Footer />
