@@ -1,14 +1,14 @@
 import React from 'react';
-import HeroSection from './berandasection/HeroSection';
-import FeaturesSection from './berandasection/FeaturesSection';
-import AboutUsSection from './berandasection/AboutUsSection';
-import KursusTerpopuler from './berandasection/KursusTerpopuler';
-import BenefitPage from './berandasection/BenefitPage';
-import FiturUnggulanPage from './berandasection/FiturUnggulanPage';
-import KursusTerlarisPage from './berandasection/KursusTerlarisPage';
-import KelasIndustriPage from './berandasection/KelasIndustriPage';
-import MitraKamiPage from './berandasection/MitraKamiPage';
-import BeritaTerbaruPage from './berandasection/BeritaTerbaruPage';
+import HeroSection from '../../../components/beranda/HeroSection';
+import FeaturesSection from '../../../components/beranda/FeaturesSection';
+import AboutUsSection from '../../../components/beranda/AboutUsSection';
+import KursusTerpopuler from '../../../components/beranda/KursusTerpopuler';
+import BenefitPage from '../../../components/beranda/BenefitPage';
+import FiturUnggulanPage from '../../../components/beranda/FiturUnggulanPage';
+import KursusTerlarisPage from '../../../components/beranda/KursusTerlarisPage';
+import KelasIndustriPage from '../../../components/beranda/KelasIndustriPage';
+import MitraKamiPage from '../../../components/beranda/MitraKamiPage';
+import BeritaTerbaruPage from '../../../components/beranda/BeritaTerbaruPage';
 
 const LandingPage: React.FC = () => {
     return (

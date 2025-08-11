@@ -1,18 +1,18 @@
 import React from 'react';
-import MitraCarousel from '../../../../components/beranda/MitraCarousel';
+import MitraCarousel from '../public/CardMitra/MitraCarousel';
 
 // Import gambar-gambar mitra dari folder assets
-import logosmk1 from '../../../../assets/landingpage/beranda/17muncar.png';
-import logosmk2 from '../../../../assets/landingpage/beranda/alazhar.jpeg';
-import logosmk3 from '../../../../assets/landingpage/beranda/antartika.png';
-import logosmk4 from '../../../../assets/landingpage/beranda/kraksakan.png';
-import logosmk5 from '../../../../assets/landingpage/beranda/muhi.png';
-import logosmk6 from '../../../../assets/landingpage/beranda/pamekasan.jpg';
-import logosmk7 from '../../../../assets/landingpage/beranda/smk6jember.jpeg';
-import logosmk8 from '../../../../assets/landingpage/beranda/smk8jember.png';
-import logosmk9 from '../../../../assets/landingpage/beranda/smk9malang.jpeg';
-import logosmk10 from '../../../../assets/landingpage/beranda/smuhero.jpeg';
-import logosmk11 from '../../../../assets/landingpage/beranda/widyagama.png';
+import logosmk1 from '../../assets/landingpage/beranda/17muncar.png';
+import logosmk2 from '../../assets/landingpage/beranda/alazhar.jpeg';
+import logosmk3 from '../../assets/landingpage/beranda/antartika.png';
+import logosmk4 from '../../assets/landingpage/beranda/kraksakan.png';
+import logosmk5 from '../../assets/landingpage/beranda/muhi.png';
+import logosmk6 from '../../assets/landingpage/beranda/pamekasan.jpg';
+import logosmk7 from '../../assets/landingpage/beranda/smk6jember.jpeg';
+import logosmk8 from '../../assets/landingpage/beranda/smk8jember.png';
+import logosmk9 from '../../assets/landingpage/beranda/smk9malang.jpeg';
+import logosmk10 from '../../assets/landingpage/beranda/smuhero.jpeg';
+import logosmk11 from '../../assets/landingpage/beranda/widyagama.png';
 
 const MitraKamiPage: React.FC = () => {
   // --- Perbaikan di sini: Tambahkan ": string[]" ---

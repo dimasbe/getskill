@@ -1,6 +1,6 @@
 import React from 'react';
-import NewsCard from '../../../../components/beranda/NewsCard';
-import { newsArticles } from '../../../../data/newsData';
+import NewsCard from '../public/CardNews/NewsCard';
+import { newsArticles } from '../../data/newsData';
 
 const BeritaTerbaruPage: React.FC = () => {
   return (

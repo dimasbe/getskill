@@ -2,9 +2,9 @@
 import React from 'react';
 
 // Import gambar-gambar
-import iconKomponen5 from '../../../../assets/landingpage/beranda/komponen5.png';
-import iconKomponen6 from '../../../../assets/landingpage/beranda/komponen6.png';
-import iconKomponen7 from '../../../../assets/landingpage/beranda/komponen7.png';
+import iconKomponen5 from '../../assets/landingpage/beranda/komponen5.png';
+import iconKomponen6 from '../../assets/landingpage/beranda/komponen6.png';
+import iconKomponen7 from '../../assets/landingpage/beranda/komponen7.png';
 
 // Interface untuk data fitur
 interface FeatureItemProps {

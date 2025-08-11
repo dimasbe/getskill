@@ -1,5 +1,5 @@
 import React from 'react';
-import fotomodel2 from '../../../../assets/landingpage/beranda/fotomodel2.png' // Pastikan path ini benar
+import fotomodel2 from '../../assets/landingpage/beranda/fotomodel2.png' // Pastikan path ini benar
 
 const BenefitPage: React.FC = () => {
   return (

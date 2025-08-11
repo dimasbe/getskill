@@ -2,8 +2,8 @@
 import React from 'react';
 
 // Import gambar-gambar dekorasi
-import komponen8 from '../../../../assets/landingpage/beranda/komponen8.png';
-import komponen9 from '../../../../assets/landingpage/beranda/komponen9.png';
+import komponen8 from '../../assets/landingpage/beranda/komponen8.png';
+import komponen9 from '../../assets/landingpage/beranda/komponen9.png';
 
 // Komponen KelasIndustriPage
 const KelasIndustriPage: React.FC = () => {

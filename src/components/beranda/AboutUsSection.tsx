@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from '../../../../assets/logo/logo.png';
-import bintang from '../../../../assets/landingpage/beranda/bintang.png';
-import layer1 from '../../../../assets/landingpage/beranda/layer1.png';
-import layer2 from '../../../../assets/landingpage/beranda/Layer 2.png';
+import logo from '../../assets/logo/logo.png';
+import bintang from '../../assets/landingpage/beranda/bintang.png';
+import layer1 from '../../assets/landingpage/beranda/layer1.png';
+import layer2 from '../../assets/landingpage/beranda/Layer 2.png';
 
 const AboutUsSection: React.FC = () => {
     return (
