@@ -1,5 +1,5 @@
 // src/pages/KursusPage.tsx
-import CourseList from '../../../../components/course/CourseList'
+import CourseList from '../../../../components/course/kursus/CourseList'
 
 export default function KursusPage() {
   return (

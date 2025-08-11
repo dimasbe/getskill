@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/beranda/Beranda";
-import Kursus from '../pages/guest/kursus/Kursus';
+import Kursus from '../pages/guest/kursus/KursusPage';
 import Event from '../pages/guest/event/Event';
 import Berita from '../pages/guest/Berita';
 import KelasIndustri from '../pages/guest/KelasIndustri';

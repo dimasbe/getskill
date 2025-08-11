@@ -59,9 +59,13 @@ export default function CourseCard({
         </div>
 
         {/* Harga */}
-        <p className="text-blue-600 font-bold text-lg mt-auto">
-          {isFree ? 'Gratis' : `Rp ${price}`}
-        </p>
+          <p
+            className={`font-bold text-lg mt-auto ${
+              isFree ? 'text-yellow-500' : 'text-green-600'
+            }`}
+          >
+            {isFree ? 'Gratis' : `Rp ${price}`}
+          </p>
       </div>
     </motion.div>
   )
