@@ -34,10 +34,7 @@ const Event: React.FC = () => {
                         <span className="text-purple-600">Event</span>
                     </p>
                 </div>
-
             </div>
-
-
 
             {/* Title Section */}
             <div className="text-center mt-12 px-4">
@@ -54,22 +51,26 @@ const Event: React.FC = () => {
 
             {/* Search & Filter */}
             <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-8 px-4">
-
-                <div className="relative w-full md:w-1/3">
+                {/* Search Input */}
+                <div className="relative w-full md:w-1/3 transition-all duration-300 ease-in-out hover:scale-[1.02]">
                     <input
                         type="text"
                         placeholder="Cari Event"
-                        className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none  focus:ring-purple-500"
+                        className="w-full px-4 py-2 pr-10 border border-gray-300 hover:border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
                     />
-                    <HiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                    <HiSearch
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 transition-colors duration-300 group-hover:text-purple-500"
+                        size={18}
+                    />
                 </div>
+
+                {/* Sort Dropdown */}
                 <SortDropdown />
             </div>
 
+
             {/* Event Grid */}
             <EventCardGrid events={currentEvents} />
-
-
 
             {/* Pagination */}
             <div className="flex justify-center mt-20">
@@ -80,9 +81,10 @@ const Event: React.FC = () => {
                             <button
                                 key={page}
                                 onClick={() => setCurrentPage(page)}
-                                className={`w-8 h-8 rounded-full text-sm font-medium ${page === currentPage
-                                    ? 'bg-purple-600 text-white'
-                                    : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
+                                className={`w-8 h-8 rounded-full text-sm font-medium transform transition-all duration-300 ease-in-out
+                        ${page === currentPage
+                                        ? 'bg-purple-600 text-white scale-110 shadow-md'
+                                        : 'bg-gray-200 text-gray-700 hover:bg-purple-100 hover:scale-105 hover:shadow-md'
                                     }`}
                             >
                                 {page}
@@ -91,7 +93,6 @@ const Event: React.FC = () => {
                     })}
                 </div>
             </div>
-
         </div>
     );
 };

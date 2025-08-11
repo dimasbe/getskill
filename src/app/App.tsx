@@ -9,6 +9,7 @@ import KelasIndustri from '../pages/guest/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/kursus/CourseDetail'
+import DetailEvent from "../pages/guest/event/DetailEvent";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/kursus" element={<Kursus />} />
           <Route path="/event" element={<Event />} />
+          <Route path="/event/:id" element={<DetailEvent />} />
           <Route path="/kelas-industri" element={<KelasIndustri />} />
           <Route path="/berita" element={<Berita />} />
           <Route path="/FAQ" element={<Faq />} />

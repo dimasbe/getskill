@@ -85,7 +85,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Pencarian kursus..."
-              className="py-1 px-2 w-40 text-sm font-bold bg-transparent focus:outline-none placeholder-gray-400"
+              className="py-1 px-2 w-40 text-sm font-semibold bg-transparent focus:outline-none placeholder-gray-400"
             />
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:opacity-90 transition">
               <HiSearch size={18} />
