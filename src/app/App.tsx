@@ -10,6 +10,11 @@ import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/kursus/CourseDetail'
 import DetailEvent from "../pages/guest/event/DetailEvent";
+import Login from "../pages/guest/auth/login";
+import Register from "../pages/guest/auth/register";
+import AuthLayout from "./route/AuthLayout";
+import ForgotPassword from "../pages/guest/auth/forgotpassword";
+import UpdatePassword from '../pages/guest/auth/updatepassword';
 
 
 function App() {
@@ -30,6 +35,14 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Auth */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/password/email" element={<ForgotPassword />} />
+          <Route path="/update-password/email" element={<UpdatePassword />} />
+        </Route>
+
         <Route element={<GuestLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/kursus" element={<Kursus />} />

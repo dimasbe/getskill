@@ -133,7 +133,7 @@ const Navbar = () => {
           </div>
 
           <Link
-            to="#"
+            to="/login"
             className="hidden sm:block bg-yellow-500 text-black text-xs font-medium px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
           >
             Masuk
@@ -166,7 +166,7 @@ const Navbar = () => {
             </NavLink>
           ))}
           <Link
-            to="#"
+            to="/login"
             className="block text-center bg-yellow-500 text-black text-xs font-medium px-4 py-2 rounded-full hover:bg-purple-700 hover:text-white transition"
           >
             Masuk
