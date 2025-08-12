@@ -1,11 +1,10 @@
-// src/components/course/CourseCard.tsx
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { FaStar } from "react-icons/fa";
 
 interface CourseCardProps {
   id: string
   image: string
-  category: string
   title: string
   author: string
   price: string
@@ -34,38 +33,41 @@ export default function CourseCard({
       onClick={() => navigate(`/kursus/${id}`)}
     >
       {/* Gambar */}
-<div className="relative h-40 w-full overflow-hidden">
-  <img
-    src={`/images/${image}`}
-    alt={title}
-    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-  />
-
-</div>
+      <div className="relative h-40 w-full overflow-hidden">
+        <img
+          src={`/images/${image}`}
+          alt={title}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+      </div>
 
       {/* Konten */}
-      <div className="p-4 flex flex-col flex-grow text-left">
+      <div className="p-4 flex flex-col flex-grow text-left space-y-2">
+        
         {/* Judul */}
-        <h3 className="font-semibold text-gray-900 leading-snug line-clamp-2">
+        <h3 className="font-semibold text-gray-900 leading-snug line-clamp-2 min-h-[48px]">
           {title}
         </h3>
 
         {/* Penulis */}
-        <p className="text-sm text-gray-500 mb-2">By {author}</p>
+        <p className="text-sm text-gray-500">By {author}</p>
+
+        {/* Spacer biar rating & harga selalu di bawah */}
+        <div className="flex-grow" />
 
         {/* Rating */}
-        <div className="flex items-center text-yellow-500 text-sm mb-2">
-          ⭐ {rating.toFixed(1)}
+        <div className="flex items-center text-yellow-500 text-sm">
+          <FaStar className="mr-1" /> {rating.toFixed(1)}
         </div>
 
         {/* Harga */}
-          <p
-            className={`font-bold text-lg mt-auto ${
-              isFree ? 'text-yellow-500' : 'text-green-600'
-            }`}
-          >
-            {isFree ? 'Gratis' : `Rp ${price}`}
-          </p>
+        <p
+          className={`font-bold text-lg ${
+            isFree ? 'text-yellow-500' : 'text-green-600'
+          }`}
+        >
+          {isFree ? 'Gratis' : `Rp ${price}`}
+        </p>
       </div>
     </motion.div>
   )

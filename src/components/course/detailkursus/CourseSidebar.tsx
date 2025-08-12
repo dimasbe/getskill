@@ -10,10 +10,10 @@ export default function CourseSidebar({ totalModul, totalKuis }: Props) {
     <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl sticky top-6 space-y-6 border border-gray-100">
       {/* Harga */}
       <div className="bg-purple-50 border border-purple-200 rounded-xl p-4 text-center shadow-sm">
-        <div className="flex items-center justify-center gap-2 text-purple-700 font-semibold">
+        <div className="flex items-center justify-center gap-2 text-black-700 font-semibold">
           <FaTag size={18} /> <span>Harga Kursus</span>
         </div>
-        <p className="text-3xl font-extrabold text-purple-800 mt-1">Rp 250.000</p>
+        <p className="text-3xl font-extrabold text-green-800 mt-1">Rp 250.000</p>
       </div>
 
       {/* Tombol */}

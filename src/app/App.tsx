@@ -6,7 +6,7 @@ import Kursus from '../pages/guest/kursus/KursusPage';
 import Event from '../pages/guest/event/Event';
 import Berita from '../pages/guest/Berita';
 import KelasIndustri from '../pages/guest/KelasIndustri';
-import Faq from '../pages/guest/Faq';
+import Faq from '../pages/guest/FaqPage';
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/kursus/CourseDetail'
 
