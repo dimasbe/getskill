@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import GuestLayout from "./route/GuestLayout";
 import LandingPage from "../pages/guest/beranda/Beranda";
-import Kursus from "../pages/guest/kursus/Kursus";
+import Kursus from "../pages/guest/kursus/KursusPage"; // Menggunakan punya teman karena mungkin itu yang terbaru
 import CourseDetail from "../pages/guest/kursus/CourseDetail";
 import Event from "../pages/guest/event/Event";
 import DetailEvent from "../pages/guest/event/DetailEvent";
-import Berita from "../pages/guest/berita/Berita";
+import Berita from "../pages/guest/berita/Berita"; // Menggunakan punya Anda karena lebih terstruktur
 import DetailBerita from "../pages/guest/berita/DetailBerita";
 import KelasIndustri from "../pages/guest/KelasIndustri";
 import Faq from "../pages/guest/Faq";

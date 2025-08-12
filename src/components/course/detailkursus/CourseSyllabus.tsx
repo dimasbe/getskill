@@ -1,4 +1,4 @@
-import type { Course } from '../../types/Course';
+import type { Course } from '../../../types/Course';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Trophy, FileText } from 'lucide-react';
 

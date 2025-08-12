@@ -1,5 +1,5 @@
 // CourseDescription.tsx
-import type { Course } from '../../types/Course';
+import type { Course } from '../../../types/Course';
 
 interface CourseDescriptionProps {
   courseData: Course;
