@@ -9,7 +9,7 @@ import Event from "../pages/guest/event/Event";
 import DetailEvent from "../pages/guest/event/DetailEvent";
 import Berita from "../pages/guest/berita/Berita"; // Menggunakan punya Anda karena lebih terstruktur
 import DetailBerita from "../pages/guest/berita/DetailBerita";
-import KelasIndustri from "../pages/guest/KelasIndustri";
+import KelasIndustri from "../pages/guest/kelasindustri/KelasIndustri";
 import Faq from "../pages/guest/Faq";
 import Spinner from "../components/public/Spinner";
 
