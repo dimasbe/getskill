@@ -5,7 +5,7 @@ import LandingPage from "../pages/guest/beranda/Beranda";
 import Kursus from '../pages/guest/kursus/Kursus';
 import Event from '../pages/guest/event/Event';
 import Berita from '../pages/guest/Berita';
-import KelasIndustri from '../pages/guest/KelasIndustri';
+import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/kursus/CourseDetail'
