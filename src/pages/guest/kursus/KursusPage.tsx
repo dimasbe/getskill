@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import SidebarFilter from '../../../components/course/SidebarFilter';
-import CourseList from '../../../components/course/CourseList';
+import SidebarFilter from '../../../components/course/kursus/SidebarFilter';
+import CourseList from '../../../components/course/kursus/CourseList';
 import BackgroundShapes from '../../../components/public/BackgroundShapes';
 
 export default function KursusPage() {

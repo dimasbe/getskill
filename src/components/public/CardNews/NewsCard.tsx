@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import { FaRegCalendarAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface NewsCardProps {
+    id: string;       // Tambah properti id
     image: string;
     date: string;
     title: string;
     summary: string;
 }
 
-const NewsCard: React.FC<NewsCardProps> = ({ image, date, title, summary }) => {
+const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) => {
     const [isHover, setIsHover] = useState(false);
 
     return (
-        <div
-            className="relative bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-transform duration-300 hover:scale-105"
+        <Link
+            to={`/berita/${id}`}
+            tabIndex={0}
+            className="relative block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
+            onFocus={() => setIsHover(true)}
+            onBlur={() => setIsHover(false)}
         >
             {/* Shine Diagonal Sekali Jalan */}
             {isHover && (
@@ -65,12 +71,12 @@ const NewsCard: React.FC<NewsCardProps> = ({ image, date, title, summary }) => {
 
             {/* Keyframes */}
             <style>{`
-        @keyframes shineDiagonal {
-          0% { transform: translate(-150%, -150%); }
-          100% { transform: translate(150%, 150%); }
-        }
-      `}</style>
-        </div>
+                @keyframes shineDiagonal {
+                    0% { transform: translate(-150%, -150%); }
+                    100% { transform: translate(150%, 150%); }
+                }
+            `}</style>
+        </Link>
     );
 };
 

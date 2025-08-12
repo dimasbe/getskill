@@ -1,5 +1,5 @@
 // CourseReviews.tsx
-import type { Course } from '../../types/Course';
+import type { Course } from '../../../types/Course';
 
 interface CourseReviewsProps {
   courseData: Course;

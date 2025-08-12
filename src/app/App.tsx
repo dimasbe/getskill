@@ -1,20 +1,12 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import GuestLayout from './route/GuestLayout';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import GuestLayout from "./route/GuestLayout";
 import LandingPage from "../pages/guest/beranda/Beranda";
-import Kursus from '../pages/guest/kursus/Kursus';
-import Event from '../pages/guest/event/Event';
-import Berita from '../pages/guest/Berita';
-import KelasIndustri from '../pages/guest/KelasIndustri';
-import Faq from '../pages/guest/Faq';
-import Spinner from "../components/public/Spinner";
-import CourseDetail from '../pages/guest/kursus/CourseDetail'
+import Kursus from "../pages/guest/kursus/KursusPage"; // Menggunakan punya teman karena mungkin itu yang terbaru
+import CourseDetail from "../pages/guest/kursus/CourseDetail";
+import Event from "../pages/guest/event/Event";
 import DetailEvent from "../pages/guest/event/DetailEvent";
-import Login from "../pages/guest/auth/login";
-import Register from "../pages/guest/auth/register";
-import AuthLayout from "./route/AuthLayout";
-import ForgotPassword from "../pages/guest/auth/forgotpassword";
-import UpdatePassword from '../pages/guest/auth/updatepassword';
 
 
 function App() {
@@ -45,13 +37,19 @@ function App() {
 
         <Route element={<GuestLayout />}>
           <Route path="/" element={<LandingPage />} />
+
           <Route path="/kursus" element={<Kursus />} />
+          <Route path="/kursus/:id" element={<CourseDetail />} />
+
           <Route path="/event" element={<Event />} />
           <Route path="/event/:id" element={<DetailEvent />} />
-          <Route path="/kelas-industri" element={<KelasIndustri />} />
+
           <Route path="/berita" element={<Berita />} />
-          <Route path="/FAQ" element={<Faq />} />
-          <Route path="/kursus/:id" element={<CourseDetail />} />
+          <Route path="/berita/:id" element={<DetailBerita />} />
+
+          <Route path="/kelas-industri" element={<KelasIndustri />} />
+
+          <Route path="/faq" element={<Faq />} />
         </Route>
       </Routes>
     </Router>

@@ -1,8 +1,8 @@
 // src/components/course/CourseList.tsx
 
-import CourseCard from './CourseCard'
-import dummyCourses from '../../data/dummyCourses'
-import type { Course } from '../../types/Course'
+import CourseCard from '../kursus/CourseCard'
+import dummyCourses from '../../../data/dummyCourses'
+import type { Course } from '../../../types/Course'
 
 interface CourseListProps {
   filters?: { // Menjadikan filters opsional
