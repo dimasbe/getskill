@@ -10,13 +10,13 @@ import garislengkung from '../../assets/landingpage/beranda/garis lengkung.png';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative bg-gradient-to-br from-[#F5F4F9] to-[#ebe9f0] overflow-hidden min-h-[90vh] m-0 pt-0">
+    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-[90vh] m-0 pt-0">
 
       {/* Gambar garis lengkung di pojok kiri atas */}
       <img
         src={garislengkung}
         alt="garis lengkung"
-        className="absolute top-0 left-0 w-[220px] z-0 fade-in-up"
+        className="absolute top-0 left-0 w-[200px] z-0 fade-in-up"
         style={{ animationDelay: '0s' }}
       />
 
