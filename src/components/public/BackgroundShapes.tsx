@@ -18,28 +18,28 @@ const BackgroundShapes = () => {
             <img
                 src={shape02}
                 alt="Shape 2"
-                className="absolute top-10 right-50 sm:right-120 w-10 sm:w-12 h-auto animate-slide-in-top"
+                className="absolute top-10 right-50 2xl:right-120 xl:right-120 md:right-110 sm:right-120 w-10 2xl:w-12 xl:w-12 md:w-11 sm:w-12 h-auto animate-slide-in-top"
             />
 
             {/* Shape 03 - Kanan Tengah */}
             <img
                 src={shape03}
                 alt="Shape 3"
-                className="absolute top-20 right-25 sm:right-70 w-8 sm:w-12 h-auto animate-slide-in-bottom"
+                className="absolute top-20 right-25 2xl:right-80 xl:right-80 md:right-70 sm:right-70 w-8 2xl:w-12 xl:w-12 md:w-11 sm:w-12 h-auto animate-slide-in-bottom"
             />
 
             {/* Shape 04 - Kanan Atas Kecil */}
             <img
                 src={shape04}
                 alt="Shape 4"
-                className="absolute top-7 right-25 sm:right-30 w-6 sm:w-9 h-auto animate-slide-in-left"
+                className="absolute top-7 right-25 2xl:right-35 md:right-30 sm:right-30 w-6 2xl:w-10 xl:w-10 md:w-10 sm:w-9 h-auto animate-slide-in-left"
             />
 
             {/* Shape 05 - Kanan Pojok */}
             <img
                 src={shape05}
                 alt="Shape 5"
-                className="absolute top-2 right-2 w-90 sm:w-100 h-auto animate-slide-in-right"
+                className="absolute top-2 right-2 2xl:right-5 md:right-1 sm:right- w-90 2xl:w-105 md:w-100 sm:w-100 h-auto animate-slide-in-right"
             />
         </>
     );
