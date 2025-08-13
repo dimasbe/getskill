@@ -23,7 +23,7 @@ export default function KursusPage() {
         <BackgroundShapes />
 
         {/* Konten Tengah */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center sm:text-left relative z-10 animate-fadeIn">
+        <div className="max-w-6xl mx-auto px-4 sm:px-18 text-center sm:text-left relative z-10 animate-fadeIn">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 tracking-tight">
             Jelajahi Kursus
           </h1>

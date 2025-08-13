@@ -26,7 +26,7 @@ const Event: React.FC = () => {
                 <BackgroundShapes />
 
                 {/* Konten tengah */}
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center sm:text-left relative z-10">
+                <div className="max-w-6xl mx-auto px-4 sm:px-18 text-center sm:text-left relative z-10">
                     <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Event</h1>
                     <p className="mt-2 text-sm sm:text-base text-gray-800">
                         <a href="/" className="hover:underline">Beranda</a>
