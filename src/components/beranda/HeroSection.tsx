@@ -89,7 +89,7 @@ const HeroSection: React.FC = () => {
             src={fotomodel1}
             alt="Orang dengan Laptop"
             className="relative z-10 w-[520px] fade-in-scale"
-            style={{ animationDelay: '0.9s' }}
+            style={{ animationDelay: '1.2s' }}
           />
 
           {/* Panah kecil */}
@@ -97,13 +97,13 @@ const HeroSection: React.FC = () => {
             src={panah}
             alt="panah"
             className="absolute right-[325px] top-[25px] w-[90px] rotate-20 fade-in-up"
-            style={{ animationDelay: '1.1s' }}
+            style={{ animationDelay: '1s' }}
           />
 
           {/* Bubble nama atas */}
           <div
             className="absolute top-[5px] right-[400px] z-20 fade-in-up"
-            style={{ animationDelay: '1.3s' }}
+            style={{ animationDelay: '0.1s' }}
           >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
               <img
@@ -118,7 +118,7 @@ const HeroSection: React.FC = () => {
           {/* Bubble nama bawah */}
           <div
             className="absolute top-[45px] right-[390px] z-20 fade-in-up"
-            style={{ animationDelay: '1.5s' }}
+            style={{ animationDelay: '0.3s' }}
           >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
               <img
