@@ -6,14 +6,21 @@ interface Props {
 
 export default function CourseHeader({ title }: Props) {
   return (
-    <div className="relative px-6 py-10 bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 overflow-hidden">
+
+    <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
       <BackgroundShapes />
-      <div className="max-w-6xl mx-auto relative z-10 text-left">
-        <h1 className="text-2xl md:text-3xl font-bold text-indigo-900">Kursus</h1>
-        <p className="mt-2 text-sm text-gray-600">
-          <a href="/" className="hover:underline">Beranda</a> &gt;{" "}
-          <a href="/kursus" className="hover:underline">Kursus</a> &gt;{" "}
-          <span className="text-indigo-900 font-medium">{title}</span>
+
+      {/* Konten tengah */}
+      <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
+          Kursus
+        </h1>
+        <p className="mt-2 text-sm sm:text-base text-gray-800 flex flex-wrap items-center justify-center sm:justify-start">
+          <a href="/" className="hover:underline">Beranda</a>
+          <span className="mx-1">&gt;</span>
+          <a href="/event" className="hover:underline">Kursus</a>
+          <span className="mx-1">&gt;</span>
+          <span className="text-purple-600">{title}</span>
         </p>
       </div>
     </div>
