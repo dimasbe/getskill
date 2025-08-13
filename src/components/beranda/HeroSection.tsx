@@ -16,28 +16,38 @@ const HeroSection: React.FC = () => {
       <img
         src={garislengkung}
         alt="garis lengkung"
-        className="absolute top-0 left-0 w-[220px] z-0"
+        className="absolute top-0 left-0 w-[220px] z-0 fade-in-up"
+        style={{ animationDelay: '0s' }}
       />
 
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-18 pt-16 relative z-10">
 
         {/* Bagian Kiri */}
         <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20">
-          <h1 className="text-[46px] font-bold text-gray-900 leading-snug mb-3">
+          <h1
+            className="text-[46px] font-bold text-gray-900 leading-snug mb-3 fade-in-up"
+            style={{ animationDelay: '0.1s' }}
+          >
             Selamat{' '}
             <span className="bg-purple-700 px-4 py-1 font-bold text-white rounded-[20px] inline-block">
               Datang
             </span>
           </h1>
-          <h2 className="text-[26px] text-gray-900 font-medium mb-4">
+          <h2
+            className="text-[26px] text-gray-900 font-medium mb-4 fade-in-up"
+            style={{ animationDelay: '0.3s' }}
+          >
             Update kemampuan anda bersama{' '}
             <span className="font-semibold">Getskill.id</span>
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p
+            className="text-gray-600 text-lg fade-in-up"
+            style={{ animationDelay: '0.5s' }}
+          >
             Belajar seru bersama GetSkill
           </p>
           {/* Tombol Daftar */}
-          <div className="mt-6">
+          <div className="mt-6 fade-in-up" style={{ animationDelay: '0.7s' }}>
             <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
               Daftar Sekarang
               <svg
@@ -78,18 +88,23 @@ const HeroSection: React.FC = () => {
           <img
             src={fotomodel1}
             alt="Orang dengan Laptop"
-            className="relative z-10 w-[520px]"
+            className="relative z-10 w-[520px] fade-in-scale"
+            style={{ animationDelay: '0.9s' }}
           />
 
           {/* Panah kecil */}
           <img
             src={panah}
             alt="panah"
-            className="absolute right-[325px] top-[25px] w-[90px] rotate-20"
+            className="absolute right-[325px] top-[25px] w-[90px] rotate-20 fade-in-up"
+            style={{ animationDelay: '1.1s' }}
           />
 
           {/* Bubble nama atas */}
-          <div className="absolute top-[5px] right-[400px] z-20">
+          <div
+            className="absolute top-[5px] right-[400px] z-20 fade-in-up"
+            style={{ animationDelay: '1.3s' }}
+          >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
               <img
                 src={avatar}
@@ -101,7 +116,10 @@ const HeroSection: React.FC = () => {
           </div>
 
           {/* Bubble nama bawah */}
-          <div className="absolute top-[45px] right-[390px] z-20">
+          <div
+            className="absolute top-[45px] right-[390px] z-20 fade-in-up"
+            style={{ animationDelay: '1.5s' }}
+          >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
               <img
                 src={avatar2}

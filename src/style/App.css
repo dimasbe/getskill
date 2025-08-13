@@ -25,6 +25,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -44,37 +45,87 @@
   color: #888;
 }
 
+/* Fade In Up */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Animasi panah */
 @keyframes smooth-float {
-  0%   { transform: translateY(0px) rotate(0deg); }
-  50%  { transform: translateY(-12px) rotate(1.5deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }
 
 /* Animasi dots */
 @keyframes floating-drift {
-  0%   { transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 0.9; }
-  20%  { transform: translate(5px, -5px) rotate(5deg) scale(1.02); opacity: 1; }
-  40%  { transform: translate(8px, 3px) rotate(-5deg) scale(1.04); opacity: 0.95; }
-  60%  { transform: translate(-5px, 5px) rotate(3deg) scale(1.02); opacity: 1; }
-  80%  { transform: translate(-8px, -3px) rotate(-3deg) scale(1.01); opacity: 0.92; }
-  100% { transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 0.9; }
+  0% {
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+    opacity: 0.9;
+  }
+
+  20% {
+    transform: translate(5px, -5px) rotate(5deg) scale(1.02);
+    opacity: 1;
+  }
+
+  40% {
+    transform: translate(8px, 3px) rotate(-5deg) scale(1.04);
+    opacity: 0.95;
+  }
+
+  60% {
+    transform: translate(-5px, 5px) rotate(3deg) scale(1.02);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translate(-8px, -3px) rotate(-3deg) scale(1.01);
+    opacity: 0.92;
+  }
+
+  100% {
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+    opacity: 0.9;
+  }
 }
 
+/* Panah fade in biasa */
 .arrow-animate {
-  animation: smooth-float 6s ease-in-out infinite;
-  animation-delay: 0.5s;
+  animation: fadeInUp 1.2s ease forwards, smooth-float 6s ease-in-out infinite;
+  animation-delay: 0s, 1.2s;
 }
 
+/* Dots fade in up lalu loop melayang */
 .dots-animate {
-  animation: floating-drift 10s ease-in-out infinite;
+  animation: fadeInUp 1.5s ease forwards, floating-drift 10s ease-in-out infinite;
+  animation-delay: 0s, 1.5s;
   will-change: transform, opacity;
 }
 
 @keyframes bounceStar {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-15px);
   }
@@ -89,6 +140,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -100,9 +152,12 @@
 
 /* Animasi untuk komponen 9 (Loncat) */
 @keyframes jump-animate {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -114,7 +169,8 @@
 
 .animate-marquee {
   animation: marquee 15s linear infinite;
-  animation-play-state: running; /* Pastikan selalu berjalan secara default */
+  animation-play-state: running;
+  /* Pastikan selalu berjalan secara default */
 }
 
 /* Kunci untuk fitur pause saat kursor diarahkan */
@@ -123,15 +179,20 @@
 }
 
 /* Pastikan setiap item memiliki lebar yang sama, tidak peduli berapa banyak */
-.animate-marquee > .flex-shrink-0 {
+.animate-marquee>.flex-shrink-0 {
   /* Set item untuk tumbuh dan memiliki lebar awal 20% */
   flex-grow: 1;
   flex-basis: 20%;
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } 
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .gradient-overlay-left {
@@ -139,9 +200,11 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 10%; /* Adjust the width as needed for the fade effect */
+  width: 10%;
+  /* Adjust the width as needed for the fade effect */
   background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
-  z-index: 10; /* Ensure the overlay is on top of the images */
+  z-index: 10;
+  /* Ensure the overlay is on top of the images */
 }
 
 .gradient-overlay-right {
@@ -149,7 +212,43 @@
   top: 0;
   right: 0;
   height: 100%;
-  width: 10%; /* Adjust the width as needed for the fade effect */
+  width: 10%;
+  /* Adjust the width as needed for the fade effect */
   background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
-  z-index: 10; /* Ensure the overlay is on top of the images */
+  z-index: 10;
+  /* Ensure the overlay is on top of the images */
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.fade-in-scale {
+  opacity: 0;
+  animation: fadeInScale 0.5s ease forwards;
 }
