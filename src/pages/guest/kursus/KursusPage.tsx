@@ -19,27 +19,24 @@ export default function KursusPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* ================= HEADER ================= */}
-      <div className="relative px-6 py-14 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden shadow-sm">
+
+      <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
         <BackgroundShapes />
 
-        {/* Konten Tengah */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-18 text-center sm:text-left relative z-10 animate-fadeIn">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 tracking-tight">
-            Jelajahi Kursus
-          </h1>
-          <p className="mt-3 text-sm sm:text-base text-gray-700">
-            <a href="/" className="hover:underline hover:text-indigo-600 transition-colors duration-200">
-              Beranda
-            </a>
+        {/* Konten tengah */}
+        <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Jelajahi Kursus</h1>
+          <p className="mt-2 text-sm sm:text-base text-gray-800">
+            <a href="/" className="hover:underline">Beranda</a>
             <span className="mx-1">&gt;</span>
-            <span className="text-purple-600 font-medium">Kursus</span>
+            <span className="text-purple-600">Kursus</span>
           </p>
         </div>
       </div>
 
       {/* ================= MAIN CONTENT ================= */}
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-        
+
         {/* Sidebar */}
         <div className="animate-slideInLeft">
           <SidebarFilter filters={filters} setFilters={setFilters} />
