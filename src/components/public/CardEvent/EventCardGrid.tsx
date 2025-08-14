@@ -19,7 +19,10 @@ type EventCardGridProps = {
 
 const EventCardGrid: React.FC<EventCardGridProps> = ({ events }) => {
     return (
-        <div className="w-full px-4 xl:px-8 md:px-20 sm:px-6 lg:px-30 max-w-screen-xl mx-auto mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="w-full px-4 xl:px-8 md:px-20 sm:px-6 lg:px-30 max-w-screen-xl mx-auto mt-12 
+                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6 
+                min-h-[60vh]">
+
             {events.map((event) => (
                 <Link key={event.id} to={`/event/${event.id}`}>
                     <Card className="relative flex flex-col justify-between border rounded-xl shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer p-0 overflow-hidden">

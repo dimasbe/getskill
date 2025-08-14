@@ -1,72 +1,106 @@
-// src/components/course/CourseList.tsx
-
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import CourseCard from '../kursus/CourseCard'
 import dummyCourses from '../../../data/dummyCourses'
 import type { Course } from '../../../types/Course'
 
 interface CourseListProps {
-  filters?: { // Menjadikan filters opsional
-    categories: string[]
-    priceMin: string
-    priceMax: string
-  }
-  page?: number // Menjadikan page opsional
-  setPage?: (page: number) => void // Menjadikan setPage opsional
-  limit?: number // Menambahkan properti limit
-  columns?: number // Menambahkan properti columns
+  filters: {
+    categories: string[];
+    priceMin: string;
+    priceMax: string;
+    search: string;
+  };
+  setFilters: React.Dispatch<React.SetStateAction<{
+    categories: string[];
+    priceMin: string;
+    priceMax: string;
+    search: string;
+  }>>;
+  page?: number;
+  setPage?: (page: number) => void;
+  limit?: number;
+  columns?: number;
 }
 
-const COURSES_PER_PAGE = 6
+const COURSES_PER_PAGE = 6;
 
 export default function CourseList({
   filters,
-  page = 1, // Memberikan nilai default
+  setFilters,
+  page = 1,
   setPage,
   limit,
-  columns = 3, // Memberikan nilai default
+  columns = 3,
 }: CourseListProps) {
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const category = params.get("category");
+    if (category) {
+      setFilters(prev => ({ ...prev, categories: [category] }));
+    }
+  }, [location.search, setFilters]);
+
   // Filtering logic
-  let filteredCourses = dummyCourses
+  let filteredCourses = dummyCourses;
+
   if (filters) {
     filteredCourses = dummyCourses.filter((course: Course) => {
-      const price = parseInt(course.price.replace('.', '')) || 0
-      const min = filters.priceMin ? parseInt(filters.priceMin) : 0
-      const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity
+      const price = parseInt(course.price.replace(/\./g, '')) || 0;
+      const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
+      const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
 
-      const categoryMatch =
-        filters.categories.length === 0 || filters.categories.includes(course.category)
-      const priceMatch = price >= min && price <= max
+      const matchCategory =
+        filters.categories.length === 0 ||
+        filters.categories.includes(course.category);
 
-      return categoryMatch && priceMatch
-    })
+      const matchPriceMin = price >= min;
+      const matchPriceMax = price <= max;
+
+      const matchSearch =
+        !filters.search?.trim() ||
+        course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+        course.author.toLowerCase().includes(filters.search.toLowerCase()) ||
+        course.category.toLowerCase().includes(filters.search.toLowerCase());
+
+      return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
+    });
   }
 
   // Apply limit if provided
-  const coursesToDisplay = limit ? filteredCourses.slice(0, limit) : filteredCourses
+  const coursesToDisplay = limit ? filteredCourses.slice(0, limit) : filteredCourses;
 
   // Pagination logic
-  const totalPages = Math.ceil(coursesToDisplay.length / COURSES_PER_PAGE)
-  const startIndex = (page - 1) * COURSES_PER_PAGE
-  const currentCourses = coursesToDisplay.slice(startIndex, startIndex + COURSES_PER_PAGE)
+  const totalPages = Math.ceil(coursesToDisplay.length / COURSES_PER_PAGE);
+  const startIndex = (page - 1) * COURSES_PER_PAGE;
+  const currentCourses = coursesToDisplay.slice(startIndex, startIndex + COURSES_PER_PAGE);
 
+  // Grid columns class
   const gridClass = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns} gap-5`;
-
 
   return (
     <div>
       {/* Course Cards */}
       <div className={gridClass}>
-        {currentCourses.map((course) => (
-          <CourseCard key={course.id} {...course} />
-        ))}
+        {currentCourses.length > 0 ? (
+          currentCourses.map((course) => (
+            <CourseCard key={course.id} {...course} />
+          ))
+        ) : (
+          <p className="text-center col-span-full text-gray-500">
+            Tidak ada kursus yang ditemukan
+          </p>
+        )}
       </div>
 
       {/* Pagination Buttons */}
-      {setPage && totalPages > 0 && (
+      {setPage && totalPages > 1 && (
         <div className="flex justify-center mt-20">
           <div className="flex gap-3 mb-10">
             {Array.from({ length: totalPages }).map((_, index) => {
-              const pageNumber = index + 1
+              const pageNumber = index + 1;
               return (
                 <button
                   key={pageNumber}
@@ -79,11 +113,11 @@ export default function CourseList({
                 >
                   {pageNumber}
                 </button>
-              )
+              );
             })}
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }

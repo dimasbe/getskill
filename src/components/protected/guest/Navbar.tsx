@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { HiSearch, HiMenu, HiX } from 'react-icons/hi';
+import dummyCourses from '../../../data/dummyCourses';
 import CategoryDropdown from '../../public/CategoryDropdown';
 
-
 type Course = {
-  id: number;
-  name: string;
-  url: string;
+  id: string;
+  title: string;
 };
 
 const navLinks = [
@@ -19,25 +18,35 @@ const navLinks = [
   { name: "FAQ", to: "/faq" },
 ];
 
-// Dummy data untuk search
-const dummyCourses: Course[] = [
-  { id: 1, name: "Belajar React JS", url: "/kursus/react" },
-  { id: 2, name: "Belajar Tailwind CSS", url: "/kursus/tailwind" },
-  { id: 3, name: "Kursus UI/UX Design", url: "/kursus/uiux" },
-  { id: 4, name: "Pelatihan Machine Learning", url: "/kursus/ml" },
-  { id: 5, name: "Workshop Digital Marketing", url: "/kursus/marketing" },
-];
-
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // State untuk search
+  // 🔹 Filter state (untuk kategori, harga, dan search)
+  const [filters, setFilters] = useState({
+    categories: [] as string[],
+    priceMin: "",
+    priceMax: "",
+    search: ""
+  });
+
+  // Search state
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Course[]>([]);
 
+  /** Sinkronkan searchTerm dengan query URL */
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchQuery = params.get("search") || "";
+    setSearchTerm(searchQuery);
+  }, [location.search]);
+
+  /** Scroll behavior */
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -54,17 +63,46 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Search filter
+  /** Update hasil suggestion ketika searchTerm berubah */
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setSearchResults([]);
     } else {
       const filtered = dummyCourses.filter(course =>
-        course.name.toLowerCase().includes(searchTerm.toLowerCase())
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        course.title.toLowerCase() !== searchTerm.toLowerCase()
       );
       setSearchResults(filtered);
     }
   }, [searchTerm]);
+
+  /** Reset ke /kursus tanpa query jika search dikosongkan */
+  useEffect(() => {
+    if (searchTerm.trim() === "" && location.pathname === "/kursus" && location.search.includes("search=")) {
+      navigate("/kursus", { replace: true });
+    }
+  }, [searchTerm, location.pathname, location.search, navigate]);
+
+  /** Klik hasil search */
+  const handleSearchClick = (keyword: string) => {
+    setSearchResults([]);
+    navigate(`/kursus?search=${encodeURIComponent(keyword)}`);
+    setFilters(prev => ({ ...prev, search: keyword }));
+  };
+
+  /** Tekan Enter untuk search langsung */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearchClick(searchTerm);
+    }
+  };
+
+  /** 🔹 Navigasi otomatis ke /kursus jika pilih kategori */
+  useEffect(() => {
+    if (filters.categories.length > 0) {
+      navigate(`/kursus?category=${encodeURIComponent(filters.categories[0])}`);
+    }
+  }, [filters.categories, navigate]);
 
   return (
     <nav
@@ -103,7 +141,7 @@ const Navbar = () => {
         {/* Search & Login */}
         <div className="flex items-center space-x-4 relative">
           <div className="hidden md:flex items-center border border-gray-300 rounded-full bg-white px-2 py-2 relative">
-            <CategoryDropdown />
+            <CategoryDropdown setFilters={setFilters} />
             <div className="h-6 border-l border-gray-200 mx-2" />
             <input
               type="text"
@@ -111,8 +149,12 @@ const Navbar = () => {
               className="py-1 px-2 w-40 text-sm font-semibold bg-transparent focus:outline-none placeholder-gray-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:opacity-90 transition">
+            <button
+              onClick={() => handleSearchClick(searchTerm)}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:opacity-90 transition"
+            >
               <HiSearch size={18} />
             </button>
 
@@ -120,13 +162,13 @@ const Navbar = () => {
             {searchResults.length > 0 && (
               <div className="absolute top-full mt-2 left-0 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50">
                 {searchResults.map((item) => (
-                  <Link
+                  <button
                     key={item.id}
-                    to={item.url}
-                    className="block px-4 py-2 text-sm hover:bg-purple-100"
+                    onClick={() => handleSearchClick(item.title)}
+                    className="w-full text-left block px-4 py-2 text-sm hover:bg-purple-100"
                   >
-                    {item.name}
-                  </Link>
+                    {item.title}
+                  </button>
                 ))}
               </div>
             )}
