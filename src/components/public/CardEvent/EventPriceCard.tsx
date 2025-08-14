@@ -4,25 +4,25 @@ import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 const paymentLogos = [
-    { name: "BRI", src: "/public/images/payments/bri.png", url: "https://bri.co.id" },
-    { name: "BNI", src: "/public/images/payments/bni.png", url: "https://bni.co.id" },
-    { name: "BCA", src: "/public/images/payments/bca.png", url: "https://www.bca.co.id" },
-    { name: "DANA", src: "/public/images/payments/dana.jpg", url: "https://www.dana.id" },
-    { name: "GOPAY", src: "/public/images/payments/gopay.png", url: "https://www.gopay.co.id" },
-    { name: "Mandiri", src: "/public/images/payments/mandiri.png", url: "https://bankmandiri.co.id" },
-    { name: "OVO", src: "/public/images/payments/ovo.png", url: "https://www.ovo.id" },
-    { name: "VISA", src: "/public/images/payments/visa.png", url: "https://www.visa.co.id" },
-    { name: "Mastercard", src: "/public/images/payments/mastercard.jpeg", url: "https://www.mastercard.co.id" },
-    { name: "Alfamart", src: "/public/images/payments/alfamart.jpg", url: "https://www.alfamart.co.id" },
-    { name: "Indomaret", src: "/public/images/payments/indomaret.jpg", url: "https://www.indomaret.co.id" },
-    { name: "BJB", src: "/public/images/payments/bank bjb.png", url: "https://www.bankbjb.co.id" },
-    { name: "Astra Pay", src: "/public/images/payments/astra pay.jpeg", url: "https://www.astrapay.com" },
-    { name: "BSI", src: "/public/images/payments/bnk bsi.jpg", url: "https://www.bankbsi.co.id" },
-    { name: "JCB", src: "/public/images/payments/jcb.jpeg", url: "https://www.global.jcb/en" },
-    { name: "Link Aja", src: "/public/images/payments/link aja.jpg", url: "https://www.linkaja.id" },
-    { name: "Permata Bank", src: "/public/images/payments/permata bank.jpg", url: "https://www.permatabank.com" },
-    { name: "Shopee Pay", src: "/public/images/payments/shopee pay.jpg", url: "https://shopeepay.co.id" },
-    { name: "QRIS", src: "/public/images/payments/qris.jpg", url: "https://qris.id" },
+    { name: "BRI", src: "/public/images/payments/bri.png" },
+    { name: "BNI", src: "/public/images/payments/bni.png" },
+    { name: "BCA", src: "/public/images/payments/bca.png" },
+    { name: "DANA", src: "/public/images/payments/dana.jpg" },
+    { name: "GOPAY", src: "/public/images/payments/gopay.png" },
+    { name: "Mandiri", src: "/public/images/payments/mandiri.png" },
+    { name: "OVO", src: "/public/images/payments/ovo.png" },
+    { name: "VISA", src: "/public/images/payments/visa.png" },
+    { name: "Mastercard", src: "/public/images/payments/mastercard.jpeg" },
+    { name: "Alfamart", src: "/public/images/payments/alfamart.jpg" },
+    { name: "Indomaret", src: "/public/images/payments/indomaret.jpg" },
+    { name: "BJB", src: "/public/images/payments/bank bjb.png" },
+    { name: "Astra Pay", src: "/public/images/payments/astra pay.jpeg" },
+    { name: "BSI", src: "/public/images/payments/bnk bsi.jpg" },
+    { name: "JCB", src: "/public/images/payments/jcb.jpeg" },
+    { name: "Link Aja", src: "/public/images/payments/link aja.jpg" },
+    { name: "Permata Bank", src: "/public/images/payments/permata bank.jpg" },
+    { name: "Shopee Pay", src: "/public/images/payments/shopee pay.jpg" },
+    { name: "QRIS", src: "/public/images/payments/qris.jpg" },
 ];
 
 
@@ -89,25 +89,20 @@ const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
                 <p className="text-lg font-semibold">Metode Pembayaran:</p>
                 <div className="flex flex-wrap gap-3 mt-1">
                     {paymentLogos.map((logo) => (
-                        <a
+                        <div
                             key={logo.name}
-                            href={logo.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="border border-gray-300 rounded p-1 flex items-center justify-center w-10 h-8 
-                       transition-all duration-300 ease-in-out transform hover:scale-110 hover:shadow-md hover:border-purple-400"
+                transition-all duration-300 ease-in-out transform hover:scale-110 hover:shadow-md hover:border-purple-400"
                         >
                             <img
                                 src={logo.src}
                                 alt={logo.name}
                                 className="max-h-full max-w-full object-contain"
                             />
-                        </a>
+                        </div>
                     ))}
                 </div>
-
             </div>
-
 
             {/* Share Section */}
             <div>

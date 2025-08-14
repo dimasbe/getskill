@@ -6,27 +6,49 @@ import SortDropdown from '../../../components/public/SortDropdown';
 import events from "../../../data/events";
 
 const Event: React.FC = () => {
-
+    const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const eventsPerPage = 8; // misalnya 3 event per halaman
+    const [sortOption, setSortOption] = useState("terbaru");
 
-    // Hitung indeks untuk slicing array
+    const eventsPerPage = 8;
+
+    // Filter berdasarkan pencarian
+    const filteredEvents = events
+        .filter((event) =>
+            event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            event.speakerName.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .slice() // bikin salinan supaya nggak mutasi array asli
+        .sort((a, b) => {
+            if (sortOption === "terbaru") {
+                return new Date(b.date).getTime() - new Date(a.date).getTime();
+            } else {
+                return new Date(a.date).getTime() - new Date(b.date).getTime();
+            }
+        });
+
+
+    // 🔹 Sorting berdasarkan pilihan dropdown
+    if (sortOption === "terbaru") {
+        filteredEvents.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (sortOption === "terlama") {
+        filteredEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    }
+
+    // Pagination setelah filter + sort
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-    const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+    const currentEvents = filteredEvents.slice(indexOfFirstEvent, indexOfLastEvent);
 
-    // Hitung total halaman
-    const totalPages = Math.ceil(events.length / eventsPerPage);
-
+    const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
     return (
         <div className="min-h-screen bg-white">
             {/* Header */}
             <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
                 <BackgroundShapes />
-
-                {/* Konten tengah */}
-                <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
+                <div className="max-w-6xl mx-auto px-4 text-center sm:text-left relative z-10">
                     <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Event</h1>
                     <p className="mt-2 text-sm sm:text-base text-gray-800">
                         <a href="/" className="hover:underline">Beranda</a>
@@ -52,47 +74,53 @@ const Event: React.FC = () => {
             {/* Search & Filter */}
             <div className="flex flex-col md:flex-row sm:flex-row justify-center items-center gap-4 mt-8 px-4">
                 {/* Search Input */}
-                <div className="relative w-full md:w-1/3  transition-all duration-300 ease-in-out hover:scale-[1.02]">
+                <div className="relative w-full md:w-1/3 transition-all duration-300 ease-in-out hover:scale-[1.02]">
                     <input
                         type="text"
                         placeholder="Cari Event"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
                         className="w-full px-4 py-2 pr-10 border border-gray-300 hover:border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
                     />
                     <HiSearch
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 transition-colors duration-300 group-hover:text-purple-500"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                         size={18}
                     />
                 </div>
 
                 {/* Sort Dropdown */}
-                <SortDropdown />
+                <SortDropdown selected={sortOption} onChange={setSortOption} />
             </div>
-
 
             {/* Event Grid */}
             <EventCardGrid events={currentEvents} />
 
             {/* Pagination */}
-            <div className="flex justify-center mt-20">
-                <div className="flex gap-3 mb-10">
-                    {Array.from({ length: totalPages }).map((_, index) => {
-                        const page = index + 1;
-                        return (
-                            <button
-                                key={page}
-                                onClick={() => setCurrentPage(page)}
-                                className={`w-8 h-8 rounded-full text-sm font-medium transform transition-all duration-300 ease-in-out
-                        ${page === currentPage
-                                        ? 'bg-purple-600 text-white scale-110 shadow-md'
-                                        : 'bg-gray-200 text-gray-700 hover:bg-purple-100 hover:scale-105 hover:shadow-md'
-                                    }`}
-                            >
-                                {page}
-                            </button>
-                        );
-                    })}
+            {totalPages > 1 && (
+                <div className="flex justify-center mt-20">
+                    <div className="flex gap-3 mb-10">
+                        {Array.from({ length: totalPages }).map((_, index) => {
+                            const page = index + 1;
+                            return (
+                                <button
+                                    key={page}
+                                    onClick={() => setCurrentPage(page)}
+                                    className={`w-8 h-8 rounded-full text-sm font-medium transform transition-all duration-300 ease-in-out
+                                        ${page === currentPage
+                                            ? 'bg-purple-600 text-white scale-110 shadow-md'
+                                            : 'bg-gray-200 text-gray-700 hover:bg-purple-100 hover:scale-105 hover:shadow-md'
+                                        }`}
+                                >
+                                    {page}
+                                </button>
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
