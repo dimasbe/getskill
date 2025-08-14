@@ -35,7 +35,6 @@ const benefits = [
 
 const icons = [mitraIcon, businessIcon, akreditasiIcon, kerjaIcon];
 
-// Warna background berbeda untuk tiap ikon
 const bgColors = [
   "bg-indigo-100",
   "bg-green-100",
@@ -52,26 +51,27 @@ const numberColors = [
 
 const IndustrialClassBenefits: React.FC = () => {
   return (
-    <section className="bg-white py-12 px-4 md:px-16">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10">
+    <section className="bg-white py-10 sm:py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
+
         {/* Left Content */}
-        <div className="md:w-1/2 text-left pl-6 md:pl-12">
-          <span className="text-xs font-semibold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">
+        <div className="text-left md:pr-6 lg:pr-1">
+          <span className="inline-block text-xs sm:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full mb-3">
             Manfaat Sekolah
           </span>
-          <h2 className="text-xl font-bold text-gray-900 mt-4 leading-snug">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900 leading-snug mb-4">
             Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.
           </h2>
 
-          <ul className="mt-6 space-y-6">
+          <ul className="mt-4 space-y-4 sm:space-y-6">
             {benefits.map((benefit, index) => (
-              <li key={benefit.id} className="flex items-start space-x-4">
+              <li key={benefit.id} className="flex items-start gap-3 sm:gap-4">
                 <div
-                  className={`relative w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0 ${bgColors[index]}`}
+                  className={`relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full flex-shrink-0 ${bgColors[index]}`}
                 >
-                  {/* Nomor di dalam ikon dengan posisi lebih masuk */}
+                  {/* Nomor */}
                   <span
-                    className={`absolute bottom-[-0.2rem] left-[-0.2rem] text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full ${numberColors[index]}`}
+                    className={`absolute bottom-[-0.2rem] left-[-0.2rem] text-white text-[8px] sm:text-[10px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center rounded-full ${numberColors[index]}`}
                   >
                     {index + 1}
                   </span>
@@ -79,12 +79,16 @@ const IndustrialClassBenefits: React.FC = () => {
                   <img
                     src={icons[index]}
                     alt={benefit.title}
-                    className="w-5 h-5 object-contain"
+                    className="w-4 h-4 sm:w-5 sm:h-5 object-contain"
                   />
                 </div>
                 <div className="text-left">
-                  <h4 className="font-bold text-sm text-gray-800">{benefit.title}</h4>
-                  <p className="text-gray-600 text-xs">{benefit.description}</p>
+                  <h4 className="font-bold text-gray-800 text-sm sm:text-sm">
+                    {benefit.title}
+                  </h4>
+                  <p className="text-gray-600 text-xs sm:text-xs leading-relaxed">
+                    {benefit.description}
+                  </p>
                 </div>
               </li>
             ))}
@@ -92,11 +96,11 @@ const IndustrialClassBenefits: React.FC = () => {
         </div>
 
         {/* Right Image */}
-        <div className="md:w-1/2 flex justify-center">
+        <div className="flex justify-center md:justify-end md:-translate-x-4 lg:-translate-x-15">
           <img
             src={kelasIndustriImg}
             alt="Kelas Industri"
-            className="w-full max-w-lg object-cover"
+            className="w-[240px] sm:w-[300px] md:w-[360px] lg:w-[440px] xl:w-[480px] h-auto object-contain"
           />
         </div>
       </div>
