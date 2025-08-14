@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import CourseCard from '../kursus/CourseCard'
-import dummyCourses from '../../../data/dummyCourses'
-import type { Course } from '../../../types/Course'
+import CourseCard from '../kursus/CourseCard';
+import dummyCourses from '../../../data/dummyCourses';
+import type { Course } from '../../../types/Course';
 
 interface CourseListProps {
   filters: {
@@ -11,12 +9,6 @@ interface CourseListProps {
     priceMax: string;
     search: string;
   };
-  setFilters: React.Dispatch<React.SetStateAction<{
-    categories: string[];
-    priceMin: string;
-    priceMax: string;
-    search: string;
-  }>>;
   page?: number;
   setPage?: (page: number) => void;
   limit?: number;
@@ -27,47 +19,34 @@ const COURSES_PER_PAGE = 6;
 
 export default function CourseList({
   filters,
-  setFilters,
   page = 1,
   setPage,
   limit,
   columns = 3,
 }: CourseListProps) {
-  const location = useLocation();
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const category = params.get("category");
-    if (category) {
-      setFilters(prev => ({ ...prev, categories: [category] }));
-    }
-  }, [location.search, setFilters]);
-
   // Filtering logic
   let filteredCourses = dummyCourses;
 
-  if (filters) {
-    filteredCourses = dummyCourses.filter((course: Course) => {
-      const price = parseInt(course.price.replace(/\./g, '')) || 0;
-      const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
-      const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
+  filteredCourses = dummyCourses.filter((course: Course) => {
+    const price = parseInt(course.price.replace(/\./g, '')) || 0;
+    const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
+    const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
 
-      const matchCategory =
-        filters.categories.length === 0 ||
-        filters.categories.includes(course.category);
+    const matchCategory =
+      filters.categories.length === 0 ||
+      filters.categories.includes(course.category);
 
-      const matchPriceMin = price >= min;
-      const matchPriceMax = price <= max;
+    const matchPriceMin = price >= min;
+    const matchPriceMax = price <= max;
 
-      const matchSearch =
-        !filters.search?.trim() ||
-        course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-        course.author.toLowerCase().includes(filters.search.toLowerCase()) ||
-        course.category.toLowerCase().includes(filters.search.toLowerCase());
+    const matchSearch =
+      !filters.search.trim() ||
+      course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+      course.author.toLowerCase().includes(filters.search.toLowerCase()) ||
+      course.category.toLowerCase().includes(filters.search.toLowerCase());
 
-      return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
-    });
-  }
+    return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
+  });
 
   // Apply limit if provided
   const coursesToDisplay = limit ? filteredCourses.slice(0, limit) : filteredCourses;
