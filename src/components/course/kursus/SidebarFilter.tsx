@@ -39,17 +39,19 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
         </button>
         {showCategories && (
           <div className="space-y-2">
-            {['Github', 'Pemrograman Website', 'Pemrograman Android', 'Pemrograman Desktop'].map((category) => (
-              <label key={category} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="accent-yellow-400 w-4 h-4 rounded"
-                  checked={filters.categories.includes(category)}
-                  onChange={() => handleCheckbox(category)}
-                />
-                <span className="text-sm text-gray-600">{category}</span>
-              </label>
-            ))}
+            {['Github', 'Pemrograman Website', 'Pemrograman Android', 'Pemrograman Desktop'].map((category) => {
+              return (
+                <label key={category} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="accent-yellow-400 w-4 h-4 rounded"
+                    checked={filters.categories.includes(category)}
+                    onChange={() => handleCheckbox(category)}
+                  />
+                  <span className="text-sm text-gray-600">{category}</span>
+                </label>
+              );
+            })}
           </div>
         )}
       </div>
