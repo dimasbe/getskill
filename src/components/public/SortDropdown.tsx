@@ -21,7 +21,7 @@ const SortDropdown = () => {
     };
 
     return (
-        <div className="relative w-full md:w-1/6 transition-all duration-300 ease-in-out hover:scale-[1.02] z-30">
+        <div className="relative w-full md:w-1/3 transition-all duration-300 ease-in-out hover:scale-[1.02] z-30">
             {/* Toggle Button */}
             <div
                 onClick={() => setIsOpen(!isOpen)}
