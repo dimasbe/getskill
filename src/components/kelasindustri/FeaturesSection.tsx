@@ -1,45 +1,63 @@
-import React from 'react';
-import komponen1 from '../../assets/kelasindustri/Icon1.png'; // Pastikan path ini benar
-import komponen2 from '../../assets/kelasindustri/Icon2.png'; // Pastikan path ini benar
-import komponen3 from '../../assets/kelasindustri/Icon3.png'; // Pastikan path ini benar
-import komponen4 from '../../assets/kelasindustri/Icon4.png'; // Pastikan path ini benar
+import React from "react";
+import { motion } from "framer-motion";
+import komponen1 from "../../assets/kelasindustri/Icon1.png";
+import komponen2 from "../../assets/kelasindustri/Icon2.png";
+import komponen3 from "../../assets/kelasindustri/Icon3.png";
+import komponen4 from "../../assets/kelasindustri/Icon4.png";
 
-// Komponen Feature Card
 interface FeatureCardProps {
-  iconSrc: string; // Tipe ikon adalah string untuk path gambar
-  altText: string; // AltText untuk deskripsi gambar
+  iconSrc: string;
+  altText: string;
   title: string;
   description: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ iconSrc, altText, title, description }) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  iconSrc,
+  altText,
+  title,
+  description,
+}) => {
   return (
-    <div
-      className="bg-white w-full mx-auto px-6 py-10 rounded-xl 
-                 shadow-lg border border-gray-200 
-                 hover:border-gray-300 hover:shadow-xl 
-                 transition-all duration-300 ease-in-out 
-                 text-center flex flex-col items-center 
-                 cursor-pointer hover:scale-105 hover:-translate-y-2"
+    <motion.div
+      className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-200 text-center flex flex-col items-center cursor-pointer h-full w-full max-w-[180px] sm:max-w-none mx-auto"
+      whileHover={{
+        scale: 1.1,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 500, 
+        damping: 15, 
+      }}
     >
       <div className="mb-4">
-        <img
+        <motion.img
           src={iconSrc}
           alt={altText}
-          className="w-14 h-14 object-contain"
+          className="w-10 h-10 object-contain"
+          whileHover={{
+            y: -5, 
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 10,
+          }}
         />
       </div>
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
-      <p className="text-sm text-gray-600">{description}</p>
-    </div>
+      <h3 className="text-md font-bold text-gray-800 mb-2">{title}</h3>
+      <p className="text-[0.65rem] text-gray-600 leading-snug px-2">
+        {description}
+      </p>
+    </motion.div>
   );
 };
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="py-14 -mt-5 bg-white">
-      <div className="max-w-5xl mx-auto px-">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 -mt-20 relative z-10">
+    <section className="relative z-20 -mt-12 pb-16">
+      <div className="max-w-5xl mx-auto px-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
           <FeatureCard
             iconSrc={komponen1}
             altText="Belajar Dari Ahli"
@@ -55,7 +73,7 @@ const FeaturesSection: React.FC = () => {
           <FeatureCard
             iconSrc={komponen3}
             altText="Program Sertifikat"
-            title="kelas"
+            title="Kelas"
             description="Ada 43 Kelas Yang Terdaftar Pada Kelas Industri."
           />
           <FeatureCard
@@ -69,6 +87,5 @@ const FeaturesSection: React.FC = () => {
     </section>
   );
 };
-
 
 export default FeaturesSection;
