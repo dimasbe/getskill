@@ -50,9 +50,9 @@ const Event: React.FC = () => {
             </div>
 
             {/* Search & Filter */}
-            <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-8 px-4">
+            <div className="flex flex-col md:flex-row sm:flex-row justify-center items-center gap-4 mt-8 px-4">
                 {/* Search Input */}
-                <div className="relative w-full md:w-1/3 transition-all duration-300 ease-in-out hover:scale-[1.02]">
+                <div className="relative w-full md:w-1/3  transition-all duration-300 ease-in-out hover:scale-[1.02]">
                     <input
                         type="text"
                         placeholder="Cari Event"
