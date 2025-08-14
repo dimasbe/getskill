@@ -25,7 +25,13 @@ export default function CourseDetail() {
           <CourseMain courseData={courseData} />
         </div>
         <div className="lg:col-span-1">
-          <CourseSidebar totalModul={totalModul} totalKuis={totalKuis} />
+          <CourseSidebar
+  totalModul={totalModul}
+  totalKuis={totalKuis}
+  price={courseData.price || "0"}
+  isFree={courseData.isFree || false}
+/>
+
         </div>
       </div>
     </div>

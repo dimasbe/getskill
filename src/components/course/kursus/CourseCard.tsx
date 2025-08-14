@@ -1,16 +1,16 @@
-// src/components/course/CourseCard.tsx
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { formatRupiah } from "../../../utils/formatPrice";
 
 interface CourseCardProps {
-  id: string
-  image: string
-  category: string
-  title: string
-  author: string
-  price: string
-  rating?: number
-  isFree?: boolean
+  id: string;
+  image: string;
+  category: string;
+  title: string;
+  author: string;
+  price: string;
+  rating?: number;
+  isFree?: boolean;
 }
 
 export default function CourseCard({
@@ -22,7 +22,7 @@ export default function CourseCard({
   rating = 0,
   isFree = false,
 }: CourseCardProps) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -34,14 +34,13 @@ export default function CourseCard({
       onClick={() => navigate(`/kursus/${id}`)}
     >
       {/* Gambar */}
-<div className="relative h-40 w-full overflow-hidden">
-  <img
-    src={`/images/${image}`}
-    alt={title}
-    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-  />
-
-</div>
+      <div className="relative h-40 w-full overflow-hidden">
+        <img
+          src={`/images/${image}`}
+          alt={title}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+      </div>
 
       {/* Konten */}
       <div className="p-4 flex flex-col flex-grow text-left">
@@ -59,10 +58,14 @@ export default function CourseCard({
         </div>
 
         {/* Harga */}
-        <p className="text-blue-600 font-bold text-lg mt-auto">
-          {isFree ? 'Gratis' : `Rp ${price}`}
+        <p
+          className={`font-bold text-lg mt-auto ${
+            isFree ? "text-yellow-500" : "text-green-600"
+          }`}
+        >
+          {isFree ? "Gratis" : formatRupiah(price)}
         </p>
       </div>
     </motion.div>
-  )
+  );
 }

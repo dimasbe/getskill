@@ -16,6 +16,7 @@ import AuthLayout from "./route/AuthLayout";
 import ForgotPassword from "../pages/guest/auth/forgotpassword";
 import UpdatePassword from '../pages/guest/auth/updatepassword';
 import DetailBerita from "../pages/guest/berita/DetailBerita";
+import PaymentPage from "../components/payment/PaymentPage";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
 
           <Route path="/kursus" element={<Kursus />} />
           <Route path="/kursus/:id" element={<CourseDetail />} />
+          <Route path="/payment" element={<PaymentPage />} />
 
           <Route path="/event" element={<Event />} />
           <Route path="/event/:id" element={<DetailEvent />} />

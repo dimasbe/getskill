@@ -1,11 +1,50 @@
-import { FaTag, FaBook, FaQuestionCircle, FaInfinity, FaCertificate, FaFacebookF, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import {
+  FaTag,
+  FaBook,
+  FaQuestionCircle,
+  FaInfinity,
+  FaCertificate,
+  FaFacebookF,
+  FaTwitter,
+  FaWhatsapp
+} from "react-icons/fa";
 
 interface Props {
   totalModul: number;
   totalKuis: number;
+  price: string;
+  isFree?: boolean;
 }
 
-export default function CourseSidebar({ totalModul, totalKuis }: Props) {
+export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: Props) {
+  const navigate = useNavigate();
+
+  const formatRupiah = (value: string | number) => {
+    if (typeof value === "string") {
+      value = value.replace(/\./g, "");
+    }
+    return Number(value).toLocaleString("id-ID");
+  };
+
+  const handleBuyNow = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/payment", {
+        state: {
+          course: {
+            price,
+            isFree,
+            id: window.location.pathname.split("/").pop() || "",
+            title: document.title
+          }
+        }
+      });
+    }
+  };
+
   return (
     <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl sticky top-6 space-y-6 border border-gray-100">
       {/* Harga */}
@@ -13,11 +52,20 @@ export default function CourseSidebar({ totalModul, totalKuis }: Props) {
         <div className="flex items-center justify-center gap-2 text-black-700 font-semibold">
           <FaTag size={18} /> <span>Harga Kursus</span>
         </div>
-        <p className="text-3xl font-extrabold text-green-800 mt-1">Rp 250.000</p>
+        <p
+          className={`font-bold text-lg mt-auto ${
+            isFree ? "text-yellow-500" : "text-green-600"
+          }`}
+        >
+          {isFree ? "Gratis" : `Rp ${formatRupiah(price)}`}
+        </p>
       </div>
 
       {/* Tombol */}
-      <button className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300">
+      <button
+        onClick={handleBuyNow}
+        className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
+      >
         Beli Sekarang →
       </button>
 
@@ -35,7 +83,8 @@ export default function CourseSidebar({ totalModul, totalKuis }: Props) {
             <FaInfinity className="text-black-600" /> <span>Akses penuh seumur hidup</span>
           </li>
           <li className="flex items-center gap-3">
-            <FaCertificate className="text-black-600" /> <span>Sertifikat penyelesaian</span>
+            <FaCertificate className="text-black-600" />{" "}
+            <span>Sertifikat penyelesaian</span>
           </li>
         </ul>
       </div>
@@ -44,7 +93,26 @@ export default function CourseSidebar({ totalModul, totalKuis }: Props) {
       <div>
         <h4 className="font-semibold text-gray-700 mb-3 text-left">Metode Pembayaran:</h4>
         <div className="flex flex-wrap justify-center gap-3">
-          {["bri.png", "bca.png", "gopay.png", "ovo.png", "mastercard.jpeg"].map((img, i) => (
+          {[
+            "bri.png",
+            "bca.png",
+            "gopay.png",
+            "ovo.png",
+            "mastercard.jpeg",
+            "alfamart.jpg",
+            "astra pay.jpeg",
+            "bank bjb.png",
+            "bnk bsi.jpg",
+            "dana.jpg",
+            "indomaret.jpg",
+            "jcb.jpeg",
+            "link aja.jpg",
+            "mandiri.png",
+            "permata bank.jpg",
+            "qris.jpg",
+            "shopee pay.jpg",
+            "visa.png"
+          ].map((img, i) => (
             <img
               key={i}
               src={`/images/payments/${img}`}
@@ -57,7 +125,9 @@ export default function CourseSidebar({ totalModul, totalKuis }: Props) {
 
       {/* Share */}
       <div>
-        <h4 className="font-semibold text-gray-700 mb-3 text-left">Bagikan kursus ini:</h4>
+        <h4 className="font-semibold text-gray-700 mb-3 text-left">
+          Bagikan kursus ini:
+        </h4>
         <div className="flex justify-center gap-3">
           <a
             href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
