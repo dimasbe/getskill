@@ -1,143 +1,245 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
-import { newsArticles } from "../../../data/newsData";
+import { newsArticles } from "../../../data/newsData"; // Pastikan Anda mengimpor tipe NewsArticle jika digunakan di NewsCard
 import RelatedNews from "../../../components/public/CardNews/RelatedNews";
 import logoGetskill from '../../../assets/logo/landscape.png';
 
-const DetailBerita: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const berita = newsArticles.find((item) => item.id === id);
+// --- Komponen Skeleton Detail Berita ---
+const SkeletonDetailBerita: React.FC = () => {
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8 animate-pulse">
+      {/* Skeleton untuk Konten utama */}
+      <div className="lg:col-span-3">
+        <div className="bg-gray-200 h-[350px] w-full rounded-lg shadow-md mb-4"></div> {/* Skeleton Gambar */}
+        
+        <div className="flex items-center gap-2 mt-4 text-sm">
+          <div className="bg-gray-200 h-5 w-5 rounded-full"></div> {/* Skeleton Icon */}
+          <div className="bg-gray-200 h-4 w-24 rounded"></div> {/* Skeleton Tanggal */}
+        </div>
+        
+        <div className="bg-gray-200 h-8 w-3/4 mt-2 mb-4 rounded"></div> {/* Skeleton Judul */}
+        
+        <div className="space-y-3">
+          <div className="bg-gray-200 h-4 w-full rounded"></div>
+          <div className="bg-gray-200 h-4 w-full rounded"></div>
+          <div className="bg-gray-200 h-4 w-11/12 rounded"></div>
+          <div className="bg-gray-200 h-4 w-full rounded"></div>
+          <div className="bg-gray-200 h-4 w-10/12 rounded"></div>
+        </div>
+      </div>
 
-    if (!berita) {
-        return (
-            <div className="text-center py-20 text-gray-500">Berita tidak ditemukan.</div>
-        );
-    }
-
-    const beritaTerkait = newsArticles
-        .filter((item) => item.category === berita.category && item.id !== id)
-        .slice(0, 5);
-
-    return (
-        <div className="min-h-screen bg-white">
-            {/* Header */}
-            <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
-                <BackgroundShapes />
-                <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Detail Berita</h1>
-                    <p className="mt-2 text-sm sm:text-base text-gray-800">
-                        <Link to="/" className="hover:underline">Beranda</Link>
-                        <span className="mx-1">&gt;</span>
-                        <Link to="/berita" className="hover:underline">Berita</Link>
-                        <span className="mx-1">&gt;</span>
-                        <span className="text-purple-600">{berita.title}</span>
-                    </p>
-                </div>
-            </div>
-
-            {/* Konten utama dan sidebar */}
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-                {/* Konten utama */}
-                <div className="lg:col-span-3">
-                    <div className="relative rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer">
-                        <img
-                            src={berita.image}
-                            alt={berita.title}
-                            className="w-full h-full object-cover"
-                        />
-                        {/* Overlay ungu gradasi, selalu nyala */}
-                        <div className="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-t from-purple-900/80 via-purple-700/10 to-transparent" />
-
-                        {/* Watermark bawah */}
-                        <div className="absolute bottom-0 left-2 right-2 flex items-center justify-between rounded-lg px-6 py-1 select-none pointer-events-none text-white text-sm font-semibold">
-                            {/* Social Icons kiri */}
-                            <div className="flex space-x-3 text-white">
-                                <a href="https://instagram.com/getskill" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-purple-400 transition-colors">
-                                    <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 2A5.75 5.75 0 002 7.75v8.5A5.75 5.75 0 007.75 22h8.5A5.75 5.75 0 0022 16.25v-8.5A5.75 5.75 0 0016.25 2h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm6.5-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" /></svg>
-                                </a>
-                                <a href="https://facebook.com/getskill" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-purple-400 transition-colors">
-                                    <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.87v-7h-3v-3h3v-2.3c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 1-2 2v2.3h3.4l-.5 3h-2.9v7A10 10 0 0022 12z" /></svg>
-                                </a>
-                                <a href="https://twitter.com/getskill" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="hover:text-purple-400 transition-colors">
-                                    <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14.86 4.48 4.48 0 001.96-2.48 9.14 9.14 0 01-2.83 1.08 4.52 4.52 0 00-7.71 4.12A12.79 12.79 0 013 4.16a4.52 4.52 0 001.4 6.03 4.44 4.44 0 01-2.05-.57v.06a4.52 4.52 0 003.63 4.44 4.52 4.52 0 01-2.04.08 4.52 4.52 0 004.22 3.14 9.06 9.06 0 01-5.6 1.93A9.07 9.07 0 012 18.13a12.73 12.73 0 006.92 2.03c8.3 0 12.85-6.9 12.85-12.86 0-.2 0-.42-.02-.63A9.22 9.22 0 0023 3z" /></svg>
-                                </a>
-                                <div>
-                                    @getskill
-                                </div>
-                            </div>
-
-                            {/* Logo tengah dengan background putih bulat */}
-                            <div className="bg-white rounded-full p-1 shadow-md inline-block" style={{ transform: 'translateX(-35px)' }}>
-                                <img
-                                    src={logoGetskill}
-                                    alt="GetSkill Logo"
-                                    className="w-18 h-4 object-contain rounded-full"
-                                />
-                            </div>
-
-                            {/* Text kanan */}
-                            <div>getskill.id</div>
+      {/* Skeleton untuk Sidebar */}
+      <div className="lg:col-span-1">
+        <div className="relative mb-6">
+          <div className="bg-gray-200 h-10 w-full rounded-lg"></div> {/* Skeleton Search Input */}
+        </div>
+        {/* Skeleton untuk Berita Terkait */}
+        <div className="mt-8"> {/* Adjusted margin for spacing from search bar */}
+            <div className="bg-gray-200 h-6 w-2/3 mb-4 rounded"></div> {/* Skeleton judul "Berita Terkait" */}
+            <div className="space-y-4">
+                {[...Array(3)].map((_, idx) => ( // Tampilkan 3 skeleton untuk berita terkait
+                    <div key={idx} className="flex items-center space-x-3">
+                        <div className="bg-gray-200 h-16 w-16 rounded-lg"></div> {/* Skeleton Gambar Kecil */}
+                        <div className="flex-1 space-y-2">
+                            <div className="bg-gray-200 h-4 w-full rounded"></div> {/* Skeleton Judul Berita Terkait */}
+                            <div className="bg-gray-200 h-3 w-5/6 rounded"></div> {/* Skeleton Tanggal Berita Terkait */}
                         </div>
                     </div>
-
-                    <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-purple-500"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-7H3v7a2 2 0 002 2z"
-                            />
-                        </svg>
-                        {berita.date}
-                    </div>
-
-                    {/* Judul di bawah tanggal, rata kiri */}
-                    <h2 className="mt-2 text-2xl font-extrabold text-gray-900 text-left">{berita.title}</h2>
-
-                    <div className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-justify">
-                        {berita.content}
-                    </div>
-                </div>
-
-                {/* Sidebar */}
-                <div>
-                    {/* Search (belum terhubung) */}
-                    <div className="relative mb-6">
-                        <input
-                            type="text"
-                            placeholder="Cari Berita"
-                            className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 placeholder-gray-400"
-                        />
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-purple-500 absolute right-3 top-2.5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
-                            />
-                        </svg>
-                    </div>
-
-                    {/* Related news */}
-                    <RelatedNews relatedArticles={beritaTerkait} />
-                </div>
+                ))}
             </div>
         </div>
+      </div>
+    </div>
+  );
+};
+// --- Akhir Komponen Skeleton Detail Berita ---
+
+
+const DetailBerita: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [berita, setBerita] = useState<any>(null); // State untuk menyimpan data berita
+  const [isLoading, setIsLoading] = useState(true); // State untuk loading
+
+  useEffect(() => {
+    setIsLoading(true);
+    // Simulasikan fetching data
+    const timer = setTimeout(() => {
+      const foundBerita = newsArticles.find((item) => item.id === id);
+      setBerita(foundBerita);
+      setIsLoading(false);
+    }, 1500); // Durasi loading
+    
+    return () => clearTimeout(timer);
+  }, [id]); // Dependensi ID agar memuat ulang saat ID berubah
+
+  // Hook untuk menyimpan dan mengembalikan posisi scroll
+  useEffect(() => {
+    const savedScrollY = localStorage.getItem('detailBeritaScrollPosition');
+    if (savedScrollY) {
+      window.scrollTo(0, parseInt(savedScrollY));
+    }
+
+    const handleBeforeUnload = () => {
+      localStorage.setItem('detailBeritaScrollPosition', window.scrollY.toString());
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []); // [] agar hanya dijalankan sekali saat komponen mount
+
+  // Jika berita tidak ditemukan setelah loading selesai
+  if (!isLoading && !berita) {
+    return (
+      <div className="text-center py-20 text-gray-500">Berita tidak ditemukan.</div>
     );
+  }
+
+  // Jika masih loading atau berita belum ditemukan (sebelum loading selesai)
+  // Render skeleton atau pesan default jika berita null
+  if (isLoading || !berita) {
+    return (
+      <div className="min-h-screen bg-white pb-20">
+        <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
+            <BackgroundShapes />
+            {/* Header Skeleton */}
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center sm:text-left relative z-10 animate-pulse">
+                <div className="bg-gray-200 h-8 w-40 mb-2 mx-auto sm:mx-0 rounded"></div>
+                <div className="bg-gray-200 h-6 w-60 mx-auto sm:mx-0 rounded"></div>
+            </div>
+        </div>
+        <SkeletonDetailBerita />
+      </div>
+    );
+  }
+
+  // Hitung berita terkait setelah data berita utama dimuat
+  const beritaTerkait = newsArticles
+    .filter((item) => item.category === berita.category && item.id !== id)
+    .slice(0, 5);
+
+  return (
+    <div className="min-h-screen bg-white pb-20">
+      {/* Header */}
+      <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
+        <BackgroundShapes />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center sm:text-left relative z-10">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Detail Berita</h1>
+          <p className="mt-2 text-sm sm:text-base text-gray-800">
+            <Link to="/" className="hover:underline">Beranda</Link>
+            <span className="mx-1">&gt;</span>
+            <Link to="/berita" className="hover:underline">Berita</Link>
+            <span className="mx-1">&gt;</span>
+            <span className="text-purple-600">{berita.title}</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Konten utama dan sidebar */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Konten utama */}
+        <div className="lg:col-span-3">
+          <div className="relative rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer">
+            <img
+              src={berita.image}
+              alt={berita.title}
+              className="w-full h-full object-cover"
+            />
+            {/* Overlay ungu gradasi, selalu nyala */}
+            <div className="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-t from-purple-900/80 via-purple-700/10 to-transparent" />
+
+            {/* Watermark bawah */}
+            <div className="absolute bottom-0 left-2 right-2 flex items-center justify-between rounded-lg px-6 py-1 select-none pointer-events-none text-white text-sm font-semibold">
+              {/* Social Icons kiri */}
+              <div className="flex space-x-3 text-white">
+                <a href="https://instagram.com/getskill" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-purple-400 transition-colors">
+                  <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 2A5.75 5.75 0 002 7.75v8.5A5.75 5.75 0 007.75 22h8.5A5.75 5.75 0 0022 16.25v-8.5A5.75 5.75 0 0016.25 2h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm6.5-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" /></svg>
+                </a>
+                <a href="https://facebook.com/getskill" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-purple-400 transition-colors">
+                  <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.87v-7h-3v-3h3v-2.3c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 1-2 2v2.3h3.4l-.5 3h-2.9v7A10 10 0 0022 12z" /></svg>
+                </a>
+                <a href="https://twitter.com/getskill" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="hover:text-purple-400 transition-colors">
+                  <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14.86 4.48 4.48 0 001.96-2.48 9.14 9.14 0 01-2.83 1.08 4.52 4.52 0 00-7.71 4.12A12.79 12.79 0 013 4.16a4.52 4.52 0 001.4 6.03 4.44 4.44 0 01-2.05-.57v.06a4.52 4.52 0 003.63 4.44 4.52 4.52 0 01-2.04.08 4.52 4.52 0 004.22 3.14 9.06 9.06 0 01-5.6 1.93A9.07 9.07 0 012 18.13a12.73 12.73 0 006.92 2.03c8.3 0 12.85-6.9 12.85-12.86 0-.2 0-.42-.02-.63A9.22 9.22 0 0023 3z" /></svg>
+                </a>
+                <div>
+                  @getskill
+                </div>
+              </div>
+
+              {/* Logo tengah dengan background putih bulat */}
+              <div className="bg-white rounded-full p-1 shadow-md inline-block" style={{ transform: 'translateX(-35px)' }}>
+                <img
+                  src={logoGetskill}
+                  alt="GetSkill Logo"
+                  className="w-18 h-4 object-contain rounded-full"
+                />
+              </div>
+
+              {/* Text kanan */}
+              <div>getskill.id</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-purple-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-7H3v7a2 2 0 002 2z"
+              />
+            </svg>
+            {berita.date}
+          </div>
+
+          {/* Judul di bawah tanggal, rata kiri */}
+          <h2 className="mt-2 text-2xl font-extrabold text-gray-900 text-left">{berita.title}</h2>
+
+          <div className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-justify">
+            {berita.content}
+          </div>
+        </div>
+
+        {/* Sidebar */}
+        <div>
+          {/* Search (belum terhubung) */}
+          <div className="relative mb-6">
+            <input
+              type="text"
+              placeholder="Cari Berita"
+              className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 placeholder-gray-400"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-purple-500 absolute right-3 top-2.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+              />
+            </svg>
+          </div>
+
+          {/* Related news */}
+          <RelatedNews relatedArticles={beritaTerkait} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default DetailBerita;

@@ -1,17 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NewsCard from '../public/CardNews/NewsCard';
-import { newsArticles } from '../../data/newsData';
+// Ganti baris ini:
+// import { newsArticles, NewsArticle } from '../../data/newsData';
+// Menjadi baris ini:
+import { newsArticles, type NewsArticle } from '../../data/newsData'; 
+
+// --- Komponen Skeleton Card ---
+const SkeletonCard: React.FC = () => {
+  return (
+    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 animate-pulse">
+      <div className="bg-gray-200 h-40 w-full rounded-md mb-4"></div>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="bg-gray-200 h-5 w-5 rounded-full"></div>
+        <div className="bg-gray-200 h-4 w-24 rounded"></div>
+      </div>
+      <div className="bg-gray-200 h-5 w-3/4 rounded mb-2"></div>
+      <div className="bg-gray-200 h-4 w-full rounded"></div>
+      <div className="bg-gray-200 h-4 w-5/6 rounded"></div>
+    </div>
+  );
+};
 
 const BeritaTerbaruPage: React.FC = () => {
   const navigate = useNavigate();
-  // Ambil 5 berita pertama
-  const latestFiveArticles = newsArticles.slice(0, 5);
+  const [isLoading, setIsLoading] = useState(true);
+  const [latestFourArticles, setLatestFourArticles] = useState<NewsArticle[]>([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLatestFourArticles(newsArticles.slice(0, 4));
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-white font-sans antialiased p-2">
-      <section className="py-2 bg-white rounded-lg">
-        <div className="container mx-auto px-20 text-center">
+    <div className="min-h-screen bg-white font-sans antialiased">
+      <section className="py-0 bg-white rounded-lg">
+        <div className="container mx-auto px-6 sm:px-10 lg:px-20 text-center">
           <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
             Berita
           </span>
@@ -21,20 +47,19 @@ const BeritaTerbaruPage: React.FC = () => {
           <p className="text-md text-gray-600 mb-6">
             Kumpulan berita terbaru dari getskill
           </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {latestFiveArticles.map((article, index) => (
-              <NewsCard key={index} {...article} />
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {isLoading
+              ? [...Array(4)].map((_, index) => <SkeletonCard key={index} />)
+              : latestFourArticles.map((article, index) => (
+                  <NewsCard key={index} {...article} />
+                ))}
           </div>
-
-          {/* Tombol lihat semua berita */}
           <div className="mt-8 flex justify-center">
             <button
               onClick={() => navigate('/berita')}
               className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-2 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-purple-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
             >
-              Lihat Semua Berita
+              Lihat Semua
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

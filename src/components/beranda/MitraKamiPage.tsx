@@ -31,11 +31,11 @@ const MitraKamiPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white font-sans antialiased p-4">
-      <section className="py-16 bg-white rounded-lg mt-4">
+    <div className="min-h-1 bg-white font-sans antialiased p-8">
+      <section className="py-16 bg-white rounded-lg">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">MITRA KAMI</h1>
-          <p className="text-md text-gray-600 mb-10">Kolaborasi menuju kesuksesan</p>
+          <p className="text-md text-gray-600 mb-15">Kolaborasi menuju kesuksesan</p>
 
           <div className="w-full mx-auto">
             <MitraCarousel images={mitraImages} />

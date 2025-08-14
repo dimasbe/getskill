@@ -10,45 +10,45 @@ import garislengkung from '../../assets/landingpage/beranda/garis lengkung.png';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-[90vh] m-0 pt-0">
-
+    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-screen md:min-h-[90vh] m-0 pt-0">
+      
       {/* Gambar garis lengkung di pojok kiri atas */}
       <img
         src={garislengkung}
         alt="garis lengkung"
-        className="absolute top-0 left-0 w-[200px] z-0 fade-in-up"
+        className="absolute top-0 left-0 w-[150px] md:w-[200px] z-0 fade-in-up"
         style={{ animationDelay: '0s' }}
       />
+      
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-18 pt-10 md:pt-16 relative z-10">
 
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-18 pt-16 relative z-10">
-
-        {/* Bagian Kiri */}
-        <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20">
+        {/* Bagian Kiri - Konten Teks */}
+        <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20 mt-10 md:mt-0">
           <h1
-            className="text-[46px] font-bold text-gray-900 leading-snug mb-3 fade-in-up"
+            className="text-[36px] md:text-[46px] font-bold text-gray-900 leading-tight md:leading-snug mb-3 fade-in-up"
             style={{ animationDelay: '0.1s' }}
           >
             Selamat{' '}
-            <span className="bg-purple-700 px-4 py-1 font-bold text-white rounded-[20px] inline-block">
+            <span className="bg-purple-700 px-3 py-1 font-bold text-white rounded-[20px] inline-block">
               Datang
             </span>
           </h1>
           <h2
-            className="text-[26px] text-gray-900 font-medium mb-4 fade-in-up"
+            className="text-[20px] md:text-[26px] text-gray-900 font-medium mb-4 fade-in-up"
             style={{ animationDelay: '0.3s' }}
           >
             Update kemampuan anda bersama{' '}
             <span className="font-semibold">Getskill.id</span>
           </h2>
           <p
-            className="text-gray-600 text-lg fade-in-up"
+            className="text-gray-600 text-base md:text-lg fade-in-up"
             style={{ animationDelay: '0.5s' }}
           >
             Belajar seru bersama GetSkill
           </p>
           {/* Tombol Daftar */}
           <div className="mt-6 fade-in-up" style={{ animationDelay: '0.7s' }}>
-            <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
+            <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-[20px] flex items-center justify-center mx-auto md:mx-0 gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
               Daftar Sekarang
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -68,41 +68,41 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Bagian Kanan */}
+        {/* Bagian Kanan - Gambar dan Pola */}
         <div className="md:w-1/2 relative flex justify-center items-center">
-          {/* Panah ungu */}
+          {/* Panah ungu - untuk desktop, disembunyikan di mobile */}
           <img
             src={arrowPattern}
             alt="Panah Ungu"
-            className="absolute -right-[20px] top-[150px] w-[600px] z-0 arrow-animate"
+            className="absolute -right-[20px] top-[150px] w-[600px] z-0 arrow-animate hidden md:block"
           />
 
-          {/* Pattern titik */}
+          {/* Pattern titik - untuk desktop, disembunyikan di mobile */}
           <img
             src={dotsPattern}
             alt="Dots Pattern"
-            className="absolute top-[0px] right-[50px] w-[450px] opacity-80 z-0 dots-animate"
+            className="absolute top-[0px] right-[50px] w-[450px] opacity-80 z-0 dots-animate hidden md:block"
           />
 
           {/* Foto model */}
           <img
             src={fotomodel1}
             alt="Orang dengan Laptop"
-            className="relative z-10 w-[520px] fade-in-scale"
+            className="relative z-10 w-[300px] md:w-[520px] fade-in-scale"
             style={{ animationDelay: '1.2s' }}
           />
 
-          {/* Panah kecil */}
+          {/* Panah kecil - untuk desktop, disembunyikan di mobile */}
           <img
             src={panah}
             alt="panah"
-            className="absolute right-[325px] top-[25px] w-[90px] rotate-20 fade-in-up"
+            className="absolute right-[125px] top-[15px] md:right-[260px] md:top-[25px] xl:right-[300px] xl:top-[20px] w-[70px] md:w-[90px] rotate-20 fade-in-up hidden md:block"
             style={{ animationDelay: '1s' }}
           />
 
           {/* Bubble nama atas */}
           <div
-            className="absolute top-[5px] right-[400px] z-20 fade-in-up"
+            className="absolute top-[50%] left-[10%] md:top-[5px] md:left-auto md:right-[330px] xl:right-[390px] z-20 fade-in-up"
             style={{ animationDelay: '0.1s' }}
           >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
@@ -117,7 +117,7 @@ const HeroSection: React.FC = () => {
 
           {/* Bubble nama bawah */}
           <div
-            className="absolute top-[45px] right-[390px] z-20 fade-in-up"
+            className="absolute top-[calc(50%+50px)] left-[15%] md:top-[45px] md:left-auto md:right-[320px] xl:right-[380px] z-20 fade-in-up"
             style={{ animationDelay: '0.3s' }}
           >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">

@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import NewsCard from "../../../components/public/CardNews/NewsCard";
-import { newsArticles } from "../../../data/newsData";
+import { newsArticles } from "../../../data/newsData"; // Pastikan Anda mengimpor tipe NewsArticle jika digunakan di NewsCard
+
+// --- Komponen Skeleton News Card ---
+// Komponen ini akan ditampilkan saat data sedang dimuat
+const SkeletonNewsCard: React.FC = () => {
+  return (
+    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 animate-pulse">
+      <div className="bg-gray-200 h-40 w-full rounded-md mb-4"></div>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="bg-gray-200 h-5 w-5 rounded-full"></div>
+        <div className="bg-gray-200 h-4 w-24 rounded"></div>
+      </div>
+      <div className="bg-gray-200 h-5 w-3/4 rounded mb-2"></div>
+      <div className="bg-gray-200 h-4 w-full rounded"></div>
+      <div className="bg-gray-200 h-4 w-5/6 rounded"></div>
+    </div>
+  );
+};
+// --- Akhir Komponen Skeleton News Card ---
 
 const Berita: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [sortOrder, setSortOrder] = useState("Terbaru");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true); // State untuk loading
 
-  const itemsPerPage = 10;
+  // Mengubah jumlah item per halaman menjadi 8
+  const itemsPerPage = 8;
 
   // Ambil kategori unik
   const categories = ["Semua", ...new Set(newsArticles.map((item) => item.category))];
@@ -44,7 +64,36 @@ const Berita: React.FC = () => {
     if (page < 1) page = 1;
     else if (page > totalPages) page = totalPages;
     setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Gulir ke atas halaman saat pindah halaman
   };
+
+  useEffect(() => {
+    // Simulasikan loading data selama 1.5 detik
+    setIsLoading(true); // Set loading true setiap kali filter/sort/halaman berubah
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // Waktu loading disesuaikan
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, [searchTerm, selectedCategory, sortOrder, currentPage]); // Dependensi useEffect
+
+  // Hook untuk menyimpan dan mengembalikan posisi scroll
+  useEffect(() => {
+    const savedScrollY = localStorage.getItem('beritaScrollPosition');
+    if (savedScrollY) {
+      window.scrollTo(0, parseInt(savedScrollY));
+    }
+
+    const handleBeforeUnload = () => {
+      localStorage.setItem('beritaScrollPosition', window.scrollY.toString());
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []); // [] agar hanya dijalankan sekali saat komponen mount
 
   return (
     <div className="min-h-screen bg-white">
@@ -64,9 +113,9 @@ const Berita: React.FC = () => {
       </div>
 
       {/* Search, Filter, Sort */}
-      <div className="flex flex-wrap gap-3 justify-center items-center mt-6">
+      <div className="flex flex-wrap gap-3 justify-center items-center mt-6 p-4 md:p-0"> {/* Menambah padding di sini untuk mobile */}
         {/* Search */}
-        <div className="relative w-90">
+        <div className="relative w-full sm:w-80 md:w-90"> {/* Mengubah w-90 menjadi responsif */}
           <input
             type="text"
             placeholder="Cari Berita"
@@ -100,7 +149,7 @@ const Berita: React.FC = () => {
             setSelectedCategory(e.target.value);
             setCurrentPage(1);
           }}
-          className="w-30 border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
+          className="w-full sm:w-auto border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
         >
           {categories.map((cat, index) => (
             <option key={index} value={cat}>
@@ -116,7 +165,7 @@ const Berita: React.FC = () => {
             setSortOrder(e.target.value);
             setCurrentPage(1);
           }}
-          className="w-30 border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
+          className="w-full sm:w-auto border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
         >
           <option value="Terbaru">Terbaru</option>
           <option value="Terlama">Terlama</option>
@@ -126,8 +175,12 @@ const Berita: React.FC = () => {
       {/* Isi Halaman */}
       <section className="py-10 bg-white rounded-lg">
         <div className="container mx-auto px-5 md:px-20 text-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {paginatedArticles.length > 0 ? (
+          {/* Mengubah grid agar lebih responsif untuk 8 item */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {isLoading ? (
+              // Tampilkan 8 skeleton card saat loading
+              [...Array(itemsPerPage)].map((_, index) => <SkeletonNewsCard key={index} />)
+            ) : paginatedArticles.length > 0 ? (
               paginatedArticles.map((article, index) => (
                 <NewsCard key={index} {...article} />
               ))
