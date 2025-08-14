@@ -14,19 +14,39 @@ const usePageTitle = (customTitle?: string) => {
       '/kelas-industri': 'Kelas Industri',
       '/berita': 'Berita',
       '/faq': 'FAQ',
+      '/login': 'Login',
+      '/register': 'Register',
+      '/password/email': 'Forgot Password',
+      '/update-password/email': 'Update Password',
     };
+
+
+    const dynamicRoutes: { pattern: RegExp; title: string }[] = [
+      { pattern: /^\/kursus\/[^/]+$/, title: 'Detail Kursus' },
+      { pattern: /^\/event\/[^/]+$/, title: 'Detail Event' },
+      { pattern: /^\/berita\/[^/]+$/, title: 'Detail Berita' },
+    ];
 
     const currentPath = location.pathname.toLowerCase();
     const routeTitle = pathTitles[currentPath];
 
-    if (currentPath === '/') {
-      document.title = pathTitles['/'];
-    } else if (customTitle) {
+    if (customTitle) {
       document.title = `${customTitle} - ${baseTitle}`;
     } else if (routeTitle) {
-      document.title = `${routeTitle} - ${baseTitle}`;
+      if (currentPath === '/') {
+        document.title = routeTitle;
+      } else {
+        document.title = `${routeTitle} - ${baseTitle}`;
+      }
     } else {
-      document.title = baseTitle;
+      const dynamicMatch = dynamicRoutes.find((route) =>
+        route.pattern.test(currentPath)
+      );
+      if (dynamicMatch) {
+        document.title = `${dynamicMatch.title} - ${baseTitle}`;
+      } else {
+        document.title = baseTitle;
+      }
     }
   }, [location, customTitle]);
 };

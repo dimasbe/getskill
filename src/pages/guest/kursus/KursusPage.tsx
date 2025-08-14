@@ -16,14 +16,20 @@ export default function KursusPage() {
 
   const [page, setPage] = useState(1);
 
-  // Ambil search query dari URL
+  // Get search query from URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const searchQuery = params.get('search') || '';
-    setFilters(prev => ({ ...prev, search: searchQuery }));
+    const category = params.get('category') || '';
+    
+    setFilters(prev => ({ 
+      ...prev, 
+      search: searchQuery,
+      categories: category ? [category] : prev.categories
+    }));
   }, [location.search]);
 
-  // Reset halaman kalau filter berubah
+  // Reset page when filters change
   useEffect(() => {
     setPage(1);
   }, [filters]);
@@ -54,7 +60,6 @@ export default function KursusPage() {
         <div className="md:col-span-3 animate-fadeIn">
           <CourseList
             filters={filters}
-            setFilters={setFilters}
             page={page}
             setPage={setPage}
           />
