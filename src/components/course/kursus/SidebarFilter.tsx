@@ -5,6 +5,7 @@ interface FiltersState {
   categories: string[];
   priceMin: string;
   priceMax: string;
+  search: string;
 }
 
 interface SidebarFilterProps {

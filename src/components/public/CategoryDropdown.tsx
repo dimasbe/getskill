@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { LayoutGrid } from "lucide-react";
 import { HiChevronDown } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type SubItem = string | { name: string; to: string };
 
 const categories: { name: string; sub: SubItem[] }[] = [
   {
     name: "Software Development",
-    sub: [
-      { name: "Github", to: "/github" },
-      "Pemrograman Website",
-      "Pemrograman Android",
-      "Pemrograman Dekstop"
-    ]
+    sub: ["Github", "Pemrograman Website", "Pemrograman Android", "Pemrograman Desktop"]
   },
   {
     name: "Multimedia",
@@ -25,9 +20,28 @@ const categories: { name: string; sub: SubItem[] }[] = [
   }
 ];
 
-const CategoryDropdown = () => {
+interface CategoryDropdownProps {
+  setFilters: React.Dispatch<React.SetStateAction<{
+    categories: string[];
+    priceMin: string;
+    priceMax: string;
+    search: string;
+  }>>;
+}
+
+const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category: string) => {
+    setFilters(prev => ({
+      ...prev,
+      categories: [category]
+    }));
+    navigate(`/kursus?category=${encodeURIComponent(category)}`);
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative">
@@ -39,8 +53,7 @@ const CategoryDropdown = () => {
         <LayoutGrid size={20} />
         <span className="text-sm ml-2">Pilih Kategori</span>
         <HiChevronDown
-          className={`ml-1 size-4 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
-            }`}
+          className={`ml-1 size-4 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`}
         />
       </div>
 
@@ -50,12 +63,11 @@ const CategoryDropdown = () => {
           {categories.map((category, index) => (
             <li
               key={index}
-              className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-sm text-gray-700 cursor-pointer whitespace-nowrap text-left"
+              className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-sm text-gray-700 cursor-pointer whitespace-nowrap"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {category.name}
-
 
               {/* Submenu */}
               {hoveredIndex === index && (
@@ -63,16 +75,14 @@ const CategoryDropdown = () => {
                   {category.sub.map((sub, subIndex) => (
                     <li
                       key={subIndex}
-                      className="py-2 pl-4 pr-2 hover:bg-purple-100 text-sm text-purple-600 whitespace-nowrap text-left"
-                      onClick={() => setIsOpen(false)}
+                      className="py-2 pl-4 pr-2 hover:bg-purple-100 text-sm text-purple-600 whitespace-nowrap"
+                      onClick={() =>
+                        typeof sub === "string"
+                          ? handleCategoryClick(sub)
+                          : handleCategoryClick(sub.name)
+                      }
                     >
-                      {typeof sub === "string" ? (
-                        sub
-                      ) : (
-                        <Link to={sub.to} className="block w-full h-full">
-                          {sub.name}
-                        </Link>
-                      )}
+                      {typeof sub === "string" ? sub : sub.name}
                     </li>
                   ))}
                 </ul>
