@@ -3,7 +3,7 @@ import dummyCourses from '../../../data/dummyCourses';
 import type { Course } from '../../../types/Course';
 
 interface CourseListProps {
-  filters: {
+  filters?: {
     categories: string[];
     priceMin: string;
     priceMax: string;
@@ -18,16 +18,13 @@ interface CourseListProps {
 const COURSES_PER_PAGE = 6;
 
 export default function CourseList({
-  filters,
+  filters = { categories: [], priceMin: '', priceMax: '', search: '' },
   page = 1,
   setPage,
   limit,
   columns = 3,
 }: CourseListProps) {
-  // Filtering logic
-  let filteredCourses = dummyCourses;
-
-  filteredCourses = dummyCourses.filter((course: Course) => {
+  const filteredCourses = dummyCourses.filter((course: Course) => {
     const price = parseInt(course.price.replace(/\./g, '')) || 0;
     const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
     const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
@@ -64,9 +61,7 @@ export default function CourseList({
       {/* Course Cards */}
       <div className={gridClass}>
         {currentCourses.length > 0 ? (
-          currentCourses.map((course) => (
-            <CourseCard key={course.id} {...course} />
-          ))
+          currentCourses.map((course) => <CourseCard key={course.id} {...course} />)
         ) : (
           <p className="text-center col-span-full text-gray-500">
             Tidak ada kursus yang ditemukan
