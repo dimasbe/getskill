@@ -35,7 +35,7 @@ const DetailEvent: React.FC = () => {
             </div>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 lg:px-30 md:px-30 sm:px-20 py-10 md:py-18">
+            <div className="max-w-7xl mx-auto px-4 xl:px-10 lg:px-30 md:px-30 sm:px-20 py-10 md:py-18">
                 <div className="relative">
                     <img
                         src={event.image}
