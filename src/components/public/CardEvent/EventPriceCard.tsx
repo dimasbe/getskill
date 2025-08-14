@@ -1,6 +1,7 @@
 import { HiCalendar, HiClock, HiCheckCircle, HiUsers } from "react-icons/hi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { Card } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const paymentLogos = [
     { name: "BRI", src: "/public/images/payments/bri.png", url: "https://bri.co.id" },
@@ -131,11 +132,22 @@ const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
                 </div>
             </div>
 
-            <button
-                className="w-full bg-purple-600 text-white py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-purple-700 active:scale-95 mt-3"
-            >
-                Masuk
-            </button>
+            {event.isOnline ? (
+                <Link
+                    to="/login"
+                    className="block text-center w-full bg-purple-600 text-white py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-purple-700 active:scale-95 mt-3"
+                >
+                    Masuk
+                </Link>
+            ) : (
+                <button
+                    disabled
+                    className="block text-center w-full bg-gray-400 text-white py-2 rounded-lg mt-3 cursor-not-allowed opacity-70"
+                >
+                    Masuk
+                </button>
+            )}
+
         </div>
     </Card>
 );
