@@ -47,10 +47,10 @@ const IndustrialClassBenefits: React.FC = () => {
 
   return (
     <section className="bg-white py-10 sm:py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12 justify-items-center md:justify-items-end">
 
         {/* Right Image */}
-        <div className="flex justify-center md:justify-end md:-translate-x-4 lg:-translate-x-15 order-1 md:order-2">
+        <div className="flex justify-center md:justify-end order-1 md:order-2">
           {isLoading ? <SkeletonImage /> : (
             <img
               src={kelasIndustriImg}
@@ -61,7 +61,7 @@ const IndustrialClassBenefits: React.FC = () => {
         </div>
 
         {/* Left Content */}
-        <div className="text-left md:pr-6 lg:pr-1 order-2 md:order-1">
+        <div className="text-left md:pr-6 lg:pr-1 order-2 md:order-1 justify-self-start">
           {isLoading ? (
             <div className="space-y-3">
               <SkeletonText width="w-28" height="h-5" /> {/* Label */}
@@ -83,7 +83,7 @@ const IndustrialClassBenefits: React.FC = () => {
                   <li
                     key={benefit.id}
                     className="flex items-start gap-3 fade-in-up"
-                    style={{ animationDelay: `${0.2 * index}s` }} // Stagger animation
+                    style={{ animationDelay: `${0.2 * index}s` }}
                   >
                     <div className={`relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full flex-shrink-0 ${bgColors[index]}`}>
                       <span className={`absolute bottom-[-0.2rem] left-[-0.2rem] text-white text-[8px] sm:text-[10px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center rounded-full ${numberColors[index]}`}>

@@ -17,19 +17,19 @@ const IndustrialHero: React.FC = () => {
 
   return (
     <section
-      className="relative py-16 sm:py-20 md:py-28 text-center bg-white"
+      className="relative py-16 sm:py-20 md:py-28 text-center bg-white overflow-hidden"
       style={{
         backgroundImage: `url(${bg1}), url(${bg2})`,
-        backgroundPosition: "left center, right center",
+        backgroundPosition: "center left, center right", // posisi lebih tengah
         backgroundRepeat: "no-repeat, no-repeat",
-        backgroundSize: "contain, contain",
+        backgroundSize: "auto 100%, auto 100%", // proporsional
       }}
     >
-      {/* Overlay untuk mobile agar teks tetap terbaca jika background terlalu ramai */}
+      {/* Overlay mobile */}
       <div className="absolute inset-0 bg-white/70 md:bg-transparent z-0"></div>
 
       {/* Konten */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+      <div className="relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         {isLoading ? (
           <div className="space-y-4">
             <SkeletonText width="w-40 mx-auto" height="h-3" /> {/* Subtext */}
