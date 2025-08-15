@@ -2,6 +2,7 @@ import CourseCard from '../kursus/CourseCard';
 import dummyCourses from '../../../data/dummyCourses';
 import type { Course } from '../../../types/Course';
 
+// Tambahkan 'columns' ke interface props
 interface CourseListProps {
   filters?: {
     categories: string[];
@@ -12,6 +13,7 @@ interface CourseListProps {
   page?: number;
   setPage?: (page: number) => void;
   limit?: number;
+  columns?: number; // Prop baru untuk mengontrol jumlah kolom
 }
 
 const COURSES_PER_PAGE = 6;
@@ -21,6 +23,7 @@ export default function CourseList({
   page = 1,
   setPage,
   limit,
+  columns = 3, // Tambahkan 'columns' dengan nilai default
 }: CourseListProps) {
   const filteredCourses = dummyCourses.filter((course: Course) => {
     const price = parseInt(course.price.replace(/\./g, '')) || 0;
@@ -48,10 +51,13 @@ export default function CourseList({
   const startIndex = (page - 1) * COURSES_PER_PAGE;
   const currentCourses = coursesToDisplay.slice(startIndex, startIndex + COURSES_PER_PAGE);
 
+  // Buat kelas grid dinamis
+  const gridClass = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns} gap-5`;
+
   return (
     <div>
-      {/* Grid responsif */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* Gunakan kelas grid dinamis */}
+      <div className={gridClass}>
         {currentCourses.length > 0 ? (
           currentCourses.map((course) => <CourseCard key={course.id} {...course} />)
         ) : (
