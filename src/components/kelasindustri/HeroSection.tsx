@@ -72,7 +72,11 @@ const HeroSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-2 pb-4 sm:pt-6 sm:pb-8 grid grid-cols-12 gap-6 items-center relative z-10">
         {/* Left Content */}
         <motion.div
-          className="col-span-12 md:col-span-6 text-left sm:pl-8 md:pl-12 lg:pl-16 -mt-1 sm:-mt-2 md:-mt-4"
+          className="
+            col-span-12 md:col-span-6 text-left 
+            sm:pl-8 md:pl-12 lg:pl-16 
+            mt-6 sm:mt-10 md:mt-6 lg:-mt-55
+            pt-6 sm:pt-10 md:pt-0 lg:pt-0"
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -89,6 +93,7 @@ const HeroSection: React.FC = () => {
             Belajar seru bersama GetSkill
           </p>
         </motion.div>
+
 
         {/* Right Image */}
         <motion.div

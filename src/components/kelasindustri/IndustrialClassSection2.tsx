@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import clockImg from "../../assets/kelasindustri/Clock.png";
 
-// Skeleton text component
 const SkeletonText = ({ width, height }: { width: string; height: string }) => (
   <div className={`bg-gray-300 rounded ${width} ${height} animate-pulse`}></div>
 );
 
-// Skeleton image component
 const SkeletonImage = () => (
   <div className="w-[200px] sm:w-[250px] md:w-[300px] lg:w-[340px] xl:w-[380px] h-[200px] bg-gray-300 rounded-lg animate-pulse"></div>
 );
@@ -21,10 +19,10 @@ const IndustrialClassSection2: React.FC = () => {
 
   return (
     <section className="w-full py-10 sm:py-12 md:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
 
         {/* Kanan - Gambar */}
-        <div className="flex justify-center md:justify-end md:-translate-x-6 lg:-translate-x-25 order-1 md:order-2">
+        <div className="flex justify-center md:justify-end order-1 md:order-2">
           {isLoading ? (
             <SkeletonImage />
           ) : (
@@ -37,14 +35,14 @@ const IndustrialClassSection2: React.FC = () => {
         </div>
 
         {/* Kiri - Teks */}
-        <div className="text-left mt-6 md:mt-0 md:pl-2 max-w-lg order-2 md:order-1">
+        <div className="text-left mt-6 md:mt-0 max-w-lg order-2 md:order-1">
           {isLoading ? (
             <div className="space-y-3">
-              <SkeletonText width="w-40" height="h-3" /> {/* Subtext */}
-              <SkeletonText width="w-full" height="h-7" /> {/* Title */}
-              <SkeletonText width="w-full" height="h-4" /> {/* Paragraph line 1 */}
-              <SkeletonText width="w-5/6" height="h-4" /> {/* Paragraph line 2 */}
-              <SkeletonText width="w-36" height="h-10" /> {/* Button */}
+              <SkeletonText width="w-40" height="h-3" />
+              <SkeletonText width="w-full" height="h-7" />
+              <SkeletonText width="w-full" height="h-4" />
+              <SkeletonText width="w-5/6" height="h-4" />
+              <SkeletonText width="w-36" height="h-10" />
             </div>
           ) : (
             <div className="fade-in-up space-y-4">
