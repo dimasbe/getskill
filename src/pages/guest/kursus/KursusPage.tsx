@@ -16,30 +16,28 @@ export default function KursusPage() {
 
   const [page, setPage] = useState(1);
 
-  // Get search query from URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const searchQuery = params.get('search') || '';
     const category = params.get('category') || '';
-    
-    setFilters(prev => ({ 
-      ...prev, 
+
+    setFilters(prev => ({
+      ...prev,
       search: searchQuery,
-      categories: category ? [category] : prev.categories
+      categories: category ? [category] : prev.categories,
     }));
   }, [location.search]);
 
-  // Reset page when filters change
   useEffect(() => {
     setPage(1);
   }, [filters]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
-      {/* ================= HEADER ================= */}
+      {/* HEADER */}
       <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
         <BackgroundShapes />
-        <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
+        <div className="max-w-6xl mx-auto px-4 text-center sm:text-left relative z-10">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Jelajahi Kursus</h1>
           <p className="mt-2 text-sm sm:text-base text-gray-800">
             <a href="/" className="hover:underline">Beranda</a>
@@ -49,20 +47,16 @@ export default function KursusPage() {
         </div>
       </div>
 
-      {/* ================= MAIN CONTENT ================= */}
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+      {/* MAIN CONTENT */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar */}
         <div className="animate-slideInLeft">
           <SidebarFilter filters={filters} setFilters={setFilters} />
         </div>
 
         {/* Daftar Kursus */}
-        <div className="md:col-span-3 animate-fadeIn">
-          <CourseList
-            filters={filters}
-            page={page}
-            setPage={setPage}
-          />
+        <div className="lg:col-span-3 animate-fadeIn">
+          <CourseList filters={filters} page={page} setPage={setPage} />
         </div>
       </div>
     </div>

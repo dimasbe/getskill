@@ -20,18 +20,17 @@ export default function CourseDetail() {
   return (
     <div className="min-h-screen bg-gray-50">
       <CourseHeader title={courseData.title} />
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
+      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-[1fr_minmax(350px,400px)] gap-8">
+        <div>
           <CourseMain courseData={courseData} />
         </div>
-        <div className="lg:col-span-1">
+        <div>
           <CourseSidebar
-  totalModul={totalModul}
-  totalKuis={totalKuis}
-  price={courseData.price || "0"}
-  isFree={courseData.isFree || false}
-/>
-
+            totalModul={totalModul}
+            totalKuis={totalKuis}
+            price={courseData.price || "0"}
+            isFree={courseData.isFree || false}
+          />
         </div>
       </div>
     </div>

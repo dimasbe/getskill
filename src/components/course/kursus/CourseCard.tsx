@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa";
 import { formatRupiah } from "../../../utils/formatPrice";
 
 interface CourseCardProps {
@@ -53,9 +54,10 @@ export default function CourseCard({
         <p className="text-sm text-gray-500 mb-2">By {author}</p>
 
         {/* Rating */}
-        <div className="flex items-center text-yellow-500 text-sm mb-2">
-          ⭐ {rating.toFixed(1)}
-        </div>
+        <div className="flex items-center text-yellow-500 text-sm font-light mb-2">
+  <FaStar className="mr-1 text-yellow-500" size={14} />
+  {rating.toFixed(1)}
+</div>
 
         {/* Harga */}
         <p
