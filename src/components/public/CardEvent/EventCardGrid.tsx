@@ -20,7 +20,7 @@ type EventCardGridProps = {
 const EventCardGrid: React.FC<EventCardGridProps> = ({ events }) => {
     return (
         <div className="w-full px-4 xl:px-8 md:px-20 sm:px-6 lg:px-30 max-w-screen-xl mx-auto mt-12 
-                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6 
+                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3   xl:grid-cols-4 gap-6 
                 min-h-[60vh]">
 
             {events.map((event) => (
