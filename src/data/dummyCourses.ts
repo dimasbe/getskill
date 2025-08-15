@@ -743,7 +743,161 @@ Dengan menyelesaikan kursus ini, Anda akan memiliki fondasi kuat dalam mengemban
         quiz_questions: 5
       }
     ]
+  },
+
+  // Kursus Pemrograman Dasar Python Baru
+  {
+    id: 'python-dasar',
+    image: 'python.jpeg',
+    category: 'Pemrograman Desktop',
+    title: 'Pemrograman Dasar Python untuk Pemula',
+    author: 'Get Skill',
+    price: '250.000',
+    rating: 4.2,
+    date: '15 Agustus 2025',
+    students: 45,
+    description: `Kursus ini dirancang untuk mengajarkan dasar-dasar pemrograman menggunakan Python, bahasa pemrograman yang populer dan mudah dipahami. Python banyak digunakan dalam pengembangan web, analisis data, kecerdasan buatan, dan berbagai bidang teknologi lainnya.
+
+Apa yang akan Anda pelajari:
+- Dasar-dasar sintaks Python
+- Struktur kontrol program
+- Tipe data dan struktur data Python
+- Fungsi dan modul
+- Penanganan file
+- Pengenalan Object-Oriented Programming (OOP)
+
+Keunggulan kursus ini:
+✓ Cocok untuk pemula tanpa pengalaman coding
+✓ Materi disusun secara bertahap dari dasar
+✓ Contoh kasus nyata dan praktik langsung
+✓ Persiapan karir di bidang teknologi`,
+    syllabus: [
+      {
+        title: 'Pengenalan Python',
+        description: 'Memulai perjalanan belajar Python',
+        quizzes: 1,
+        tasks: 1,
+        subtopics: [
+          'Apa itu Python?',
+          'Keunggulan Python',
+          'Instalasi Python dan IDE',
+          'Menjalankan program Python pertama',
+          'Syntax dasar Python'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Variabel dan Tipe Data',
+        description: 'Mengenal penyimpanan data dalam program',
+        quizzes: 1,
+        tasks: 3,
+        subtopics: [
+          'Pengertian variabel',
+          'Aturan penamaan variabel',
+          'Tipe data dasar (integer, float, string, boolean)',
+          'Konversi tipe data',
+          'Input/output dasar'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Operator',
+        description: 'Operasi dasar dalam pemrograman',
+        quizzes: 1,
+        tasks: 2,
+        subtopics: [
+          'Operator aritmatika',
+          'Operator perbandingan',
+          'Operator logika',
+          'Operator assignment',
+          'Operator identitas dan keanggotaan'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Struktur Kontrol',
+        description: 'Mengatur alur program',
+        quizzes: 1,
+        tasks: 4,
+        subtopics: [
+          'Percabangan if-elif-else',
+          'Perulangan for',
+          'Perulangan while',
+          'Break dan continue',
+          'Pass statement'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Struktur Data',
+        description: 'Mengelola kumpulan data',
+        quizzes: 1,
+        tasks: 3,
+        subtopics: [
+          'List dan operasinya',
+          'Tuple',
+          'Dictionary',
+          'Set',
+          'List comprehension'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Fungsi',
+        description: 'Membuat kode modular',
+        quizzes: 1,
+        tasks: 2,
+        subtopics: [
+          'Definisi fungsi',
+          'Parameter dan argumen',
+          'Return value',
+          'Lambda function',
+          'Scope variabel'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Penanganan File',
+        description: 'Bekerja dengan file eksternal',
+        quizzes: 1,
+        tasks: 2,
+        subtopics: [
+          'Membuka dan menutup file',
+          'Membaca file',
+          'Menulis ke file',
+          'Berbagai mode file',
+          'Exception handling'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Pengenalan OOP',
+        description: 'Konsep dasar Pemrograman Berorientasi Objek',
+        quizzes: 1,
+        tasks: 2,
+        subtopics: [
+          'Konsep class dan object',
+          'Attribute dan method',
+          'Inheritance',
+          'Encapsulation',
+          'Contoh implementasi sederhana'
+        ],
+        quiz_questions: 5
+      },
+      {
+        title: 'Proyek Akhir',
+        description: 'Mengaplikasikan semua yang dipelajari',
+        quizzes: 0,
+        tasks: 1,
+        subtopics: [
+          'Membuat program manajemen kontak sederhana',
+          'Implementasi CRUD dasar',
+          'Penyimpanan data ke file'
+        ]
+      }
+    ]
   }
+
 ];
 
 
