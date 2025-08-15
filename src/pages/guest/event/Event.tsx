@@ -48,7 +48,7 @@ const Event: React.FC = () => {
             {/* Header */}
             <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
                 <BackgroundShapes />
-                <div className="max-w-6xl mx-auto px-4 text-center sm:text-left relative z-10">
+                <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
                     <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Event</h1>
                     <p className="mt-2 text-sm sm:text-base text-gray-800">
                         <a href="/" className="hover:underline">Beranda</a>
