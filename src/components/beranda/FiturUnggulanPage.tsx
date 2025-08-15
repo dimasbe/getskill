@@ -57,7 +57,7 @@ const FiturUnggulanPage: React.FC = () => {
       setIsLoading(false);
     }, 2000);
   }, []);
-  
+
   return (
     <div className="min-h-screen bg-white font-sans antialiased">
       <section className="py-16 sm:py-20 md:py-24 bg-white rounded-lg">

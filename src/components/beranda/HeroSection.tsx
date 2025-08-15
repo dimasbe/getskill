@@ -10,8 +10,8 @@ import garislengkung from '../../assets/landingpage/beranda/garis lengkung.png';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-screen md:min-h-[90vh] m-0 pt-0">
-      
+    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-[75vh] md:min-h-[90vh] m-0 pt-0">
+
       {/* Gambar garis lengkung di pojok kiri atas */}
       <img
         src={garislengkung}
@@ -19,11 +19,12 @@ const HeroSection: React.FC = () => {
         className="absolute top-0 left-0 w-[150px] md:w-[200px] z-0 fade-in-up"
         style={{ animationDelay: '0s' }}
       />
-      
+
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-18 pt-10 md:pt-16 relative z-10">
 
         {/* Bagian Kiri - Konten Teks */}
-        <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20 mt-10 md:mt-0">
+        <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20 mt-10 md:mt-0 relative">
+
           <h1
             className="text-[36px] md:text-[46px] font-bold text-gray-900 leading-tight md:leading-snug mb-3 fade-in-up"
             style={{ animationDelay: '0.1s' }}
@@ -46,6 +47,7 @@ const HeroSection: React.FC = () => {
           >
             Belajar seru bersama GetSkill
           </p>
+
           {/* Tombol Daftar */}
           <div className="mt-6 fade-in-up" style={{ animationDelay: '0.7s' }}>
             <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-[20px] flex items-center justify-center mx-auto md:mx-0 gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
@@ -66,18 +68,64 @@ const HeroSection: React.FC = () => {
               </svg>
             </button>
           </div>
+
+          {/* Bubble dan Panah untuk mobile */}
+          <div className="absolute top-[110%] left-[5%] space-y-1 md:hidden fade-in-up" style={{ animationDelay: '0.9s' }}>
+
+            {/* Panah kecil untuk seluler */}
+            <img
+              src={panah}
+              alt="panah"
+              className="absolute top-6 left-[90%] w-[70px] rotate-20 fade-in-up"
+              style={{ animationDelay: '1s' }}
+            />
+
+            {/* Bubble Kenza */}
+            <div className="bg-white px-3 py-1 rounded-full shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2">
+              <img
+                src={avatar}
+                alt="Kenza"
+                className="w-7 h-7 rounded-full"
+              />
+              <p className="text-sm font-medium">Kenza</p>
+            </div>
+            {/* Bubble Michel */}
+            <div className="bg-white px-3 py-1 rounded-full shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2">
+              <img
+                src={avatar2}
+                alt="Michel"
+                className="w-7 h-7 rounded-full"
+              />
+              <p className="text-sm font-medium">Michel</p>
+            </div>
+          </div>
         </div>
 
         {/* Bagian Kanan - Gambar dan Pola */}
         <div className="md:w-1/2 relative flex justify-center items-center">
-          {/* Panah ungu - untuk desktop, disembunyikan di mobile */}
+
+          {/* Panah ungu - MOBILE */}
+          <img
+            src={arrowPattern}
+            alt="Panah Ungu"
+            className="absolute top-[100px] -right-[30px] w-[360px] opacity-80 z-0 dots-animate md:hidden"
+          />
+
+          {/* Panah ungu - DESKTOP */}
           <img
             src={arrowPattern}
             alt="Panah Ungu"
             className="absolute -right-[20px] top-[150px] w-[600px] z-0 arrow-animate hidden md:block"
           />
 
-          {/* Pattern titik - untuk desktop, disembunyikan di mobile */}
+          {/* Pattern titik - MOBILE */}
+          <img
+            src={dotsPattern}
+            alt="Dots Pattern"
+            className="absolute -top-[40px] -right-[10px] w-[360px] opacity-80 z-0 dots-animate md:hidden"
+          />
+
+          {/* Pattern titik - DESKTOP */}
           <img
             src={dotsPattern}
             alt="Dots Pattern"
@@ -92,17 +140,17 @@ const HeroSection: React.FC = () => {
             style={{ animationDelay: '1.2s' }}
           />
 
-          {/* Panah kecil - untuk desktop, disembunyikan di mobile */}
+          {/* Panah kecil untuk desktop */}
           <img
             src={panah}
             alt="panah"
-            className="absolute right-[125px] top-[15px] md:right-[260px] md:top-[25px] xl:right-[300px] xl:top-[20px] w-[70px] md:w-[90px] rotate-20 fade-in-up hidden md:block"
+            className="absolute right-[125px] top-[15px] md:right-[225px] md:top-[20px] xl:right-[315px] xl:top-[20px] w-[70px] md:w-[90px] rotate-20 fade-in-up hidden md:block"
             style={{ animationDelay: '1s' }}
           />
 
-          {/* Bubble nama atas */}
+          {/* Bubble nama atas untuk desktop */}
           <div
-            className="absolute top-[50%] left-[10%] md:top-[5px] md:left-auto md:right-[330px] xl:right-[390px] z-20 fade-in-up"
+            className="absolute top-[50%] left-[10%] md:top-[1px] md:left-auto md:right-[290px] xl:right-[390px] z-20 fade-in-up hidden md:block"
             style={{ animationDelay: '0.1s' }}
           >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
@@ -115,9 +163,9 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Bubble nama bawah */}
+          {/* Bubble nama bawah untuk desktop */}
           <div
-            className="absolute top-[calc(50%+50px)] left-[15%] md:top-[45px] md:left-auto md:right-[320px] xl:right-[380px] z-20 fade-in-up"
+            className="absolute top-[calc(50%+50px)] left-[15%] md:top-[40px] md:left-auto md:right-[290px] xl:right-[380px] z-20 fade-in-up hidden md:block"
             style={{ animationDelay: '0.3s' }}
           >
             <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">

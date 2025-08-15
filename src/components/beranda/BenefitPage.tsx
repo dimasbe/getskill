@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import fotomodel2 from '../../assets/landingpage/beranda/fotomodel2.png';
 
-// --- Komponen Skeleton Loader ---
+
 const SkeletonBenefit: React.FC = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-20 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 animate-pulse">
@@ -9,7 +9,7 @@ const SkeletonBenefit: React.FC = () => {
       <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
         <div className="w-full max-w-[250px] sm:max-w-sm md:max-w-md h-[300px] bg-gray-200 rounded-lg"></div>
       </div>
-      {/* Skeleton untuk Konten */}
+     
       <div className="w-full md:w-1/2 text-center md:text-left">
         <div className="bg-gray-200 h-6 w-40 rounded-full mb-4 mx-auto md:mx-0"></div>
         <div className="bg-gray-200 h-10 w-full rounded mb-4"></div>
@@ -36,7 +36,6 @@ const SkeletonBenefit: React.FC = () => {
     </div>
   );
 };
-// --- Akhir Komponen Skeleton Loader ---
 
 const BenefitPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -86,15 +85,17 @@ const BenefitPage: React.FC = () => {
               <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
                 Benefit Yang Didapat
               </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-4 mb-6">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-4 mb-3">
                 Tingkatkan <span className="bg-purple-700 text-white px-2 py-1 rounded-[20px]">Skillmu</span> Dengan Kursus Terbaik Di Satu Tempat
               </h3>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-6">
-                GetSkill memberikan penjaminan belajar terbaik dengan akses ke berbagai kursus berkualitas tinggi yang dirancang untuk membantu Anda mengembangkan keterampilan yang dibutuhkan di dunia kerja.
-              </p>
+              <div className="text-justify md:text-justify">
+                <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-6 px-7 md:px-0">
+                  GetSkill memberikan penjaminan belajar terbaik dengan akses ke berbagai kursus berkualitas tinggi yang dirancang untuk membantu Anda mengembangkan keterampilan yang dibutuhkan di dunia kerja.
+                </p>
+              </div>
 
               {/* Poin-poin */}
-              <ul className="space-y-4 text-gray-700 text-sm sm:text-base text-left">
+              <ul className="space-y-4 text-gray-700 text-sm sm:text-base text-left px-7 md:px-0">
                 <li className="flex items-center">
                   <svg className="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -120,7 +121,7 @@ const BenefitPage: React.FC = () => {
                 <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
                   Daftar Sekarang
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
                   </svg>
                 </button>
               </div>
