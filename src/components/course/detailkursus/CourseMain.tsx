@@ -19,17 +19,18 @@ export default function CourseMain({ courseData }: Props) {
         <img
           src={`/images/${courseData.image}`}
           alt={courseData.title}
-          className="w-full h-[300px] md:h-[400px] lg:h-[450px] object-cover hover:scale-105 transition-transform duration-300"
+          className="w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] object-cover hover:scale-105 transition-transform duration-300"
         />
       </div>
+
       {/* Info */}
-      <div className="space-y-2 max-w-6xl mx-auto px-6 text-left">
-        <h1 className="text-xl md:text-4xl font-bold text-gray-900 leading-snug">
+      <div className="space-y-2 max-w-6xl mx-auto px-4 sm:px-6 text-left">
+        <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 leading-snug">
           {courseData.title}
         </h1>
 
         {/* Rating */}
-        <div className="flex items-center gap-1 text-yellow-500 text-sm">
+        <div className="flex items-center gap-1 text-yellow-500 text-sm flex-wrap">
           {[...Array(5)].map((_, i) => (
             <FaStar
               key={i}
@@ -41,22 +42,24 @@ export default function CourseMain({ courseData }: Props) {
             ({courseData.rating.toFixed(1)} Review)
           </span>
         </div>
+
         {/* Info penulis */}
-        <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm">
+        <div className="flex flex-wrap items-center gap-3 text-gray-500 text-sm">
           <span className="flex items-center gap-1">
-            <FaUser className="text-black-500" size={14} /> {courseData.author}
+            <FaUser size={14} /> {courseData.author}
           </span>
           <span className="flex items-center gap-1">
-            <FaCalendarAlt className="text-black-500" size={14} /> {courseData.date}
+            <FaCalendarAlt size={14} /> {courseData.date}
           </span>
           <span className="flex items-center gap-1">
-            <FaUsers className="text-black-500" size={14} /> {courseData.students} Siswa
+            <FaUsers size={14} /> {courseData.students} Siswa
           </span>
         </div>
       </div>
+
       {/* Tabs */}
       <div>
-        <div className="flex border-b border-gray-200">
+        <div className="flex overflow-x-auto border-b border-gray-200 scrollbar-hide">
           {[
             { key: "deskripsi", label: "Deskripsi" },
             { key: "konten-kursus", label: "Konten Kursus" },
@@ -65,7 +68,7 @@ export default function CourseMain({ courseData }: Props) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`py-3 px-6 text-lg font-medium text-left transition-colors ${
+              className={`py-3 px-4 sm:px-6 text-sm sm:text-lg font-medium text-left whitespace-nowrap transition-colors ${
                 activeTab === tab.key
                   ? "text-purple-700 border-b-2 border-purple-700"
                   : "text-gray-500 hover:text-gray-800"
@@ -75,7 +78,8 @@ export default function CourseMain({ courseData }: Props) {
             </button>
           ))}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
           {activeTab === "deskripsi" && <CourseDescription courseData={courseData} />}
           {activeTab === "konten-kursus" && <CourseSyllabus courseData={courseData} />}
           {activeTab === "ulasan" && <CourseReviews courseData={courseData} />}

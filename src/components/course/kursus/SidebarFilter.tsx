@@ -29,6 +29,7 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
 
   const SidebarContent = (
     <div className="bg-white rounded-2xl shadow-md p-5 border border-gray-100 w-full md:w-64 h-fit">
+      
       {/* Kategori */}
       <div>
         <button
