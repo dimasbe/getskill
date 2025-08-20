@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logo/logo.png";
+import logo from "../../assets/img/logo/get-skill/logo.png";
 
 interface SpinnerProps {
     animateOut?: boolean;

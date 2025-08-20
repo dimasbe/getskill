@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import { newsArticles } from "../../../data/newsData"; // Pastikan Anda mengimpor tipe NewsArticle jika digunakan di NewsCard
 import RelatedNews from "../../../components/public/CardNews/RelatedNews";
-import logoGetskill from '../../../assets/logo/landscape.png';
+import logoGetskill from '../../../assets/img/logo/get-skill/landscape.png';
 
 // --- Komponen Skeleton Detail Berita ---
 const SkeletonDetailBerita: React.FC = () => {
