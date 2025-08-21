@@ -1,9 +1,7 @@
-// src/components/beranda/HeroSection.tsx
-
-import React, { useEffect } from 'react'; // <--- Perbaikan di sini: '=>' diganti menjadi 'from'
+import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import '../../style/App.css'; // Pastikan ini mengimpor CSS dasar Anda
+import '../../style/App.css';
 import fotomodel1 from '../../assets/landingpage/beranda/fotomodel1.png';
 import avatar from '../../assets/landingpage/beranda/avatar.png';
 import avatar2 from '../../assets/landingpage/beranda/avatar2.png';
@@ -11,6 +9,7 @@ import panah from "../../assets/landingpage/beranda/panah.png";
 import arrowPattern from '../../assets/landingpage/beranda/panah-ungu.png';
 import dotsPattern from '../../assets/landingpage/beranda/dots.png';
 import garislengkung from '../../assets/landingpage/beranda/garis lengkung.png';
+import bannerShape02 from '../../assets/img/banner/banner_shape02.png';
 
 const HeroSection: React.FC = () => {
   useEffect(() => {
@@ -123,20 +122,36 @@ const HeroSection: React.FC = () => {
 
         {/* Bagian Kanan - Gambar dan Pola */}
         <div className="md:w-1/2 relative flex justify-center items-center">
+          {/* Banner Shape02 - MOBILE */}
+          <img
+            src={bannerShape02}
+            alt="Banner Shape"
+            className="absolute top-[150px] right-[30px] w-[280px] opacity-100 z-0 md:hidden"
+            data-aos="fade-left"
+            data-aos-delay="1500"
+          />
+          {/* Banner Shape02 - DESKTOP */}
+          <img
+            src={bannerShape02}
+            alt="Banner Shape"
+            className="absolute top-[430px] right-[380px] w-[120px] opacity-100 z-0 hidden md:block"
+            data-aos="fade-up"
+            data-aos-delay="1500"
+          />
           {/* Panah ungu - MOBILE */}
           <img
             src={arrowPattern}
             alt="Panah Ungu"
             className="absolute top-[100px] -right-[30px] w-[360px] opacity-80 z-0 md:hidden"
-            data-aos="fade-left"
+            data-aos="fade-up"
             data-aos-delay="1200"
           />
           {/* Panah ungu - DESKTOP */}
           <img
             src={arrowPattern}
             alt="Panah Ungu"
-            className="absolute -right-[20px] top-[150px] w-[600px] z-0 hidden md:block"
-            data-aos="fade-left"
+            className="absolute -right-[30px] top-[230px] w-[530px] z-0 hidden md:block"
+            data-aos="fade-up"
             data-aos-delay="1200"
           />
           {/* Pattern titik - MOBILE */}
@@ -151,8 +166,8 @@ const HeroSection: React.FC = () => {
           <img
             src={dotsPattern}
             alt="Dots Pattern"
-            className="absolute top-[0px] right-[50px] w-[450px] opacity-80 z-0 hidden md:block"
-            data-aos="fade-down"
+            className="absolute top-[25px] right-[60px] w-[400px] opacity-80 z-0 hidden md:block"
+            data-aos="fade-up"
             data-aos-delay="1400"
           />
           {/* Foto model */}
@@ -167,30 +182,27 @@ const HeroSection: React.FC = () => {
           <img
             src={panah}
             alt="panah"
-            className="absolute right-[125px] top-[15px] md:right-[225px] md:top-[20px] xl:right-[315px] xl:top-[20px] w-[70px] md:w-[90px] rotate-20 hidden md:block"
-            data-aos="fade-up"
+            className="absolute right-[125px] top-[15px] md:right-[225px] md:top-[20px] xl:right-[375px] xl:top-[60px] w-[70px] md:w-[80px] rotate-1 hidden md:block"
+            data-aos="fade-right"
             data-aos-delay="1000"
           />
-          {/* Bubble nama atas untuk desktop */}
+          {/* Bubble nama untuk desktop - KODE YANG TELAH DIGABUNGKAN */}
           <div
-            className="absolute top-[50%] left-[10%] md:top-[1px] md:left-auto md:right-[290px] xl:right-[390px] z-20 hidden md:block"
-            data-aos="fade-up"
+            className="absolute top-[50%] left-[10%] md:top-[50px] md:left-auto md:right-[280px] xl:right-[440px] z-20 hidden md:block"
+            data-aos="fade-down"
             data-aos-delay="100"
           >
-            <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
-              <img src={avatar} alt="Kenza" className="w-7 h-7 rounded-full" />
-              <p className="text-sm font-medium">Kenza Aurelia</p>
-            </div>
-          </div>
-          {/* Bubble nama bawah untuk desktop */}
-          <div
-            className="absolute top-[calc(50%+50px)] left-[15%] md:top-[40px] md:left-auto md:right-[290px] xl:right-[380px] z-20 hidden md:block"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            <div className="bg-white px-3 py-1 rounded-lg shadow-lg shadow-gray-500/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/40">
-              <img src={avatar2} alt="Michel" className="w-7 h-7 rounded-full" />
-              <p className="text-sm font-medium">Michel Jones</p>
+            <div className="bg-white p-2 rounded-[5px] shadow-[7px_7px_0px_rgba(176,184,196,0.6)] backdrop-blur-sm space-y-2">
+              {/* Bubble Kenza */}
+              <div className="flex items-center space-x-2">
+                <img src={avatar} alt="Kenza" className="w-6 h-6 rounded-full" />
+                <p className="text-xs font-medium">Kenza Aurelia</p>
+              </div>
+              {/* Bubble Michel */}
+              <div className="flex items-center space-x-2">
+                <img src={avatar2} alt="Michel" className="w-6 h-6 rounded-full" />
+                <p className="text-xs font-medium">Michel Jones</p>
+              </div>
             </div>
           </div>
         </div>
