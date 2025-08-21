@@ -114,11 +114,11 @@ const Navbar = () => {
           : '-translate-y-full opacity-0'
         }`}
     >
-      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex justify-between items-center">
+      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-10 md:px-25 h-20 flex justify-between items-center">
         {/* Logo & Links */}
-        <div className="flex items-center space-x-10">
+        <div className="flex items-center space-x-5">
           <NavLink to="/">
-            <img src="/src/assets/logo/logo.png" alt="Logo" className="w-11 h-12" />
+            <img src="/src/assets/img/logo/get-skill/landscape.png" alt="Logo" className="w-auto h-11" />
           </NavLink>
           <ul className="hidden lg:flex items-center space-x-6">
             {navLinks.map(({ name, to }) => (

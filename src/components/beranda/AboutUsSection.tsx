@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import logoDesktop from '../../assets/logo/logo.png';
-import logoMobile from '../../assets/logo/landscape.png';
+import logoDesktop from '../../assets/img/logo/get-skill/logo.png';
+import logoMobile from '../../assets/img/logo/get-skill/landscape.png';
 import bintang from '../../assets/landingpage/beranda/bintang.png';
 import layer1 from '../../assets/landingpage/beranda/layer1.png';
 import layer2 from '../../assets/landingpage/beranda/Layer 2.png';

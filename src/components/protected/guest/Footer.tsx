@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
-import logoLandscape from '../../../assets/logo/landscape white .png';
+import logoLandscape from '../../../assets/img/logo/get-skill/landscape white.png';
 
 const Footer: React.FC = () => {
   return (
