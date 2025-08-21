@@ -17,6 +17,7 @@ interface CourseCardProps {
 export default function CourseCard({
   id,
   image,
+  category,
   title,
   author,
   price,
@@ -30,7 +31,7 @@ export default function CourseCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: 1.02 }}
       className="cursor-pointer rounded-2xl shadow-md hover:shadow-lg bg-white overflow-hidden transition-all flex flex-col"
       onClick={() => navigate(`/kursus/${id}`)}
     >
@@ -45,24 +46,30 @@ export default function CourseCard({
 
       {/* Konten */}
       <div className="p-4 flex flex-col flex-grow text-left">
+        {/* Badge kategori */}
+        <span className="px-2 py-0.5 text-[11px] font-medium bg-gray-100 text-gray-600 rounded-md inline-flex w-fit mb-2">
+  {category}
+</span>
+
+
+        {/* Rating */}
+        <div className="flex items-center text-sm text-gray-500 mb-2">
+          <FaStar className="text-yellow-500 mr-1" size={14} />
+          <span>{rating.toFixed(1)} Reviews</span>
+        </div>
+
         {/* Judul */}
-        <h3 className="font-semibold text-gray-900 leading-snug line-clamp-2">
+        <h3 className="font-semibold text-gray-900 leading-snug line-clamp-2 mb-1">
           {title}
         </h3>
 
-        {/* Penulis */}
-        <p className="text-sm text-gray-500 mb-2">By {author}</p>
-
-        {/* Rating */}
-        <div className="flex items-center text-yellow-500 text-sm font-light mb-2">
-  <FaStar className="mr-1 text-yellow-500" size={14} />
-  {rating.toFixed(1)}
-</div>
+        {/* Author */}
+        <p className="text-sm text-gray-500 mb-3">By {author}</p>
 
         {/* Harga */}
         <p
           className={`font-bold text-lg mt-auto ${
-            isFree ? "text-yellow-500" : "text-green-600"
+            isFree ? "text-yellow-500" : "text-purple-600"
           }`}
         >
           {isFree ? "Gratis" : formatRupiah(price)}
