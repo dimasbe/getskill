@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { LayoutGrid } from "lucide-react";
-import { HiChevronDown } from "react-icons/hi";
+import { HiChevronDown, HiOutlineViewGridAdd } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
 type SubItem = string | { name: string; to: string };
@@ -50,7 +49,7 @@ const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center pl-5 pr-3 text-gray-500 cursor-pointer select-none"
       >
-        <LayoutGrid size={20} />
+        <HiOutlineViewGridAdd size={20} className="text-purple-600" />
         <span className="text-sm ml-2">Pilih Kategori</span>
         <HiChevronDown
           className={`ml-1 size-4 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`}
@@ -59,7 +58,7 @@ const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <ul className="absolute left-0 mt-5 w-52 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+        <ul className="absolute left-0 mt-5 w-52 bg-white border text-left border-gray-200 rounded-md shadow-lg z-50">
           {categories.map((category, index) => (
             <li
               key={index}

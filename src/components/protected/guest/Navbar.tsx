@@ -105,21 +105,35 @@ const Navbar = () => {
   }, [filters.categories, navigate]);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md transition-all duration-500 ease-in-out
-        ${showNavbar
-          ? scrollDirection === 'down'
-            ? 'animate-slideDown'
-            : 'translate-y-0 opacity-100'
-          : '-translate-y-full opacity-0'
-        }`}
-    >
-      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-10 md:px-25 h-20 flex justify-between items-center">
+<nav
+  className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md
+    ${showNavbar
+      ? scrollDirection === 'down'
+        ? 'animate-slideDown'
+        : 'translate-y-0 opacity-100'
+      : '-translate-y-full opacity-0'
+    }`}
+>
+
+
+      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex justify-between items-center">
         {/* Logo & Links */}
-        <div className="flex items-center space-x-5">
+        <div className="flex items-center space-x-10">
           <NavLink to="/">
-            <img src="/src/assets/img/logo/get-skill/landscape.png" alt="Logo" className="w-auto h-11" />
+            {/* Logo Desktop */}
+            <img
+              src="/src/assets/img/logo/get-skill/logo.png"
+              alt="Logo Desktop"
+              className="hidden lg:block w-auto h-11"
+            />
+            {/* Logo Mobile */}
+            <img
+              src="/src/assets/img/logo/get-skill/landscape.png"
+              alt="Logo Mobile"
+              className="block lg:hidden w-auto h-10"
+            />
           </NavLink>
+
           <ul className="hidden lg:flex items-center space-x-6">
             {navLinks.map(({ name, to }) => (
               <li key={name}>
@@ -127,8 +141,8 @@ const Navbar = () => {
                   to={to}
                   className={({ isActive }) =>
                     isActive
-                      ? "text-purple-700 text-sm font-bold"
-                      : "text-black text-sm font-bold hover:text-purple-700"
+                      ? "text-purple-700 text-sm font-semibold"
+                      : "text-black text-sm font-semibold hover:text-purple-700"
                   }
                 >
                   {name}
@@ -146,7 +160,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Pencarian kursus..."
-              className="py-1 px-2 w-40 text-sm font-semibold bg-transparent focus:outline-none placeholder-gray-400"
+              className="py-1 px-2 w-40 text-sm font-medium bg-transparent focus:outline-none placeholder-gray-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -176,10 +190,11 @@ const Navbar = () => {
 
           <Link
             to="/login"
-            className="hidden sm:block bg-yellow-500 text-black text-xs font-medium px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
+            className="hidden lg:block bg-yellow-500 text-black text-xs font-semibold px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
           >
             Masuk
           </Link>
+
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -209,7 +224,7 @@ const Navbar = () => {
           ))}
           <Link
             to="/login"
-            className="block text-center bg-yellow-500 text-black text-xs font-medium px-4 py-2 rounded-full hover:bg-purple-700 hover:text-white transition"
+            className="block text-center bg-yellow-500 text-black text-xs font-semibold px-4 py-2 rounded-full hover:bg-purple-700 hover:text-white transition"
           >
             Masuk
           </Link>
