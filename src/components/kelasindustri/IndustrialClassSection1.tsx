@@ -37,10 +37,11 @@ const IndustrialClassSection1: React.FC = () => {
 
   return (
     <section className="w-full py-10 sm:py-12 md:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12 justify-items-center md:justify-items-start">
-
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 
+                grid grid-cols-1 md:grid-cols-2 items-center 
+                gap-4 md:gap-6 justify-center">
         {/* Kiri - Gambar */}
-        <div className="relative flex justify-center md:justify-start order-1">
+        <div className="relative flex justify-center md:justify-start order-1 md:ml-15">
           {isLoading ? <SkeletonImage /> : (
             <img
               src={chartImg}
@@ -51,13 +52,13 @@ const IndustrialClassSection1: React.FC = () => {
         </div>
 
         {/* Kanan - Konten */}
-        <div className="text-left mt-6 md:mt-0 max-w-lg order-2">
+        <div className="text-left md:pr-2 lg:pr-0 order-2 md:order-1 justify-self-start">
           {isLoading ? (
             <div className="space-y-4">
-              <SkeletonText width="w-28" height="h-5" /> {/* Label */}
-              <SkeletonText width="w-full" height="h-6" /> {/* Title */}
-              <SkeletonText width="w-5/6" height="h-4" /> {/* Paragraph line 1 */}
-              <SkeletonText width="w-4/6" height="h-4" /> {/* Paragraph line 2 */}
+              <SkeletonText width="w-28" height="h-5" />
+              <SkeletonText width="w-full" height="h-6" />
+              <SkeletonText width="w-5/6" height="h-4" />
+              <SkeletonText width="w-4/6" height="h-4" />
               <div className="space-y-2">
                 {Array(4).fill(null).map((_, i) => <SkeletonListItem key={i} />)}
               </div>
@@ -80,7 +81,7 @@ const IndustrialClassSection1: React.FC = () => {
                   <li
                     key={index}
                     className="flex items-start gap-3 fade-in-up"
-                    style={{ animationDelay: `${0.15 * index}s` }} // stagger
+                    style={{ animationDelay: `${0.15 * index}s` }}
                   >
                     <span className="text-yellow-400 text-lg leading-none">•</span>
                     <span className="text-gray-700">{item}</span>
@@ -92,6 +93,7 @@ const IndustrialClassSection1: React.FC = () => {
         </div>
       </div>
     </section>
+
   );
 };
 

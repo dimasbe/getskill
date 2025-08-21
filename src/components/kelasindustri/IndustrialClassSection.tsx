@@ -30,10 +30,12 @@ const IndustrialClassSection: React.FC = () => {
 
   return (
     <section className="w-full py-10 sm:py-12 md:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12 justify-items-center md:justify-items-start">
-
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 
+                grid grid-cols-1 md:grid-cols-2 items-center 
+                gap-4 md:gap-6 justify-center">
         {/* Kiri - Gambar */}
-        <div className="relative flex justify-center md:justify-start">
+        <div className="relative flex justify-center md:justify-start md:ml-15">
+
           {isLoading ? (
             <SkeletonImage />
           ) : (
