@@ -19,10 +19,11 @@ const IndustrialClassSection2: React.FC = () => {
 
   return (
     <section className="w-full py-10 sm:py-12 md:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
-
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 
+                  grid grid-cols-1 md:grid-cols-2 items-center 
+                  gap-4 md:gap-6 justify-center">
         {/* Kanan - Gambar */}
-        <div className="flex justify-center md:justify-end order-1 md:order-2">
+        <div className="flex justify-center md:justify-end order-1 md:order-2 md:mr-15">
           {isLoading ? (
             <SkeletonImage />
           ) : (
@@ -35,7 +36,7 @@ const IndustrialClassSection2: React.FC = () => {
         </div>
 
         {/* Kiri - Teks */}
-        <div className="text-left mt-6 md:mt-0 max-w-lg order-2 md:order-1">
+         <div className="text-left max-w-md md:ml-4 lg:ml-6 order-2 md:order-1">
           {isLoading ? (
             <div className="space-y-3">
               <SkeletonText width="w-40" height="h-3" />

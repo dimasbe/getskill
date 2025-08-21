@@ -15,8 +15,8 @@ const benefits = [
 ];
 
 const icons = [mitraIcon, businessIcon, akreditasiIcon, kerjaIcon];
-const bgColors = ["bg-indigo-100","bg-green-100","bg-yellow-100","bg-green-100"];
-const numberColors = ["bg-indigo-600","bg-green-600","bg-yellow-600","bg-green-500"];
+const bgColors = ["bg-indigo-100", "bg-green-100", "bg-yellow-100", "bg-green-100"];
+const numberColors = ["bg-indigo-600", "bg-green-600", "bg-yellow-600", "bg-green-500"];
 
 // Skeleton components
 const SkeletonText = ({ width, height }: { width: string, height: string }) => (
@@ -27,8 +27,8 @@ const SkeletonBenefitItem = () => (
   <div className="flex items-start gap-3 sm:gap-4 animate-pulse">
     <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex-shrink-0"></div>
     <div className="flex-1 space-y-1">
-      <SkeletonText width="w-24" height="h-3"/>
-      <SkeletonText width="w-32" height="h-2"/>
+      <SkeletonText width="w-24" height="h-3" />
+      <SkeletonText width="w-32" height="h-2" />
     </div>
   </div>
 );
@@ -47,10 +47,12 @@ const IndustrialClassBenefits: React.FC = () => {
 
   return (
     <section className="bg-white py-10 sm:py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12 justify-items-center md:justify-items-end">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 
+                  grid grid-cols-1 md:grid-cols-2 items-center 
+                  gap-4 md:gap-6 justify-center">
 
         {/* Right Image */}
-        <div className="flex justify-center md:justify-end order-1 md:order-2">
+        <div className="flex justify-center md:justify-end order-1 md:order-2 md:mr-10">
           {isLoading ? <SkeletonImage /> : (
             <img
               src={kelasIndustriImg}
@@ -61,11 +63,11 @@ const IndustrialClassBenefits: React.FC = () => {
         </div>
 
         {/* Left Content */}
-        <div className="text-left md:pr-6 lg:pr-1 order-2 md:order-1 justify-self-start">
+        <div className="text-left max-w-md md:ml-4 lg:ml-6 order-2 md:order-1">
           {isLoading ? (
             <div className="space-y-3">
-              <SkeletonText width="w-28" height="h-5" /> {/* Label */}
-              <SkeletonText width="w-full" height="h-6" /> {/* Title */}
+              <SkeletonText width="w-28" height="h-5" />
+              <SkeletonText width="w-full" height="h-6" />
               <ul className="mt-4 space-y-4 sm:space-y-6">
                 {Array(4).fill(null).map((_, i) => <SkeletonBenefitItem key={i} />)}
               </ul>
@@ -104,6 +106,7 @@ const IndustrialClassBenefits: React.FC = () => {
 
       </div>
     </section>
+
   );
 };
 
