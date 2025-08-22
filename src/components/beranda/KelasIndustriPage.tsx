@@ -44,7 +44,7 @@ const KelasIndustriPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans antialiased p-20">
-      <section className="py-30 bg-gray-50 rounded-lg mt-5 relative overflow-hidden">
+      <section className="py-[15vh] bg-gray-50 rounded-lg mt-5 relative overflow-hidden">
         {/* Dekorasi Gambar 1 */}
         <img
           src={komponen8}
@@ -74,12 +74,12 @@ const KelasIndustriPage: React.FC = () => {
           <div className="container mx-auto px-4 sm:px-8 lg:px-16 flex flex-col md:flex-row items-center justify-center gap-10 z-10 relative">
             <div className="md:w-1/2 text-center md:text-left">
               <h1 className="text-4xl font-bold text-gray-800 mb-4">
-                Jelajahi{' '}
+                Jelajahi Kelas{' '}
                 <span className="bg-yellow-400 px-4 py-1 font-bold text-white rounded-[5px] inline-block">
-                  Kelas Industri
+                  Industri
                 </span>
               </h1>
-              <p className="text-sm sm:text-base text-gray-600 mb-6 text-justify">
+              <p className="text-sm sm:text-base text-gray-600 mb-6 text-justify max-w-sm">
                 Tingkatkan keterampilan dengan program kelas industri yang dirancang
                 untuk menjembatani dunia akademik dan profesional. Dapatkan pengalaman
                 langsung dari para ahli dan siapkan diri untuk karier yang kompetitif.
@@ -111,28 +111,28 @@ const KelasIndustriPage: React.FC = () => {
                 </button>
               </div>
             </div>
-            <div className="md:w-1/2 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-              <div className="bg-white p-5 rounded-xl shadow-lg flex flex-col items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-bold text-purple-700">
-                  535+
+            <div className="md:w-1/2 grid grid-cols-1 sm:grid-cols-3 gap-5 text-center">
+              <div className="bg-white p-2 aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
+                <span className="text-4xl sm:text-5xl font-bold text-[#9900FF]">
+                  755+
                 </span>
-                <p className="text-gray-600 text-xs sm:text-sm">
+                <p className="text-gray-600 text-xs sm:text-sm mt-2">
                   Siswa Kelas Industri
                 </p>
               </div>
-              <div className="bg-white p-5 rounded-xl shadow-lg flex flex-col items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-bold text-blue-700">
-                  34+
+              <div className="bg-white p-2 aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
+                <span className="text-4xl sm:text-5xl font-bold text-[#9900FF]">
+                  97+
                 </span>
-                <p className="text-gray-600 text-xs sm:text-sm">
+                <p className="text-gray-600 text-xs sm:text-sm mt-2">
                   Alumni Kelas Industri
                 </p>
               </div>
-              <div className="bg-white p-5 rounded-xl shadow-lg flex flex-col items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-bold text-yellow-700">
+              <div className="bg-white p-2 aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
+                <span className="text-4xl sm:text-5xl font-bold text-[#9900FF]">
                   18+
                 </span>
-                <p className="text-gray-600 text-xs sm:text-sm">
+                <p className="text-gray-600 text-xs sm:text-sm mt-2">
                   Sekolah Bergabung
                 </p>
               </div>

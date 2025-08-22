@@ -42,7 +42,7 @@ const AboutUsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-20 bg-white rounded-lg mt-0 overflow-hidden">
+    <section className="relative py-[26vh] bg-white rounded-lg mt-0 overflow-hidden">
       <style>
         {`
           @keyframes fadeInUp {
@@ -84,7 +84,7 @@ const AboutUsSection: React.FC = () => {
       ) : (
         <div className="relative z-10 container mx-auto px-6 sm:px-10 lg:px-20 flex flex-col md:flex-row items-center justify-center fade-in-up">
           {/* Logo */}
-          <div className="w-full md:w-5/12 flex justify-center pr-0 md:pr-4"> 
+          <div className="w-full md:w-5/12 flex justify-center pr-0 md:pr-4">
             <img
               src={logoDesktop}
               alt="Getskill Desktop"

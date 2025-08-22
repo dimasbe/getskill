@@ -35,7 +35,10 @@ const SkeletonFeatures: React.FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {[...Array(3)].map((_, index) => (
-        <div key={index} className="w-full max-w-sm p-5 rounded-xl shadow-lg text-center flex flex-col items-center mx-auto animate-pulse">
+        <div
+          key={index}
+          className="w-full max-w-sm p-5 rounded-xl shadow-lg text-center flex flex-col items-center mx-auto animate-pulse"
+        >
           <div className="bg-gray-200 w-12 h-12 rounded-full mb-3"></div>
           <div className="bg-gray-200 h-6 w-3/4 mb-2 rounded"></div>
           <div className="bg-gray-200 h-10 w-full rounded"></div>
@@ -45,7 +48,6 @@ const SkeletonFeatures: React.FC = () => {
   );
 };
 // --- Akhir Komponen Skeleton Loader ---
-
 
 // Komponen FiturUnggulanPage
 const FiturUnggulanPage: React.FC = () => {
@@ -60,7 +62,7 @@ const FiturUnggulanPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white font-sans antialiased">
-      <section className="py-16 sm:py-20 md:py-24 bg-white rounded-lg">
+      <section className="py-[20vh] sm:py-[20vh] md:py-[10vh] bg-white rounded-lg">
         <div className="container mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center">
           <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
             Fitur Unggulan
@@ -81,19 +83,19 @@ const FiturUnggulanPage: React.FC = () => {
                 icon={<img src={iconKomponen5} alt="Mentor Terpercaya" className="w-12 h-12" />}
                 title="Mentor Terpercaya"
                 description="Mentor Kami ramah dan ahli dalam domain untuk membuat Anda belajar dengan mudah"
-                bgColor="bg-purple-200"
+                bgColor="bg-purple-100" // light
               />
               <FeatureItem
                 icon={<img src={iconKomponen6} alt="Kursus Terbaik" className="w-12 h-12" />}
                 title="Kursus Terbaik"
                 description="Semua kursus kami dibuat dan untuk membuat Anda menikmati mempelajari hal-hal baru"
-                bgColor="bg-blue-200"
+                bgColor="bg-blue-100" // light
               />
               <FeatureItem
                 icon={<img src={iconKomponen7} alt="Tugas Kompetensi" className="w-12 h-12" />}
                 title="Tugas Kompetensi"
                 description="Bergabunglah dengan kelas kami dengan alat interaktif dan dukungan keraguan"
-                bgColor="bg-orange-200"
+                bgColor="bg-orange-100" // light
               />
             </div>
           )}

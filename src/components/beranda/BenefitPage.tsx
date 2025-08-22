@@ -66,7 +66,7 @@ const BenefitPage: React.FC = () => {
           }
         `}
       </style>
-      <section className="py-30 sm:py-30 bg-white">
+      <section className="py-{30vh] sm:py-[25vh] bg-white">
         {isLoading ? (
           <SkeletonBenefit />
         ) : (
@@ -97,19 +97,19 @@ const BenefitPage: React.FC = () => {
               {/* Poin-poin */}
               <ul className="space-y-4 text-gray-700 text-sm sm:text-base text-left px-7 md:px-0">
                 <li className="flex items-center">
-                  <svg className="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#39FF14] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                   Akses Materi Premium & Berkualitas
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#39FF14] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                   Belajar Kapan Saja & Di Mana Saja
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#39FF14] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                   Sertifikat Resmi & Peluang Karier
