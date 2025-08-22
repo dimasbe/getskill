@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import logoGetskill from '../../../assets/img/logo/get-skill/landscape.png';
 
 interface NewsCardProps {
-    id: string;       // Tambah properti id
+    id: string;
     image: string;
     date: string;
     title: string;
@@ -17,29 +18,15 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
         <Link
             to={`/berita/${id}`}
             tabIndex={0}
-            className="relative block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
+            className="relative block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm transition-transform duration-700 hover:scale-105 cursor-pointer
+             hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)]"
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             onFocus={() => setIsHover(true)}
             onBlur={() => setIsHover(false)}
         >
-            {/* Shine Diagonal Sekali Jalan */}
-            {isHover && (
-                <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none z-20">
-                    <div
-                        className="absolute w-[200%] h-[200%]"
-                        style={{
-                            background:
-                                'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)',
-                            transform: 'translate(-150%, -150%)',
-                            animation: 'shineDiagonal 1s linear forwards',
-                        }}
-                    />
-                </div>
-            )}
-
-            {/* Bagian Gambar dengan Border Putih */}
-            <div className="relative h-44 p-2 bg-white z-10">
+            {/* Bagian Thumbnail dengan Shine */}
+            <div className="relative h-58 p-5 bg-white z-10">
                 <div className="w-full h-full rounded-lg overflow-hidden relative">
                     <img
                         src={image}
@@ -50,23 +37,54 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                                 'https://placehold.co/400x200/EAB308/FFFFFF?text=News';
                         }}
                     />
-                    <span className="absolute top-2 left-2 bg-yellow-400 text-white text-xs font-semibold px-2 py-1 rounded">
+                    <span className="absolute top-2 left-2 bg-yellow-400 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
                         Berita
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-600/70 via-transparent to-transparent" />
+
+                    {/* Shine hanya di thumbnail */}
+                    {isHover && (
+                        <div className="absolute inset-0 rounded-lg overflow-hidden pointer-events-none z-20">
+                            <div
+                                className="absolute w-[200%] h-[200%]"
+                                style={{
+                                    background:
+                                        'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)',
+                                    transform: 'translate(-150%, -150%)',
+                                    animation: 'shineDiagonal 1s linear forwards',
+                                }}
+                            />
+                        </div>
+                    )}
+
+                    {/* Logo watermark bawah thumbnail */}
+                    <div className="absolute -bottom-[-6px] left-1/2 transform -translate-x-1/2 bg-white rounded-full p-1 shadow-md">
+                        <img
+                            src={logoGetskill}
+                            alt="GetSkill Logo"
+                            className="w-13 h-3 object-contain rounded-full"
+                        />
+                    </div>
                 </div>
             </div>
 
             {/* Konten */}
-            <div className="p-3 z-10 relative">
-                <div className="flex items-center text-sm text-gray-500 mb-2">
+            <div className="relative z-10 p-6">
+                {/* Tanggal */}
+                <div className="mb-3 -mt-6 flex items-center text-sm text-gray-500">
                     <FaRegCalendarAlt className="mr-2 text-purple-500" />
-                    {date}
+                    <span className="leading-none">{date}</span>
                 </div>
-                <h3 className="text-base font-semibold text-gray-800 mb-1 line-clamp-2 text-left">
+
+                {/* Judul */}
+                <h3 className="mb-1 text-base font-semibold text-gray-800 line-clamp-2 text-left">
                     {title}
                 </h3>
-                <p className="text-gray-600 text-sm line-clamp-2 text-justify">{summary}</p>
+
+                {/* Ringkasan */}
+                <p className="text-sm text-gray-600 line-clamp-2 text-justify">
+                    {summary}
+                </p>
             </div>
 
             {/* Keyframes */}
