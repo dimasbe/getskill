@@ -75,7 +75,7 @@ const KelasIndustriPage: React.FC = () => {
             <div className="md:w-1/2 text-center md:text-left">
               <h1 className="text-4xl font-bold text-gray-800 mb-4">
                 Jelajahi{' '}
-                <span className="bg-purple-700 px-4 py-1 font-bold text-white rounded-[20px] inline-block">
+                <span className="bg-yellow-400 px-4 py-1 font-bold text-white rounded-[5px] inline-block">
                   Kelas Industri
                 </span>
               </h1>
@@ -84,22 +84,29 @@ const KelasIndustriPage: React.FC = () => {
                 untuk menjembatani dunia akademik dan profesional. Dapatkan pengalaman
                 langsung dari para ahli dan siapkan diri untuk karier yang kompetitif.
               </p>
-              <div className="mt-6 flex justify-center md:justify-start">
-                <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
-                  Gabung Sekarang
+              {/* Tombol */}
+              <div className="mt-6" data-aos="fade-right" data-aos-delay="700">
+                <button
+                  className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
+                  rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
+                  transition-all duration-500 ease-in-out
+                  shadow-[4px_4px_0_#0A0082] 
+                  hover:bg-yellow-400 hover:shadow-none
+                  active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+                  focus:outline-none"
+                >
+                  <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
+                    Gabung Sekarang
+                  </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}
                     stroke="currentColor"
-                    className="w-5 h-5"
+                    className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
                   </svg>
                 </button>
               </div>

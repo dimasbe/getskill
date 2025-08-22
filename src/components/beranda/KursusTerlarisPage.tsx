@@ -8,7 +8,7 @@ export default function KursusPage() {
       <div className="bg-white font-sans antialiased p-4">
         <div className="container mx-auto py-12 px-6">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
+            <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
               Kursus Terlaris
             </span>
           </div>

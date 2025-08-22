@@ -9,7 +9,7 @@ const SkeletonBenefit: React.FC = () => {
       <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
         <div className="w-full max-w-[250px] sm:max-w-sm md:max-w-md h-[300px] bg-gray-200 rounded-lg"></div>
       </div>
-     
+
       <div className="w-full md:w-1/2 text-center md:text-left">
         <div className="bg-gray-200 h-6 w-40 rounded-full mb-4 mx-auto md:mx-0"></div>
         <div className="bg-gray-200 h-10 w-full rounded mb-4"></div>
@@ -82,11 +82,11 @@ const BenefitPage: React.FC = () => {
 
             {/* Konten */}
             <div className="w-full md:w-1/2 text-center md:text-left">
-              <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
+              <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
                 Benefit Yang Didapat
               </span>
               <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-4 mb-3">
-                Tingkatkan <span className="bg-purple-700 text-white px-2 py-1 rounded-[20px]">Skillmu</span> Dengan Kursus Terbaik Di Satu Tempat
+                Tingkatkan <span className="bg-yellow-400 text-white px-2 py-1 rounded-[5px]">Skillmu</span> Dengan Kursus Terbaik Di Satu Tempat
               </h3>
               <div className="text-justify md:text-justify">
                 <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-6 px-7 md:px-0">
@@ -117,10 +117,27 @@ const BenefitPage: React.FC = () => {
               </ul>
 
               {/* Tombol */}
-              <div className="mt-6 flex justify-center md:justify-start">
-                <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-yellow-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none">
-                  Daftar Sekarang
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <div className="mt-6" data-aos="fade-right" data-aos-delay="700">
+                <button
+                  className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
+                  rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
+                  transition-all duration-500 ease-in-out
+                  shadow-[4px_4px_0_#0A0082] 
+                  hover:bg-[#5a4ee6] hover:shadow-none
+                  active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+                  focus:outline-none"
+                >
+                  <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
+                    Daftar Sekarang
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
                   </svg>
                 </button>

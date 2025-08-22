@@ -38,7 +38,7 @@ const BeritaTerbaruPage: React.FC = () => {
     <div className="min-h-screen bg-white font-sans antialiased">
       <section className="py-0 bg-white rounded-lg">
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 text-center">
-          <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
+          <span className="px-2 py-1 text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
             Berita
           </span>
           <h1 className="text-3xl font-bold text-gray-800 mt-5 mb-2">

@@ -99,7 +99,7 @@ const AboutUsSection: React.FC = () => {
 
           {/* Teks */}
           <div className="w-full md:w-7/12 text-center md:text-left pl-0 md:pl-4">
-            <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-purple-600 rounded-full">
+            <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
               Tentang Kami
             </span>
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mt-4 mb-6">

@@ -72,13 +72,13 @@ const HeroSection: React.FC = () => {
             <button
               className="group bg-[#7063FF] text-white font-semibold py-3 px-6 
                rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
-               transition-all duration-150 ease-in-out
+               transition-all duration-500 ease-in-out
                shadow-[4px_4px_0_#0A0082] 
                hover:bg-[#5a4ee6] hover:shadow-none
                active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                focus:outline-none"
             >
-              <span className="transition-colors duration-150 group-hover:text-[#0A0082]">
+              <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
                 Daftar Sekarang
               </span>
               <svg
@@ -87,7 +87,7 @@ const HeroSection: React.FC = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="w-5 h-5 transition-colors duration-150 text-white group-hover:text-[#0A0082]"
+                className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
               </svg>
