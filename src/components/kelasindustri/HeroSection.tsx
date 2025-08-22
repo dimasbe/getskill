@@ -17,13 +17,13 @@ const HeroSection: React.FC = () => {
         {/* Text Section */}
         <div className="lg:w-7/12 text-center lg:text-left space-y-1 -mt-95 relative z-20 -mr-20 lg:-mr-32">
           <h3
-            className="text-4xl md:text-5xl lg:text-[47px] font-bold text-[#1C1C1C] 
+            className="text-4xl md:text-5xl lg:text-[47px] font-bold text-gray-800 
                leading-tight md:leading-snug lg:leading-[1.2] tracking-tight 
                text-left"
           >
             Selamat Datang Di Kelas <br />
             <span className="whitespace-nowrap">
-              Industri <span className="font-bold">Hummatech</span>
+              Industri <span className="font-extrabold">Hummatech</span>
             </span>
           </h3>
 
@@ -60,7 +60,7 @@ const HeroSection: React.FC = () => {
       <img
         src={bannerShape01}
         alt="Garis Ornamen"
-        className="absolute top-3 left-0 w-[160px] md:w-[200px] opacity-80 z-30"
+        className="absolute top-3 left-0 w-[160px] md:w-[210px] opacity-80 z-30"
       />
 
     </section>
