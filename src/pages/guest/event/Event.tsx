@@ -128,7 +128,7 @@ const Event: React.FC = () => {
             </div>
 
             {/* Event Grid */}
-            <EventCardGrid events={currentEvents} isLoading={loading} />
+            <EventCardGrid events={currentEvents}  />
 
             {/* Pagination */}
             {totalPages > 1 && (
