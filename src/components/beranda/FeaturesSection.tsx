@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import komponen1 from '../../assets/landingpage/beranda/komponen1.png';
-import komponen2 from '../../assets/landingpage/beranda/komponen2.png';
-import komponen3 from '../../assets/landingpage/beranda/komponen3.png';
-import komponen4 from '../../assets/landingpage/beranda/komponen4.png';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import komponen1 from "../../assets/landingpage/beranda/komponen1.png";
+import komponen2 from "../../assets/landingpage/beranda/komponen2.png";
+import komponen3 from "../../assets/landingpage/beranda/komponen3.png";
+import komponen4 from "../../assets/landingpage/beranda/komponen4.png";
 
-// Komponen Feature Card
+// --- Interface FeatureCard ---
 interface FeatureCardProps {
   iconSrc: string;
   altText: string;
@@ -12,44 +13,67 @@ interface FeatureCardProps {
   description: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ iconSrc, altText, title, description }) => {
+// --- Feature Card dengan animasi framer-motion ---
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  iconSrc,
+  altText,
+  title,
+  description,
+}) => {
   return (
-    <div
-      className="bg-white max-w-xs w-full mx-auto px-4 py-10 rounded-xl shadow-lg border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 ease-in-out text-center flex flex-col items-center cursor-pointer hover:scale-105 hover:-translate-y-2"
+    <motion.div
+      className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 text-center flex flex-col items-center justify-center cursor-pointer"
+      whileHover="hover"
+      initial="rest"
+      animate="rest"
+      variants={{
+        rest: { scale: 1, y: 0, boxShadow: "0px 2px 6px rgba(0,0,0,0.1)" },
+        hover: {
+          scale: 1.05,
+          y: -5,
+          boxShadow: "0px 8px 20px rgba(0,0,0,0.2)",
+        },
+      }}
+      transition={{ duration: 0.3 }}
     >
-      <div className="mb-2">
-        <img
-          src={iconSrc}
-          alt={altText}
-          className="w-12 h-12 object-contain"
-        />
-      </div>
+      {/* Icon dengan efek flip */}
+      <motion.div
+        className="mb-4 w-12 h-12 flex items-center justify-center"
+        variants={{
+          rest: { rotateY: 0 },
+          hover: { rotateY: 180 },
+        }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        style={{ perspective: 1000 }}
+      >
+        <img src={iconSrc} alt={altText} className="w-12 h-12 object-contain" />
+      </motion.div>
+
+      {/* Judul & Deskripsi */}
       <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3>
       <p className="text-xs text-gray-600">{description}</p>
-    </div>
+    </motion.div>
   );
 };
 
-// --- Komponen Skeleton Loader ---
+// --- Skeleton Loader ---
 const SkeletonFeatureCard: React.FC = () => {
   return (
-    <div className="bg-white max-w-xs w-full mx-auto px-4 py-10 rounded-xl shadow-lg border border-gray-200 animate-pulse text-center flex flex-col items-center">
-      <div className="mb-2 bg-gray-200 w-12 h-12 rounded-full"></div>
+    <div className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 animate-pulse text-center flex flex-col items-center">
+      <div className="mb-4 bg-gray-200 w-12 h-12 rounded-full"></div>
       <div className="bg-gray-200 h-4 w-3/4 mb-2 rounded"></div>
       <div className="bg-gray-200 h-3 w-5/6 rounded"></div>
     </div>
   );
 };
-// --- Akhir Komponen Skeleton Loader ---
 
+// --- Features Section ---
 const FeaturesSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulasikan pengambilan data selama 2 detik
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -57,7 +81,6 @@ const FeaturesSection: React.FC = () => {
       <div className="container mx-auto px-6 sm:px-10 lg:px-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 -mt-20 relative z-10">
           {isLoading ? (
-            // Tampilkan skeleton saat loading
             <>
               <SkeletonFeatureCard />
               <SkeletonFeatureCard />
@@ -65,7 +88,6 @@ const FeaturesSection: React.FC = () => {
               <SkeletonFeatureCard />
             </>
           ) : (
-            // Tampilkan konten asli setelah loading selesai
             <>
               <FeatureCard
                 iconSrc={komponen1}
