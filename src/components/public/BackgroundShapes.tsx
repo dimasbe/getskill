@@ -11,7 +11,7 @@ const BackgroundShapes = () => {
             <img
                 src={shape01}
                 alt="Shape 1"
-                className="absolute top-13 left-7 sm:left-20 w-12 sm:w-13 h-auto animate-slide-in-left animate-up-down"
+                className="absolute top-5 sm:top-13 left-7 sm:left-20 w-12 sm:w-13 h-auto animate-slide-in-left animate-up-down"
             />
 
             {/* Shape 02 - Kanan Atas */}
@@ -39,7 +39,7 @@ const BackgroundShapes = () => {
             <img
                 src={shape05}
                 alt="Shape 5"
-                className="absolute top-2 right-2 2xl:right-5 md:right-1 sm:right- w-90 2xl:w-105 md:w-100 sm:w-100 h-auto animate-slide-in-right"
+                className="absolute top-2 right-2 2xl:right-5 md:right-1 sm:right-0 w-90 2xl:w-105 md:w-100 sm:w-100 h-auto animate-slide-in-right max-md:hidden"
             />
         </>
     );

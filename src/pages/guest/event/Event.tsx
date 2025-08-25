@@ -53,7 +53,7 @@ const Event: React.FC = () => {
       {/* Header */}
       <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
         <BackgroundShapes />
-        <div className="max-w-6xl mx-auto px-4 text-left relative z-10">
+        <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
             Event
           </h1>
@@ -93,30 +93,30 @@ const Event: React.FC = () => {
       </div>
 
       {/* Search & Filter */}
-       <div className="max-w-2xl 2xl:mx-28 xl:mx-18 lg:mx-25 md:mx-15 sm:mx-1 flex flex-col sm:flex-row items-center gap-3 mt-8 px-4">
-                {loading ? (
-                    <div className="animate-pulse w-full sm:w-1/2 h-10 bg-gray-200 rounded-md"></div>
-                ) : (
-                    <div className="relative w-full sm:w-1/2 transition-all duration-300 ease-in-out hover:scale-[1.02]">
-                        <input
-                            type="text"
-                            placeholder="Cari Event"
-                            value={searchTerm}
-                            onChange={(e) => {
-                                setSearchTerm(e.target.value);
-                                setCurrentPage(1);
-                            }}
-                            className="w-full px-4 py-2 pr-10 border border-gray-300 hover:border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
-                        />
-                        <HiSearch
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                            size={18}
-                        />
-                    </div>
-                )}
+      <div className="max-w-2xl 2xl:mx-29 xl:mx-18 lg:mx-25 md:mx-15 sm:mx-1 flex flex-col sm:flex-row items-center gap-3 mt-8 px-4">
+        {loading ? (
+          <div className="animate-pulse w-full sm:w-1/2 h-10 bg-gray-200 rounded-md"></div>
+        ) : (
+          <div className="relative w-full sm:w-1/2 transition-all duration-300 ease-in-out hover:scale-[1.02]">
+            <input
+              type="text"
+              placeholder="Cari Event"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full px-4 py-2 pr-10 border border-gray-300 hover:border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+            />
+            <HiSearch
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={18}
+            />
+          </div>
+        )}
 
-                {!loading && <SortDropdown selected={sortOption} onChange={setSortOption} />}
-            </div>
+        {!loading && <SortDropdown selected={sortOption} onChange={setSortOption} />}
+      </div>
 
       {/* Event Grid */}
       <EventCardGrid events={currentEvents} />
@@ -131,10 +131,9 @@ const Event: React.FC = () => {
                 key={page}
                 onClick={() => setCurrentPage(page)}
                 className={`w-8 h-8 rounded-full text-sm font-medium transform transition-all duration-300 ease-in-out
-                  ${
-                    page === currentPage
-                      ? "bg-purple-600 text-white scale-110 shadow-md"
-                      : "bg-gray-200 text-gray-700 hover:bg-purple-100 hover:scale-105 hover:shadow-md"
+                  ${page === currentPage
+                    ? "bg-purple-600 text-white scale-110 shadow-md"
+                    : "bg-gray-200 text-gray-700 hover:bg-purple-100 hover:scale-105 hover:shadow-md"
                   }`}
               >
                 {page}

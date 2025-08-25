@@ -1,11 +1,114 @@
 @import "tailwindcss";
 
+:root {
+  --tg-common-color-white: #ffffff;
+  --tg-common-color-gray: #e5e7eb;
+  --tg-theme-primary: #4c1d95;
+}
+
+
 @layer base {
   body {
     font-family: 'Poppins', sans-serif;
   }
 }
 
+/* Spiner */
+  #preloader {
+  background-color: var(--tg-common-color-white);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  margin-top: 0px;
+  top: 0px;
+  z-index: 9999;
+  }
+  #preloader .loader .loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--tg-common-color-gray);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  }
+  #preloader .loader .loader-container::before {
+  position: absolute;
+  content: "";
+  display: block;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-top: 3px solid var(--tg-theme-primary);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  animation: loaderspin 1.8s infinite ease-in-out;
+  -webkit-animation: loaderspin 1.8s infinite ease-in-out;
+  }
+  #preloader .loader .loader-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 80px;
+  text-align: center;
+  }
+  #preloader .loader .loader-icon img {
+  animation: loaderpulse alternate 900ms infinite;
+  width: 40px;
+  position: relative;
+  top: 0px;
+  left: 18px;
+  }
+
+  @keyframes loaderspin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  }
+  @-webkit-keyframes loaderspin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  }
+  @keyframes loaderpulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+  }
+
+/* animasi blink */
 .shine__animate-link {
   display: block;
   position: relative;
