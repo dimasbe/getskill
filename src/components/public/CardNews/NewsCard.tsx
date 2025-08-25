@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { FaRegCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import logoGetskill from '../../../assets/img/logo/get-skill/landscape.png';
+import logoGetskill from '../../../assets/img/logo/get-skill/landscape.png'; // pakai logo asli PNG transparan
 
 interface NewsCardProps {
     id: string;
@@ -62,7 +61,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                         <img
                             src={logoGetskill}
                             alt="GetSkill Logo"
-                            className="w-13 h-3 object-contain rounded-full"
+                            className="w-13 h-3 object-contain"
                         />
                     </div>
                 </div>
@@ -72,17 +71,41 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
             <div className="relative z-10 p-6">
                 {/* Tanggal */}
                 <div className="mb-3 -mt-6 flex items-center text-sm text-gray-500">
-                    <FaRegCalendarAlt className="mr-2 text-purple-500" />
+                    {/* Ikon kalender pakai inline SVG */}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mr-2 text-purple-500 h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fillRule="evenodd"
+                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
                     <span className="leading-none">{date}</span>
                 </div>
 
                 {/* Judul */}
-                <h3 className="mb-1 text-base font-semibold text-gray-800 line-clamp-2 text-left">
+                <h3
+                    className="relative block w-full text-left font-semibold text-gray-800 mb-1 
+                     hover:text-purple-600 transition-colors duration-300
+                     after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-purple-500
+                     after:w-0 hover:after:w-full after:transition-all after:duration-500"
+                    style={{
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                    }}
+                >
                     {title}
                 </h3>
 
                 {/* Ringkasan */}
-                <p className="text-sm text-gray-600 line-clamp-2 text-justify">
+                <p className="text-sm text-gray-600 line-clamp-3 text-justify">
                     {summary}
                 </p>
             </div>

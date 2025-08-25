@@ -4,7 +4,7 @@ import NewsCard from '../public/CardNews/NewsCard';
 // Ganti baris ini:
 // import { newsArticles, NewsArticle } from '../../data/newsData';
 // Menjadi baris ini:
-import { newsArticles, type NewsArticle } from '../../data/newsData'; 
+import { newsArticles, type NewsArticle } from '../../data/newsData';
 
 // --- Komponen Skeleton Card ---
 const SkeletonCard: React.FC = () => {
@@ -51,22 +51,31 @@ const BeritaTerbaruPage: React.FC = () => {
             {isLoading
               ? [...Array(4)].map((_, index) => <SkeletonCard key={index} />)
               : latestFourArticles.map((article, index) => (
-                  <NewsCard key={index} {...article} />
-                ))}
+                <NewsCard key={index} {...article} />
+              ))}
           </div>
-          <div className="mt-8 flex justify-center">
+          {/* Tombol */}
+          <div className="mt-6 flex justify-center" data-aos="fade" data-aos-delay="700">
             <button
-              onClick={() => navigate('/berita')}
-              className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-2 rounded-[20px] flex items-center gap-2 transition-all duration-200 shadow-[4px_4px_0_rgba(0,0,0,0.2)] border border-purple-500 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+              onClick={() => navigate("/berita")} // 👈 tambahin ini
+              className="group bg-[#7063FF] text-white font-semibold py-2 px-2 
+              rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
+              transition-all duration-500 ease-in-out
+              shadow-[4px_4px_0_#0A0082] 
+              hover:bg-yellow-400 hover:shadow-none
+              active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+              focus:outline-none"
             >
-              Lihat Semua
+              <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
+                Lihat Semua
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="w-5 h-5"
+                className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
               >
                 <path
                   strokeLinecap="round"

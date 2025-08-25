@@ -74,7 +74,7 @@ const HeroSection: React.FC = () => {
                rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                transition-all duration-500 ease-in-out
                shadow-[4px_4px_0_#0A0082] 
-               hover:bg-[#5a4ee6] hover:shadow-none
+               hover:bg-yellow-400 hover:shadow-none
                active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                focus:outline-none"
             >

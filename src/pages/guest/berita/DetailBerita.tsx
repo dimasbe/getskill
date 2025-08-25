@@ -12,14 +12,14 @@ const SkeletonDetailBerita: React.FC = () => {
       {/* Skeleton untuk Konten utama */}
       <div className="lg:col-span-3">
         <div className="bg-gray-200 h-[350px] w-full rounded-lg shadow-md mb-4"></div> {/* Skeleton Gambar */}
-        
+
         <div className="flex items-center gap-2 mt-4 text-sm">
           <div className="bg-gray-200 h-5 w-5 rounded-full"></div> {/* Skeleton Icon */}
           <div className="bg-gray-200 h-4 w-24 rounded"></div> {/* Skeleton Tanggal */}
         </div>
-        
+
         <div className="bg-gray-200 h-8 w-3/4 mt-2 mb-4 rounded"></div> {/* Skeleton Judul */}
-        
+
         <div className="space-y-3">
           <div className="bg-gray-200 h-4 w-full rounded"></div>
           <div className="bg-gray-200 h-4 w-full rounded"></div>
@@ -36,18 +36,18 @@ const SkeletonDetailBerita: React.FC = () => {
         </div>
         {/* Skeleton untuk Berita Terkait */}
         <div className="mt-8"> {/* Adjusted margin for spacing from search bar */}
-            <div className="bg-gray-200 h-6 w-2/3 mb-4 rounded"></div> {/* Skeleton judul "Berita Terkait" */}
-            <div className="space-y-4">
-                {[...Array(3)].map((_, idx) => ( // Tampilkan 3 skeleton untuk berita terkait
-                    <div key={idx} className="flex items-center space-x-3">
-                        <div className="bg-gray-200 h-16 w-16 rounded-lg"></div> {/* Skeleton Gambar Kecil */}
-                        <div className="flex-1 space-y-2">
-                            <div className="bg-gray-200 h-4 w-full rounded"></div> {/* Skeleton Judul Berita Terkait */}
-                            <div className="bg-gray-200 h-3 w-5/6 rounded"></div> {/* Skeleton Tanggal Berita Terkait */}
-                        </div>
-                    </div>
-                ))}
-            </div>
+          <div className="bg-gray-200 h-6 w-2/3 mb-4 rounded"></div> {/* Skeleton judul "Berita Terkait" */}
+          <div className="space-y-4">
+            {[...Array(3)].map((_, idx) => ( // Tampilkan 3 skeleton untuk berita terkait
+              <div key={idx} className="flex items-center space-x-3">
+                <div className="bg-gray-200 h-16 w-16 rounded-lg"></div> {/* Skeleton Gambar Kecil */}
+                <div className="flex-1 space-y-2">
+                  <div className="bg-gray-200 h-4 w-full rounded"></div> {/* Skeleton Judul Berita Terkait */}
+                  <div className="bg-gray-200 h-3 w-5/6 rounded"></div> {/* Skeleton Tanggal Berita Terkait */}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ const DetailBerita: React.FC = () => {
       setBerita(foundBerita);
       setIsLoading(false);
     }, 1500); // Durasi loading
-    
+
     return () => clearTimeout(timer);
   }, [id]); // Dependensi ID agar memuat ulang saat ID berubah
 
@@ -104,12 +104,12 @@ const DetailBerita: React.FC = () => {
     return (
       <div className="min-h-screen bg-white pb-20">
         <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
-            <BackgroundShapes />
-            {/* Header Skeleton */}
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center sm:text-left relative z-10 animate-pulse">
-                <div className="bg-gray-200 h-8 w-40 mb-2 mx-auto sm:mx-0 rounded"></div>
-                <div className="bg-gray-200 h-6 w-60 mx-auto sm:mx-0 rounded"></div>
-            </div>
+          <BackgroundShapes />
+          {/* Header Skeleton */}
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center sm:text-left relative z-10 animate-pulse">
+            <div className="bg-gray-200 h-8 w-40 mb-2 mx-auto sm:mx-0 rounded"></div>
+            <div className="bg-gray-200 h-6 w-60 mx-auto sm:mx-0 rounded"></div>
+          </div>
         </div>
         <SkeletonDetailBerita />
       </div>
@@ -139,7 +139,7 @@ const DetailBerita: React.FC = () => {
       </div>
 
       {/* Konten utama dan sidebar */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-4 grid grid-cols-1 lg:grid-cols-4 gap-2">
         {/* Konten utama */}
         <div className="lg:col-span-3">
           <div className="relative rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer">
@@ -186,25 +186,23 @@ const DetailBerita: React.FC = () => {
           <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-purple-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              className="text-purple-500 h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-7H3v7a2 2 0 002 2z"
+                fillRule="evenodd"
+                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                clipRule="evenodd"
               />
             </svg>
-            {berita.date}
+            <span className="leading-none">{berita.date}</span>
           </div>
 
           {/* Judul di bawah tanggal, rata kiri */}
           <h2 className="mt-2 text-2xl font-extrabold text-gray-900 text-left">{berita.title}</h2>
 
-          <div className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-justify">
+          <div className="-mt-4 text-gray-700 leading-relaxed whitespace-pre-line text-justify">
             {berita.content}
           </div>
         </div>
