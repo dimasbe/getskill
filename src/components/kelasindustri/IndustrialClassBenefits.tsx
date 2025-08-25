@@ -8,17 +8,17 @@ import fotofotoImg from "../../assets/img/others/fotofotoid.png";
 
 const IndustrialClassBenefits: React.FC = () => {
   return (
-    <section className="benefits-section py-12">
+    <section className="benefits-section py-6">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left Content */}
-          <div className="lg:w-1/2 text-left lg:-ml-6">
-            <span className="inline-block text-xs sm:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
+          <div className="lg:w-7/12 text-left lg:-ml-6"> 
+            <span className="inline-block text-[11px] font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
               Manfaat Sekolah
             </span>
 
             <h2 className="text-xl md:text-2xl font-semibold mb-6 leading-snug text-left">
-              Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri. {" "}
+              Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.{" "}
             </h2>
 
             <div className="space-y-5">
@@ -32,7 +32,7 @@ const IndustrialClassBenefits: React.FC = () => {
                 </div>
                 <div className="ml-3 flex-1 text-left">
                   <h4 className="font-semibold text-base">Mitra Industri</h4>
-                  <p className="text-gray-600 text-xs">
+                  <p className="text-gray-600 text-[11px]">
                     Memiliki kerjasama dengan CV. Hummatech Technology dan menjadikan mitra industri.
                   </p>
                 </div>
@@ -48,7 +48,7 @@ const IndustrialClassBenefits: React.FC = () => {
                 </div>
                 <div className="ml-3 flex-1 text-left">
                   <h4 className="font-semibold text-base">Business Center</h4>
-                  <p className="text-gray-600 text-xs">
+                  <p className="text-gray-600 text-[11px]">
                     Mengaktifkan Business Center Sekolah dibidang pengembangan perangkat lunak.
                   </p>
                 </div>
@@ -64,9 +64,7 @@ const IndustrialClassBenefits: React.FC = () => {
                 </div>
                 <div className="ml-3 flex-1 text-left">
                   <h4 className="font-semibold text-base">Akreditasi</h4>
-                  <p className="text-gray-600 text-xs">
-                    Menambah poin akreditasi sekolah.
-                  </p>
+                  <p className="text-gray-600 text-[11px]">Menambah poin akreditasi sekolah.</p>
                 </div>
               </div>
 
@@ -80,7 +78,7 @@ const IndustrialClassBenefits: React.FC = () => {
                 </div>
                 <div className="ml-3 flex-1 text-left">
                   <h4 className="font-semibold text-base">Kerja</h4>
-                  <p className="text-gray-600 text-xs">
+                  <p className="text-gray-600 text-[11px]">
                     Peningkatan keterserapan lulusan sesuai kebutuhan industri.
                   </p>
                 </div>
@@ -89,11 +87,11 @@ const IndustrialClassBenefits: React.FC = () => {
           </div>
 
           {/* Right Image */}
-          <div className="lg:w-1/2 flex justify-center mt-12 lg:mt-0 relative">
+          <div className="lg:w-7/12 flex justify-center mt-12 lg:mt-0 relative">
             <img
               src={fotofotoImg}
               alt="Belajar Online"
-              className="w-[80%] md:w-[70%] lg:w-[100%] h-auto object-contain rounded-xl transform translate-x-10 translate-y-10"
+              className="w-full h-auto object-contain rounded-xl transform translate-x-6 translate-y-6"
             />
           </div>
 
