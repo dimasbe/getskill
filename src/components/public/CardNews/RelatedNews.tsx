@@ -1,5 +1,5 @@
 import React from "react";
-import NewsCard from "./NewsCard";
+import MiniNewsCard from "./MiniNewsCard";
 
 interface RelatedNewsProps {
   relatedArticles: {
@@ -21,13 +21,12 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ relatedArticles }) => {
       <h2 className="font-bold text-lg mb-3 border-b pb-2">Berita Terkait</h2>
       <div className="flex flex-col space-y-4">
         {relatedArticles.map((article) => (
-          <NewsCard
+          <MiniNewsCard
             key={article.id}
             id={article.id}
             image={article.image}
             date={article.date}
             title={article.title}
-            summary={article.summary}
           />
         ))}
       </div>
