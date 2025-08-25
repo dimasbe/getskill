@@ -1,18 +1,43 @@
-import FotoModel2 from '../assets/landingpage/beranda/WhatsApp Image 2025-07-15 at 18.25.41_4c5a94b6.jpg';
+import FotoModel2 from '../assets/img/events/689021a8009ee.jpeg';
 
-const events = [
+type Event = {
+  id: number;
+  title: string;
+  date: string;
+  description: string;
+  quota: number;
+  registered: number;
+  daysLeft: number;
+  image: string;
+  category: string;
+  isOnline: boolean;
+  location?: string;
+  platform?: string;
+  price: number;
+  speakerName: string;
+  speakerImage: string;
+  rundown: {
+    time: string;
+    session: string;
+    speaker: { name: string; role: string };
+  }[];
+};
+
+const events: Event[] = [
   {
     id: 1,
     title: 'Resolving Conflicts Between Designers',
-    date: '5 September, 2024',
+    date: '5 September 2024',
     description:
       'Acara ini dipersembahkan QARIS dan akan diselenggarakan mulai 5 September 2024 pukul 13:00 - 15:40 WIB via live YouTube',
     quota: 123,
+    registered: 45,
     daysLeft: 28,
     image: FotoModel2,
     category: 'Seminar',
     isOnline: false,
-    price: 50000, // harga tiket dalam rupiah
+    location: 'Ruang A, Gedung A, Universitas Indonesia',
+    price: 50000,
     speakerName: 'David Miller',
     speakerImage: 'https://randomuser.me/api/portraits/men/32.jpg',
     rundown: [
@@ -38,15 +63,17 @@ const events = [
   {
     id: 2,
     title: 'The Accessible Target Sizes Cheatsheet',
-    date: '25 June, 2024',
+    date: '25 Juni 2024',
     description:
       'Acara ini dipersembahkan QARIS dan akan diselenggarakan mulai 25 Juni 2024 pukul 15:00 - 17:00 WIB via live YouTube oijosdogjpdsjgoijgpoodjgdr fogjdfpnbisfdgopnspodgjipodisjbipnd dfogdponosfjgpofngo;jds;ofngvfdvpodjgpondvmdfjpodfnidf gdfnogn;odjgsgjpd gjfo g osg;od',
     quota: 150,
+    registered: 45,
     daysLeft: 4,
     image: FotoModel2,
     category: 'Seminar',
     isOnline: true,
-    price: 75000, // harga tiket dalam rupiah
+    platform: 'zoom',
+    price: 75000,
     speakerName: 'Sarah Johnson',
     speakerImage: 'https://randomuser.me/api/portraits/women/45.jpg',
     rundown: [
@@ -69,35 +96,6 @@ const events = [
   },
 ];
 
-// tambahkan dummy supaya total 20
-for (let i = events.length + 1; i <= 20; i++) {
-  events.push({
-    id: i,
-    title: `Event Dummy ${i}`,
-    date: '1 Desember, 2024',
-    description:
-      'Deskripsi singkat event dummy untuk pengujian tampilan halaman Event.',
-    quota: 100 + i,
-    daysLeft: i % 10,
-    image: FotoModel2,
-    category: 'Seminar',
-    isOnline: i % 2 === 0,
-    price: 20000 + i * 1000, // harga bervariasi sedikit biar beda-beda
-    speakerName: `Pembicara Dummy ${i}`,
-    speakerImage: 'https://randomuser.me/api/portraits/men/1.jpg',
-    rundown: [
-      {
-        time: '09:00 - 09:30',
-        session: 'Pembukaan Acara',
-        speaker: { name: `Pembicara Dummy ${i}`, role: 'Pembicara' },
-      },
-      {
-        time: '09:30 - 10:30',
-        session: 'Sesi Utama',
-        speaker: { name: `Pembicara Dummy ${i}`, role: 'Pembicara' },
-      },
-    ],
-  });
-}
+
 
 export default events;

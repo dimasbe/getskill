@@ -1,5 +1,6 @@
-import { HiCalendar, HiClock, HiCheckCircle, HiUsers } from "react-icons/hi";
+import { FiCalendar, FiCheckCircle, FiClock, FiUser, FiArrowRight } from "react-icons/fi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
+import { GraduationCap } from "lucide-react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 
@@ -32,7 +33,10 @@ interface EventPriceCardProps {
         date: string;
         quota: number;
         daysLeft: number;
+        registered: number;
         isOnline: boolean;
+        location?: string;
+        platform?: string;
         rundown: {
             time: string;
             session: string;
@@ -47,42 +51,98 @@ interface EventPriceCardProps {
 
 const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
     <Card className="shadow-lg border border-gray-100 p-0 overflow-hidden z-10">
-        <div className="bg-purple-600 text-white px-4 py-3 rounded-xl">
+        <div className="bg-purple-600 text-white px-6 py-5 rounded-xl">
             <p className="text-sm">Harga Masuk</p>
             <p className="text-2xl font-bold">Rp {event.price.toLocaleString('id-ID')}</p>
         </div>
         <div className="p-2 space-y-3 text-sm text-gray-700">
             <h1 className="text-lg font-semibold">Informasi Event:</h1>
-            <div className="flex items-center gap-2 border-b border-gray-300 pb-2">
-                <HiCalendar className="text-purple-600" /> Tanggal Mulai: {event.date}
-            </div>
-            <div className="flex items-center gap-2 border-b border-gray-300 pb-2">
-                <HiClock className="text-purple-600" />
-                Waktu Mulai: {event.rundown[0].time.split(" - ")[0]} WIB
-            </div>
+            <div className="space-y-4">
+                <div className="flex justify-between border-b border-gray-300 pb-2">
+                    <div className="flex items-center gap-2">
+                        <FiCalendar size={20} className="text-gray-600" />
+                        <span className="font-medium">Tanggal Mulai</span>
+                    </div>
+                    <span>
+                        {new Date(event.date).toLocaleDateString("id-ID", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                        })}
+                    </span>
+                </div>
 
-            <div className="flex items-center gap-2 border-b border-gray-300 pb-2">
-                <HiCheckCircle className="text-purple-600" />
-                Sertifikat: {event.isOnline ? "Online Certificate" : "Include"}
-            </div>
+                <div className="flex justify-between border-b border-gray-300 pb-2">
+                    <div className="flex items-center gap-2">
+                        <FiClock size={20} className="text-gray-600" />
+                        <span className="font-medium">Waktu Mulai</span>
+                    </div>
+                    <span>{event.rundown[0].time.split(" - ")[0]} WIB</span>
+                </div>
 
-            <div className="flex items-center gap-2 border-b border-gray-300 pb-2">
-                <HiUsers className="text-purple-600" />
-                Sisa Peserta: {event.quota}/300
+                <div className="flex justify-between border-b border-gray-300 pb-2">
+                    <div className="flex items-center gap-2">
+                        <FiCheckCircle size={20} className="text-gray-600" />
+                        <span className="font-medium">Sertifikat</span>
+                    </div>
+                    <span>{event.isOnline ? "Online Certificate" : "Include"}</span>
+                </div>
+
+                <div className="flex justify-between border-b border-gray-300 pb-2">
+                    <div className="flex items-center gap-2">
+                        <GraduationCap size={20} className="text-gray-600" />
+                        <span className="font-medium">Total Kouta Peserta</span>
+                    </div>
+                    <span>{event.quota}</span>
+                </div>
+
+                <div className="flex justify-between border-b border-gray-300 pb-2">
+                    <div className="flex items-center gap-2">
+                        <FiUser size={20} className="text-gray-600" />
+                        <span className="font-medium">Sisa Kouta Peserta</span>
+                    </div>
+                    <span>{event.quota - event.registered}</span>
+                </div>
             </div>
 
 
             <div className="flex flex-col items-start gap-2 border-b border-gray-300 pb-2">
                 <h1 className="text-lg font-semibold">Lokasi:</h1>
-                <span>
-                    LIVE at{" "}
-                    <a href="#" className="text-purple-600 hover:underline">
-                        YouTube HumanTech Class <br />
-                    </a>
-                </span>
-                <span className="font-bold">Online</span>
-            </div>
 
+                {event.isOnline ? (
+                    <>
+                        <span>
+                            LIVE at{" "}
+                            <a
+                                href={
+                                    event.platform?.toLowerCase() === "zoom"
+                                        ? "https://zoom.us/j/123456789"
+                                        : "https://youtube.com"
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-purple-600 hover:underline"
+                            >
+                                {event.platform}
+                            </a>
+                        </span>
+                        {/* <span className="font-semibold bg-green-500 text-white px-2 rounded">Online</span> */}
+                    </>
+                ) : (
+                    <>
+                        <span className="text-gray-700">{event.location}</span>
+                        <iframe
+                            title="map-location"
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(
+                                event.location || ""
+                            )}&output=embed`}
+                            className="w-full h-40 rounded-lg border mt-2"
+                            allowFullScreen
+                        />
+                        {/* <span className="font-semibold bg-red-500 text-white px-2 rounded">Offline</span> */}
+                    </>
+                )}
+            </div>
 
             {/* Payment Methods */}
             <div className="border-b border-gray-300 pb-2">
@@ -127,21 +187,14 @@ const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
                 </div>
             </div>
 
-            {event.isOnline ? (
-                <Link
-                    to="/login"
-                    className="block text-center w-full bg-purple-600 text-white py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-purple-700 active:scale-95 mt-3"
-                >
-                    Masuk
-                </Link>
-            ) : (
-                <button
-                    disabled
-                    className="block text-center w-full bg-gray-400 text-white py-2 rounded-lg mt-3 cursor-not-allowed opacity-70"
-                >
-                    Masuk
-                </button>
-            )}
+            <Link
+                to="/login"
+                className="flex items-center justify-center gap-2 w-full bg-purple-600 shadow-[5px_7px_0_#4c1d95] text-white py-3 rounded-full 
+                        hover:shadow hover:bg-yellow-400 hover:text-gray-950 transition-all duration-300 ease-in-out font-semibold  mt-4"
+            >
+                <span>Masuk Event</span>
+                <FiArrowRight className="text-lg" />
+            </Link>
 
         </div>
     </Card>
