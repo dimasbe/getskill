@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
+import { RiFilter3Fill } from "react-icons/ri";
 
 type Option = {
     label: string;
@@ -30,6 +31,7 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ selected, onChange }) => {
         ${isOpen ? "text-purple-500 border-purple-400" : "text-gray-700"}
         hover:text-purple-500 hover:border-purple-400 focus:ring-3 focus:ring-purple-500`}
             >
+                <RiFilter3Fill size={25} />
                 <span>{selectedLabel}</span>
                 <HiChevronDown
                     className={`transition-transform duration-300 ease-in-out ${isOpen ? "rotate-180" : "rotate-0"}`}

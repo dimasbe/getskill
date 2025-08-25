@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import events from '../../../data/events';
-import { HiUsers } from "react-icons/hi";
+import { GraduationCap } from "lucide-react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventPriceCard from "../../../components/public/CardEvent/EventPriceCard";
 import StatusIndicator from "../../../components/public/CardEvent/StatusIndicator";
@@ -35,7 +35,7 @@ const DetailEvent: React.FC = () => {
             </div>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 xl:px-10 lg:px-30 md:px-30 sm:px-20 py-10 md:py-18">
+            <div className="max-w-7xl mx-auto px-4 xl:px-10 lg:px-20 md:px-30 sm:px-20 py-10 md:py-18">
                 <div className="relative">
                     <img
                         src={event.image}
@@ -43,13 +43,13 @@ const DetailEvent: React.FC = () => {
                         className="w-full h-130 object-cover rounded-xl"
                     />
 
-                    <div className="absolute right-8 -bottom-189 w-75 hidden lg:block">
+                    <div className="absolute right-8 -bottom-230 w-80 hidden lg:block">
                         <EventPriceCard event={event} />
                     </div>
                 </div>
 
                 <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-2 xl:pb-60 lg:pb-60">
                         <span className="bg-purple-600 text-white px-3 py-1 text-sm rounded-full inline-block">
                             {event.category}
                         </span>
@@ -67,7 +67,7 @@ const DetailEvent: React.FC = () => {
                             <span>By {event.speakerName}</span>
                             <StatusIndicator isOnline={event.isOnline} />
                             <span className="flex items-center gap-1">
-                                <HiUsers /> {event.quota} Peserta
+                                <GraduationCap /> {event.quota} Peserta
                             </span>
                         </div>
 

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
-import { HiSearch, HiMenu, HiX } from 'react-icons/hi';
-import dummyCourses from '../../../data/dummyCourses';
-import CategoryDropdown from '../../public/CategoryDropdown';
+import { useState, useEffect } from "react";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+import { HiSearch, HiMenu, HiX } from "react-icons/hi";
+import dummyCourses from "../../../data/dummyCourses";
+import CategoryDropdown from "../../public/CategoryDropdown";
 
 type Course = {
   id: string;
@@ -27,12 +27,12 @@ const Navbar = () => {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // 🔹 Filter state (untuk kategori, harga, dan search)
+  // 🔹 Filter state
   const [filters, setFilters] = useState({
     categories: [] as string[],
     priceMin: "",
     priceMax: "",
-    search: ""
+    search: "",
   });
 
   // Search state
@@ -50,6 +50,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         setScrollDirection("down");
         setShowNavbar(true);
@@ -57,10 +58,12 @@ const Navbar = () => {
         setScrollDirection("up");
         setShowNavbar(true);
       }
+
       setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   /** Update hasil suggestion ketika searchTerm berubah */
@@ -68,9 +71,10 @@ const Navbar = () => {
     if (searchTerm.trim() === "") {
       setSearchResults([]);
     } else {
-      const filtered = dummyCourses.filter(course =>
-        course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        course.title.toLowerCase() !== searchTerm.toLowerCase()
+      const filtered = dummyCourses.filter(
+        (course) =>
+          course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          course.title.toLowerCase() !== searchTerm.toLowerCase()
       );
       setSearchResults(filtered);
     }
@@ -78,7 +82,11 @@ const Navbar = () => {
 
   /** Reset ke /kursus tanpa query jika search dikosongkan */
   useEffect(() => {
-    if (searchTerm.trim() === "" && location.pathname === "/kursus" && location.search.includes("search=")) {
+    if (
+      searchTerm.trim() === "" &&
+      location.pathname === "/kursus" &&
+      location.search.includes("search=")
+    ) {
       navigate("/kursus", { replace: true });
     }
   }, [searchTerm, location.pathname, location.search, navigate]);
@@ -87,7 +95,7 @@ const Navbar = () => {
   const handleSearchClick = (keyword: string) => {
     setSearchResults([]);
     navigate(`/kursus?search=${encodeURIComponent(keyword)}`);
-    setFilters(prev => ({ ...prev, search: keyword }));
+    setFilters((prev) => ({ ...prev, search: keyword }));
   };
 
   /** Tekan Enter untuk search langsung */
@@ -105,17 +113,10 @@ const Navbar = () => {
   }, [filters.categories, navigate]);
 
   return (
-<nav
-  className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md
-    ${showNavbar
-      ? scrollDirection === 'down'
-        ? 'animate-slideDown'
-        : 'translate-y-0 opacity-100'
-      : '-translate-y-full opacity-0'
-    }`}
->
-
-
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md 
+      ${showNavbar ? (scrollDirection === "down" ? "animate-slideDown" : "translate-y-0 opacity-100") : "-translate-y-full opacity-0"}`}
+    >
       <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex justify-between items-center">
         {/* Logo & Links */}
         <div className="flex items-center space-x-10">
@@ -154,9 +155,11 @@ const Navbar = () => {
 
         {/* Search & Login */}
         <div className="flex items-center space-x-4 relative">
+          {/* Search Bar */}
           <div className="hidden md:flex items-center border border-gray-300 rounded-full bg-white px-2 py-2 relative">
             <CategoryDropdown setFilters={setFilters} />
             <div className="h-6 border-l border-gray-200 mx-2" />
+
             <input
               type="text"
               placeholder="Pencarian kursus..."
@@ -165,6 +168,7 @@ const Navbar = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
             />
+
             <button
               onClick={() => handleSearchClick(searchTerm)}
               className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white hover:opacity-90 transition"
@@ -188,6 +192,7 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Login Button */}
           <Link
             to="/login"
             className="hidden lg:block bg-yellow-500 text-black text-xs font-semibold px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
@@ -195,7 +200,7 @@ const Navbar = () => {
             Masuk
           </Link>
 
-
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden text-gray-600"
