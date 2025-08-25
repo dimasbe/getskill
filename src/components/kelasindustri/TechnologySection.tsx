@@ -35,7 +35,7 @@ const TechnologySection: React.FC = () => {
 
         {/* Right side - Content */}
         <div className="text-left lg:col-span-6 lg:pl-24">
-          <span className="inline-block text-xs sm:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
+          <span className="inline-block text-[11px] font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
             Teknologi
           </span>
 

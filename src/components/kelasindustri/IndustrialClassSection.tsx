@@ -13,15 +13,15 @@ const IndustrialClassSection: React.FC = () => {
             <img
               src={manfaatImg}
               alt="Belajar Online"
-              className="w-[80%] md:w-[60%] lg:w-[72%] h-auto object-contain -ml-48"
+              className="w-[80%] md:w-[60%] lg:w-[78%] h-auto object-contain -ml-35"
             />
           </div>
 
 
           {/* Right side - Content */}
-          <div className="lg:w-1/2 mt-8 lg:mt-0 text-left">
+          <div className="lg:w-7/12 mt-8 lg:mt-0 text-left lg:pl-12">
             <div className="content">
-              <span className="inline-block text-xs sm:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
+              <span className="inline-block text-[11px] font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
                 Manfaat Kelas Industri?
               </span>
 
