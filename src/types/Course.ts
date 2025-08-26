@@ -3,7 +3,6 @@ export interface SyllabusItem {
   description?: string
   quizzes: number
   tasks: number
-  // BARIS BARU DITAMBAHKAN
   subtopics?: string[]
   quiz_questions?: number
 }
