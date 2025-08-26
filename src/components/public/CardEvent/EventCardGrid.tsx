@@ -56,11 +56,11 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({ events, loading = false }
                 : events.map((event) => (
                     <Link key={event.id} to={`/event/${event.id}`}>
                         <div className="relative">
-                            <Card className="shine__animate-item relative flex flex-col justify-between border rounded-2xl shadow-sm 
+                            <Card className="card-shine relative flex flex-col justify-between border rounded-2xl shadow-sm 
                   hover:shadow-[8px_8px_0_#D3DAD9] hover:scale-[1.02] transition-all duration-300 cursor-pointer p-0 overflow-hidden z-10">
 
-                                <div className="relative shine__animate-item">
-                                    <div className="shine__animate-link ">
+                                <div className="relative ">
+                                    <div className="shine__animate ">
                                         <img
                                             src={event.image}
                                             alt={event.title}

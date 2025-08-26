@@ -36,8 +36,6 @@ interface EventPriceCardProps {
     daysLeft: number;
     registered: number;
     isOnline: boolean;
-    location?: string;
-    platform?: string;
     rundown: {
       time: string;
       session: string;
@@ -52,16 +50,16 @@ interface EventPriceCardProps {
 const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
   <Card className="shadow-lg border border-gray-200 overflow-hidden z-10 rounded-2xl">
     {/* Header Harga */}
-    <div className="bg-purple-600 text-white px-6 py-5">
+    <div className="bg-purple-600 text-white px-6 rounded-xl shadow-xl py-5">
       <p className="text-sm">Harga Masuk</p>
       <p className="text-2xl font-bold">Rp {event.price.toLocaleString("id-ID")}</p>
     </div>
 
     {/* Isi Konten */}
-    <div className="p-5 space-y-6 text-sm text-gray-700">
+    <div className="p-5 space-y-5 text-sm text-gray-700">
       {/* Informasi Event */}
       <div>
-        <h1 className="text-lg font-semibold mb-3">Informasi Event</h1>
+        <h1 className="text-lg font-semibold mb-3">Informasi Event :</h1>
         <div className="space-y-3">
           {/* Tanggal */}
           <div className="flex justify-between items-center border-b border-gray-200 pb-2">
@@ -106,7 +104,7 @@ const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
           </div>
 
           {/* Sisa Kuota */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center border-b border-gray-200 pb-2">
             <div className="flex items-center gap-2">
               <FiUser size={20} className="text-gray-600" />
               <span className="font-medium">Sisa Kuota</span>
@@ -116,41 +114,9 @@ const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
         </div>
       </div>
 
-      {/* Lokasi */}
-      <div>
-        <h1 className="text-lg font-semibold mb-2">Lokasi</h1>
-        {event.isOnline ? (
-          <span>
-            LIVE at{" "}
-            <a
-              href={
-                event.platform?.toLowerCase() === "zoom"
-                  ? "https://zoom.us/j/123456789"
-                  : "https://youtube.com"
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-purple-600 hover:underline font-medium"
-            >
-              {event.platform}
-            </a>
-          </span>
-        ) : (
-          <>
-            <span className="text-gray-700 block mb-2">{event.location}</span>
-            <iframe
-              title="map-location"
-              src={`https://www.google.com/maps?q=${encodeURIComponent(event.location || "")}&output=embed`}
-              className="w-full h-40 rounded-lg border"
-              allowFullScreen
-            />
-          </>
-        )}
-      </div>
-
       {/* Metode Pembayaran */}
-      <div>
-        <p className="text-lg font-semibold mb-2">Metode Pembayaran</p>
+      <div className="border-b border-gray-200 pb-5">
+        <p className="text-lg font-semibold mb-3">Metode Pembayaran :</p>
         <div className="flex flex-wrap gap-2">
           {paymentLogos.map((logo) => (
             <div
@@ -169,8 +135,8 @@ const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
       </div>
 
       {/* Bagikan */}
-      <div>
-        <p className="text-lg font-semibold mb-2">Bagikan Kursus Ini</p>
+      <div className="border-b border-gray-200 pb-5">
+        <p className="text-lg font-semibold mb-3">Bagikan Kursus Ini</p>
         <div className="flex gap-3">
           {[
             {
