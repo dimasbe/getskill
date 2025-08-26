@@ -73,17 +73,18 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({ events, loading = false }
                                 </div>
 
                                 <div className="text-left flex-1 pt-3 px-4">
-                                    <h3 className="text-lg font-semibold line-clamp-2 cursor-pointer">
+                                    <h3 className="text-lg font-semibold line-clamp-1 cursor-pointer">
                                         <a
                                             className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
-               bg-[length:0%_2px,0_2px]
-               bg-[position:100%_100%,0_100%]
-               bg-no-repeat
-               transition-[background-size] duration-300
-               hover:bg-[length:0_2px,100%_2px]">
+                                                    bg-[length:0%_2px,0_2px]
+                                                    bg-[position:100%_100%,0_100%]
+                                                    bg-no-repeat
+                                                    transition-[background-size] duration-300
+                                                    hover:bg-[length:0_2px,100%_2px]">
                                             {event.title}
                                         </a>
                                     </h3>
+
                                     <div className="flex items-center gap-1 text-gray-500 text-sm mt-1">
                                         {event.isOnline ? (
                                             <>

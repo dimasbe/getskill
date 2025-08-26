@@ -32,8 +32,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   border: 3px solid var(--tg-common-color-gray);
   border-radius: 50%;
 }
@@ -43,8 +43,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   border-top: 3px solid var(--tg-theme-primary);
   border-radius: 50%;
   animation: loaderspin 1.8s infinite ease-in-out;
@@ -59,10 +59,10 @@
 }
 #preloader .loader .loader-icon img {
   animation: loaderpulse alternate 900ms infinite;
-  width: 40px;
+  width: 35px;
   position: relative;
   top: 0;
-  left: 18px;
+  left: 21px;
 }
 
 @keyframes loaderspin {
