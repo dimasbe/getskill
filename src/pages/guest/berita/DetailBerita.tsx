@@ -1,3 +1,4 @@
+// src/pages/public/news/DetailBerita.tsx
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
@@ -11,15 +12,19 @@ const SkeletonDetailBerita: React.FC = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8 animate-pulse">
       {/* Skeleton untuk Konten utama */}
       <div className="lg:col-span-3">
+        {/* Thumbnail utama */}
         <div className="bg-gray-200 h-[350px] w-full rounded-lg shadow-md mb-4"></div>
 
+        {/* Tanggal */}
         <div className="flex items-center gap-2 mt-4 text-sm">
           <div className="bg-gray-200 h-5 w-5 rounded-full"></div>
           <div className="bg-gray-200 h-4 w-24 rounded"></div>
         </div>
 
+        {/* Judul */}
         <div className="bg-gray-200 h-8 w-3/4 mt-2 mb-4 rounded"></div>
 
+        {/* Konten paragraf */}
         <div className="space-y-3">
           <div className="bg-gray-200 h-4 w-full rounded"></div>
           <div className="bg-gray-200 h-4 w-full rounded"></div>
@@ -31,36 +36,36 @@ const SkeletonDetailBerita: React.FC = () => {
 
       {/* Skeleton Sidebar */}
       <div className="lg:col-span-1">
+        {/* Search input */}
         <div className="relative mb-6">
-          <div className="bg-gray-200 h-10 w-full rounded-lg"></div> {/* Skeleton Search Input */}
+          <div className="bg-gray-200 h-10 w-full rounded-lg"></div>
         </div>
 
-        <div className="mt-8">
-          <div className="bg-gray-200 h-6 w-2/3 mb-4 rounded"></div> {/* Judul "Berita Terkait" */}
+        {/* Judul "Berita Terkait" */}
+        <div className="mt-8 text-center">
+          <div className="bg-gray-200 h-6 w-2/3 mb-4 rounded mx-auto"></div>
+
+          {/* List skeleton card berita terkait */}
           <div className="space-y-4">
             {[...Array(3)].map((_, idx) => (
               <div
                 key={idx}
-                className="block bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm animate-pulse"
+                className="block rounded-lg border border-gray-200 overflow-hidden shadow-sm"
               >
                 {/* Thumbnail */}
                 <div className="relative h-32 bg-gray-200 w-full"></div>
 
                 {/* Konten */}
                 <div className="p-3 space-y-2">
-                  {/* Tanggal */}
+                  {/* tanggal */}
                   <div className="flex items-center gap-2">
                     <div className="bg-gray-200 h-3 w-3 rounded"></div>
                     <div className="bg-gray-200 h-3 w-16 rounded"></div>
                   </div>
 
-                  {/* Judul */}
-                  <div className="bg-gray-200 h-4 w-full rounded"></div>
-                  <div className="bg-gray-200 h-4 w-5/6 rounded"></div>
-
-                  {/* Ringkasan */}
-                  <div className="bg-gray-200 h-3 w-4/5 rounded"></div>
-                  <div className="bg-gray-200 h-3 w-3/5 rounded"></div>
+                  {/* judul 2 baris */}
+                  <div className="bg-gray-200 h-3 w-3/4 rounded"></div>
+                  <div className="bg-gray-200 h-3 w-1/2 rounded"></div>
                 </div>
               </div>
             ))}

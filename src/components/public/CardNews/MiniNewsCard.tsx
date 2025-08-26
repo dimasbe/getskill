@@ -99,12 +99,28 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
 
                 {/* ✅ Judul dengan animasi garis bawah */}
                 <h4
-                    className="relative block w-full text-left font-semibold text-[13px] text-gray-800 mb-1 
-           hover:text-purple-600 transition-colors duration-300
-           after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-purple-500
-           after:w-0 hover:after:w-full after:transition-all after:duration-500 line-clamp-2"
-                >
-                    {title}
+                    className="group relative sm:text-[15px] font-sans text-black font-semibold mb-1 leading-snug line-clamp-2">
+                    {title
+                        .split(" ")
+                        .reduce<string[][]>((lines, word) => {
+                            if (!lines.length) return [[word]];
+                            const lastLine = lines[lines.length - 1].join(" ");
+                            if ((lastLine + " " + word).length > 25) lines.push([word]);
+                            else lines[lines.length - 1].push(word);
+                            return lines;
+                        }, [])
+                        .map((line, i) => (
+                            <span
+                                key={i}
+                                className="relative block w-fit pb-0.5
+                                after:absolute after:left-0 after:bottom-0 after:h-[1.5px] after:bg-black
+                                after:w-0 group-hover:after:w-full
+                                after:transition-all after:duration-500 after:[transition-delay:var(--delay)]"
+                                style={{ ["--delay" as any]: `${i * 100}ms` }}
+                            >
+                                {line.join(" ")}
+                            </span>
+                        ))}
                 </h4>
 
                 {/* Ringkasan (opsional) */}
@@ -117,11 +133,11 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
 
             {/* Keyframes */}
             <style>{`
-        @keyframes shineDiagonal {
-          0% { transform: translate(-150%, -150%); }
-          100% { transform: translate(150%, 150%); }
-        }
-      `}</style>
+            @keyframes shineDiagonal {
+            0% { transform: translate(-150%, -150%); }
+            100% { transform: translate(150%, 150%); }
+            }
+        `}</style>
         </Link>
     );
 };
