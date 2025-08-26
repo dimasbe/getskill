@@ -33,7 +33,7 @@ const events: Event[] = [
     quota: 123,
     registered: 45,
     daysLeft: 28,
-    image: FotoModel2,
+    image: "",
     category: 'Seminar',
     isOnline: false,
     location: 'Ruang A, Gedung A, Universitas Indonesia',
