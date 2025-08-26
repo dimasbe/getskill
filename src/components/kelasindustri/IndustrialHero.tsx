@@ -1,7 +1,7 @@
 // src/components/BannerSection.tsx
 import React from "react";
 
-const BannerSection: React.FC = () => {
+const IndustrialHero: React.FC = () => {
   return (
     <section className="relative bg-white overflow-hidden">
       {/* Dot pattern kiri */}
@@ -27,4 +27,4 @@ const BannerSection: React.FC = () => {
   );
 };
 
-export default BannerSection;
+export default IndustrialHero;

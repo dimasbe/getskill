@@ -10,7 +10,7 @@ import IndustrialHero from '../../../components/kelasindustri/IndustrialHero';
 
 const KelasIndustri = () => {
   return (
-    <div className="min-h-screen bg-white antialiased">
+  <div className="min-h-screen bg-white antialiased overflow-x-hidden">
       <HeroSection />
       <FeaturesSection />
       <IndustrialClassSection />

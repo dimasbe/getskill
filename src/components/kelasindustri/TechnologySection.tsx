@@ -5,86 +5,69 @@ import { ArrowRight } from "lucide-react";
 
 const TechnologySection: React.FC = () => {
   return (
-    <section className="py-16 lg:py-24 bg-white">
-      <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-12">
+    <section className="technology-section py-12">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16">
+          
+          {/* Left side - Illustration */}
+          <div className="w-full lg:w-5/12 flex justify-center md:justify-center lg:justify-start relative lg:-ml-6 md:px-6">
+            {/* Background telur miring */}
+            <div
+              className="absolute bg-orange-50 hidden sm:block"
+              style={{
+                width: "420px",
+                height: "260px",
+                borderRadius: "50% 100% 100% 50% / 60% 100% 100% 60%",
+                transform: "rotate(-6deg) translateY(30px)",
+              }}
+            ></div>
 
-        {/* Left side - Illustration */}
-        <div className="flex justify-center lg:col-span-4 lg:col-start-2 relative lg:translate-x-15">
-          {/* Background telur miring */}
-          <div
-            className="absolute bg-orange-50"
-            style={{
-              width: "480px",
-              height: "300px",
-              borderRadius: "50% 100% 100% 50% / 60% 100% 100% 60%", 
-              transform: "rotate(-6deg) translateY(30px)",
-            }}
-          ></div>
-
-          {/* Illustration */}
-          <div className="relative w-[90%] md:w-[80%] lg:w-[110%] scale-96 z-10">
             <img
               src={conceptImg}
               alt="Belajar Online"
-              className="w-full h-auto object-contain"
+              className="relative w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto lg:max-w-[345px] h-auto object-contain z-10 lg:translate-x-10"
             />
           </div>
-        </div>
 
+          {/* Right side - Content */}
+          <div className="w-full lg:w-7/12 text-left md:pl-4 md:pr-2 lg:pl-10">
+            <div className="content">
+              <span className="inline-block text-[11px] lg:text-[11px] md:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
+                Teknologi
+              </span>
 
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl font-semibold mb-4 leading-snug">
+                Kelas Industri menggunakan sistem LMS sendiri
+              </h2>
 
-        {/* Right side - Content */}
-        <div className="text-left lg:col-span-6 lg:pl-24">
-          <span className="inline-block text-[11px] font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
-            Teknologi
-          </span>
+              <p className="text-gray-600 text-sm sm:text-base md:text-sm lg:text-xs mb-6 leading-relaxed">
+                Menggunakan smart classroom sebagai pendukung dalam meningkatkan
+                daya serap dalam proses kegiatan belajar mengajar (KBM).
+              </p>
 
-          <h2 className="text-xl lg:text-2xl font-semibold mb-4 leading-snug">
-            Kelas Industri menggunakan sistem LMS sendiri
-          </h2>
+              {/* List Fitur */}
+              <ul className="space-y-3">
+                {[
+                  "Melakukan sinkronisasi kurikulum berbasis industri.",
+                  "Menerima guru magang.",
+                  "Menerima siswa magang / Praktik Kerja Lapangan (PKL).",
+                  "Mengadakan rekruitmen kerja untuk lulusan SMK jurusan rekayasa perangkat lunak.",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center">
+                    <span className="bg-yellow-400 rounded-full p-1.5 mr-3 flex-shrink-0">
+                      <ArrowRight size={12} className="text-white" />
+                    </span>
+                    <span className="text-sm sm:text-base lg:text-xs text-gray-700">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-          <p className="text-gray-600 mb-6 leading-relaxed text-xs">
-            Menggunakan smart classroom sebagai pendukung dalam meningkatkan
-            daya serap dalam proses kegiatan belajar mengajar (KBM).
-          </p>
-
-          <ul className="space-y-3">
-            <li className="flex items-start">
-              <span className="bg-yellow-400 text-white rounded-full p-1.5 mr-3 mt-1">
-                <ArrowRight size={14} />
-              </span>
-              <span className="text-gray-700 text-xs">
-                Melakukan sinkronisasi kurikulum berbasis industri.
-              </span>
-            </li>
-            <li className="flex items-start">
-              <span className="bg-yellow-400 text-white rounded-full p-1.5 mr-3 mt-1">
-                <ArrowRight size={14} />
-              </span>
-              <span className="text-gray-700 text-xs">
-                Menerima guru magang.
-              </span>
-            </li>
-            <li className="flex items-start">
-              <span className="bg-yellow-400 text-white rounded-full p-1.5 mr-3 mt-1">
-                <ArrowRight size={14} />
-              </span>
-              <span className="text-gray-700 text-xs">
-                Menerima siswa magang / Praktik Kerja Lapangan (PKL).
-              </span>
-            </li>
-            <li className="flex items-start">
-              <span className="bg-yellow-400 text-white rounded-full p-1.5 mr-3 mt-1">
-                <ArrowRight size={14} />
-              </span>
-              <span className="text-gray-700 text-xs">
-                Mengadakan rekruitmen kerja untuk lulusan SMK jurusan rekayasa perangkat lunak.
-              </span>
-            </li>
-          </ul>
         </div>
       </div>
-
     </section>
   );
 };

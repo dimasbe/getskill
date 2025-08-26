@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
   return (
     <section
       className="relative overflow-hidden bg-cover bg-center 
-                py-2  0 md:py-12 lg:py-25 "
+                py-2 md:py-12 lg:py-25 "
       style={{ backgroundImage: `url(${backgroundClass})` }}
     >
       <div
@@ -86,12 +86,13 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 1.5, ease: "easeOut", delay: 0.6 }}
             whileHover={{ y: -8, opacity: 1 }}
             className="
-              absolute -z-0 top-20              
-              sm:top-28 sm:w-[95%]   /* Tablet kecil */
+              absolute -z-0 top-20
+              w-[60%] max-w-[220px]                
+              sm:top-28 sm:w-[70%]   /* Tablet kecil */
               md:top-32 md:w-[500px] /* Tablet sedang */
-              lg:top-45 lg:scale-118 lg:-translate-x-2 /* Desktop - lebih besar */
+              lg:top-66 lg:scale-250 lg:-translate-x-2 /* Desktop - lebih besar */
             "
-            style={{ width: "95%", maxWidth: "550px" }}
+            
           />
         </div>
       </div>

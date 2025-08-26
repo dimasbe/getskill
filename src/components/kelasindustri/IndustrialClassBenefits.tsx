@@ -8,93 +8,87 @@ import fotofotoImg from "../../assets/img/others/fotofotoid.png";
 
 const IndustrialClassBenefits: React.FC = () => {
   return (
-    <section className="benefits-section py-6">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center">
-          {/* Left Content */}
-          <div className="lg:w-7/12 text-left lg:-ml-6"> 
-            <span className="inline-block text-[11px] font-medium text-indigo-600 bg-indigo-100 px-3 py-2 rounded-full mb-3">
+    <section className="benefits-section py-10 sm:py-14 lg:py-2">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-1">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-10 lg:gap-16">
+
+          {/* Left Content (Teks) */}
+          <div className="w-full md:w-6/12 lg:w-8/12 text-left md:pl-8 lg:pl-0 lg:-ml-6">
+            <span className="inline-block text-[11px] lg:text-[11px] md:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
               Manfaat Sekolah
             </span>
 
-            <h2 className="text-xl md:text-2xl font-semibold mb-6 leading-snug text-left">
-              Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.{" "}
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-semibold mb-6 leading-snug">
+              Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.
             </h2>
 
             <div className="space-y-5">
-              {/* Item 1 */}
-              <div className="flex items-start">
-                <div className="relative flex-shrink-0 w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
-                  <img src={lampImg} alt="Mitra Industri" className="w-6 h-6" />
-                  <div className="absolute -bottom-1 -left-1 w-5 h-5 rounded-full bg-purple-700 text-white text-[10px] flex items-center justify-center">
-                    1
+              {[
+                {
+                  id: 1,
+                  img: lampImg,
+                  title: "Mitra Industri",
+                  desc: "Memiliki kerjasama dengan CV. Hummatech Technology dan menjadikan mitra industri.",
+                  color: "bg-purple-100",
+                  badge: "bg-purple-700",
+                },
+                {
+                  id: 2,
+                  img: searchImg,
+                  title: "Business Center",
+                  desc: "Mengaktifkan Business Center Sekolah dibidang pengembangan perangkat lunak.",
+                  color: "bg-teal-50",
+                  badge: "bg-teal-600",
+                },
+                {
+                  id: 3,
+                  img: loveImg,
+                  title: "Akreditasi",
+                  desc: "Menambah poin akreditasi sekolah.",
+                  color: "bg-yellow-50",
+                  badge: "bg-yellow-500",
+                },
+                {
+                  id: 4,
+                  img: boardImg,
+                  title: "Kerja",
+                  desc: "Peningkatan keterserapan lulusan sesuai kebutuhan industri.",
+                  color: "bg-green-50",
+                  badge: "bg-green-600",
+                },
+              ].map((item) => (
+                <div key={item.id} className="flex items-start">
+                  <div
+                    className={`relative flex-shrink-0 w-12 h-12 rounded-full ${item.color} flex items-center justify-center`}
+                  >
+                    <img src={item.img} alt={item.title} className="w-6 h-6" />
+                    <div
+                      className={`absolute -bottom-1 -left-1 w-5 h-5 rounded-full ${item.badge} text-white text-[10px] flex items-center justify-center`}
+                    >
+                      {item.id}
+                    </div>
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <h4 className="font-semibold text-sm sm:text-base lg:text-base">
+                      {item.title}
+                    </h4>
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[11px] leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
-                <div className="ml-3 flex-1 text-left">
-                  <h4 className="font-semibold text-base">Mitra Industri</h4>
-                  <p className="text-gray-600 text-[11px]">
-                    Memiliki kerjasama dengan CV. Hummatech Technology dan menjadikan mitra industri.
-                  </p>
-                </div>
-              </div>
-
-              {/* Item 2 */}
-              <div className="flex items-start">
-                <div className="relative flex-shrink-0 w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center">
-                  <img src={searchImg} alt="Business Center" className="w-6 h-6" />
-                  <div className="absolute -bottom-1 -left-1 w-5 h-5 rounded-full bg-teal-600 text-white text-[10px] flex items-center justify-center">
-                    2
-                  </div>
-                </div>
-                <div className="ml-3 flex-1 text-left">
-                  <h4 className="font-semibold text-base">Business Center</h4>
-                  <p className="text-gray-600 text-[11px]">
-                    Mengaktifkan Business Center Sekolah dibidang pengembangan perangkat lunak.
-                  </p>
-                </div>
-              </div>
-
-              {/* Item 3 */}
-              <div className="flex items-start">
-                <div className="relative flex-shrink-0 w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center">
-                  <img src={loveImg} alt="Akreditasi" className="w-6 h-6" />
-                  <div className="absolute -bottom-1 -left-1 w-5 h-5 rounded-full bg-yellow-500 text-white text-[10px] flex items-center justify-center">
-                    3
-                  </div>
-                </div>
-                <div className="ml-3 flex-1 text-left">
-                  <h4 className="font-semibold text-base">Akreditasi</h4>
-                  <p className="text-gray-600 text-[11px]">Menambah poin akreditasi sekolah.</p>
-                </div>
-              </div>
-
-              {/* Item 4 */}
-              <div className="flex items-start">
-                <div className="relative flex-shrink-0 w-12 h-12 rounded-full bg-green-50 flex items-center justify-center">
-                  <img src={boardImg} alt="Kerja" className="w-6 h-6" />
-                  <div className="absolute -bottom-1 -left-1 w-5 h-5 rounded-full bg-green-600 text-white text-[10px] flex items-center justify-center">
-                    4
-                  </div>
-                </div>
-                <div className="ml-3 flex-1 text-left">
-                  <h4 className="font-semibold text-base">Kerja</h4>
-                  <p className="text-gray-600 text-[11px]">
-                    Peningkatan keterserapan lulusan sesuai kebutuhan industri.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Image */}
-          <div className="lg:w-7/12 flex justify-center mt-12 lg:mt-0 relative">
+          {/* Right Image (tapi di mobile jadi atas) */}
+          <div className="w-full md:w-6/12 lg:w-7/12 flex justify-center">
             <img
               src={fotofotoImg}
               alt="Belajar Online"
-              className="w-full h-auto object-contain rounded-xl transform translate-x-6 translate-y-6"
+              className="w-full max-w-[480px] lg:max-w-none lg:w-[116%] h-auto object-contain lg:mt-26"
             />
           </div>
-
         </div>
       </div>
     </section>
