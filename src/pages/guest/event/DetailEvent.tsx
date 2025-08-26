@@ -4,6 +4,7 @@ import { GraduationCap } from "lucide-react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventPriceCard from "../../../components/public/CardEvent/EventPriceCard";
 import StatusIndicator from "../../../components/public/CardEvent/StatusIndicator";
+import EventLocationCard from "../../../components/public/CardEvent/EventLocationCard";
 
 const DetailEvent: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -20,14 +21,14 @@ const DetailEvent: React.FC = () => {
                 <BackgroundShapes />
 
                 {/* Konten tengah */}
-                <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
+                <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
+                    <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
                         {event.title}
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-gray-800 flex flex-wrap items-center justify-center sm:justify-start">
-                        <a href="/" className="hover:underline">Beranda</a>
+                    <p className="mt-2 text-sm sm:text-xs text-gray-800 flex flex-wrap items-center justify-center sm:justify-start">
+                        <a href="/">Beranda</a>
                         <span className="mx-1">&gt;</span>
-                        <a href="/event" className="hover:underline">Events</a>
+                        <a href="/event">Events</a>
                         <span className="mx-1">&gt;</span>
                         <span className="text-purple-600">{event.title}</span>
                     </p>
@@ -35,7 +36,8 @@ const DetailEvent: React.FC = () => {
             </div>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 xl:px-10 lg:px-20 md:px-30 sm:px-20 py-10 md:py-18">
+            <div className={`max-w-7xl mx-auto px-4 xl:px-10 lg:px-20 md:px-30 sm:px-20 pt-10 md:pt-18 ${event.isOnline ? 'pb-10 xl:pb-28 lg:pb-28' : 'pb-10 xl:pb-90 lg:pb-90'}`}>
+
                 <div className="relative">
                     <img
                         src={event.image}
@@ -43,8 +45,13 @@ const DetailEvent: React.FC = () => {
                         className="w-full h-130 object-cover rounded-xl"
                     />
 
-                    <div className="absolute right-8 -bottom-230 w-80 hidden lg:block">
+                    <div className="absolute right-8 top-[70%] translate-y-[3%] w-85 hidden lg:block space-y-6">
                         <EventPriceCard event={event} />
+                        <EventLocationCard
+                            isOnline={event.isOnline}
+                            location={event.location}
+                            platform={event.platform}
+                        />
                     </div>
                 </div>
 
@@ -128,8 +135,13 @@ const DetailEvent: React.FC = () => {
                     </div>
 
 
-                    <div className="lg:hidden">
+                    <div className={`lg:hidden space-y-6 ${event.isOnline ? 'pb-1' : 'pb-0'}`}>
                         <EventPriceCard event={event} />
+                        <EventLocationCard
+                            isOnline={event.isOnline}
+                            location={event.location}
+                            platform={event.platform}
+                        />
                     </div>
                 </div>
             </div>

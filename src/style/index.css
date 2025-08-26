@@ -160,6 +160,7 @@
   display: block;
   overflow: hidden;
 }
+
 .shine__animate::before {
   content: "";
   position: absolute;
@@ -174,10 +175,14 @@
     rgba(255, 255, 255, 0) 100%
   );
   transform: skewX(-25deg);
+  pointer-events: none;
 }
-.shine__animate:hover::before {
+
+.card-shine:hover .shine__animate::before {
   animation: hoverShine 1.2s ease;
 }
+
 @keyframes hoverShine {
   100% { left: 125%; }
 }
+

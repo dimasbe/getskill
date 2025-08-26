@@ -480,7 +480,7 @@ const events: Event[] = [
   category: 'Conference',
   isOnline: false,
   location: 'Jakarta Digital Valley',
-  price: 0,
+  price: 1000,
   speakerName: 'Investor Panel',
   speakerImage: 'https://randomuser.me/api/portraits/men/88.jpg',
   rundown: [
