@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/beranda/Beranda";
 import Kursus from "../pages/guest/kursus/KursusPage";
@@ -18,51 +18,55 @@ import UpdatePassword from '../pages/guest/auth/updatepassword';
 import DetailBerita from "../pages/guest/berita/DetailBerita";
 import PaymentPage from "../components/payment/PaymentPage";
 
-
-function App() {
+function RouteChangeLoader() {
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [animateOut, setAnimateOut] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+    setAnimateOut(false);
+
     const timer = setTimeout(() => {
       setAnimateOut(true);
       setTimeout(() => setLoading(false), 200);
-    }, 1200);
+    }, 300);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.pathname]); 
 
   if (loading) return <Spinner animateOut={animateOut} />;
 
   return (
+    <Routes>
+      {/* Auth */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/password/email" element={<ForgotPassword />} />
+        <Route path="/update-password/email" element={<UpdatePassword />} />
+      </Route>
+
+      <Route element={<GuestLayout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/kursus" element={<Kursus />} />
+        <Route path="/kursus/:id" element={<CourseDetail />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/event" element={<Event />} />
+        <Route path="/event/:id" element={<DetailEvent />} />
+        <Route path="/berita" element={<Berita />} />
+        <Route path="/berita/:id" element={<DetailBerita />} />
+        <Route path="/kelas-industri" element={<KelasIndustri />} />
+        <Route path="/faq" element={<Faq />} />
+      </Route>
+    </Routes>
+  );
+}
+
+function App() {
+  return (
     <Router>
-      <Routes>
-        {/* Auth */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/password/email" element={<ForgotPassword />} />
-          <Route path="/update-password/email" element={<UpdatePassword />} />
-        </Route>
-
-        <Route element={<GuestLayout />}>
-          <Route path="/" element={<LandingPage />} />
-
-          <Route path="/kursus" element={<Kursus />} />
-          <Route path="/kursus/:id" element={<CourseDetail />} />
-          <Route path="/payment" element={<PaymentPage />} />
-
-          <Route path="/event" element={<Event />} />
-          <Route path="/event/:id" element={<DetailEvent />} />
-
-          <Route path="/berita" element={<Berita />} />
-          <Route path="/berita/:id" element={<DetailBerita />} />
-
-          <Route path="/kelas-industri" element={<KelasIndustri />} />
-
-          <Route path="/faq" element={<Faq />} />
-        </Route>
-      </Routes>
+      <RouteChangeLoader />
     </Router>
   );
 }

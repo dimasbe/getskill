@@ -117,7 +117,7 @@ const Navbar = () => {
       className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md 
       ${showNavbar ? (scrollDirection === "down" ? "animate-slideDown" : "translate-y-0 opacity-100") : "-translate-y-full opacity-0"}`}
     >
-      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex justify-between items-center">
+      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex  font-sans justify-between items-center">
         {/* Logo & Links */}
         <div className="flex items-center space-x-10">
           <NavLink to="/">
@@ -163,7 +163,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Pencarian kursus..."
-              className="py-1 px-2 w-40 text-sm font-medium bg-transparent focus:outline-none placeholder-gray-400"
+              className="py-1 px-2 w-40 text-sm bg-transparent focus:outline-none placeholder-gray-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
