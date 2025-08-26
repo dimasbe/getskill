@@ -46,7 +46,7 @@ const DetailEvent: React.FC = () => {
 
             {/* Main Content */}
             <div
-                className={`max-w-7xl mx-auto px-4 xl:px-10 lg:px-20 pt-10 ${event?.isOnline ? "pb-10 xl:pb-28" : "pb-10 xl:pb-90"
+                className={`max-w-7xl mx-auto px-4 xl:px-10 lg:px-20 pt-10 ${event?.isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-90 lg:pb-90"
                     }`}
             >
                 <div className="relative">
