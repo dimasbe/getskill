@@ -95,15 +95,28 @@ const HeroSection: React.FC = () => {
           </div>
 
           {/* Bubble + panah mobile */}
-          <div className="absolute top-[110%] left-[5%] space-y-1 md:hidden" data-aos="fade-up" data-aos-delay="900">
-            <img src={panah} alt="panah" className="absolute top-6 left-[90%] w-[70px] rotate-20" />
-            <div className="bg-white px-3 py-1 rounded-full shadow-lg shadow-gray-500/30 flex items-center space-x-2">
-              <img src={avatar} alt="Kenza" className="w-7 h-7 rounded-full" />
-              <p className="text-sm font-medium">Kenza</p>
-            </div>
-            <div className="bg-white px-3 py-1 rounded-full shadow-lg shadow-gray-500/30 flex items-center space-x-2">
-              <img src={avatar2} alt="Michel" className="w-7 h-7 rounded-full" />
-              <p className="text-sm font-medium">Michel</p>
+          <div
+            className="absolute top-[110%] -left-[1%] space-y-1 md:hidden"
+            data-aos="fade-up"
+            data-aos-delay="900"
+          >
+            {/* Panah di belakang */}
+            <img
+              src={panah}
+              alt="panah"
+              className="absolute top-4 left-[90%] w-[70px] rotate-20 z-0"
+            />
+
+            {/* Bubble versi mobile */}
+            <div className="relative z-10 bg-white p-2 rounded-[5px] shadow-[7px_7px_0px_rgba(176,184,196,0.6)] space-y-2">
+              <div className="flex items-center space-x-2">
+                <img src={avatar} alt="Kenza" className="w-6 h-6 rounded-full" />
+                <p className="text-xs font-medium">Kenza Aurelia</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <img src={avatar2} alt="Michel" className="w-6 h-6 rounded-full" />
+                <p className="text-xs font-medium">Michel Jones</p>
+              </div>
             </div>
           </div>
         </div>
