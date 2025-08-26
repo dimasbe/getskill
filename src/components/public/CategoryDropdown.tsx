@@ -43,14 +43,14 @@ const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative font-sans">
       {/* Toggle Button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center pl-5 pr-3 text-gray-500 cursor-pointer select-none"
       >
         <HiOutlineViewGridAdd size={20} className="text-purple-600" />
-        <span className="text-sm ml-2">Pilih Kategori</span>
+        <span className="text-xs ml-2">Pilih Kategori</span>
         <HiChevronDown
           className={`ml-1 size-4 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`}
         />
@@ -58,11 +58,11 @@ const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <ul className="absolute left-0 mt-5 w-52 bg-white border text-left border-gray-200 rounded-md shadow-lg z-50">
+        <ul className="absolute left-0 mt-5 w-40 bg-white border text-left border-gray-200 rounded-md shadow-lg z-50">
           {categories.map((category, index) => (
             <li
               key={index}
-              className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-sm text-gray-700 cursor-pointer whitespace-nowrap"
+              className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-xs text-gray-700 cursor-pointer whitespace-nowrap"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
@@ -74,7 +74,7 @@ const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
                   {category.sub.map((sub, subIndex) => (
                     <li
                       key={subIndex}
-                      className="py-2 pl-4 pr-2 hover:bg-purple-100 text-sm text-purple-600 whitespace-nowrap"
+                      className="py-2 pl-4 pr-2 hover:bg-purple-100 text-xs text-purple-600 whitespace-nowrap"
                       onClick={() =>
                         typeof sub === "string"
                           ? handleCategoryClick(sub)

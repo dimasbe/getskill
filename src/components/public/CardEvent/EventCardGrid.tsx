@@ -25,8 +25,8 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({ events, loading = false }
     const skeletonArray = Array.from({ length: 8 });
 
     return (
-        <div className="w-full px-4 xl:px-3 md:px-20 sm:px-6 lg:px-30 max-w-screen-xl mx-auto mt-12 
-      grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[60vh]">
+        <div className="w-full px-4 2xl:px-3 xl:px-20 md:px-20 sm:px-6 lg:px-30 max-w-screen-xl mx-auto mt-12 
+      grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6 min-h-[60vh]">
 
             {loading
                 ? skeletonArray.map((_, index) => (

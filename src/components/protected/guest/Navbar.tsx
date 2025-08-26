@@ -142,7 +142,7 @@ const Navbar = () => {
                   to={to}
                   className={({ isActive }) =>
                     isActive
-                      ? "text-purple-700 text-sm font-normal"
+                      ? "text-purple-700 text-sm font-semibold"
                       : "text-black text-sm font-semibold hover:text-purple-700"
                   }
                 >
@@ -163,7 +163,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Pencarian kursus..."
-              className="py-1 px-2 w-40 text-sm font-medium bg-transparent focus:outline-none placeholder-gray-400"
+              className="py-1 px-2 w-40 text-sm bg-transparent focus:outline-none placeholder-gray-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
