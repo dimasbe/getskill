@@ -66,7 +66,7 @@ const BenefitPage: React.FC = () => {
           }
         `}
       </style>
-      <section className="py-{30vh] sm:py-[25vh] bg-white">
+      <section className="py-[25vh] sm:py-[25vh] bg-white">
         {isLoading ? (
           <SkeletonBenefit />
         ) : (

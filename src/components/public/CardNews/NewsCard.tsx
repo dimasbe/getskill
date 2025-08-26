@@ -71,7 +71,6 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
             <div className="relative z-10 p-6">
                 {/* Tanggal */}
                 <div className="mb-3 -mt-6 flex items-center text-sm text-gray-500">
-                    {/* Ikon kalender pakai inline SVG */}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="mr-2 text-purple-500 h-4 w-4"
@@ -87,21 +86,29 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                     <span className="leading-none">{date}</span>
                 </div>
 
-                {/* Judul */}
-                <h3
-                    className="relative block w-full text-left font-semibold text-gray-800 mb-1 
-                     hover:text-purple-600 transition-colors duration-300
-                     after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-purple-500
-                     after:w-0 hover:after:w-full after:transition-all after:duration-500"
-                    style={{
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis'
-                    }}
-                >
-                    {title}
+                {/* Judul dengan underline animasi per baris */}
+                <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold mb-1 leading-snug line-clamp-2">
+                    {title
+                        .split(" ")
+                        .reduce<string[][]>((lines, word) => {
+                            if (!lines.length) return [[word]];
+                            const lastLine = lines[lines.length - 1].join(" ");
+                            if ((lastLine + " " + word).length > 25) lines.push([word]);
+                            else lines[lines.length - 1].push(word);
+                            return lines;
+                        }, [])
+                        .map((line, i) => (
+                            <span
+                                key={i}
+                                className="relative block w-fit pb-0.5
+                                after:absolute after:left-0 after:bottom-0 after:h-[1.5px] after:bg-black
+                                after:w-0 group-hover:after:w-full
+                                after:transition-all after:duration-500 after:[transition-delay:var(--delay)]"
+                                style={{ ["--delay" as any]: `${i * 100}ms` }}
+                            >
+                                {line.join(" ")}
+                            </span>
+                        ))}
                 </h3>
 
                 {/* Ringkasan */}
