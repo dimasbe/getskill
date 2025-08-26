@@ -24,15 +24,10 @@ export default function FaqCategoryFilter({
               transform select-none
               ${
                 isSelected
-                  ? "bg-yellow-400 shadow-[0_4px_0_#b45309] scale-95"
-                  : "bg-purple-600 hover:bg-yellow-400 shadow-[0_6px_0_#4c1d95] hover:shadow-[0_6px_0_#b45309]"
+                  ? "bg-yellow-400 translate-y-[6px] shadow-none"
+                  : "bg-purple-600 shadow-[0_6px_0_#4c1d95] hover:bg-yellow-400 hover:translate-y-[6px] hover:shadow-none"
               }
             `}
-            style={{
-              boxShadow: isSelected
-                ? "inset 0 2px 4px rgba(0,0,0,0.2)"
-                : "0 6px 0 #4c1d95",
-            }}
           >
             {cat}
           </button>

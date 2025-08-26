@@ -1,8 +1,8 @@
 import CourseCard from '../kursus/CourseCard';
 import dummyCourses from '../../../data/dummyCourses';
 import type { Course } from '../../../types/Course';
+import { motion, AnimatePresence } from "framer-motion";
 
-// Tambahkan 'columns' ke interface props
 interface CourseListProps {
   filters?: {
     categories: string[];
@@ -13,7 +13,7 @@ interface CourseListProps {
   page?: number;
   setPage?: (page: number) => void;
   limit?: number;
-  columns?: number; // Prop baru untuk mengontrol jumlah kolom
+  columns?: number;
 }
 
 const COURSES_PER_PAGE = 6;
@@ -23,8 +23,9 @@ export default function CourseList({
   page = 1,
   setPage,
   limit,
-  columns = 3, // Tambahkan 'columns' dengan nilai default
+  columns = 3,
 }: CourseListProps) {
+  // 🔍 Filter data
   const filteredCourses = dummyCourses.filter((course: Course) => {
     const price = parseInt(course.price.replace(/\./g, '')) || 0;
     const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
@@ -46,38 +47,70 @@ export default function CourseList({
     return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
   });
 
+  // 🔄 Pagination
   const coursesToDisplay = limit ? filteredCourses.slice(0, limit) : filteredCourses;
   const totalPages = Math.ceil(coursesToDisplay.length / COURSES_PER_PAGE);
   const startIndex = (page - 1) * COURSES_PER_PAGE;
   const currentCourses = coursesToDisplay.slice(startIndex, startIndex + COURSES_PER_PAGE);
 
-  // Buat kelas grid dinamis
-  const gridClass = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns} gap-5`;
+  // ✅ Mapping kolom agar Tailwind bisa compile
+  const columnsClass =
+    columns === 2
+      ? "lg:grid-cols-2"
+      : columns === 4
+      ? "lg:grid-cols-4"
+      : "lg:grid-cols-2 xl:grid-cols-3";
+
+  const gridClass = `grid grid-cols-1 ${columnsClass} gap-5 items-stretch`;
+
 
   return (
-    <div>
-      {/* Gunakan kelas grid dinamis */}
-      <div className={gridClass}>
+  <div className="flex flex-col min-h-[500px]">
+    {/* Grid courses */}
+    <div className={gridClass}>
+      <AnimatePresence mode="popLayout">
         {currentCourses.length > 0 ? (
-          currentCourses.map((course) => <CourseCard key={course.id} {...course} />)
+          currentCourses.map((course) => (
+            <motion.div
+              key={course.id}
+              layout
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <CourseCard {...course} />
+            </motion.div>
+          ))
         ) : (
-          <p className="text-center col-span-full text-gray-500">
+          <motion.p
+            key="no-course"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center col-span-full text-gray-500 py-8"
+          >
             Tidak ada kursus yang ditemukan
-          </p>
+          </motion.p>
         )}
-      </div>
+      </AnimatePresence>
+    </div>
 
-      {/* Pagination */}
-      {setPage && totalPages > 1 && (
-        <div className="flex justify-center mt-12">
-          <div className="flex gap-3 mb-10">
+    {/* Pagination */}
+    {setPage && totalPages > 1 && (
+      <div className="mt-auto pt-6 sm:pt-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex justify-center"
+        >
+          <div className="flex gap-2 sm:gap-3">
             {Array.from({ length: totalPages }).map((_, index) => {
               const pageNumber = index + 1;
               return (
                 <button
                   key={pageNumber}
                   onClick={() => setPage(pageNumber)}
-                  className={`w-8 h-8 rounded-full text-sm font-medium transition ${
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
                     pageNumber === page
                       ? 'bg-purple-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
@@ -88,8 +121,9 @@ export default function CourseList({
               );
             })}
           </div>
-        </div>
-      )}
-    </div>
-  );
+        </motion.div>
+      </div>
+    )}
+  </div>
+);
 }
