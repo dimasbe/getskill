@@ -61,11 +61,34 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({ events, loading = false }
 
                                 <div className="relative ">
                                     <div className="shine__animate ">
-                                        <img
-                                            src={event.image}
-                                            alt={event.title}
-                                            className="h-40 w-full object-cover rounded-xl"
-                                        />
+                                        {event.image ? (
+  <img
+    src={event.image}
+    alt={event.title}
+    className="h-40 w-full object-cover rounded-xl"
+    onError={(e) => {
+      e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d1d5db' viewBox='0 0 24 24'%3E%3Cpath d='M12 5c1.657 0 3 1.343 3 3S13.657 11 12 11s-3-1.343-3-3 1.343-3 3-3m0-2C9.239 3 7 5.239 7 8s2.239 5 5 5 5-2.239 5-5-2.239-5-5-5m0 16c-3.866 0-7-3.134-7-7h2c0 2.761 2.239 5 5 5s5-2.239 5-5h2c0 3.866-3.134 7-7 7z'/%3E%3C/svg%3E";
+    }}
+  />
+) : (
+  <div className="h-40 w-full flex items-center justify-center bg-gray-200 rounded-xl">
+    <svg
+      className="w-12 h-12 text-gray-400"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M3 7l6 6-6 6M21 7l-6 6 6 6"
+      />
+    </svg>
+  </div>
+)}
+
                                     </div>
                                     <div className="absolute -bottom-1 -left-1 bg-yellow-400 text-sm font-extrabold text-gray-900 px-5 py-2 rounded-full border shadow-[5px_5px_0_#4c1d95] z-10">
                                         {event.date}
