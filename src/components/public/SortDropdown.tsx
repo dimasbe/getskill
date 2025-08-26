@@ -10,6 +10,7 @@ type Option = {
 type SortDropdownProps = {
     selected: string;
     onChange: (value: string) => void;
+    loading?: boolean;
 };
 
 const sortOptions: Option[] = [
@@ -17,10 +18,18 @@ const sortOptions: Option[] = [
     { label: "Berakhir - Aktif", value: "terlama" }
 ];
 
-const SortDropdown: React.FC<SortDropdownProps> = ({ selected, onChange }) => {
+const SortDropdown: React.FC<SortDropdownProps> = ({ selected, onChange, loading = false }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const selectedLabel = sortOptions.find(opt => opt.value === selected)?.label || sortOptions[0].label;
+
+    if (loading) {
+        return (
+            <div className="relative w-full md:w-1/3">
+                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative w-full md:w-1/3 transition-all duration-300 ease-in-out hover:scale-[1.02] z-30">
