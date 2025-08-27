@@ -47,7 +47,7 @@ const ContactSection: React.FC = () => {
               </p>
 
               {/* Button */}
-              <div className="mt-6" data-aos="fade-right" data-aos-delay="700">
+              <div className="mt-6" data-aos="" data-aos-delay="700">
                 <button
                   className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
                     rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
