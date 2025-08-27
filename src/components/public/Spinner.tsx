@@ -17,11 +17,11 @@ const Spinner: React.FC<SpinnerProps> = ({ animateOut }) => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         {/* Outer Circle Border */}
         <motion.div
-          className="relative w-[85px] h-[85px] rounded-full border-[3px] border-gray-300"
-          animate={{ rotate: 500 }}
+          className="relative inset-0 w-[85px] h-[85px] rounded-full border-[3px] border-gray-300"
+          animate={{ rotate: 900 }}
           transition={{
             repeat: Infinity,
-            duration: 1.8,
+            duration: 1.1,
             ease: "easeInOut",
           }}
         >
