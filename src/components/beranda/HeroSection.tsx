@@ -133,8 +133,18 @@ const HeroSection: React.FC = () => {
           <img src={arrowPattern} alt="Panah Ungu" className="absolute -right-[30px] top-[230px] w-[530px] z-0 hidden md:block" data-aos="fade-up" />
 
           {/* Dots */}
-          <img src={dotsPattern} alt="Dots" className="absolute -top-[40px] -right-[10px] w-[360px] z-0 md:hidden" data-aos="fade-right" />
-          <img src={dotsPattern} alt="Dots" className="absolute top-[25px] right-[60px] w-[400px] z-0 hidden md:block" data-aos="fade-up" />
+          <img
+            src={dotsPattern}
+            alt="Dots"
+            className="absolute -top-[40px] -right-[10px] w-[360px] z-0 md:hidden spin-slow"
+            data-aos="fade-right"
+          />
+          <img
+            src={dotsPattern}
+            alt="Dots"
+            className="absolute top-[25px] right-[60px] w-[400px] z-0 hidden md:block spin-reverse"
+            data-aos="fade-up"
+          />
 
           {/* Foto model */}
           <img src={fotomodel1} alt="Orang dengan Laptop" className="relative z-10 w-[300px] md:w-[520px]" data-aos="fade-up" />
