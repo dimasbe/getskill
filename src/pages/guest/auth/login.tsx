@@ -48,7 +48,7 @@ const Login = () => {
                     {/* Logo */}
                     <div className="flex-1 items-center justify-center mb-6">
                         <img
-                            src="/src/assets/logo/landscape.png"
+                            src="/src/assets/img/logo/get-skill/landscape.png"
                             alt="GetSkill Logo"
                             className="h-8 w-auto"
                         />
