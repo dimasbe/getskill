@@ -60,7 +60,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({ events, loading = false }
                   hover:shadow-[8px_8px_0_#D3DAD9] hover:scale-[1.02] transition-all duration-300 cursor-pointer p-0 overflow-hidden z-10">
 
                                 <div className="relative ">
-                                    <div className="shine__animate ">
+                                    <div className="shine__animate">
                                         {event.image ? (
                                             <img
                                                 src={event.image}
