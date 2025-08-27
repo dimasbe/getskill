@@ -32,7 +32,7 @@ export default function CourseCard({
   return (
     <div
       onClick={() => navigate(`/kursus/${id}`)}
-      className="w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
+      className="group w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
                  transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
                  hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1 "
     >
@@ -80,7 +80,7 @@ export default function CourseCard({
         </div>
 
         {/* Judul dengan clamp + underline animasi */}
-        <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold mb-3 leading-snug line-clamp-2">
+        <h3 className="relative sm:text-[15px] font-sans text-black font-semibold mb-3 leading-snug line-clamp-2">
           {title
             .split(" ")
             .reduce<string[][]>((lines, word) => {
