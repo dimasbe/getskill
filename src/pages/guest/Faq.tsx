@@ -30,8 +30,8 @@ export default function Faq() {
 
       <FaqHeader />
 
-      <div className="container mx-auto px-4 py-14 max-w-4xl relative z-10">
-        <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-800 tracking-tight drop-shadow-sm">
+      <div className="container mx-auto px-4 py-30 max-w-4xl relative z-10">
+        <h2 className="text-4xl font-semibold text-center mb-15 text-gray-800 tracking-tight drop-shadow-sm ">
           Temukan Pertanyaanmu
         </h2>
 

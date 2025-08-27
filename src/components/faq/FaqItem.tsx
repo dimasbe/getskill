@@ -18,10 +18,10 @@ export default function FaqItem({ question, answer, isOpen, onToggle }: Props) {
     >
       {/* Tombol pertanyaan */}
       <button
-        className="w-full flex justify-between items-center px-5 py-4 text-left focus:outline-none"
+        className="w-full flex justify-between items-center px-5 py-4 text-left focus:outline-none border-b border-gray-300 pb-4"
         onClick={onToggle}
       >
-        <span className="font-semibold text-gray-900">{question}</span>
+        <span className="font-semibold text-gray-900 text-[15px]">{question}</span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
@@ -44,7 +44,7 @@ export default function FaqItem({ question, answer, isOpen, onToggle }: Props) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-5 pb-4 text-gray-600 leading-relaxed">
+            <div className="px-5 pb-5 mt-5 text-gray-600 leading-relaxed text-[13px] text-left">
               {answer}
             </div>
           </motion.div>
