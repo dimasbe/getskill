@@ -64,6 +64,14 @@ const HeroSection: React.FC = () => {
             </div>
           </h2>
 
+          <p
+            className="text-gray-600 text-sm md:text-base"
+            data-aos="fade-right"
+            data-aos-delay="500"
+          >
+            Belajar seru bersama GetSkill
+          </p>
+
           {/* Tombol daftar */}
           <div className="mt-6" data-aos="fade-right" data-aos-delay="700">
             <Link to="/register">
