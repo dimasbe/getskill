@@ -46,7 +46,7 @@ const DetailEvent: React.FC = () => {
 
             {/* Main Content */}
             <div
-                className={`max-w-7xl mx-auto px-4 xl:px-10 lg:px-20 pt-10 ${event?.isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-90 lg:pb-90"
+                className={`max-w-7xl mx-auto px-4 sm:px-20 md:px-30 lg:px-30 xl:px-10 2xl:px-10 pt-10 ${event?.isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-90 lg:pb-90"
                     }`}
             >
                 <div className="relative">
@@ -164,7 +164,7 @@ const DetailEvent: React.FC = () => {
 
                                 {/* Rundown Table */}
                                 <h3 className="mt-8 text-lg font-semibold">Rundown Acara :</h3>
-                                <div className="overflow-x-auto mt-4">
+                                <div className="overflow-x-auto mt-4 w-full 2xl:w-auto xl:w-auto lg:w-150">
                                     {loading ? (
                                         <div className="animate-pulse space-y-2">
                                             {Array.from({ length: 3 }).map((_, i) => (
@@ -172,7 +172,7 @@ const DetailEvent: React.FC = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <table className="w-full border border-gray-300 rounded-lg text-sm text-left border-collapse min-w-[500px]">
+                                        <table className="w-full border border-gray-300 rounded-lg text-sm text-left border-collapse min-w-full">
                                             <thead className="bg-purple-100 text-gray-700">
                                                 <tr>
                                                     <th className="px-6 py-2 border border-gray-300 text-center whitespace-nowrap">
