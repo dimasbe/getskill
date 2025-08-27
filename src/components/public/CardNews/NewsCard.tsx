@@ -87,29 +87,19 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                 </div>
 
                 {/* Judul dengan underline animasi per baris */}
-                <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold mb-1 leading-snug line-clamp-2">
-                    {title
-                        .split(" ")
-                        .reduce<string[][]>((lines, word) => {
-                            if (!lines.length) return [[word]];
-                            const lastLine = lines[lines.length - 1].join(" ");
-                            if ((lastLine + " " + word).length > 25) lines.push([word]);
-                            else lines[lines.length - 1].push(word);
-                            return lines;
-                        }, [])
-                        .map((line, i) => (
-                            <span
-                                key={i}
-                                className="relative block w-fit pb-0.5
-                                after:absolute after:left-0 after:bottom-0 after:h-[1.5px] after:bg-black
-                                after:w-0 group-hover:after:w-full
-                                after:transition-all after:duration-500 after:[transition-delay:var(--delay)]"
-                                style={{ ["--delay" as any]: `${i * 100}ms` }}
-                            >
-                                {line.join(" ")}
-                            </span>
-                        ))}
-                </h3>
+                <div className="text-left flex-1 pt-0 px-0">
+                    <h3 className="text- font-semibold line-clamp-2 cursor-pointer">
+                        <a
+                            className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
+                                                    bg-[length:0%_2px,0_2px]
+                                                    bg-[position:100%_100%,0_100%]
+                                                    bg-no-repeat
+                                                    transition-[background-size] duration-300
+                                                    hover:bg-[length:0_2px,100%_2px]">
+                            {title}
+                        </a>
+                    </h3>
+                </div>
 
                 {/* Ringkasan */}
                 <p className="text-sm text-gray-600 line-clamp-3 text-justify">
