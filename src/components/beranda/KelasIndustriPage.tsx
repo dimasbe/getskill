@@ -76,7 +76,7 @@ const KelasIndustriPage: React.FC = () => {
               </p>
 
               {/* Tombol */}
-              <div className="mt-6" data-aos="fade-right" data-aos-delay="700">
+              <div className="mt-6" data-aos="fade" data-aos-delay="700">
                 <button
                   className="group bg-[#7063FF] text-white font-semibold py-2 px-5 sm:py-3 sm:px-6 
                   rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
