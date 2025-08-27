@@ -12,19 +12,12 @@ const SkeletonDetailBerita: React.FC = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8 animate-pulse">
       {/* Skeleton untuk Konten utama */}
       <div className="lg:col-span-3">
-        {/* Thumbnail utama */}
         <div className="bg-gray-200 h-[350px] w-full rounded-lg shadow-md mb-4"></div>
-
-        {/* Tanggal */}
         <div className="flex items-center gap-2 mt-4 text-sm">
           <div className="bg-gray-200 h-5 w-5 rounded-full"></div>
           <div className="bg-gray-200 h-4 w-24 rounded"></div>
         </div>
-
-        {/* Judul */}
         <div className="bg-gray-200 h-8 w-3/4 mt-2 mb-4 rounded"></div>
-
-        {/* Konten paragraf */}
         <div className="space-y-3">
           <div className="bg-gray-200 h-4 w-full rounded"></div>
           <div className="bg-gray-200 h-4 w-full rounded"></div>
@@ -36,34 +29,23 @@ const SkeletonDetailBerita: React.FC = () => {
 
       {/* Skeleton Sidebar */}
       <div className="lg:col-span-1">
-        {/* Search input */}
         <div className="relative mb-6">
           <div className="bg-gray-200 h-10 w-full rounded-lg"></div>
         </div>
-
-        {/* Judul "Berita Terkait" */}
         <div className="mt-8 text-center">
           <div className="bg-gray-200 h-6 w-2/3 mb-4 rounded mx-auto"></div>
-
-          {/* List skeleton card berita terkait */}
           <div className="space-y-4">
             {[...Array(3)].map((_, idx) => (
               <div
                 key={idx}
                 className="block rounded-lg border border-gray-200 overflow-hidden shadow-sm"
               >
-                {/* Thumbnail */}
                 <div className="relative h-32 bg-gray-200 w-full"></div>
-
-                {/* Konten */}
                 <div className="p-3 space-y-2">
-                  {/* tanggal */}
                   <div className="flex items-center gap-2">
                     <div className="bg-gray-200 h-3 w-3 rounded"></div>
                     <div className="bg-gray-200 h-3 w-16 rounded"></div>
                   </div>
-
-                  {/* judul 2 baris */}
                   <div className="bg-gray-200 h-3 w-3/4 rounded"></div>
                   <div className="bg-gray-200 h-3 w-1/2 rounded"></div>
                 </div>
@@ -123,8 +105,8 @@ const DetailBerita: React.FC = () => {
         {/* Header tetap muncul */}
         <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
           <BackgroundShapes />
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center sm:text-left relative z-10">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
+          <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
               Detail Berita
             </h1>
             <p className="mt-2 text-sm sm:text-base text-gray-800">
@@ -139,7 +121,6 @@ const DetailBerita: React.FC = () => {
           </div>
         </div>
 
-        {/* Skeleton konten & sidebar */}
         <SkeletonDetailBerita />
       </div>
     );
@@ -154,8 +135,8 @@ const DetailBerita: React.FC = () => {
       {/* Header */}
       <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
         <BackgroundShapes />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center sm:text-left relative z-10">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
+        <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
             Detail Berita
           </h1>
           <p className="mt-2 text-sm sm:text-base text-gray-800">
