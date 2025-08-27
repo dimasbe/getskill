@@ -94,7 +94,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                                                     bg-[length:0%_2px,0_2px]
                                                     bg-[position:100%_100%,0_100%]
                                                     bg-no-repeat
-                                                    transition-[background-size] duration-300
+                                                    transition-[background-size] duration-700
                                                     hover:bg-[length:0_2px,100%_2px]">
                             {title}
                         </a>
