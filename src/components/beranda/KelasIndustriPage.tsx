@@ -1,5 +1,6 @@
 // src/pages/KelasIndustriPage.tsx
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import komponen8 from '../../assets/landingpage/beranda/komponen8.png';
 import komponen9 from '../../assets/landingpage/beranda/komponen9.png';
 
@@ -77,29 +78,31 @@ const KelasIndustriPage: React.FC = () => {
 
               {/* Tombol */}
               <div className="mt-6" data-aos="fade" data-aos-delay="700">
-                <button
-                  className="group bg-[#7063FF] text-white font-semibold py-2 px-5 sm:py-3 sm:px-6 
-                  rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
-                  transition-all duration-500 ease-in-out
-                  shadow-[4px_4px_0_#0A0082] 
-                  hover:bg-yellow-400 hover:shadow-none
-                  active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
-                  focus:outline-none"
-                >
-                  <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
-                    Gabung Sekarang
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
+                <Link to="/login">
+                  <button
+                    className="group bg-[#7063FF] text-white font-semibold py-2 px-5 sm:py-3 sm:px-6 
+                    rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
+                    transition-all duration-500 ease-in-out
+                    shadow-[4px_4px_0_#0A0082] 
+                    hover:bg-yellow-400 hover:shadow-none
+                    active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+                    focus:outline-none"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
-                  </svg>
-                </button>
+                    <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
+                      Gabung Sekarang
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
+                    </svg>
+                  </button>
+                </Link>
               </div>
             </div>
 
