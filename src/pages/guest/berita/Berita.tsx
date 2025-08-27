@@ -3,8 +3,31 @@ import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import NewsCard from "../../../components/public/CardNews/NewsCard";
 import { newsArticles } from "../../../data/newsData"; // Pastikan Anda mengimpor tipe NewsArticle jika digunakan di NewsCard
 
+const SkeletonSearchFilterSort: React.FC = () => {
+  return (
+    <div className="flex flex-wrap gap-3 justify-center items-center mt-6 p-4 md:p-0">
+      {/* Search Skeleton */}
+      <div className="relative w-full sm:w-80 md:w-90">
+        <div className="bg-white border border-gray-300 rounded-lg shadow-sm h-10 flex items-center px-3 animate-pulse">
+          <div className="w-5 h-5 bg-gray-200 rounded-full mr-2"></div>
+          <div className="flex-1 h-4 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+
+      {/* Filter Skeleton */}
+      <div className="bg-white border border-gray-300 rounded-lg shadow-sm h-10 w-full sm:w-40 flex items-center px-3 animate-pulse">
+        <div className="h-4 w-20 bg-gray-200 rounded"></div>
+      </div>
+
+      {/* Sort Skeleton */}
+      <div className="bg-white border border-gray-300 rounded-lg shadow-sm h-10 w-full sm:w-32 flex items-center px-3 animate-pulse">
+        <div className="h-4 w-16 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+  );
+};
+
 // --- Komponen Skeleton News Card ---
-// Komponen ini akan ditampilkan saat data sedang dimuat
 const SkeletonNewsCard: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 animate-pulse">
@@ -18,7 +41,7 @@ const SkeletonNewsCard: React.FC = () => {
       <div className="bg-gray-200 h-4 w-5/6 rounded"></div>
     </div>
   );
-};
+}
 // --- Akhir Komponen Skeleton News Card ---
 
 const Berita: React.FC = () => {
@@ -113,64 +136,68 @@ const Berita: React.FC = () => {
       </div>
 
       {/* Search, Filter, Sort */}
-      <div className="flex flex-wrap gap-3 justify-center items-center mt-6 p-4 md:p-0"> {/* Menambah padding di sini untuk mobile */}
-        {/* Search */}
-        <div className="relative w-full sm:w-80 md:w-90"> {/* Mengubah w-90 menjadi responsif */}
-          <input
-            type="text"
-            placeholder="Cari Berita"
-            value={searchTerm}
+      {isLoading ? (
+        <SkeletonSearchFilterSort />
+      ) : (
+        <div className="flex flex-wrap gap-3 justify-center items-center mt-6 p-4 md:p-0">
+          {/* Search */}
+          <div className="relative w-full sm:w-80 md:w-90">
+            <input
+              type="text"
+              placeholder="Cari Berita"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-gray-700 placeholder-gray-400"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-gray-400 absolute right-3 top-2.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+              />
+            </svg>
+          </div>
+
+          {/* Filter Kategori */}
+          <select
+            value={selectedCategory}
             onChange={(e) => {
-              setSearchTerm(e.target.value);
+              setSelectedCategory(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-gray-700 placeholder-gray-400"
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-400 absolute right-3 top-2.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            className="w-full sm:w-auto border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
-            />
-          </svg>
+            {categories.map((cat, index) => (
+              <option key={index} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+
+          {/* Sort */}
+          <select
+            value={sortOrder}
+            onChange={(e) => {
+              setSortOrder(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full sm:w-auto border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
+          >
+            <option value="Terbaru">Terbaru</option>
+            <option value="Terlama">Terlama</option>
+          </select>
         </div>
-
-        {/* Filter Kategori */}
-        <select
-          value={selectedCategory}
-          onChange={(e) => {
-            setSelectedCategory(e.target.value);
-            setCurrentPage(1);
-          }}
-          className="w-full sm:w-auto border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
-        >
-          {categories.map((cat, index) => (
-            <option key={index} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-
-        {/* Sort */}
-        <select
-          value={sortOrder}
-          onChange={(e) => {
-            setSortOrder(e.target.value);
-            setCurrentPage(1);
-          }}
-          className="w-full sm:w-auto border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 bg-white"
-        >
-          <option value="Terbaru">Terbaru</option>
-          <option value="Terlama">Terlama</option>
-        </select>
-      </div>
+      )}
 
       {/* Isi Halaman */}
       <section className="py-10 bg-white rounded-lg">
