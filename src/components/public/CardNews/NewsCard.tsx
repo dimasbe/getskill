@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import logoGetskill from '../../../assets/img/logo/get-skill/landscape.png'; // pakai logo asli PNG transparan
+import logoGetskill from '../../../assets/img/logo/get-skill/landscape.png';
 
 interface NewsCardProps {
     id: string;
@@ -11,22 +11,16 @@ interface NewsCardProps {
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) => {
-    const [isHover, setIsHover] = useState(false);
-
     return (
         <Link
             to={`/berita/${id}`}
             tabIndex={0}
             className="relative block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm transition-transform duration-700 hover:scale-105 cursor-pointer
-             hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)]"
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-            onFocus={() => setIsHover(true)}
-            onBlur={() => setIsHover(false)}
+             hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)] card-shine"
         >
-            {/* Bagian Thumbnail dengan Shine */}
+            {/* Thumbnail dengan Shine Animate */}
             <div className="relative h-58 p-5 bg-white z-10">
-                <div className="w-full h-full rounded-lg overflow-hidden relative">
+                <div className="w-full h-full rounded-lg overflow-hidden relative shine__animate">
                     <img
                         src={image}
                         alt={title}
@@ -41,22 +35,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-600/70 via-transparent to-transparent" />
 
-                    {/* Shine hanya di thumbnail */}
-                    {isHover && (
-                        <div className="absolute inset-0 rounded-lg overflow-hidden pointer-events-none z-20">
-                            <div
-                                className="absolute w-[200%] h-[200%]"
-                                style={{
-                                    background:
-                                        'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)',
-                                    transform: 'translate(-150%, -150%)',
-                                    animation: 'shineDiagonal 1s linear forwards',
-                                }}
-                            />
-                        </div>
-                    )}
-
-                    {/* Logo watermark bawah thumbnail */}
+                    {/* Logo watermark */}
                     <div className="absolute -bottom-[-6px] left-1/2 transform -translate-x-1/2 bg-white rounded-full p-1 shadow-md">
                         <img
                             src={logoGetskill}
@@ -86,16 +65,17 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                     <span className="leading-none">{date}</span>
                 </div>
 
-                {/* Judul dengan underline animasi per baris */}
+                {/* Judul */}
                 <div className="text-left flex-1 pt-0 px-0">
-                    <h3 className="text- font-semibold line-clamp-2 cursor-pointer">
+                    <h3 className="text-base font-semibold line-clamp-2 cursor-pointer">
                         <a
                             className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
-                                                    bg-[length:0%_2px,0_2px]
-                                                    bg-[position:100%_100%,0_100%]
-                                                    bg-no-repeat
-                                                    transition-[background-size] duration-700
-                                                    hover:bg-[length:0_2px,100%_2px]">
+                          bg-[length:0%_2px,0_2px]
+                          bg-[position:100%_100%,0_100%]
+                          bg-no-repeat
+                          transition-[background-size] duration-700
+                          hover:bg-[length:0_2px,100%_2px]"
+                        >
                             {title}
                         </a>
                     </h3>
@@ -106,14 +86,6 @@ const NewsCard: React.FC<NewsCardProps> = ({ id, image, date, title, summary }) 
                     {summary}
                 </p>
             </div>
-
-            {/* Keyframes */}
-            <style>{`
-                @keyframes shineDiagonal {
-                    0% { transform: translate(-150%, -150%); }
-                    100% { transform: translate(150%, 150%); }
-                }
-            `}</style>
         </Link>
     );
 };

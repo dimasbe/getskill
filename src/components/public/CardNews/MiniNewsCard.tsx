@@ -12,7 +12,6 @@ interface MiniNewsCardProps {
 }
 
 const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, summary }) => {
-    const [isHover, setIsHover] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
     return (
@@ -20,15 +19,11 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
             to={`/berita/${id}`}
             tabIndex={0}
             className="relative block bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm transition-transform duration-500 hover:scale-[1.02] cursor-pointer
-       hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.15)]"
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-            onFocus={() => setIsHover(true)}
-            onBlur={() => setIsHover(false)}
+                 hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.15)] card-shine"
         >
             {/* Thumbnail */}
             <div className="relative h-32 bg-white">
-                <div className="w-full h-full rounded-md overflow-hidden relative">
+                <div className="w-full h-full rounded-md overflow-hidden relative shine__animate">
                     {/* ✅ Skeleton Loader */}
                     {!isLoaded && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-md" />
@@ -51,21 +46,6 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                         Berita
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-600/60 via-transparent to-transparent" />
-
-                    {/* Shine effect */}
-                    {isHover && (
-                        <div className="absolute inset-0 rounded-md overflow-hidden pointer-events-none z-20">
-                            <div
-                                className="absolute w-[200%] h-[200%]"
-                                style={{
-                                    background:
-                                        "linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
-                                    transform: "translate(-150%, -150%)",
-                                    animation: "shineDiagonal 1s linear forwards",
-                                }}
-                            />
-                        </div>
-                    )}
 
                     {/* ✅ Watermark logo GetSkill */}
                     <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 bg-white rounded-full p-0.5 shadow">
@@ -97,16 +77,17 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                     <span className="leading-none">{date}</span>
                 </div>
 
-                {/* Judul dengan underline animasi per baris */}
+                {/* Judul */}
                 <div className="text-left flex-1 pt-0 px-0">
                     <h3 className="text-sm font-semibold line-clamp-2 cursor-pointer">
                         <a
                             className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
-                                                    bg-[length:0%_2px,0_2px]
-                                                    bg-[position:100%_100%,0_100%]
-                                                    bg-no-repeat
-                                                    transition-[background-size] duration-700
-                                                    hover:bg-[length:0_2px,100%_2px]">
+                         bg-[length:0%_2px,0_2px]
+                         bg-[position:100%_100%,0_100%]
+                         bg-no-repeat
+                         transition-[background-size] duration-700
+                         hover:bg-[length:0_2px,100%_2px]"
+                        >
                             {title}
                         </a>
                     </h3>
@@ -119,14 +100,6 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                     </p>
                 )}
             </div>
-
-            {/* Keyframes */}
-            <style>{`
-            @keyframes shineDiagonal {
-            0% { transform: translate(-150%, -150%); }
-            100% { transform: translate(150%, 150%); }
-            }
-        `}</style>
         </Link>
     );
 };
