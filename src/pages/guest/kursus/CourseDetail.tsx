@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import dummyCourses from "../../../data/dummyCourses";
 import type { Course } from "../../../types/Course";
 import CourseHeader from "../../../components/course/detailkursus/CourseHeader";
@@ -10,21 +11,45 @@ export default function CourseDetail() {
   const courseData = dummyCourses.find((course: Course) => course.id === id);
 
   if (!courseData) {
-    return <div className="p-8 text-gray-600">Kursus tidak ditemukan.</div>;
+    return (
+      <motion.div
+        className="p-8 text-gray-600"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        Kursus tidak ditemukan.
+      </motion.div>
+    );
   }
 
   const totalModul = courseData.syllabus?.length || 0;
   const totalKuis =
-    courseData.syllabus?.reduce((total, modul) => total + (modul.quizzes || 0), 0) || 0;
+    courseData.syllabus?.reduce(
+      (total, modul) => total + (modul.quizzes || 0),
+      0
+    ) || 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <motion.div
+      className="min-h-screen bg-gray-50"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      {/* Header */}
       <CourseHeader title={courseData.title} />
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-[1fr_minmax(350px,400px)] gap-8">
-        <div>
+
+      {/* Layout Utama */}
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-12 flex flex-col lg:flex-row gap-8">
+        {/* Konten Utama */}
+        <div className="flex-1">
           <CourseMain courseData={courseData} />
         </div>
-        <div>
+
+        {/* Sidebar */}
+        <div className="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0">
           <CourseSidebar
             totalModul={totalModul}
             totalKuis={totalKuis}
@@ -33,6 +58,7 @@ export default function CourseDetail() {
           />
         </div>
       </div>
-    </div>
+
+    </motion.div>
   );
 }

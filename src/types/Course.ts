@@ -9,6 +9,7 @@ export interface SyllabusItem {
 
 export interface Course {
   id: string
+  authorImage: string;
   image: string
   category: string
   title: string

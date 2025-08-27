@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaUser, FaCalendarAlt, FaUsers, FaStar } from "react-icons/fa";
+import { FaCalendarAlt, FaUsers, FaStar } from "react-icons/fa";
 import CourseDescription from "./CourseDescription";
 import CourseSyllabus from "./CourseSyllabus";
 import CourseReviews from "./CourseReviews";
@@ -13,53 +13,74 @@ export default function CourseMain({ courseData }: Props) {
   const [activeTab, setActiveTab] = useState("deskripsi");
 
   return (
-    <div className="space-y-8">
-      {/* Gambar */}
-      <div className="w-full rounded-xl overflow-hidden shadow-lg">
-        <img
-          src={`/images/${courseData.image}`}
-          alt={courseData.title}
-          className="w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] object-cover hover:scale-105 transition-transform duration-300"
-        />
+    <div className="max-w-5xl mx-auto">
+      {/* Gambar Kursus */}
+      <div className="rounded-xl overflow-hidden mb-5 max-w-3xl mx-auto">
+        <div className="w-full aspect-[50/25]">
+          <img
+            src={`/images/${courseData.image}`}
+            alt={courseData.title}
+            className="w-full h-full rounded-xl object-cover"
+          />
+        </div>
       </div>
 
-      {/* Info */}
-      <div className="space-y-2 max-w-6xl mx-auto px-4 sm:px-6 text-left">
-        <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 leading-snug">
+      {/* Info Kursus */}
+      <div className="space-y-2 px-4 sm:px-0 text-left">
+        {/* Judul */}
+        <h1 className="text-lg sm:text-wrap md:text-2xl font-bold text-gray-800 leading-snug font-poppins">
           {courseData.title}
         </h1>
 
-        {/* Rating */}
-        <div className="flex items-center gap-1 text-yellow-500 text-sm flex-wrap">
-          {[...Array(5)].map((_, i) => (
-            <FaStar
-              key={i}
-              className={i < courseData.rating ? "text-yellow-500" : "text-gray-300"}
-              size={14}
-            />
-          ))}
-          <span className="text-gray-500 ml-1">
-            ({courseData.rating.toFixed(1)} Review)
-          </span>
+        {/* Kategori + Rating */}
+        <div className="flex items-center gap-x-3 mb-3">
+          <button className="bg-gray-100 font-semibold text-gray-800  text-[11px] px-2 py-0.5 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
+            {courseData.category}
+          </button>
+
+          <div className="flex items-center text-gray-400 text-[12px]">
+            <FaStar className="text-yellow-500 font-medium mr-1" size={12} />
+            <span>({courseData.rating.toFixed(1)} Reviews)</span>
+          </div>
         </div>
 
-        {/* Info penulis */}
-        <div className="flex flex-wrap items-center gap-3 text-gray-500 text-sm">
-          <span className="flex items-center gap-1">
-            <FaUser size={14} /> {courseData.author}
-          </span>
-          <span className="flex items-center gap-1">
-            <FaCalendarAlt size={14} /> {courseData.date}
-          </span>
-          <span className="flex items-center gap-1">
-            <FaUsers size={14} /> {courseData.students} Siswa
-          </span>
+        {/* Author */}
+        <div className="flex items-center gap-2 mt-5 mb-1 text-[13px] text-gray-500 gap-x-4">
+          <div className="flex items-center gap-2">
+            <img
+              src={new URL(
+                `../../../assets/img/logo/get-skill/${courseData.authorImage}`,
+                import.meta.url
+              ).href}
+              alt={courseData.author}
+              className="rounded-full object-cover"
+              width={30}
+              height={30}
+            />
+
+            <span className=" text-gray-500">
+              by{" "}
+              <span className="font-semibold text-gray-700 ">
+                {courseData.author}
+              </span>
+            </span>
+          </div>
+
+          {/* Info tambahan */}
+          <div className="flex flex-wrap items-center gap-3 text-gray-500">
+            <span className="flex items-center gap-1">
+              <FaCalendarAlt size={14} /> {courseData.date}
+            </span>
+            <span className="flex items-center gap-1">
+              <FaUsers size={14} /> {courseData.students} Siswa
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div>
-        <div className="flex overflow-x-auto border-b border-gray-200 scrollbar-hide">
+      <div className="mt-10">
+        <div className="flex gap-3">
           {[
             { key: "deskripsi", label: "Deskripsi" },
             { key: "konten-kursus", label: "Konten Kursus" },
@@ -68,23 +89,29 @@ export default function CourseMain({ courseData }: Props) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`py-3 px-4 sm:px-6 text-sm sm:text-lg font-medium text-left whitespace-nowrap transition-colors ${
-                activeTab === tab.key
-                  ? "text-purple-700 border-b-2 border-purple-700"
-                  : "text-gray-500 hover:text-gray-800"
-              }`}
+              className={`
+    relative py-1.5 px-4 sm:px-5 text-sm sm:text-[14px] font-semibold whitespace-nowrap
+    transition-all duration-200 ease-out rounded-full
+    ${activeTab === tab.key
+                  ? "bg-purple-700 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.7)]"
+                  : "bg-gray-200 text-gray-600 hover:bg-purple-700 hover:text-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.7)] hover:translate-y-0.5"
+                }`}
             >
               {tab.label}
             </button>
+
           ))}
         </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+        <div className="bg-white p-6 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.1)] mt-7">
           {activeTab === "deskripsi" && <CourseDescription courseData={courseData} />}
           {activeTab === "konten-kursus" && <CourseSyllabus courseData={courseData} />}
           {activeTab === "ulasan" && <CourseReviews courseData={courseData} />}
         </div>
+
       </div>
+
+
     </div>
   );
 }

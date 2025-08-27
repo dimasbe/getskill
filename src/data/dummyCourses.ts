@@ -4,6 +4,7 @@ const dummyCourses: Course[] = [
   // Kursus Scratch
   {
     id: 'scratch',
+    authorImage: 'Asset 4.png',
     image: 'scratch.png',
     category: 'Scratch',
     title: 'Belajar Coding Untuk Anak Menggunakan Scratch',
@@ -117,6 +118,7 @@ const dummyCourses: Course[] = [
   // Kursus PHP
   {
     id: 'php-native',
+    authorImage: 'Asset 4.png',
     image: 'php.jpeg',
     category: 'Pemrograman Website',
     title: 'Pemrograman Web dengan PHP Native: Dasar hingga CRUD (Create, Read, Update Delete)',
@@ -232,6 +234,7 @@ Siswa SMK, mahasiswa, atau pemula yang ingin mempelajari pemrograman web menggun
   // Kursus Front End Web dengan Bootstrap
   {
     id: 'frontend-bootstrap',
+    authorImage: 'Asset 4.png',
     image: 'frontend.jpeg',
     category: 'Pemrograman Website',
     title: 'Pemrograman Front End Web dengan Bootstrap',
@@ -312,6 +315,7 @@ Setelah mengikuti pembelajaran ini, peserta diharapkan mampu membuat halaman web
   // Kursus Java Fundamental Programming
   {
     id: 'java-fundamental',
+    authorImage: 'Asset 4.png',
     image: 'java.jpeg',
     category: 'Pemrograman Desktop',
     title: 'Java Fundamental Programming',
@@ -515,6 +519,7 @@ Di awal pembelajaran, peserta akan dikenalkan pada:
   // kursus GitHub
   {
     id: 'github-dasar',
+    authorImage: 'Asset 4.png',
     image: 'github.png',
     category: 'Github',
     title: 'Tutorial Dasar Menggunakan GitHub',
@@ -579,6 +584,7 @@ Di awal pembelajaran, peserta akan dikenalkan pada:
   },
   {
     id: 'laravel-fundamental',
+    authorImage: 'Asset 4.png',
     image: 'laravel.png',
     category: 'Pemrograman Website',
     title: 'Pemrograman Web menggunakan Framework LARAVEL',
@@ -748,6 +754,7 @@ Dengan menyelesaikan kursus ini, Anda akan memiliki fondasi kuat dalam mengemban
   // Kursus Pemrograman Dasar Python Baru
   {
     id: 'python-dasar',
+    authorImage: 'Asset 4.png',
     image: 'python.jpeg',
     category: 'Pemrograman Desktop',
     title: 'Pemrograman Dasar Python untuk Pemula',

@@ -7,7 +7,7 @@ interface CourseDescriptionProps {
 
 export default function CourseDescription({ courseData }: CourseDescriptionProps) {
   return (
-    <section className="text-justify">
+    <section className="text-justify font-sans text-[14px]">
       <p
         className="whitespace-pre-line text-gray-700 leading-relaxed"
         style={{ textAlign: 'justify' }}

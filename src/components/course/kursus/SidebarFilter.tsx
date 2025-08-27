@@ -44,8 +44,10 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
   const [openGroups, setOpenGroups] = useState<string[]>(["Software Development"]);
   const [isOpen, setIsOpen] = useState(false);
   const [localFilters, setLocalFilters] = useState<FiltersState>(filters);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const toggleGroup = (name: string) => {
+    setIsInitialRender(false);
     setOpenGroups((prev) =>
       prev.includes(name) ? prev.filter((g) => g !== name) : [...prev, name]
     );
@@ -82,10 +84,10 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
                   className="flex items-center justify-between w-full text-left font-normal text-gray-700 px-2 py-2 rounded-lg hover:bg-gray-50 focus:outline-none text-[13px]"
                   onClick={() => toggleGroup(group.name)}
                 >
-                  <span className="text-[13px]">
-                    {group.name}{" "}
+                  <div className="flex items-center gap-1 text-[13px]">
+                    <span>{group.name}</span>
                     <span className="text-gray-400 text-[11px]">({group.count})</span>
-                  </span>
+                  </div>
                   {openGroups.includes(group.name) ? (
                     <ChevronUp size={12} className="text-gray-400" />
                   ) : (
@@ -93,11 +95,11 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
                   )}
                 </button>
                 {/* Subkategori */}
-                <AnimatePresence initial={false}>
+                <AnimatePresence initial={!isInitialRender}>
                   {openGroups.includes(group.name) && group.subcategories.length > 0 && (
                     <motion.div
                       key="subcategories"
-                      initial={{ height: 0, opacity: 0 }}
+                      initial={isInitialRender ? false : { height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -115,7 +117,7 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
                               onChange={() => handleCheckbox(subcategory.name)}
                               disabled={subcategory.count === 0}
                             />
-                            {subcategory.name}
+                            <span className="flex-1 text-left">{subcategory.name}</span>
                             <span className="text-gray-400 text-[11px]">
                               ({subcategory.count})
                             </span>
