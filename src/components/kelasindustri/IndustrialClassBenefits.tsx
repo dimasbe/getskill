@@ -9,16 +9,15 @@ import fotofotoImg from "../../assets/img/others/fotofotoid.png";
 const IndustrialClassBenefits: React.FC = () => {
   return (
     <section className="benefits-section py-10 sm:py-14 lg:py-2">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-1">
-        <div className="flex flex-col-reverse md:flex-row items-center gap-10 lg:gap-16">
-
+      <div className="container mx-auto px-0 sm:px-0 lg:px-1">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16">
           {/* Left Content (Teks) */}
-          <div className="w-full md:w-6/12 lg:w-8/12 text-left md:pl-8 lg:pl-0 lg:-ml-6">
+          <div className="w-full md:w-30/30 lg:w-8/12 text-left px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-6 mx-auto">
             <span className="inline-block text-[11px] lg:text-[11px] md:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
               Manfaat Sekolah
             </span>
 
-            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-semibold mb-6 leading-snug">
+            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-2xl font-semibold mb-6 leading-snug">
               Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.
             </h2>
 
@@ -66,7 +65,7 @@ const IndustrialClassBenefits: React.FC = () => {
                       className={`absolute -bottom-1 -left-1 w-5 h-5 rounded-full ${item.badge} text-white text-[10px] flex items-center justify-center`}
                     >
                       {item.id}
-                    </div>
+                    </div> 
                   </div>
                   <div className="ml-3 flex-1">
                     <h4 className="font-semibold text-sm sm:text-base lg:text-base">
@@ -82,13 +81,14 @@ const IndustrialClassBenefits: React.FC = () => {
           </div>
 
           {/* Right Image (tapi di mobile jadi atas) */}
-          <div className="w-full md:w-6/12 lg:w-7/12 flex justify-center">
+          <div className="w-full lg:w-7/12 flex justify-center">
             <img
               src={fotofotoImg}
               alt="Belajar Online"
-              className="w-full max-w-[480px] lg:max-w-none lg:w-[116%] h-auto object-contain lg:mt-26"
+              className="w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] h-auto object-contain"
             />
           </div>
+
         </div>
       </div>
     </section>
