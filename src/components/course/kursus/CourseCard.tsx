@@ -80,21 +80,14 @@ export default function CourseCard({
         </div>
 
         {/* Judul dengan clamp + underline animasi */}
-        <h3 className="relative sm:text-[15px] font-sans text-black font-semibold mb-3 leading-snug line-clamp-2">
-          {title
-            .split(" ")
-            .reduce<string[][]>((lines, word) => {
-              if (!lines.length) return [[word]];
-              const lastLine = lines[lines.length - 1].join(" ");
-              if ((lastLine + " " + word).length > 25) lines.push([word]);
-              else lines[lines.length - 1].push(word);
-              return lines;
-            }, [])
-            .map((line, i) => (
-              <span key={i} className="line-animate-line block">
-                {line.join(" ")}
-              </span>
-            ))}
+        <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold mb-3 leading-snug line-clamp-2">
+          <a className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
+                                                    bg-[length:0%_2px,0_2px]
+                                                    bg-[position:100%_100%,0_100%]
+                                                    bg-no-repeat
+                                                    transition-[background-size] duration-900
+                                                    hover:bg-[length:0_2px,100%_2px]">{title}</a>
+
         </h3>
 
         {/* Author */}
