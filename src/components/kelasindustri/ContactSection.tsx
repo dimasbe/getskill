@@ -1,18 +1,19 @@
 // src/components/ContactSection.tsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Illustration from "../../assets/img/others/concept12.png.png";
 
-const ContactSection: React.FC = () => {
+// Skeleton versi Contact Section
+const SkeletonContact: React.FC = () => {
   return (
     <section className="contact-section py-12">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16 animate-pulse">
           
-          {/* Left side - Illustration */}
-          <div className="w-full lg:w-5/12 flex justify-center md:justify-center lg:justify-start relative lg:-ml-6 md:px-6">
-            {/* Background telur miring */}
+          {/* Left side - Illustration Skeleton */}
+          <div className="w-full lg:w-5/12 flex justify-center lg:justify-start relative lg:-ml-6 md:px-6">
+            {/* Background telur miring skeleton */}
             <div
-              className="absolute bg-orange-50 hidden sm:block"
+              className="absolute bg-gray-200 hidden sm:block"
               style={{
                 width: "420px",
                 height: "260px",
@@ -21,63 +22,123 @@ const ContactSection: React.FC = () => {
               }}
             ></div>
 
-            {/* Ilustrasi */}
-            <img
-              src={Illustration}
-              alt="Belajar Online"
-              className="relative w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto lg:max-w-[345px] h-auto object-contain z-10 lg:translate-x-10"
-            />
+            {/* Placeholder untuk gambar */}
+            <div className="relative z-10 lg:translate-x-10 bg-gray-300 rounded-lg w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto lg:max-w-[345px] h-[220px] md:h-[260px] lg:h-[300px]"></div>
           </div>
 
-          {/* Right side - Content */}
-          <div className="w-full lg:w-7/12 text-left md:pl-4 md:pr-2 lg:pl-10">
-            <div className="content">
-              <span className="inline-block text-[11px] md:text-xs font-medium text-gray-600 mb-3">
-                Ingin tahu lebih banyak?
-              </span>
+          {/* Right side - Content Skeleton */}
+          <div className="w-full lg:w-7/12 text-left md:pl-4 md:pr-2 lg:pl-10 space-y-4">
+            {/* Subtitle */}
+            <div className="bg-gray-300 h-4 w-40 rounded mb-3"></div>
 
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl font-semibold mb-4 leading-snug">
-                Butuh informasi lebih banyak dan proposal lengkap dari kelas industri?
-              </h2>
+            {/* Title */}
+            <div className="bg-gray-300 h-7 w-3/4 rounded"></div>
+            <div className="bg-gray-200 h-6 w-2/3 rounded"></div>
 
-              <p className="text-gray-600 text-sm sm:text-base md:text-sm lg:text-xs mb-6 leading-relaxed">
-                Silahkan hubungi kami pada nomor yang tertera dan undang kami ke
-                sekolah anda untuk menjelaskan program kelas industri kami di sekolah
-                anda, akan kami jelaskan secara detail.
-              </p>
-
-              {/* Button */}
-              <div className="mt-6" data-aos="" data-aos-delay="700">
-                <button
-                  className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
-                    rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
-                    transition-all duration-500 ease-in-out
-                    shadow-[4px_4px_0_#0A0082] 
-                    hover:bg-yellow-400 hover:shadow-none
-                    active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
-                    focus:outline-none"
-                >
-                  <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
-                    Hubungi Sekarang
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
-                  </svg>
-                </button>
-              </div>
+            {/* Paragraph */}
+            <div className="space-y-2 mt-4">
+              <div className="bg-gray-200 h-4 w-full rounded"></div>
+              <div className="bg-gray-200 h-4 w-5/6 rounded"></div>
+              <div className="bg-gray-200 h-4 w-3/4 rounded"></div>
             </div>
+
+            {/* Button Skeleton */}
+            <div className="bg-gray-300 h-10 w-40 rounded-full mt-6"></div>
           </div>
 
         </div>
       </div>
     </section>
+  );
+};
+
+const ContactSection: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <SkeletonContact />;
+  }
+
+  return (
+    <section className="contact-section py-12 xl:py-20">
+  <div className="container mx-auto px-4 md:px-6 xl:px-12">
+    <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16 xl:gap-20">
+      
+      {/* Left side - Illustration */}
+      <div className="w-full lg:w-5/12 xl:w-4/12 flex justify-center lg:justify-start relative lg:-ml-6 md:px-6 xl:ml-10">
+        {/* Background telur miring */}
+        <div
+          className="absolute bg-orange-50 hidden sm:block"
+          style={{
+            width: "420px",
+            height: "260px",
+            borderRadius: "50% 100% 100% 50% / 60% 100% 100% 60%",
+            transform: "rotate(-3deg) translateY(30px)",
+          }}
+        ></div>
+
+        {/* Ilustrasi */}
+        <img
+          src={Illustration}
+          alt="Belajar Online"
+          className="relative w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto lg:max-w-[345px] xl:max-w-[355px] h-auto object-contain z-10 lg:translate-x-10"
+        />
+      </div>
+
+      {/* Right side - Content */}
+      <div className="w-full lg:w-7/12 xl:w-7/13 text-left md:pl-4 md:pr-2 lg:pl-12 xl:pl-23">
+        <div className="content">
+          <span className="inline-block text-[11px] md:text-xs font-medium text-gray-600 mb-3">
+            Ingin tahu lebih banyak?
+          </span>
+
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-2xl font-semibold mb-4 leading-snug">
+            Butuh informasi lebih banyak dan proposal lengkap dari kelas industri?
+          </h2>
+
+          <p className="text-gray-600 text-sm sm:text-base md:text-sm lg:text-xs xl:text-xs mb-6 leading-relaxed">
+            Silahkan hubungi kami pada nomor yang tertera dan undang kami ke
+            sekolah anda untuk menjelaskan program kelas industri kami di sekolah
+            anda, akan kami jelaskan secara detail.
+          </p>
+
+          {/* Button */}
+          <div className="mt-6" data-aos="" data-aos-delay="700">
+            <button
+              className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
+                rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
+                transition-all duration-500 ease-in-out
+                shadow-[4px_4px_0_#0A0082] 
+                hover:bg-yellow-400 hover:shadow-none
+                active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+                focus:outline-none"
+            >
+              <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
+                Hubungi Sekarang
+              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-5 h-5 transition-colors duration-500 text-white group-hover:text-[#0A0082]"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L21 12m0 0l-3.75 5.25M21 12H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
   );
 };
 
