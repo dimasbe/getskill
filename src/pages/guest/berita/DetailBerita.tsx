@@ -109,12 +109,12 @@ const DetailBerita: React.FC = () => {
             <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
               Detail Berita
             </h1>
-            <p className="mt-2 text-sm sm:text-base text-gray-800">
-              <Link to="/" className="hover:underline">
+            <p className="mt-2 text-xs sm:text-xs text-gray-800">
+              <Link to="/">
                 Beranda
               </Link>
               <span className="mx-1">&gt;</span>
-              <Link to="/berita" className="hover:underline">
+              <Link to="/berita">
                 Berita
               </Link>
             </p>
@@ -139,12 +139,12 @@ const DetailBerita: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
             Detail Berita
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-gray-800">
-            <Link to="/" className="hover:underline">
+          <p className="mt-2 text-xs sm:text-xs text-gray-800">
+            <Link to="/">
               Beranda
             </Link>
             <span className="mx-1">&gt;</span>
-            <Link to="/berita" className="hover:underline">
+            <Link to="/berita">
               Berita
             </Link>
             <span className="mx-1">&gt;</span>
