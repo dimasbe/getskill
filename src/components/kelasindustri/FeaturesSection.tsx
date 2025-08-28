@@ -23,7 +23,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     <motion.div
       className="bg-white py-6 px-3 rounded-xl shadow-md border border-gray-200 
                  text-center flex flex-col items-center justify-center cursor-pointer 
-                 w-full h-full max-w-[235px] mx-auto"
+                 w-full h-full max-w-[235px] md:max-w-[260px] xl:max-w-[280px] 2xl:max-w-[320px] mx-auto"
       whileHover="hover"
       initial="rest"
       animate="rest"
@@ -34,7 +34,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        className="mb-4 w-12 h-12 flex items-center justify-center"
+        className="mb-4 w-12 h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 flex items-center justify-center"
         variants={{
           rest: { rotateY: 0 },
           hover: { rotateY: 180 },
@@ -43,16 +43,22 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         style={{ perspective: 1000 }}
       >
         {icon ? (
-          <div className="w-12 h-12 flex items-center justify-center">{icon}</div>
+          <div className="w-12 h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 flex items-center justify-center">
+            {icon}
+          </div>
         ) : (
-          <img src={iconSrc} alt={altText} className="w-12 h-12 object-contain" />
+          <img
+            src={iconSrc}
+            alt={altText}
+            className="w-12 h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 object-contain"
+          />
         )}
       </motion.div>
 
-      <h3 className="text-sm md:text-base font-semibold text-gray-800 mb-2">
+      <h3 className="text-sm md:text-base xl:text-lg 2xl:text-xl font-semibold text-gray-800 mb-2">
         {title}
       </h3>
-      <p className="text-[0.7rem] md:text-xs text-gray-600 leading-snug">
+      <p className="text-[0.7rem] md:text-xs xl:text-sm 2xl:text-base text-gray-600 leading-snug">
         {description}
       </p>
     </motion.div>
@@ -61,9 +67,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
 const SkeletonCard = () => (
   <div className="bg-white py-8 px-6 rounded-2xl shadow-md border border-gray-200 text-center flex flex-col items-center justify-center w-full h-full animate-pulse">
-    <div className="bg-gray-300 rounded-full w-14 h-14 mb-5"></div>
-    <div className="bg-gray-300 h-5 w-28 mb-3 rounded"></div>
-    <div className="bg-gray-200 h-4 w-32 rounded"></div>
+    <div className="bg-gray-300 rounded-full w-14 h-14 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 mb-5"></div>
+    <div className="bg-gray-300 h-5 xl:h-6 w-28 xl:w-32 mb-3 rounded"></div>
+    <div className="bg-gray-200 h-4 xl:h-5 w-32 xl:w-36 2xl:w-40 rounded"></div>
   </div>
 );
 
@@ -116,8 +122,8 @@ const FeaturesSection: React.FC = () => {
 
   return (
     <section className="relative z-20 -mt-12 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-1 max-w-5xl mx-auto">
+      <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto px-6 xl:px-10 2xl:px-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 xl:gap-6 2xl:gap-8 max-w-5xl xl:max-w-6xl 2xl:max-w-full mx-auto">
           {isLoading
             ? Array(4)
                 .fill(null)
