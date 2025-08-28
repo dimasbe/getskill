@@ -81,7 +81,7 @@ const TechnologySection: React.FC = () => {
           </div>
 
           {/* Right side - Content */}
-          <div className="w-full lg:w-7/12 xl:w-8/12 2xl:w-7/12 text-left md:pl-4 md:pr-2 lg:pl-12 xl:pl-16 2xl:pl-50">
+          <div className="w-full lg:w-7/12 xl:w-6/12 2xl:w-7/12 text-left md:pl-4 md:pr-2 lg:pl-15 xl:pl-10 2xl:pl-50">
             <div className="content">
               <span className="inline-block text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
                 Teknologi
@@ -91,7 +91,7 @@ const TechnologySection: React.FC = () => {
                 Kelas Industri menggunakan sistem LMS sendiri
               </h2>
 
-              <p className="text-gray-600 text-sm sm:text-base md:text-sm lg:text-xs xl:text-xs 2xl:text-sm mb-6 leading-relaxed max-w-2xl">
+              <p className="text-gray-600 text-sm sm:text-base md:text-sm lg:text-xs xl:text-xs 2xl:text-sm mb-6 leading-relaxed max-w-1xl">
                 Menggunakan smart classroom sebagai pendukung dalam meningkatkan
                 daya serap dalam proses kegiatan belajar mengajar (KBM).
               </p>

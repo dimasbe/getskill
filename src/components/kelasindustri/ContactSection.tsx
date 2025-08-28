@@ -78,8 +78,8 @@ const ContactSection: React.FC = () => {
           </div>
 
           {/* Right side - Content */}
-          <div className="w-full lg:w-7/12 xl:w-8/12 2xl:w-7/12 text-left 
-            md:pl-4 md:pr-2 lg:pl-12 xl:pl-16 2xl:pl-50">
+          <div className="w-full lg:w-7/12 xl:w-6/12 2xl:w-7/12 text-left 
+            md:pl-4 md:pr-2 lg:pl-15 xl:pl-10 2xl:pl-50">
             <div className="content">
               <span className="inline-block text-[11px] lg:text-xs xl:text-xs 2xl:text-sm 
                 font-medium text-gray-600 mb-3">
