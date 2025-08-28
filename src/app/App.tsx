@@ -17,11 +17,14 @@ import ForgotPassword from "../pages/guest/auth/forgotpassword";
 import UpdatePassword from '../pages/guest/auth/updatepassword';
 import DetailBerita from "../pages/guest/berita/DetailBerita";
 import PaymentPage from "../components/payment/PaymentPage";
+import usePageTitle from "../hooks/public/usePageTitle";
 
 function RouteChangeLoader() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [animateOut, setAnimateOut] = useState(false);
+
+  usePageTitle();
 
   useEffect(() => {
     setLoading(true);
