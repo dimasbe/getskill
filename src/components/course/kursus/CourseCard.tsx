@@ -73,10 +73,18 @@ export default function CourseCard({
             {category}
           </span>
 
-          <div className="flex items-center text-gray-400 text-[11px]">
-            <FaStar className="text-yellow-500 font-medium mr-1" size={12} />
+          <div className="flex items-center text-gray-500 text-[11px]">
+            <FaStar
+              size={12}
+              className="text-yellow-500 mr-1"
+              style={{
+                stroke: "black",   // warna border
+                strokeWidth: 20,   // ketebalan border
+              }}
+            />
             <span>({rating.toFixed(1)} Reviews)</span>
           </div>
+
         </div>
 
         {/* Judul dengan clamp + underline animasi */}
@@ -87,7 +95,6 @@ export default function CourseCard({
                                                     bg-no-repeat
                                                     transition-[background-size] duration-900
                                                     hover:bg-[length:0_2px,100%_2px]">{title}</a>
-
         </h3>
 
         {/* Author */}
@@ -102,7 +109,7 @@ export default function CourseCard({
             className="bg-yellow-400 text-gray-900 text-xs font-sans font-bold px-4 py-2 rounded-full border border-black 
                        transition-all duration-300 ease-in-out 
                        shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => navigate(`/kursus/${id}`)}
           >
             Enroll Now →
           </button>
