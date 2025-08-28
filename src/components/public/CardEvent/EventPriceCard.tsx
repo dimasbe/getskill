@@ -3,7 +3,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsapp, FaYoutube } from "reac
 import { GraduationCap } from "lucide-react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
-import type Event from "../../../types/event";
+import type Event from "../../../types/Event";
 
 // Daftar Logo Pembayaran
 const paymentLogos = [

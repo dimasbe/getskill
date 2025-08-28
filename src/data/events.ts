@@ -1,5 +1,5 @@
 import FotoModel2 from '../assets/img/events/689021a8009ee.jpeg';
-import type Event from '../types/event';
+import type Event from '../types/Event';
 
 const events: Event[] = [
   {

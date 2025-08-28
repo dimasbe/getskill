@@ -3,12 +3,12 @@ import { HiOutlineUsers, HiOutlineClock, HiOutlineLocationMarker, HiOutlineGlobe
 import { Link } from "react-router-dom";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type Event from "../../../types/event";
+import type Event from "../../../types/Event";
 
 type EventCardGridProps = {
   events: Event[];
   loading?: boolean;
-  page?: number; // tambahkan jika pagination dipakai
+  page?: number;
 };
 
 const EventCardGrid: React.FC<EventCardGridProps> = ({ events, loading = false, page = 1 }) => {
