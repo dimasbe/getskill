@@ -1,6 +1,7 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { ChevronDown, ChevronUp, SlidersHorizontal, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import SidebarSkeleton from "../kursus/SidebarSkeleton";
 
 interface FiltersState {
   categories: string[];
@@ -45,6 +46,12 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
   const [isOpen, setIsOpen] = useState(false);
   const [localFilters, setLocalFilters] = useState<FiltersState>(filters);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleGroup = (name: string) => {
     setIsInitialRender(false);
@@ -199,7 +206,7 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
 
       {/* Sidebar desktop */}
       <aside className="hidden md:block w-[220px] lg:sticky top-4 h-[calc(100vh-2rem)] p-2 text-sm">
-        {SidebarContent}
+        {loading ? <SidebarSkeleton /> : SidebarContent}
       </aside>
 
       {/* Drawer mobile */}
@@ -213,7 +220,7 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
               <X size={18} />
             </button>
             <div className="pt-8 h-full">
-              {SidebarContent}
+              {loading ? <SidebarSkeleton /> : SidebarContent}
             </div>
           </div>
         </div>

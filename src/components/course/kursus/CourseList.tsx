@@ -1,6 +1,9 @@
-import CourseCard from '../kursus/CourseCard';
-import dummyCourses from '../../../data/dummyCourses';
-import type { Course } from '../../../types/Course';
+// components/course/kursus/CourseList.tsx
+import { useEffect, useState } from "react";
+import CourseCard from "../kursus/CourseCard";
+import CourseSkeleton from "../kursus/CourseSkeleton";
+import dummyCourses from "../../../data/dummyCourses";
+import type { Course } from "../../../types/Course";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface CourseListProps {
@@ -25,7 +28,18 @@ export default function CourseList({
   limit,
   columns = 3,
 }: CourseListProps) {
-  // 🔍 Filter data
+  // ✅ State untuk loading
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Simulasi pemuatan data
+  useEffect(() => {
+    setLoading(true);
+    // Timer 1.2 detik untuk simulasi loading
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, [filters, page]);
+
+  // 🔍 Filter data (dari file kedua)
   const filteredCourses = dummyCourses.filter((course: Course) => {
     const price = parseInt(course.price.replace(/\./g, '')) || 0;
     const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
@@ -63,67 +77,79 @@ export default function CourseList({
 
   const gridClass = `grid grid-cols-1 ${columnsClass} gap-5 items-stretch`;
 
-
   return (
-  <div className="flex flex-col min-h-[500px]">
-    {/* Grid courses */}
-    <div className={gridClass}>
-      <AnimatePresence mode="popLayout">
-        {currentCourses.length > 0 ? (
-          currentCourses.map((course) => (
-            <motion.div
-              key={course.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+    <div className="flex flex-col min-h-[500px]">
+      {/* Grid courses */}
+      <div className={gridClass}>
+        <AnimatePresence mode="popLayout">
+          {loading ? (
+            // ✅ Tampilkan skeleton saat loading
+            Array.from({ length: COURSES_PER_PAGE }).map((_, idx) => (
+              <motion.div
+                key={`skeleton-${idx}`}
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <CourseSkeleton />
+              </motion.div>
+            ))
+          ) : currentCourses.length > 0 ? (
+            // Tampilkan courses normal
+            currentCourses.map((course) => (
+              <motion.div
+                key={course.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <CourseCard {...course} />
+              </motion.div>
+            ))
+          ) : (
+            <motion.p
+              key="no-course"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center col-span-full text-gray-500 py-8"
             >
-              <CourseCard {...course} />
-            </motion.div>
-          ))
-        ) : (
-          <motion.p
-            key="no-course"
+              Tidak ada kursus yang ditemukan
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Pagination - Sembunyikan saat loading */}
+      {!loading && setPage && totalPages > 1 && (
+        <div className="mt-auto pt-6 sm:pt-8">
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center col-span-full text-gray-500 py-8"
+            className="flex justify-center"
           >
-            Tidak ada kursus yang ditemukan
-          </motion.p>
-        )}
-      </AnimatePresence>
+            <div className="flex gap-2 sm:gap-3">
+              {Array.from({ length: totalPages }).map((_, index) => {
+                const pageNumber = index + 1;
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => setPage(pageNumber)}
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
+                      pageNumber === page
+                        ? 'bg-purple-600 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
-
-    {/* Pagination */}
-    {setPage && totalPages > 1 && (
-      <div className="mt-auto pt-6 sm:pt-8">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex justify-center"
-        >
-          <div className="flex gap-2 sm:gap-3">
-            {Array.from({ length: totalPages }).map((_, index) => {
-              const pageNumber = index + 1;
-              return (
-                <button
-                  key={pageNumber}
-                  onClick={() => setPage(pageNumber)}
-                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
-                    pageNumber === page
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
-                  }`}
-                >
-                  {pageNumber}
-                </button>
-              );
-            })}
-          </div>
-        </motion.div>
-      </div>
-    )}
-  </div>
-);
+  );
 }
