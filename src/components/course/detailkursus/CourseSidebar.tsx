@@ -55,7 +55,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         <div className="flex items-center justify-center gap-2 font-semibold text-white">
           <FaTag size={18} /> <span>Harga Kursus</span>
         </div>
-        <p className={`font-bold text-xl mt-2 ${isFree ? "text-white" : "text-white"}`}>
+        <p className={`font-bold text-[25px] mt-2 ${isFree ? "text-white" : "text-white"}`}>
           {isFree ? "Gratis" : `Rp ${formatRupiah(price)}`}
         </p>
       </div>
@@ -69,13 +69,13 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
           active:translate-y-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:text-white"
       >
         <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"></span>
-        <span className="relative z-10">Beli Sekarang →</span>
+        <span className="relative z-10 text-[15px]">Beli Sekarang →</span>
       </button>
 
       {/* Info kursus */}
       <div className="pt-3 pb-3">
-        <h4 className="text-left font-semibold text-gray-900 text-sm">Kursus ini mencakup:</h4>
-        <ul className="space-y-4 text-gray-600 text-xs mt-5">
+        <h4 className="text-left font-semibold text-black">Kursus ini mencakup:</h4>
+        <ul className="space-y-4 text-gray-600 text-sm mt-5">
           <li className="flex items-center gap-3 border-b border-gray-300 pb-4 ">
             <FaBook /> <span>{totalModul} Modul</span>
           </li>
@@ -93,7 +93,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
       {/* Metode pembayaran */}
       <div className="mb-3 pt-3 pb-3 border-b border-gray-300">
-        <h4 className="text-left font-semibold text-gray-900 text-sm">Metode Pembayaran:</h4>
+        <h4 className="text-left font-semibold text-black">Metode Pembayaran:</h4>
         <div className="grid grid-cols-6 gap-2 mt-5">
           {[
             "bri.png",
@@ -127,7 +127,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
       {/* Share */}
       <div className="pt-3">
-        <h4 className="text-left font-semibold text-gray-900 text-sm">Bagikan kursus ini:</h4>
+        <h4 className="text-left font-semibold text-black">Bagikan kursus ini:</h4>
         <div className="flex gap-3 justify-center mt-5">
           <a
             href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
