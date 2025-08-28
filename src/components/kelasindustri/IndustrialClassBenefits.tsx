@@ -59,7 +59,7 @@ const IndustrialClassBenefits: React.FC = () => {
           
           {/* Left Content (Teks) */}
           <div className="w-full md:w-30/30 lg:w-8/12 xl:w-6/12 text-left 
-  px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-6 xl:ml-20 mx-auto relative z-10">
+                          px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-3 xl:ml-20 mx-auto relative z-10">
             <span className="inline-block text-[11px] lg:text-xs xl:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
               Manfaat Sekolah
             </span>

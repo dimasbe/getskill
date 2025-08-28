@@ -68,7 +68,7 @@ const IndustrialClassSection: React.FC = () => {
               <img
                 src={manfaatImg}
                 alt="Belajar Online"
-                className="w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto lg:max-w-[345px] xl:max-w-[355px] h-auto object-contain relative z-10"
+                className="w-[85%] sm:w-[70%] md:w-[85%] lg:w-auto lg:max-w-[345px] xl:max-w-[355px] h-auto object-contain relative z-10"
               />
             </div>
           </div>
