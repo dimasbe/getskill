@@ -1,23 +1,70 @@
 // src/components/BenefitsSection.tsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import lampImg from "../../assets/img/icons/lampid.png";
 import searchImg from "../../assets/img/icons/searchid.png";
 import loveImg from "../../assets/img/icons/loveid.png";
 import boardImg from "../../assets/img/icons/blackboardid.png";
 import fotofotoImg from "../../assets/img/others/fotofotoid.png";
 
-const IndustrialClassBenefits: React.FC = () => {
+const SkeletonBenefits: React.FC = () => {
   return (
-    <section className="benefits-section py-10 sm:py-14 lg:py-2">
-      <div className="container mx-auto px-0 sm:px-0 lg:px-1">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16">
+    <section className="benefits-section py-10 sm:py-14 lg:py-2 xl:py-16">
+      <div className="container mx-auto px-0 sm:px-0 lg:px-1 xl:px-12">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 xl:gap-20 animate-pulse">
+          
+          {/* Left Content (Skeleton Teks) */}
+          <div className="w-full md:w-30/30 lg:w-8/12 xl:w-6/12 text-left px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-6 xl:pl-10 mx-auto space-y-5">
+            <div className="bg-gray-300 h-6 w-32 rounded-full mb-3"></div>
+            <div className="bg-gray-300 h-8 xl:h-9 w-3/4 rounded"></div>
+            <div className="bg-gray-200 h-6 w-2/3 rounded"></div>
+
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="flex items-start space-x-3">
+                <div className="bg-gray-300 rounded-full w-12 h-12 flex-shrink-0"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="bg-gray-300 h-4 w-40 xl:w-48 rounded"></div>
+                  <div className="bg-gray-200 h-3 w-52 xl:w-64 rounded"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Image Skeleton */}
+          <div className="w-full lg:w-7/12 xl:w-6/12 flex justify-center">
+            <div className="bg-gray-300 w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] xl:w-[100%] xl:max-w-[500px] h-[240px] md:h-[300px] lg:h-[360px] xl:h-[420px] rounded-xl"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const IndustrialClassBenefits: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <SkeletonBenefits />;
+  }
+
+  return (
+    <section className="benefits-section py-10 sm:py-14 lg:py-2 xl:py-16">
+      <div className="container mx-auto px-0 sm:px-0 lg:px-1 xl:px-12">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 xl:gap-20">
+          
           {/* Left Content (Teks) */}
-          <div className="w-full md:w-30/30 lg:w-8/12 text-left px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-6 mx-auto">
-            <span className="inline-block text-[11px] lg:text-[11px] md:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
+          <div className="w-full md:w-30/30 lg:w-8/12 xl:w-6/12 text-left 
+  px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-6 xl:ml-20 mx-auto relative z-10">
+            <span className="inline-block text-[11px] lg:text-xs xl:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
               Manfaat Sekolah
             </span>
 
-            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-2xl font-semibold mb-6 leading-snug">
+            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-2xl xl:text-2xl font-semibold mb-6 leading-snug">
               Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.
             </h2>
 
@@ -68,10 +115,10 @@ const IndustrialClassBenefits: React.FC = () => {
                     </div> 
                   </div>
                   <div className="ml-3 flex-1">
-                    <h4 className="font-semibold text-sm sm:text-base lg:text-base">
+                    <h4 className="font-semibold text-sm sm:text-base lg:text-base xl:text-base">
                       {item.title}
                     </h4>
-                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[11px] leading-relaxed">
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[11px] xl:text-xs leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -80,12 +127,12 @@ const IndustrialClassBenefits: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Image (tapi di mobile jadi atas) */}
-          <div className="w-full lg:w-7/12 flex justify-center">
+          {/* Right Image */}
+          <div className="w-full lg:w-7/12 xl:w-6/12 flex justify-center xl:-ml-30">
             <img
               src={fotofotoImg}
               alt="Belajar Online"
-              className="w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] h-auto object-contain"
+              className="w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] xl:w-[100%] xl:max-w-[500px] h-auto object-contain"
             />
           </div>
 
