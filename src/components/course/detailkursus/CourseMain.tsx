@@ -38,8 +38,13 @@ export default function CourseMain({ courseData }: Props) {
             {courseData.category}
           </button>
 
-          <div className="flex items-center text-gray-400 text-[12px]">
-            <FaStar className="text-yellow-500 font-medium mr-1" size={12} />
+          <div className="flex items-center text-gray-500 text-[12px]">
+            <FaStar className="text-yellow-500 font-medium mr-1" size={12} 
+            style={{
+                stroke: "black",   // warna border
+                strokeWidth: 20,   // ketebalan border
+              }}
+            />
             <span>({courseData.rating.toFixed(1)} Reviews)</span>
           </div>
         </div>
@@ -90,7 +95,7 @@ export default function CourseMain({ courseData }: Props) {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`
-    relative py-1.5 px-4 sm:px-5 text-sm sm:text-[14px] font-semibold whitespace-nowrap
+    relative py-1.5 px-4 sm:px-5 text-sm sm:text-[13px] font-semibold whitespace-nowrap
     transition-all duration-200 ease-out rounded-full
     ${activeTab === tab.key
                   ? "bg-purple-700 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.7)]"
