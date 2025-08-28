@@ -78,8 +78,8 @@ export default function CourseList({
     columns === 2
       ? "lg:grid-cols-2"
       : columns === 4
-      ? "lg:grid-cols-4"
-      : "lg:grid-cols-2 xl:grid-cols-3";
+        ? "lg:grid-cols-4"
+        : "lg:grid-cols-2 xl:grid-cols-3";
 
   const gridClass = `grid grid-cols-1 ${columnsClass} gap-5 items-stretch`;
 
@@ -140,11 +140,10 @@ export default function CourseList({
                   <button
                     key={pageNumber}
                     onClick={() => setPage(pageNumber)}
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
-                      pageNumber === page
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${pageNumber === page
                         ? "bg-purple-600 text-white"
                         : "bg-gray-200 text-gray-700 hover:bg-purple-100"
-                    }`}
+                      }`}
                   >
                     {pageNumber}
                   </button>
