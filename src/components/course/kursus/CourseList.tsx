@@ -22,26 +22,23 @@ interface CourseListProps {
 const COURSES_PER_PAGE = 6;
 
 export default function CourseList({
-  filters = { categories: [], priceMin: '', priceMax: '', search: '' },
+  filters = { categories: [], priceMin: "", priceMax: "", search: "" },
   page = 1,
   setPage,
   limit,
   columns = 3,
 }: CourseListProps) {
-  // ✅ State untuk loading
   const [loading, setLoading] = useState(true);
 
-  // ✅ Simulasi pemuatan data
+  // ✅ Loading hanya saat pertama kali mount
   useEffect(() => {
-    setLoading(true);
-    // Timer 1.2 detik untuk simulasi loading
-    const timer = setTimeout(() => setLoading(false), 1200);
+    const timer = setTimeout(() => setLoading(false), 800); // lebih cepat
     return () => clearTimeout(timer);
-  }, [filters, page]);
+  }, []);
 
-  // 🔍 Filter data (dari file kedua)
+  // 🔍 Filter data
   const filteredCourses = dummyCourses.filter((course: Course) => {
-    const price = parseInt(course.price.replace(/\./g, '')) || 0;
+    const price = parseInt(course.price.replace(/\./g, "")) || 0;
     const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
     const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
 
@@ -61,11 +58,20 @@ export default function CourseList({
     return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
   });
 
-  // 🔄 Pagination
-  const coursesToDisplay = limit ? filteredCourses.slice(0, limit) : filteredCourses;
-  const totalPages = Math.ceil(coursesToDisplay.length / COURSES_PER_PAGE);
-  const startIndex = (page - 1) * COURSES_PER_PAGE;
-  const currentCourses = coursesToDisplay.slice(startIndex, startIndex + COURSES_PER_PAGE);
+  // 🔄 Data yang ditampilkan
+  let currentCourses: Course[] = [];
+  let totalPages = 1;
+
+  if (limit) {
+    currentCourses = filteredCourses.slice(0, limit);
+  } else {
+    totalPages = Math.ceil(filteredCourses.length / COURSES_PER_PAGE);
+    const startIndex = (page - 1) * COURSES_PER_PAGE;
+    currentCourses = filteredCourses.slice(
+      startIndex,
+      startIndex + COURSES_PER_PAGE
+    );
+  }
 
   // ✅ Mapping kolom agar Tailwind bisa compile
   const columnsClass =
@@ -83,8 +89,7 @@ export default function CourseList({
       <div className={gridClass}>
         <AnimatePresence mode="popLayout">
           {loading ? (
-            // ✅ Tampilkan skeleton saat loading
-            Array.from({ length: COURSES_PER_PAGE }).map((_, idx) => (
+            Array.from({ length: limit || COURSES_PER_PAGE }).map((_, idx) => (
               <motion.div
                 key={`skeleton-${idx}`}
                 layout
@@ -95,7 +100,6 @@ export default function CourseList({
               </motion.div>
             ))
           ) : currentCourses.length > 0 ? (
-            // Tampilkan courses normal
             currentCourses.map((course) => (
               <motion.div
                 key={course.id}
@@ -121,8 +125,8 @@ export default function CourseList({
         </AnimatePresence>
       </div>
 
-      {/* Pagination - Sembunyikan saat loading */}
-      {!loading && setPage && totalPages > 1 && (
+      {/* Pagination hanya muncul kalau tidak ada limit */}
+      {!loading && !limit && setPage && totalPages > 1 && (
         <div className="mt-auto pt-6 sm:pt-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -138,8 +142,8 @@ export default function CourseList({
                     onClick={() => setPage(pageNumber)}
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
                       pageNumber === page
-                        ? 'bg-purple-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-purple-100'
+                        ? "bg-purple-600 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-purple-100"
                     }`}
                   >
                     {pageNumber}
