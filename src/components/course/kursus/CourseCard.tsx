@@ -32,9 +32,9 @@ export default function CourseCard({
   return (
     <div
       onClick={() => navigate(`/kursus/${id}`)}
-      className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
-                 transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
-                 hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1 "
+      className="card-shine w-full max-w-sm mx-auto h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
+             transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
+             hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1 "
     >
       {/* Bagian Gambar */}
       <div className="relative w-full aspect-video flex items-center justify-center p-2 sm:p-3 overflow-hidden">
