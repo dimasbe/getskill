@@ -125,10 +125,10 @@ const Berita: React.FC = () => {
         <BackgroundShapes />
 
         {/* Konten tengah */}
-        <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-center sm:text-left relative z-10">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">Berita</h1>
-          <p className="mt-2 text-sm sm:text-base text-gray-800">
-            <a href="/" className="hover:underline">Beranda</a>
+        <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">Berita</h1>
+          <p className="mt-2 text-sm sm:text-xs text-gray-800">
+            <a href="/" >Beranda</a>
             <span className="mx-1">&gt;</span>
             <span className="text-purple-600">Berita</span>
           </p>
