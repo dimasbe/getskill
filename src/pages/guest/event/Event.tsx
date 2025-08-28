@@ -4,6 +4,7 @@ import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventCardGrid from "../../../components/public/CardEvent/EventCardGrid";
 import SortDropdown from "../../../components/public/SortDropdown";
 import events from "../../../data/events";
+import { motion } from "framer-motion";
 
 const Event: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -127,18 +128,25 @@ const Event: React.FC = () => {
         <div className="flex gap-3 mb-10">
           {Array.from({ length: totalPages || 1 }).map((_, index) => {
             const page = index + 1;
+            const isActive = page === currentPage;
             return (
-              <button
+              <motion.button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`w-8 h-8 rounded-full text-sm font-medium transform transition-all duration-300 ease-in-out
-                  ${page === currentPage
-                    ? "bg-purple-600 text-white scale-110 shadow-md"
-                    : "bg-gray-200 text-gray-700 hover:bg-purple-100 hover:scale-105 hover:shadow-md"
+                whileTap={{ scale: 0.9 }}
+                animate={{
+                  scale: isActive ? 1.1 : 1,
+                  boxShadow: isActive ? "0px 4px 10px rgba(147, 51, 234, 0.4)" : "none",
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                className={`w-8 h-8 rounded-full text-sm font-medium transition-colors duration-300 ease-in-out
+            ${isActive
+                    ? "bg-purple-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-purple-100"
                   }`}
               >
                 {page}
-              </button>
+              </motion.button>
             );
           })}
         </div>
