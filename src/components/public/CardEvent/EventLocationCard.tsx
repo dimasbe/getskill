@@ -1,14 +1,7 @@
 import { Card } from "flowbite-react";
+import type Event from "../../../types/event";
 
-interface EventLocationCardProps {
-  isOnline: boolean;
-  location?: string;
-  platform?: string;
-}
-
-
-
-const EventLocationCard: React.FC<EventLocationCardProps> = ({ isOnline, location, platform }) => {
+const EventLocationCard: React.FC<Event> = ({ isOnline, location, platform }) => {
   return (
     <Card className="shadow-lg border border-gray-200 overflow-hidden z-10 rounded-2xl">
       <div className="p-5 text-sm text-gray-700">

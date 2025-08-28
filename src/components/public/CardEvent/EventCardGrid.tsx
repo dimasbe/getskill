@@ -2,19 +2,7 @@ import { Card } from "flowbite-react";
 import { HiOutlineUsers, HiOutlineClock, HiOutlineLocationMarker, HiOutlineGlobeAlt } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import React from "react";
-
-type Event = {
-    id: number;
-    image: string;
-    title: string;
-    description: string;
-    date: string;
-    quota: number;
-    daysLeft: number;
-    location?: string;
-    platform?: string;
-    isOnline: boolean;
-};
+import type Event from "../../../types/event";
 
 type EventCardGridProps = {
     events: Event[];

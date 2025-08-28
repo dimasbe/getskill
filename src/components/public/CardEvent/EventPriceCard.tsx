@@ -3,6 +3,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsapp, FaYoutube } from "reac
 import { GraduationCap } from "lucide-react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
+import type Event from "../../../types/event";
 
 // Daftar Logo Pembayaran
 const paymentLogos = [
@@ -27,27 +28,8 @@ const paymentLogos = [
   { name: "QRIS", src: "/public/images/payments/qris.jpg" },
 ];
 
-// Props
-interface EventPriceCardProps {
-  event: {
-    price: number;
-    date: string;
-    quota: number;
-    daysLeft: number;
-    registered: number;
-    isOnline: boolean;
-    rundown: {
-      time: string;
-      session: string;
-      speaker: {
-        name: string;
-        role: string;
-      };
-    }[];
-  };
-}
 
-const EventPriceCard: React.FC<EventPriceCardProps> = ({ event }) => (
+const EventPriceCard: React.FC<{ event: Event }> = ({ event }) => (
   <Card className="shadow-lg border border-gray-200 overflow-hidden z-10 rounded-2xl">
     {/* Header Harga */}
     <div className="bg-purple-600 text-white px-6 rounded-xl shadow-xl py-5">
