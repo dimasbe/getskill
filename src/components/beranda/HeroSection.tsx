@@ -30,7 +30,7 @@ const HeroSection: React.FC = () => {
         data-aos="fade-right"
       />
 
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-20 lg:px-10 xl:px-22 2xl:px-20 pt-10 md:pt-16 relative z-10">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-20 lg:px-10 xl:px-22 2xl:px-34 pt-10 md:pt-16 relative z-10">
 
         {/* Bagian kiri */}
         <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-20 mt-10 md:-mt-4 lg:-mt-18 xl:-mt-14 2xl:-mt-8 relative">
@@ -109,7 +109,7 @@ const HeroSection: React.FC = () => {
         {/* Bagian kanan */}
         <div className="w-1/2 md:w-1/2 lg:w-3/4 relative flex justify-center items-center">
           {/* Banner desktop */}
-          <img src={bannerShape02} alt="Banner Shape" className="absolute top-[430px] md:top-[260px] lg:top-[395px] xl:top-[435px] 2xl:top-[510px] right-[380px] md:right-[200px] lg:right-[360px] xl:right-[410px] 2xl:right-[490px] w-[120px] md:w-[80px] lg:w-[90px] xl:w-[110px] 2xl:w-[130px] z-0" data-aos="" />
+          <img src={bannerShape02} alt="Banner Shape" className="absolute top-[430px] md:top-[260px] lg:top-[395px] xl:top-[435px] 2xl:top-[510px] right-[380px] md:right-[200px] lg:right-[360px] xl:right-[410px] 2xl:right-[490px] w-[120px] md:w-[80px] lg:w-[90px] xl:w-[110px] 2xl:w-[130px] z-0" data-aos="fade" />
 
           {/* Dots */}
           <img
@@ -126,7 +126,7 @@ const HeroSection: React.FC = () => {
           <img src={fotomodel1} alt="Orang dengan Laptop" className="relative z-100 w-[800px] md:w-[520px] lg:w-[480px] xl:w-[520px] 2xl:w-[610px]" data-aos="fade-up" />
 
           {/* Panah desktop */}
-          <img src={panah} alt="panah" className="absolute right-[500px] md:right-[140px] lg:right-[350px] xl:right-[415px] 2xl:right-[520px] top-[15px] md:-top-[16px] lg:top-[50px] xl:top-[60px] 2xl:top-[60px] w-[70px] md:w-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[90px]  md:rotate-50 lg:rotate-1 xl:rotate-1 hidden md:block" data-aos="" />
+          <img src={panah} alt="panah" className="absolute right-[500px] md:right-[140px] lg:right-[350px] xl:right-[415px] 2xl:right-[520px] top-[15px] md:-top-[16px] lg:top-[50px] xl:top-[60px] 2xl:top-[60px] w-[70px] md:w-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[90px]  md:rotate-50 lg:rotate-1 xl:rotate-1 hidden md:block" data-aos="fade" />
 
           {/* Bubble desktop */}
           <div className="absolute -top-[20px] md:-top-[30px] lg:top-[40px] xl:top-[50px] 2xl:top-[50px] left-auto md:left-auto lg:left-auto xl:left- 2xl:left-auto right-[80px] md:right-[185px] lg:right-[410px] xl:right-[480px] 2xl:right-[600px] z-20" data-aos="">
