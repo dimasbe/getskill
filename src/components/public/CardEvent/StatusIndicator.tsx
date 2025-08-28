@@ -1,10 +1,8 @@
 import { HiCheckCircle, HiXCircle } from "react-icons/hi";
+import type Event from "../../../types/event";
 
-type StatusIndicatorProps = {
-  isOnline: boolean;
-};
 
-function StatusIndicator({ isOnline }: StatusIndicatorProps) {
+function StatusIndicator({ isOnline }: Event) {
   return (
     <span className="flex items-center gap-1">
       {isOnline ? (

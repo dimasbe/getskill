@@ -1,27 +1,5 @@
 import FotoModel2 from '../assets/img/events/689021a8009ee.jpeg';
-
-type Event = {
-  id: number;
-  title: string;
-  date: string;
-  description: string;
-  quota: number;
-  registered: number;
-  daysLeft: number;
-  image: string;
-  category: string;
-  isOnline: boolean;
-  location?: string;
-  platform?: string;
-  price: number;
-  speakerName: string;
-  speakerImage: string;
-  rundown: {
-    time: string;
-    session: string;
-    speaker: { name: string; role: string };
-  }[];
-};
+import type Event from '../types/event';
 
 const events: Event[] = [
   {
