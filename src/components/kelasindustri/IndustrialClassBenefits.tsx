@@ -8,12 +8,12 @@ import fotofotoImg from "../../assets/img/others/fotofotoid.png";
 
 const SkeletonBenefits: React.FC = () => {
   return (
-    <section className="benefits-section py-10 sm:py-14 lg:py-2 xl:py-16">
-      <div className="container mx-auto px-0 sm:px-0 lg:px-1 xl:px-12">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 xl:gap-20 animate-pulse">
+    <section className="benefits-section py-10 sm:py-14 lg:py-12 xl:py-16 2xl:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 2xl:px-16">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20 animate-pulse">
           
           {/* Left Content (Skeleton Teks) */}
-          <div className="w-full md:w-30/30 lg:w-8/12 xl:w-6/12 text-left px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-6 xl:pl-10 mx-auto space-y-5">
+          <div className="w-full md:w-full lg:w-8/12 xl:w-6/12 text-left px-4 sm:px-6 md:px-8 lg:px-0 xl:pl-10 2xl:pl-16 mx-auto space-y-5">
             <div className="bg-gray-300 h-6 w-32 rounded-full mb-3"></div>
             <div className="bg-gray-300 h-8 xl:h-9 w-3/4 rounded"></div>
             <div className="bg-gray-200 h-6 w-2/3 rounded"></div>
@@ -31,7 +31,7 @@ const SkeletonBenefits: React.FC = () => {
 
           {/* Right Image Skeleton */}
           <div className="w-full lg:w-7/12 xl:w-6/12 flex justify-center">
-            <div className="bg-gray-300 w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] xl:w-[100%] xl:max-w-[500px] h-[240px] md:h-[300px] lg:h-[360px] xl:h-[420px] rounded-xl"></div>
+            <div className="bg-gray-300 w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] xl:w-[100%] xl:max-w-[500px] 2xl:max-w-[550px] h-[240px] md:h-[300px] lg:h-[360px] xl:h-[420px] 2xl:h-[480px] rounded-xl"></div>
           </div>
 
         </div>
@@ -53,18 +53,17 @@ const IndustrialClassBenefits: React.FC = () => {
   }
 
   return (
-    <section className="benefits-section py-10 sm:py-14 lg:py-2 xl:py-16">
-      <div className="container mx-auto px-0 sm:px-0 lg:px-1 xl:px-12">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 xl:gap-20">
+    <section className="benefits-section py-10 sm:py-14 lg:py-12 xl:py-16 2xl:py-1">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 2xl:px-16">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
           
           {/* Left Content (Teks) */}
-          <div className="w-full md:w-30/30 lg:w-8/12 xl:w-6/12 text-left 
-                          px-4 sm:px-6 md:px-12 lg:px-0 lg:-ml-3 xl:ml-20 mx-auto relative z-10">
-            <span className="inline-block text-[11px] lg:text-xs xl:text-xs font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
+          <div className="w-full md:w-full lg:w-8/12 xl:w-6/12 2xl:w-7/12 text-left px-4 sm:px-6 md:px-8 lg:px-0 xl:pl-25 2xl:pl-20 mx-auto relative z-10">
+            <span className="inline-block text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
               Manfaat Sekolah
             </span>
 
-            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-2xl xl:text-2xl font-semibold mb-6 leading-snug">
+            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-2xl xl:text-2xl 2xl:text-2xl font-semibold mb-6 leading-snug">
               Manfaat yang akan didapatkan sekolah ketika mengikuti kelas industri.
             </h2>
 
@@ -115,10 +114,10 @@ const IndustrialClassBenefits: React.FC = () => {
                     </div> 
                   </div>
                   <div className="ml-3 flex-1">
-                    <h4 className="font-semibold text-sm sm:text-base lg:text-base xl:text-base">
+                    <h4 className="font-semibold text-sm sm:text-base lg:text-base xl:text-base 2xl:text-base">
                       {item.title}
                     </h4>
-                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[11px] xl:text-xs leading-relaxed">
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[11px] xl:text-xs 2xl:text-sm leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -128,11 +127,11 @@ const IndustrialClassBenefits: React.FC = () => {
           </div>
 
           {/* Right Image */}
-          <div className="w-full lg:w-7/12 xl:w-6/12 flex justify-center xl:-ml-30">
+          <div className="w-full lg:w-7/12 xl:w-6/12 2xl:w-6/12 flex justify-center lg:justify-end xl:-ml-12 2xl:-ml-10">
             <img
               src={fotofotoImg}
               alt="Belajar Online"
-              className="w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] xl:w-[100%] xl:max-w-[500px] h-auto object-contain"
+              className="w-full max-w-md md:max-w-lg lg:max-w-none lg:w-[116%] xl:w-[100%] xl:max-w-[500px] 2xl:max-w-[550px] h-auto object-contain xl:-translate-x-12 2xl:-translate-x-10"
             />
           </div>
 
