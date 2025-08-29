@@ -3,7 +3,8 @@ import { HiSearch } from "react-icons/hi";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventCardGrid from "../../../components/public/CardEvent/EventCardGrid";
 import SortDropdown from "../../../components/public/SortDropdown";
-import events from "../../../data/events";
+import { fetchEvents } from "../../../features/event/_services/eventService";
+import type { Event as ApiEvent } from "../../../features/event/_event";
 import { motion } from "framer-motion";
 
 const Event: React.FC = () => {
@@ -11,12 +12,22 @@ const Event: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("terbaru");
   const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState<ApiEvent[]>([]);
 
   const eventsPerPage = 8;
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
+    const loadEvents = async () => {
+      try {
+        const data = await fetchEvents();
+        setEvents(data);
+      } catch (error) {
+        console.error("Gagal memuat event:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadEvents();
   }, []);
 
   // Filter & Sorting
@@ -24,28 +35,24 @@ const Event: React.FC = () => {
     .filter(
       (event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        event.speakerName.toLowerCase().includes(searchTerm.toLowerCase())
+        event.description.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .slice();
 
   if (sortOption === "terbaru") {
     filteredEvents.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      (a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
     );
   } else if (sortOption === "terlama") {
     filteredEvents.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      (a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
     );
   }
 
   // Pagination
   const indexOfLastEvent = currentPage * eventsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = filteredEvents.slice(
-    indexOfFirstEvent,
-    indexOfLastEvent
-  );
+  const currentEvents = filteredEvents.slice(indexOfFirstEvent, indexOfLastEvent);
 
   const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
@@ -59,9 +66,7 @@ const Event: React.FC = () => {
             Event
           </h1>
           <p className="mt-2 text-xs sm:text-xs text-gray-800">
-            <a href="/">
-              Beranda
-            </a>
+            <a href="/">Beranda</a>
             <span className="mx-1">&gt;</span>
             <span className="text-purple-600">Event</span>
           </p>
@@ -79,15 +84,15 @@ const Event: React.FC = () => {
         ) : (
           <>
             <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">
-              Event Hummaclass
+              Event GetSkill
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mt-4">
-              Kembangkan Kemampuanmu Di <br />
-              Event Hummaclass
+              Kembangkan Kemampuanmu <br />
+              Di Event GetSkill
             </h2>
             <p className="text-sm text-gray-500 mt-2">
               Tingkatkan kemampuan teknis melalui event yang diselenggarakan
-              oleh partner Hummaclass
+              oleh partner GetSkill
             </p>
           </>
         )}
@@ -117,7 +122,6 @@ const Event: React.FC = () => {
         )}
 
         <SortDropdown selected={sortOption} onChange={setSortOption} loading={loading} />
-
       </div>
 
       {/* Event Grid */}
@@ -140,7 +144,7 @@ const Event: React.FC = () => {
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
                 className={`w-8 h-8 rounded-full text-sm font-medium transition-colors duration-300 ease-in-out
-            ${isActive
+                  ${isActive
                     ? "bg-purple-600 text-white"
                     : "bg-gray-200 text-gray-700 hover:bg-purple-100"
                   }`}
