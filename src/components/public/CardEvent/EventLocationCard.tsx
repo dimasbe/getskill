@@ -1,19 +1,19 @@
 import { Card } from "flowbite-react";
 
 type EventCardGridProps = {
-  isOnline: boolean;
+  is_online: boolean;
   location?: string;
   platform?: string;
 };
 
-const EventLocationCard: React.FC<EventCardGridProps> = ({ isOnline, location, platform }) => {
+const EventLocationCard: React.FC<EventCardGridProps> = ({ is_online, location, platform }) => {
   return (
     <Card className="shadow-lg border border-gray-200 overflow-hidden z-10 rounded-2xl">
       <div className="p-5 text-sm text-gray-700">
         <h1 className="text-lg font-semibold mb-2">
-          {isOnline ? "Platform" : "Lokasi"}
+          {is_online ? "Platform" : "Lokasi"}
         </h1>
-        {isOnline ? (
+        {is_online ? (
           <span>
             LIVE at{" "}
             <a

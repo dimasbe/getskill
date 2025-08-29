@@ -56,7 +56,7 @@ function RouteChangeLoader() {
         <Route path="/kursus/:id" element={<CourseDetail />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/event" element={<Event />} />
-        <Route path="/event/:id" element={<DetailEvent />} />
+        <Route path="/event/:slug" element={<DetailEvent />} />
         <Route path="/berita" element={<Berita />} />
         <Route path="/berita/:id" element={<DetailBerita />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />

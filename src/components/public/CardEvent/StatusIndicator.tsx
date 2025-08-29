@@ -1,4 +1,4 @@
-import { HiCheckCircle, HiXCircle } from "react-icons/hi";
+import { HiOutlineGlobeAlt, HiOutlineLocationMarker } from "react-icons/hi";
 
 interface StatusIndicatorProps {
   isOnline: boolean;
@@ -9,13 +9,13 @@ function StatusIndicator({ isOnline }: StatusIndicatorProps) {
     <span className="flex items-center gap-1">
       {isOnline ? (
         <>
-          <HiCheckCircle className="text-green-500" />
-          <span className="text-green-600">Online</span>
+          <HiOutlineGlobeAlt size={20} className="text-purple-500" />
+          <span className="text-gray-600">Online</span>
         </>
       ) : (
         <>
-          <HiXCircle className="text-red-500" />
-          <span className="text-red-600">Offline</span>
+          <HiOutlineLocationMarker size={20} className="text-purple-500" />
+          <span className="text-gray-600">Offline</span>
         </>
       )}
     </span>
