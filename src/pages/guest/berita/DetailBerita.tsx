@@ -63,6 +63,7 @@ const DetailBerita: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [berita, setBerita] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false); // <- tambahan state modal
 
   useEffect(() => {
     setIsLoading(true);
@@ -110,13 +111,9 @@ const DetailBerita: React.FC = () => {
               Detail Berita
             </h1>
             <p className="mt-2 text-xs sm:text-xs text-gray-800">
-              <Link to="/">
-                Beranda
-              </Link>
+              <Link to="/">Beranda</Link>
               <span className="mx-1">&gt;</span>
-              <Link to="/berita">
-                Berita
-              </Link>
+              <Link to="/berita">Berita</Link>
             </p>
           </div>
         </div>
@@ -140,13 +137,9 @@ const DetailBerita: React.FC = () => {
             Detail Berita
           </h1>
           <p className="mt-2 text-xs sm:text-xs text-gray-800">
-            <Link to="/">
-              Beranda
-            </Link>
+            <Link to="/">Beranda</Link>
             <span className="mx-1">&gt;</span>
-            <Link to="/berita">
-              Berita
-            </Link>
+            <Link to="/berita">Berita</Link>
             <span className="mx-1">&gt;</span>
             <span className="text-purple-600">{berita.title}</span>
           </p>
@@ -157,7 +150,10 @@ const DetailBerita: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-4 grid grid-cols-1 lg:grid-cols-4 gap-2">
         {/* Konten utama */}
         <div className="lg:col-span-3">
-          <div className="relative rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer">
+          <div
+            className="relative rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer"
+            onClick={() => setIsModalOpen(true)} // klik buka modal
+          >
             <img
               src={berita.image}
               alt={berita.title}
@@ -231,6 +227,20 @@ const DetailBerita: React.FC = () => {
               <div>getskill.id</div>
             </div>
           </div>
+
+          {/* Modal */}
+          {isModalOpen && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <img
+                src={berita.image}
+                alt={berita.title}
+                className="max-w-5xl max-h-[90vh] object-contain rounded-lg shadow-lg"
+              />
+            </div>
+          )}
 
           <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
             <svg

@@ -1,8 +1,8 @@
-import berita1 from '../assets/landingpage/beranda/berita1.png';
-import berita2 from '../assets/landingpage/beranda/berita2.png';
-import berita3 from '../assets/landingpage/beranda/berita3.png';
-import berita4 from '../assets/landingpage/beranda/berita4.png';
-import berita5 from '../assets/landingpage/beranda/berita5.jpeg';
+import berita1 from '../assets/img/courses/course_thumb01.jpg';
+import berita2 from '../assets/img/courses/course_thumb02.jpg';
+import berita3 from '../assets/img/courses/course_thumb03.jpg';
+import berita4 from '../assets/img/courses/course_thumb04.jpg';
+import berita5 from '../assets/img/courses/course_thumb05.jpg';
 
 export interface NewsArticle {
   id: string;
