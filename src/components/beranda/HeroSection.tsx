@@ -126,10 +126,10 @@ const HeroSection: React.FC = () => {
           <img src={fotomodel1} alt="Orang dengan Laptop" className="relative z-100 w-[800px] md:w-[520px] lg:w-[480px] xl:w-[520px] 2xl:w-[610px]" data-aos="fade-up" />
 
           {/* Panah desktop */}
-          <img src={panah} alt="panah" className="absolute right-[500px] md:right-[140px] lg:right-[350px] xl:right-[415px] 2xl:right-[520px] top-[15px] md:-top-[16px] lg:top-[50px] xl:top-[60px] 2xl:top-[60px] w-[70px] md:w-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[90px]  md:rotate-50 lg:rotate-1 xl:rotate-1 hidden md:block" data-aos="fade-up" />
+          <img src={panah} alt="panah" className="absolute right-[500px] md:right-[140px] lg:right-[350px] xl:right-[415px] 2xl:right-[520px] top-[15px] md:-top-[16px] lg:top-[50px] xl:top-[60px] 2xl:top-[60px] w-[70px] md:w-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[90px]  md:rotate-50 lg:rotate-1 xl:rotate-1 hidden md:block" data-aos="fade-left" />
 
           {/* Bubble desktop */}
-          <div className="absolute -top-[20px] md:-top-[30px] lg:top-[40px] xl:top-[50px] 2xl:top-[50px] left-auto md:left-auto lg:left-auto xl:left- 2xl:left-auto right-[80px] md:right-[185px] lg:right-[410px] xl:right-[480px] 2xl:right-[600px] z-20" data-aos="">
+          <div className="absolute -top-[20px] md:-top-[30px] lg:top-[40px] xl:top-[50px] 2xl:top-[50px] left-auto md:left-auto lg:left-auto xl:left- 2xl:left-auto right-[80px] md:right-[185px] lg:right-[410px] xl:right-[480px] 2xl:right-[600px] z-20" data-aos="fade-right">
             <div className="bg-white p-2 rounded-[5px] shadow-[7px_7px_0px_rgba(176,184,196,0.6)] space-y-2">
               <div className="flex items-center space-x-2">
                 <img src={avatar} alt="Kenza" className="w-4 md:w-5 lg:w-5 xl:w-6 2xl:w-8 h-4 md:h-5 lg:h-5 xl:h-6 2xl:h-8 rounded-full" />
