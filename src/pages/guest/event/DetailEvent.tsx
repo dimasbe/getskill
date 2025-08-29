@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import events from "../../../data/events";
 import { GraduationCap } from "lucide-react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventPriceCard from "../../../components/public/CardEvent/EventPriceCard";
@@ -8,28 +7,43 @@ import EventLocationCard from "../../../components/public/CardEvent/EventLocatio
 import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 
-const DetailEvent: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const event = events.find((e) => e.id === Number(id));
+import { fetchEventDetail } from "../../../features/event/_services/eventService";
+import type { Event } from "../../../features/event/_event";
 
+const DetailEvent: React.FC = () => {
+    const { slug } = useParams<{ slug: string }>();
+    const [event, setEvent] = useState<Event | null>(null);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 1500);
-        return () => clearTimeout(timer);
-    }, []);
+        const loadEvent = async () => {
+            if (!slug) return;
+            try {
+                setLoading(true);
+                const eventData = await fetchEventDetail(slug);
+                setEvent(eventData);
+            } catch (error) {
+                console.error("Gagal memuat detail event:", error);
+                setEvent(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadEvent();
+    }, [slug]);
 
     if (!event && !loading) {
         return <div className="p-6 text-center">Event tidak ditemukan</div>;
     }
+
+    const isOnline = Boolean(event?.is_online);
 
     return (
         <div className="bg-white min-h-screen text-left">
             {/* Breadcrumb & Header */}
             <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
                 <BackgroundShapes />
-
                 <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
                     <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
                         {event?.title}
@@ -46,7 +60,7 @@ const DetailEvent: React.FC = () => {
 
             {/* Main Content */}
             <div
-                className={`max-w-7xl mx-auto px-4 sm:px-20 md:px-30 lg:px-30 xl:px-10 2xl:px-10 pt-10 ${event?.isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-90 lg:pb-90"
+                className={`max-w-7xl mx-auto px-4 sm:px-20 md:px-30 lg:px-30 xl:px-10 2xl:px-10 pt-10 ${isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-90 lg:pb-90"
                     }`}
             >
                 <div className="relative">
@@ -59,27 +73,15 @@ const DetailEvent: React.FC = () => {
                             className="w-full h-130 object-cover rounded-xl cursor-pointer"
                             onClick={() => setIsOpen(true)}
                             onError={(e) => {
-                                e.currentTarget.src =
-                                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d1d5db' viewBox='0 0 24 24'%3E%3Cpath d='M12 5c1.657 0 3 1.343 3 3S13.657 11 12 11s-3-1.343-3-3 1.343-3 3-3m0-2C9.239 3 7 5.239 7 8s2.239 5 5 5 5-2.239 5-5-2.239-5-5-5m0 16c-3.866 0-7-3.134-7-7h2c0 2.761 2.239 5 5 5s5-2.239 5-5h2c0 3.866-3.134 7-7 7z'/%3E%3C/svg%3E";
+                                e.currentTarget.src = "/src/assets/Default-Img.png";
                             }}
                         />
                     ) : (
-                        <div className="w-full h-130 flex items-center justify-center bg-gray-200 rounded-xl">
-                            <svg
-                                className="w-12 h-12 text-gray-400"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M3 7l6 6-6 6M21 7l-6 6 6 6"
-                                />
-                            </svg>
-                        </div>
+                        <img
+                          src="/src/assets/Default-Img.png"
+                          alt="Default"
+                          className="h-40 w-full object-cover rounded-xl"
+                        />
                     )}
 
                     <div className="absolute right-8 top-[70%] translate-y-[3%] w-85 hidden lg:block space-y-6">
@@ -92,26 +94,24 @@ const DetailEvent: React.FC = () => {
                             <>
                                 <EventPriceCard event={event!} />
                                 <EventLocationCard
-                                    isOnline={event!.isOnline}
-                                    location={event!.location}
-                                    platform={event!.platform}
+                                    is_online={isOnline}
+                                    location={event!.location || ""}
+                                    platform={isOnline ? "Zoom" : undefined}
                                 />
                             </>
                         )}
                     </div>
+
                     {/* Modal */}
                     {isOpen && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-2">
                             <div className="relative rounded-xl w-full max-w-5xl max-h-[95vh] overflow-y-auto">
-
-                                {/* Tombol close */}
                                 <button
                                     onClick={() => setIsOpen(false)}
                                     className="absolute top-3 right-3 text-white hover:text-gray-300 text-2xl"
                                 >
                                     <FiX />
                                 </button>
-
                                 <img
                                     src={event?.image}
                                     alt={event?.title}
@@ -120,60 +120,59 @@ const DetailEvent: React.FC = () => {
                             </div>
                         </div>
                     )}
-
                 </div>
 
-                <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="mt-12 grid grid-cols-1 xl:grid-cols-1 lg:grid-cols-1 w-full xl:max-w-3xl lg:max-w-xl gap-8">
                     <div className="lg:col-span-2 xl:pb-60 lg:pb-60">
                         {loading ? (
                             <div className="animate-pulse space-y-4">
                                 <div className="h-6 w-32 bg-gray-200 rounded-full"></div>
                                 <div className="h-6 w-80 bg-gray-200 rounded-md"></div>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-gray-200"></div>
-                                    <div className="h-4 w-40 bg-gray-200 rounded-md"></div>
-                                </div>
                                 <div className="h-20 w-full bg-gray-200 rounded-md"></div>
                             </div>
                         ) : (
                             <>
                                 <span className="bg-purple-600 text-white px-3 py-1 text-sm rounded-full inline-block">
-                                    {event?.category}
+                                    {"Seminar"}
                                 </span>
 
                                 <h2 className="mt-4 text-xl sm:text-2xl font-bold text-gray-900">
                                     {event?.title}
                                 </h2>
 
-                                <div className="flex flex-wrap items-center gap-3 mt-3 text-gray-600 text-sm">
+                                <div className="flex flex-wrap items-center gap-2 mt-3 text-gray-600 text-sm">
                                     <img
-                                        src={event?.speakerImage}
-                                        alt={event?.speakerName}
+                                        src="/src/assets/img/logo/get-skill/logo.png"
+                                        alt={event?.title}
                                         className="w-8 h-8 rounded-full"
                                     />
-                                    <span>By {event?.speakerName}</span>
-                                    <StatusIndicator isOnline={event!.isOnline} />
+
+                                    <span>
+                                        By <a href="#" className="font-normal font-sans">GetSkills</a>
+                                    </span>
+
+                                    <span className="text-gray-400">•</span>
+
+                                    <StatusIndicator isOnline={isOnline} />
+
+                                    <span className="text-gray-400">•</span>
+
                                     <span className="flex items-center gap-1">
-                                        <GraduationCap /> {event?.quota} Peserta
+                                        <GraduationCap /> {event?.capacity_left} Peserta
                                     </span>
                                 </div>
-
-                                <p className="mt-4 text-gray-700 leading-relaxed">
-                                    {event?.description}
-                                </p>
+                                <div className="w-full border-t-2 border-gray-400 my-8"></div>
+                                <p
+                                    className="mt-4 text-gray-700 leading-relaxed prose max-w-none"
+                                    dangerouslySetInnerHTML={{ __html: event?.description || "" }}
+                                />
 
                                 {/* Rundown Table */}
                                 <h3 className="mt-8 text-lg font-semibold">Rundown Acara :</h3>
-                                <div className="overflow-x-auto mt-4 w-full 2xl:w-auto xl:w-auto lg:w-150">
-                                    {loading ? (
-                                        <div className="animate-pulse space-y-2">
-                                            {Array.from({ length: 3 }).map((_, i) => (
-                                                <div key={i} className="h-10 bg-gray-200 rounded-md"></div>
-                                            ))}
-                                        </div>
-                                    ) : (
+                                <div className="overflow-x-auto mt-4 w-full">
+                                    {event?.event_details?.length ? (
                                         <table className="w-full border border-gray-300 rounded-lg text-sm text-left border-collapse min-w-full">
-                                            <thead className="bg-purple-100 text-gray-700">
+                                            <thead className="bg-purple-600 text-white">
                                                 <tr>
                                                     <th className="px-6 py-2 border border-gray-300 text-center whitespace-nowrap">
                                                         Time
@@ -187,76 +186,42 @@ const DetailEvent: React.FC = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {event?.rundown.map((item, index) => (
-                                                    <tr key={index}>
-                                                        <td className="px-6 py-2 border border-gray-300 text-center whitespace-nowrap">
-                                                            {item.time}
-                                                        </td>
-                                                        <td className="px-4 py-2 border border-gray-300">
-                                                            {item.session}
-                                                        </td>
-                                                        <td className="px-4 py-2 border border-gray-300 whitespace-nowrap">
-                                                            <span className="font-semibold">
-                                                                {item.speaker.name}
-                                                            </span>
-                                                            <br />
-                                                            <span>{item.speaker.role}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                {event.event_details.map((item, index) => {
+                                                    const formatTime = (time: string) => time.slice(0, 5);
+
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td className="px-6 py-2 border border-gray-300 text-center whitespace-nowrap">
+                                                                {formatTime(item.start)} - {formatTime(item.end)}
+                                                            </td>
+                                                            <td className="px-4 py-2 border border-gray-300">
+                                                                {item.session}
+                                                            </td>
+                                                            <td className="px-4 py-2 border font-bold border-gray-300 whitespace-nowrap">
+                                                                {item.user}
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
                                             </tbody>
+
                                         </table>
+                                    ) : (
+                                        <p className="text-gray-500">Rundown belum tersedia.</p>
                                     )}
                                 </div>
-
-                                {/* FAQ */}
-                                {loading ? (
-                                    <div className="animate-pulse mt-8 space-y-3">
-                                        <div className="h-5 w-40 bg-gray-200 rounded-md"></div>
-                                        <div className="h-4 w-full bg-gray-200 rounded-md"></div>
-                                        <div className="h-4 w-3/4 bg-gray-200 rounded-md"></div>
-                                    </div>
-                                ) : (
-                                    <div className="mt-8">
-                                        <h3 className="text-lg font-semibold mb-4">FAQ:</h3>
-                                        <div className="mb-4 border-b border-gray-200 pb-4">
-                                            <p className="font-medium">
-                                                1. Apakah setelah mendaftar...
-                                            </p>
-                                            <p className="text-gray-600">
-                                                Jawab: Kamu tidak perlu mendaftar ulang...
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="font-medium">
-                                                2. Apakah saya bisa mendapatkan sertifikat...
-                                            </p>
-                                            <p className="text-gray-600">
-                                                Jawab: Sertifikat dan rekaman video akan tersedia...
-                                            </p>
-                                        </div>
-                                    </div>
-                                )}
                             </>
                         )}
                     </div>
 
-                    <div
-                        className={`lg:hidden space-y-6 ${event?.isOnline ? "pb-1" : "pb-0"
-                            }`}
-                    >
-                        {loading ? (
-                            <div className="animate-pulse space-y-4">
-                                <div className="h-32 bg-gray-200 rounded-xl"></div>
-                                <div className="h-32 bg-gray-200 rounded-xl"></div>
-                            </div>
-                        ) : (
+                    <div className={`lg:hidden space-y-6 ${isOnline ? "pb-1" : "pb-0"}`}>
+                        {!loading && (
                             <>
                                 <EventPriceCard event={event!} />
                                 <EventLocationCard
-                                    isOnline={event!.isOnline}
-                                    location={event!.location}
-                                    platform={event!.platform}
+                                    is_online={isOnline}
+                                    location={event!.location || ""}
+                                    platform={isOnline ? "Zoom" : undefined}
                                 />
                             </>
                         )}

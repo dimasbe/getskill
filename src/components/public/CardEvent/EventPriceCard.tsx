@@ -1,9 +1,11 @@
-import { FiCalendar, FiCheckCircle, FiClock, FiUser, FiArrowRight } from "react-icons/fi";
+import { FiAward , FiClock, FiUser, FiArrowRight } from "react-icons/fi";
+import { BsCalendar2Event, BsCalendar2X } from "react-icons/bs";
 import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { GraduationCap } from "lucide-react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
-import type Event from "../../../types/Event";
+import type { Event } from "../../../features/event/_event";
+
 
 // Daftar Logo Pembayaran
 const paymentLogos = [
@@ -34,7 +36,9 @@ const EventPriceCard: React.FC<{ event: Event }> = ({ event }) => (
     {/* Header Harga */}
     <div className="bg-purple-600 text-white px-6 rounded-xl shadow-xl py-5">
       <p className="text-sm">Harga Masuk</p>
-      <p className="text-2xl font-bold">Rp {event.price.toLocaleString("id-ID")}</p>
+      <p className="text-2xl font-bold">
+        {event.price === 0 ? "Gratis" : `Rp ${event.price.toLocaleString("id-ID")}`}
+      </p>
     </div>
 
     {/* Isi Konten */}
@@ -46,11 +50,25 @@ const EventPriceCard: React.FC<{ event: Event }> = ({ event }) => (
           {/* Tanggal */}
           <div className="flex justify-between items-center border-b border-gray-200 pb-2">
             <div className="flex items-center gap-2">
-              <FiCalendar size={20} className="text-gray-600" />
+              <BsCalendar2Event size={20} className="text-gray-600" />
               <span className="font-medium">Tanggal Mulai</span>
             </div>
             <span>
-              {new Date(event.date).toLocaleDateString("id-ID", {
+              {new Date(event.start_date_raw).toLocaleDateString("id-ID", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+            <div className="flex items-center gap-2">
+              <BsCalendar2X size={20} className="text-gray-600" />
+              <span className="font-medium">Tanggal Berakhir</span>
+            </div>
+            <span>
+              {new Date(event.end_date_raw).toLocaleDateString("id-ID", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
@@ -64,16 +82,16 @@ const EventPriceCard: React.FC<{ event: Event }> = ({ event }) => (
               <FiClock size={20} className="text-gray-600" />
               <span className="font-medium">Waktu Mulai</span>
             </div>
-            <span>{event.rundown[0].time.split(" - ")[0]} WIB</span>
+            <span>{event.start_hour} WIB</span>
           </div>
 
           {/* Sertifikat */}
           <div className="flex justify-between items-center border-b border-gray-200 pb-2">
             <div className="flex items-center gap-2">
-              <FiCheckCircle size={20} className="text-gray-600" />
+              <FiAward  size={20} className="text-gray-600" />
               <span className="font-medium">Sertifikat</span>
             </div>
-            <span>{event.isOnline ? "Online Certificate" : "Include"}</span>
+            <span>{event.is_online ? "Online Certificate" : "Include"}</span>
           </div>
 
           {/* Kuota */}
@@ -82,7 +100,7 @@ const EventPriceCard: React.FC<{ event: Event }> = ({ event }) => (
               <GraduationCap size={20} className="text-gray-600" />
               <span className="font-medium">Total Kuota</span>
             </div>
-            <span>{event.quota}</span>
+            <span>{event.capacity}</span>
           </div>
 
           {/* Sisa Kuota */}
@@ -91,7 +109,7 @@ const EventPriceCard: React.FC<{ event: Event }> = ({ event }) => (
               <FiUser size={20} className="text-gray-600" />
               <span className="font-medium">Sisa Kuota</span>
             </div>
-            <span>{event.quota - event.registered}</span>
+            <span>{event.capacity - event.capacity_left}</span>
           </div>
         </div>
       </div>
