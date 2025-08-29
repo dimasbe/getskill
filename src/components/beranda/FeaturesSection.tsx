@@ -5,7 +5,7 @@ import komponen2 from "../../assets/landingpage/beranda/komponen2.png";
 import komponen3 from "../../assets/landingpage/beranda/komponen3.png";
 import komponen4 from "../../assets/landingpage/beranda/komponen4.png";
 
-// --- Interface FeatureCard ---
+//Interface FeatureCard
 interface FeatureCardProps {
   iconSrc: string;
   altText: string;
@@ -13,7 +13,7 @@ interface FeatureCardProps {
   description: string;
 }
 
-// --- Feature Card dengan animasi framer-motion ---
+//Feature Card dengan animasi framer-motion
 const FeatureCard: React.FC<FeatureCardProps> = ({
   iconSrc,
   altText,
@@ -22,7 +22,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 text-center flex flex-col items-center justify-center cursor-pointer"
+      className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 text-center flex flex-col items-center justify-center"
       whileHover="hover"
       initial="rest"
       animate="rest"
@@ -36,7 +36,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       }}
       transition={{ duration: 0.3 }}
     >
-      {/* Icon dengan efek flip */}
+      {/* Icon */}
       <motion.div
         className="mb-4 w-12 h-12 flex items-center justify-center"
         variants={{
@@ -56,7 +56,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   );
 };
 
-// --- Skeleton Loader ---
+//Skeleton Loader 
 const SkeletonFeatureCard: React.FC = () => {
   return (
     <div className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 animate-pulse text-center flex flex-col items-center">
@@ -67,7 +67,7 @@ const SkeletonFeatureCard: React.FC = () => {
   );
 };
 
-// --- Features Section ---
+//Features Section
 const FeaturesSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
