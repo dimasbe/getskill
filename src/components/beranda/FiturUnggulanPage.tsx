@@ -18,14 +18,19 @@ interface FeatureItemProps {
 const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, bgColor }) => {
   return (
     <div
-      className={`w-full max-w-sm p-5 rounded-xl shadow-lg border border-gray-200 transition-all duration-300 ease-in-out text-center flex flex-col items-center mx-auto ${bgColor} 
-      hover:scale-105 hover:shadow-xl hover:-translate-y-2 hover:border-gray-300 cursor-pointer`}
+      className={`w-full p-5 rounded-xl shadow-md border border-gray-200 transition-all duration-200 ease-in-out flex flex-col items-start ${bgColor} 
+      hover:scale-[1.01] hover:shadow-lg hover:-translate-y-0.5 hover:border-gray-300`}
     >
-      <div className="mb-3 text-4xl">
-        {icon}
+      {/* Icon + Title sebaris rata kiri */}
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-12 h-12 flex items-center justify-center">
+          {icon}
+        </div>
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
       </div>
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
-      <p className="text-gray-600 text-sm">{description}</p>
+
+      {/* Description di bawah, rata kiri */}
+      <p className="text-gray-600 text-sm text-left">{description}</p>
     </div>
   );
 };
