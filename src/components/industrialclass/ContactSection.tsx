@@ -101,7 +101,7 @@ const ContactSection: React.FC = () => {
               {/* Button */}
               <div className="mt-6" data-aos="" data-aos-delay="700">
                 <button
-                  className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
+                  className="group bg-[#9425FE] text-white font-semibold py-2 px-4 
                   rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                   transition-all duration-500 ease-in-out
                   shadow-[4px_4px_0_#0A0082] 
