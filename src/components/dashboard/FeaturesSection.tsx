@@ -13,7 +13,6 @@ interface FeatureCardProps {
   description: string;
 }
 
-//Feature Card dengan animasi framer-motion
 const FeatureCard: React.FC<FeatureCardProps> = ({
   iconSrc,
   altText,

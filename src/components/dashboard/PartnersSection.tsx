@@ -1,7 +1,5 @@
 import React from 'react';
 import MitraCarousel from '../public/CardMitra/MitraCarousel';
-
-// Import gambar-gambar mitra dari folder assets
 import logosmk1 from '../../assets/landingpage/beranda/17muncar.png';
 import logosmk2 from '../../assets/landingpage/beranda/alazhar.jpeg';
 import logosmk3 from '../../assets/landingpage/beranda/antartika.png';
@@ -15,7 +13,7 @@ import logosmk10 from '../../assets/landingpage/beranda/smuhero.jpeg';
 import logosmk11 from '../../assets/landingpage/beranda/widyagama.png';
 
 const MitraKamiPage: React.FC = () => {
-  // --- Perbaikan di sini: Tambahkan ": string[]" ---
+
   const mitraImages: string[] = [
     logosmk1,
     logosmk2,

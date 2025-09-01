@@ -1,4 +1,3 @@
-// src/pages/KursusPage.tsx
 import CourseList from '../course/kursus/CourseList'
 
 export default function KursusPage() {

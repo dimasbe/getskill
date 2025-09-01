@@ -1,10 +1,8 @@
-// src/pages/KursusPage.tsx
 import CourseList from '../course/kursus/CourseList'
 
 export default function KursusPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Bagian heading yang diganti */}
       <div className="bg-gray-50 font-sans antialiased p-4">
         <div className="container mx-auto py-12 px-6">
           <div className="flex items-center justify-center gap-3 mb-4">

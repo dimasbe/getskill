@@ -1,4 +1,3 @@
-// src/pages/public/news/DetailBerita.tsx
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
@@ -6,7 +5,7 @@ import { newsArticles } from "../../../data/newsData";
 import RelatedNews from "../../../components/public/CardNews/RelatedNews";
 import logoGetskill from "../../../assets/img/logo/get-skill/landscape.png";
 
-// --- Komponen Skeleton Detail Berita ---
+// --- Skeleton ---
 const SkeletonDetailBerita: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8 animate-pulse">
@@ -57,7 +56,6 @@ const SkeletonDetailBerita: React.FC = () => {
     </div>
   );
 };
-// --- Akhir Skeleton Detail Berita ---
 
 const DetailBerita: React.FC = () => {
   const { id } = useParams<{ id: string }>();

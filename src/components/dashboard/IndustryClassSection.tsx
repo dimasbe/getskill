@@ -1,4 +1,3 @@
-// src/pages/KelasIndustriPage.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import komponen8 from '../../assets/landingpage/beranda/komponen8.png';
@@ -80,7 +79,7 @@ const KelasIndustriPage: React.FC = () => {
               <div className="mt-6" data-aos="fade" data-aos-delay="700">
                 <Link to="/login">
                   <button
-                    className="group bg-[#7063FF] text-white font-semibold py-2 px-5 sm:py-3 sm:px-6 
+                    className="group bg-[#9425FE] text-white font-semibold py-2 px-5 sm:py-3 sm:px-6 
                     rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                     transition-all duration-500 ease-in-out
                     shadow-[4px_4px_0_#0A0082] 

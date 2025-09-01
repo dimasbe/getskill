@@ -1,4 +1,3 @@
-// src/components/public/CardNews/MiniNewsCard.tsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logoGetskill from "../../../assets/img/logo/get-skill/landscape.png";
@@ -24,7 +23,7 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
             {/* Thumbnail */}
             <div className="relative h-32 bg-white">
                 <div className="w-full h-full rounded-md overflow-hidden relative shine__animate">
-                    {/* ✅ Skeleton Loader */}
+                    {/* Skeleton Loader */}
                     {!isLoaded && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-md" />
                     )}
@@ -46,8 +45,6 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                         Berita
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-600/60 via-transparent to-transparent" />
-
-                    {/* ✅ Watermark logo GetSkill */}
                     <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 bg-white rounded-full p-0.5 shadow">
                         <img
                             src={logoGetskill}
@@ -93,7 +90,6 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                     </h3>
                 </div>
 
-                {/* Ringkasan (opsional) */}
                 {summary && (
                     <p className="text-[11px] text-gray-600 line-clamp-2 text-justify">
                         {summary}

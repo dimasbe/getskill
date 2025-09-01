@@ -76,7 +76,7 @@ const HeroSection: React.FC = () => {
           <div className="mt-3 md:mt-3 lg:mt-4 xl:mt-6" data-aos="fade-right" data-aos-delay="700">
             <Link to="/register">
               <button
-                className="group bg-[#7063FF] text-white text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-6 2xl:py-4 2xl:px-8
+                className="group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-6 2xl:py-4 2xl:px-8
                 rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                 transition-all duration-500 ease-in-out
                 shadow-[4px_4px_0_#0A0082] 

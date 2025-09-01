@@ -1,12 +1,8 @@
-// src/pages/FiturUnggulanPage.tsx
 import React, { useState, useEffect } from 'react';
-
-// Import gambar-gambar
 import iconKomponen5 from '../../assets/landingpage/beranda/komponen5.png';
 import iconKomponen6 from '../../assets/landingpage/beranda/komponen6.png';
 import iconKomponen7 from '../../assets/landingpage/beranda/komponen7.png';
 
-// Interface untuk data fitur
 interface FeatureItemProps {
   icon: React.ReactNode;
   title: string;
@@ -14,7 +10,6 @@ interface FeatureItemProps {
   bgColor: string;
 }
 
-// Komponen Feature Item dengan animasi hover
 const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, bgColor }) => {
   return (
     <div
@@ -35,7 +30,7 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, bgC
   );
 };
 
-// --- Komponen Skeleton Loader ---
+// --- Skeleton Loader ---
 const SkeletonFeatures: React.FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -52,9 +47,7 @@ const SkeletonFeatures: React.FC = () => {
     </div>
   );
 };
-// --- Akhir Komponen Skeleton Loader ---
 
-// Komponen FiturUnggulanPage
 const FiturUnggulanPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 

@@ -77,8 +77,8 @@ const BeritaTerbaruPage: React.FC = () => {
           {/* Tombol */}
           <div className="mt-6 flex justify-center" data-aos="fade" data-aos-delay="700">
             <button
-              onClick={() => navigate("/berita")} // 👈 tambahin ini
-              className="group bg-[#7063FF] text-white font-semibold py-2 px-4 
+              onClick={() => navigate("/berita")}
+              className="group bg-[#9425FE] text-white font-semibold py-2 px-4 
               rounded-full flex items-center justify-center mx-auto md:mx-0 gap-1
               transition-all duration-500 ease-in-out
               shadow-[4px_4px_0_#0A0082] 

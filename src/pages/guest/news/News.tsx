@@ -27,7 +27,7 @@ const SkeletonSearchFilterSort: React.FC = () => {
   );
 };
 
-// --- Komponen Skeleton News Card ---
+// --- Skeleton ---
 const SkeletonNewsCard: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 animate-pulse">
@@ -42,22 +42,16 @@ const SkeletonNewsCard: React.FC = () => {
     </div>
   );
 }
-// --- Akhir Komponen Skeleton News Card ---
 
 const Berita: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [sortOrder, setSortOrder] = useState("Terbaru");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true); // State untuk loading
-
-  // Mengubah jumlah item per halaman menjadi 8
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 8;
-
-  // Ambil kategori unik
   const categories = ["Semua", ...new Set(newsArticles.map((item) => item.category))];
 
-  // Filter + Sort
   const filteredArticles = newsArticles
     .filter((article) => {
       const matchSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -73,34 +67,30 @@ const Berita: React.FC = () => {
         : dateA.getTime() - dateB.getTime();
     });
 
-  // Hitung total halaman
+
   const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
 
-  // Potong data untuk halaman sekarang
   const paginatedArticles = filteredArticles.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Fungsi pindah halaman (dipakai langsung di tombol)
   const goToPage = (page: number) => {
     if (page < 1) page = 1;
     else if (page > totalPages) page = totalPages;
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Gulir ke atas halaman saat pindah halaman
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
-    // Simulasikan loading data selama 1.5 detik
-    setIsLoading(true); // Set loading true setiap kali filter/sort/halaman berubah
+    setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500); // Waktu loading disesuaikan
+    }, 1500);
 
-    return () => clearTimeout(timer); // Cleanup timer
-  }, [searchTerm, selectedCategory, sortOrder, currentPage]); // Dependensi useEffect
+    return () => clearTimeout(timer);
+  }, [searchTerm, selectedCategory, sortOrder, currentPage]);
 
-  // Hook untuk menyimpan dan mengembalikan posisi scroll
   useEffect(() => {
     const savedScrollY = localStorage.getItem('beritaScrollPosition');
     if (savedScrollY) {
@@ -116,7 +106,7 @@ const Berita: React.FC = () => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []); // [] agar hanya dijalankan sekali saat komponen mount
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -202,10 +192,8 @@ const Berita: React.FC = () => {
       {/* Isi Halaman */}
       <section className="py-10 bg-white rounded-lg">
         <div className="container mx-auto px-5 md:px-20 text-center">
-          {/* Mengubah grid agar lebih responsif untuk 8 item */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {isLoading ? (
-              // Tampilkan 8 skeleton card saat loading
               [...Array(itemsPerPage)].map((_, index) => <SkeletonNewsCard key={index} />)
             ) : paginatedArticles.length > 0 ? (
               paginatedArticles.map((article, index) => (

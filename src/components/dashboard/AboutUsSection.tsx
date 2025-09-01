@@ -5,7 +5,7 @@ import bintang from '../../assets/landingpage/beranda/bintang.png';
 import layer1 from '../../assets/landingpage/beranda/layer1.png';
 import layer2 from '../../assets/landingpage/beranda/Layer 2.png';
 
-// --- Komponen Skeleton Loader ---
+// --- Skeleton Loader ---
 const SkeletonAboutUs: React.FC = () => {
   return (
     <div className="relative z-10 container mx-auto px-6 sm:px-10 lg:px-20 flex flex-col md:flex-row items-center justify-center animate-pulse">
@@ -29,13 +29,11 @@ const SkeletonAboutUs: React.FC = () => {
     </div>
   );
 };
-// --- Akhir Komponen Skeleton Loader ---
 
 const AboutUsSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulasikan pengambilan data selama 2 detik
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -61,7 +59,6 @@ const AboutUsSection: React.FC = () => {
         `}
       </style>
 
-      {/* Dekorasi Background - Dekorasi ini tidak perlu loading */}
       <img
         src={bintang}
         alt="bintang"
