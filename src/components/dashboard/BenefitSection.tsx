@@ -83,7 +83,7 @@ const BenefitPage: React.FC = () => {
 
             {/* Konten */}
             <div className="w-full md:w-1/2 text-center md:text-left">
-              <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
+              <span className="px-3 py-2 text-[10px] sm:text-xs font-semibold bg-[#F6EEFE] text-[#9425FE] rounded-full">
                 Benefit Yang Didapat
               </span>
               <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-4 mb-3">

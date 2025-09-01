@@ -69,7 +69,7 @@ const FiturUnggulanPage: React.FC = () => {
     <div className="min-h-screen bg-white font-sans antialiased">
       <section className="py-[20vh] sm:py-[20vh] md:py-[10vh] bg-white rounded-lg">
         <div className="container mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 text-center">
-          <span className="px-2 py-1 text-xs sm:text-sm font-semibold border border-gray-200 bg-gray-100 text-[#7063FF] rounded-full">
+          <span className="px-3 py-2 text-[10px] sm:text-xs font-semibold bg-[#F6EEFE] text-[#9425FE] rounded-full">
             Fitur Unggulan
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-6 mb-4">
