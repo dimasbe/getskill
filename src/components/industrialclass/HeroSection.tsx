@@ -28,7 +28,7 @@ const HeroSection: React.FC = () => {
               w-full text-center space-y-1 relative z-20           
               md:space-y-4 md:pl-8 md:text-left   
               lg:w-7/12 lg:text-left lg:absolute lg:top-1/3 lg:left-12 
-              xl:top-1/4 xl:left-20 xl:w-6/12
+              xl:top-1/4 xl:left-20 xl:w-7/12
               2xl:top-1/4 2xl:left-25 2xl:w-6/12
   "
         >

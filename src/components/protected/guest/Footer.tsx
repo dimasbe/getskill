@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaWhatsapp, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 import logoLandscape from '../../../assets/img/logo/get-skill/landscape white.png';
 
 const Footer: React.FC = () => {
@@ -22,10 +22,24 @@ const Footer: React.FC = () => {
             <p className="text-[12px] leading-5 max-w-[260px] mb-6">
               Getskill adalah Platform Pembelajaran yang digunakan untuk Upgrade ilmu dan wawasan secara lengkap.
             </p>
-            <div>
-              <div className="font-semibold text-white mb-1 text-base">082132560566</div>
-              <div className="font-medium text-xs text-[#c1c1d1]">getskill.id@gmail.com</div>
+            <div className="flex flex-col gap-2">
+              {/* Nomor Telepon */}
+              <div className="flex items-center gap-2 text-[#ffffff]">
+                <FaPhoneAlt className="text-white text-sm md:text-base" />
+                <span className="text-sm md:text-base font-semibold">
+                  082132560566
+                </span>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-center gap-2 text-[#c1c1d1]">
+                <FaEnvelope className="text-white text-sm md:text-base" />
+                <span className="text-sm md:text-xs font-medium">
+                  getskill.id@gmail.com
+                </span>
+              </div>
             </div>
+
           </div>
 
           {/* Quick Links */}
@@ -116,17 +130,22 @@ const Footer: React.FC = () => {
       <div className="w-full bg-[#2a2454]">
         <div className="max-w-[1300px] mx-auto px-6 md:px-12 lg:px-20 py-6 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-[#3a3366] text-[11px] text-[#7a7a94] text-left">
           <div>© 2025 GetSkill. All rights reserved.</div>
-          <nav className="flex gap-4 font-semibold">
-            {['Terms & Conditions', 'Privacy Policy'].map(link => (
-              <a
-                key={link}
-                href="#"
-                tabIndex={0}
-                className="text-[#7a7a94] hover:text-[#8a4fff] relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-[#8a4fff] hover:after:w-full after:transition-all after:duration-500"
-              >
-                {link}
-              </a>
-            ))}
+          <nav className="flex items-center gap-2 font-semibold">
+            <a
+              href="#"
+              tabIndex={0}
+              className="text-[#7a7a94] hover:text-[#8a4fff] relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-[#8a4fff] hover:after:w-full after:transition-all after:duration-500"
+            >
+              Terms & Conditions
+            </a>
+            <span className="text-[#555]">|</span>
+            <a
+              href="#"
+              tabIndex={0}
+              className="text-[#7a7a94] hover:text-[#8a4fff] relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-[#8a4fff] hover:after:w-full after:transition-all after:duration-500"
+            >
+              Privacy Policy
+            </a>
           </nav>
         </div>
       </div>
