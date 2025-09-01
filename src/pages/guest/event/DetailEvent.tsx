@@ -3,9 +3,9 @@ import { GraduationCap } from "lucide-react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventPriceCard from "../../../components/public/CardEvent/EventPriceCard";
 import StatusIndicator from "../../../components/public/CardEvent/StatusIndicator";
-import EventLocationCard from "../../../components/public/CardEvent/EventLocationCard";
 import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
+import { IoIosAlert } from "react-icons/io";
 
 import { fetchEventDetail } from "../../../features/event/_services/eventService";
 import type { Event } from "../../../features/event/_event";
@@ -15,6 +15,11 @@ const DetailEvent: React.FC = () => {
     const [event, setEvent] = useState<Event | null>(null);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const eventIsOver =
+        event?.start_in === "selesai" ||
+        (!!event?.end_date_raw && new Date(event.end_date_raw) < new Date());
+
+
 
     useEffect(() => {
         const loadEvent = async () => {
@@ -60,10 +65,22 @@ const DetailEvent: React.FC = () => {
 
             {/* Main Content */}
             <div
-                className={`max-w-7xl mx-auto px-4 sm:px-20 md:px-30 lg:px-30 xl:px-10 2xl:px-10 pt-10 ${isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-90 lg:pb-90"
+                className={`max-w-7xl mx-auto px-4 sm:px-20 md:px-30 lg:px-30 xl:px-10 2xl:px-10 pt-20 ${isOnline ? "pb-10 xl:pb-28 lg:pb-28" : "pb-10 xl:pb-28 lg:pb-28"
                     }`}
             >
-                <div className="relative">
+                {eventIsOver && (
+                    <div className="max-w-7xl mx-auto pb-5">
+                        <div className="bg-orange-100 border border-orange-100 px-10 py-4 rounded-lg flex items-center gap-3">
+                            <IoIosAlert size={30} className="text-amber-500" />
+                            <span className="font-extrabold italic text-xl text-amber-500">
+                                Event Ini telah Berakhir
+                            </span>
+                        </div>
+                    </div>
+                )}
+
+
+                <div className="relative group">
                     {loading ? (
                         <div className="animate-pulse w-full h-80 bg-gray-200 rounded-xl"></div>
                     ) : event?.image ? (
@@ -78,12 +95,21 @@ const DetailEvent: React.FC = () => {
                         />
                     ) : (
                         <img
-                          src="/src/assets/Default-Img.png"
-                          alt="Default"
-                          className="h-40 w-full object-cover rounded-xl"
+                            src="/src/assets/Default-Img.png"
+                            alt="Default"
+                            className="h-40 w-full object-cover rounded-xl"
                         />
                     )}
+                    {/* Gradient bawah */}
+                    {!loading && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-purple-600/70 via-transparent to-transparent rounded-b-xl" />
+                    )}
 
+                    {/* Overlay hover */}
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-lg font-semibold rounded-xl transition-opacity duration-300 cursor-pointer"
+                        onClick={() => setIsOpen(true)}>
+                        Klik untuk melihat ukuran penuh
+                    </div>
                     <div className="absolute right-8 top-[70%] translate-y-[3%] w-85 hidden lg:block space-y-6">
                         {loading ? (
                             <div className="animate-pulse space-y-4">
@@ -92,12 +118,7 @@ const DetailEvent: React.FC = () => {
                             </div>
                         ) : (
                             <>
-                                <EventPriceCard event={event!} />
-                                <EventLocationCard
-                                    is_online={isOnline}
-                                    location={event!.location || ""}
-                                    platform={isOnline ? "Zoom" : undefined}
-                                />
+                                <EventPriceCard event={event!} eventIsOver={eventIsOver} />
                             </>
                         )}
                     </div>
@@ -123,7 +144,7 @@ const DetailEvent: React.FC = () => {
                 </div>
 
                 <div className="mt-12 grid grid-cols-1 xl:grid-cols-1 lg:grid-cols-1 w-full xl:max-w-3xl lg:max-w-xl gap-8">
-                    <div className="lg:col-span-2 xl:pb-60 lg:pb-60">
+                    <div className="lg:col-span-2">
                         {loading ? (
                             <div className="animate-pulse space-y-4">
                                 <div className="h-6 w-32 bg-gray-200 rounded-full"></div>
@@ -212,17 +233,29 @@ const DetailEvent: React.FC = () => {
                                 </div>
                             </>
                         )}
+
+                        {/* Maps Lokasi (hanya muncul kalau offline) */}
+                        {!isOnline && !loading && (
+                            <div className="mt-12">
+                                <h3 className="text-lg font-semibold mb-4">Maps Lokasi:</h3>
+                                <div className="w-full rounded-xl overflow-hidden shadow">
+                                    <iframe
+                                        src={`https://www.google.com/maps?q=${encodeURIComponent(event?.location || "")}&output=embed`}
+                                        width="100%"
+                                        height="400"
+                                        style={{ border: 0 }}
+                                        allowFullScreen
+                                        loading="lazy"
+                                    ></iframe>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className={`lg:hidden space-y-6 ${isOnline ? "pb-1" : "pb-0"}`}>
                         {!loading && (
                             <>
-                                <EventPriceCard event={event!} />
-                                <EventLocationCard
-                                    is_online={isOnline}
-                                    location={event!.location || ""}
-                                    platform={isOnline ? "Zoom" : undefined}
-                                />
+                                <EventPriceCard event={event!} eventIsOver={eventIsOver} />
                             </>
                         )}
                     </div>
