@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import HeroSection from '../../../components/beranda/HeroSection';
-import FeaturesSection from '../../../components/beranda/FeaturesSection';
-import AboutUsSection from '../../../components/beranda/AboutUsSection';
-import KursusTerpopuler from '../../../components/beranda/KursusTerpopuler';
-import BenefitPage from '../../../components/beranda/BenefitPage';
-import FiturUnggulanPage from '../../../components/beranda/FiturUnggulanPage';
-import KursusTerlarisPage from '../../../components/beranda/KursusTerlarisPage';
-import KelasIndustriPage from '../../../components/beranda/KelasIndustriPage';
-import MitraKamiPage from '../../../components/beranda/MitraKamiPage';
-import BeritaTerbaruPage from '../../../components/beranda/BeritaTerbaruPage';
+import HeroSection from '../../../components/dashboard/HeroSection';
+import FeaturesSection from '../../../components/dashboard/FeaturesSection';
+import AboutUsSection from '../../../components/dashboard/AboutUsSection';
+import KursusTerpopuler from '../../../components/dashboard/PopularCourses';
+import BenefitPage from '../../../components/dashboard/BenefitSection';
+import FiturUnggulanPage from '../../../components/dashboard/KeyFeaturesSection';
+import KursusTerlarisPage from '../../../components/dashboard/BestSellingCourses';
+import KelasIndustriPage from '../../../components/dashboard/IndustryClassSection';
+import MitraKamiPage from '../../../components/dashboard/PartnersSection';
+import BeritaTerbaruPage from '../../../components/dashboard/LatestNewsSection';
 
 const LandingPage: React.FC = () => {
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
-import LandingPage from "../pages/guest/beranda/Beranda";
+import LandingPage from "../pages/guest/dashboard/Dashboard";
 import Kursus from "../pages/guest/kursus/KursusPage";
 import Event from '../pages/guest/event/Event';
-import Berita from "../pages/guest/berita/Berita";
+import Berita from "../pages/guest/news/News";
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
@@ -15,7 +15,7 @@ import Register from "../pages/guest/auth/register";
 import AuthLayout from "./route/AuthLayout";
 import ForgotPassword from "../pages/guest/auth/forgotpassword";
 import UpdatePassword from '../pages/guest/auth/updatepassword';
-import DetailBerita from "../pages/guest/berita/DetailBerita";
+import DetailBerita from "../pages/guest/news/NewsDetail";
 import PaymentPage from "../components/payment/PaymentPage";
 import usePageTitle from "../hooks/public/usePageTitle";
 
