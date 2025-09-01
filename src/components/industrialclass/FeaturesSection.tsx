@@ -4,6 +4,7 @@ import komponen1 from "../../assets/kelasindustri/Icon1.png";
 import komponen3 from "../../assets/kelasindustri/Icon3.png";
 import komponen4 from "../../assets/kelasindustri/Icon4.png";
 
+// Interface FeatureCard
 interface FeatureCardProps {
   icon?: React.ReactNode;
   iconSrc?: string;
@@ -12,6 +13,7 @@ interface FeatureCardProps {
   description: string;
 }
 
+// Feature Card dengan animasi framer-motion
 const FeatureCard: React.FC<FeatureCardProps> = ({
   icon,
   iconSrc,
@@ -21,20 +23,23 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="bg-white py-6 px-3 rounded-xl shadow-md border border-gray-200 
-                 text-center flex flex-col items-center justify-center cursor-pointer 
-                 w-full h-full max-w-[235px] md:max-w-[260px] xl:max-w-[280px] 2xl:max-w-[320px] mx-auto"
+      className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 text-center flex flex-col items-center justify-center"
       whileHover="hover"
       initial="rest"
       animate="rest"
       variants={{
         rest: { scale: 1, y: 0, boxShadow: "0px 2px 6px rgba(0,0,0,0.1)" },
-        hover: { scale: 1.05, y: -5, boxShadow: "0px 8px 20px rgba(0,0,0,0.2)" },
+        hover: {
+          scale: 1.05,
+          y: -5,
+          boxShadow: "0px 8px 20px rgba(0,0,0,0.2)",
+        },
       }}
       transition={{ duration: 0.3 }}
     >
+      {/* Icon */}
       <motion.div
-        className="mb-4 w-12 h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 flex items-center justify-center"
+        className="mb-4 w-12 h-12 flex items-center justify-center"
         variants={{
           rest: { rotateY: 0 },
           hover: { rotateY: 180 },
@@ -43,36 +48,31 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         style={{ perspective: 1000 }}
       >
         {icon ? (
-          <div className="w-12 h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 flex items-center justify-center">
-            {icon}
-          </div>
+          <div className="w-12 h-12 flex items-center justify-center">{icon}</div>
         ) : (
-          <img
-            src={iconSrc}
-            alt={altText}
-            className="w-12 h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 object-contain"
-          />
+          <img src={iconSrc} alt={altText} className="w-12 h-12 object-contain" />
         )}
       </motion.div>
 
-      <h3 className="text-sm md:text-base xl:text-lg 2xl:text-xl font-semibold text-gray-800 mb-2">
-        {title}
-      </h3>
-      <p className="text-[0.7rem] md:text-xs xl:text-sm 2xl:text-base text-gray-600 leading-snug">
-        {description}
-      </p>
+      {/* Judul & Deskripsi */}
+      <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3>
+      <p className="text-xs text-gray-600">{description}</p>
     </motion.div>
   );
 };
 
-const SkeletonCard = () => (
-  <div className="bg-white py-8 px-6 rounded-2xl shadow-md border border-gray-200 text-center flex flex-col items-center justify-center w-full h-full animate-pulse">
-    <div className="bg-gray-300 rounded-full w-14 h-14 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 mb-5"></div>
-    <div className="bg-gray-300 h-5 xl:h-6 w-28 xl:w-32 mb-3 rounded"></div>
-    <div className="bg-gray-200 h-4 xl:h-5 w-32 xl:w-36 2xl:w-40 rounded"></div>
-  </div>
-);
+// Skeleton Loader
+const SkeletonFeatureCard: React.FC = () => {
+  return (
+    <div className="bg-white max-w-xs w-full mx-auto px-6 py-10 rounded-xl shadow-lg border border-gray-200 animate-pulse text-center flex flex-col items-center">
+      <div className="mb-4 bg-gray-200 w-12 h-12 rounded-full"></div>
+      <div className="bg-gray-200 h-4 w-3/4 mb-2 rounded"></div>
+      <div className="bg-gray-200 h-3 w-5/6 rounded"></div>
+    </div>
+  );
+};
 
+// Features Section
 const FeaturesSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -84,7 +84,7 @@ const FeaturesSection: React.FC = () => {
   const features = [
     {
       iconSrc: komponen1,
-      altText: "Belajar Dari Ahli",
+      altText: "Sekolah",
       title: "Sekolah",
       description: "Total 18 Sekolah Yang Tergabung Dalam Kelas Industri",
     },
@@ -108,26 +108,24 @@ const FeaturesSection: React.FC = () => {
     },
     {
       iconSrc: komponen3,
-      altText: "Program Sertifikat",
+      altText: "Kelas",
       title: "Kelas",
       description: "Ada 45 Kelas Yang Terdaftar Pada Kelas Industri.",
     },
     {
       iconSrc: komponen4,
-      altText: "Event Pelatihan",
+      altText: "Siswa",
       title: "Siswa",
       description: "Total 755 Siswa Yang Telah Bergabung Dalam Kelas Industri",
     },
   ];
 
   return (
-    <section className="relative z-20 -mt-12 pb-20">
-      <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto px-6 xl:px-10 2xl:px-5">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 xl:gap-6 2xl:gap-8 max-w-5xl xl:max-w-6xl 2xl:max-w-full mx-auto">
+    <section className="py-14 -mt-5 bg-white">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 -mt-20 relative z-10">
           {isLoading
-            ? Array(4)
-                .fill(null)
-                .map((_, i) => <SkeletonCard key={i} />)
+            ? features.map((_, i) => <SkeletonFeatureCard key={i} />)
             : features.map((f, i) => <FeatureCard key={i} {...f} />)}
         </div>
       </div>
