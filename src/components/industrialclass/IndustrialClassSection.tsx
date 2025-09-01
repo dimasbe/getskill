@@ -76,7 +76,7 @@ const IndustrialClassSection: React.FC = () => {
           {/* Right side - Content */}
           <div className="w-full lg:w-7/12 xl:w-6/12 2xl:w-9/12 text-left md:pl-4 md:pr-2 lg:pl-12 xl:pl-10 2xl:pl-50">
             <div className="content">
-              <span className="inline-block text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-medium text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full mb-3">
+              <span className="inline-block text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-semibold text-indigo-500 bg-blue-50 px-3 py-1.5 rounded-full mb-3">
                 Manfaat Kelas Industri?
               </span>
 
