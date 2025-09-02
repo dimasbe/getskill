@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://core.getskill.id/api",
+  baseURL: "https://api-getskill.mijurnal.com/",
   headers: {
     "Content-Type": "application/json",
   },

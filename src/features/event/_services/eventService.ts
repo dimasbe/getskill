@@ -3,7 +3,7 @@ import type { Event } from "../_event";
 
 export async function fetchEvents(): Promise<Event[]> {
   try {
-    const response = await api.get("/events-user");
+    const response = await api.get("/api/events-user");
     return response.data?.data || [];
   } catch (error) {
     console.error("Gagal mengambil data event:", error);
@@ -13,10 +13,11 @@ export async function fetchEvents(): Promise<Event[]> {
 
 export async function fetchEventDetail(slug: string): Promise<Event> {
   try {
-    const response = await api.get(`/events/${slug}`);
+    const response = await api.get(`/api/events/${slug}`);
     return response.data?.data;
   } catch (error) {
     console.error(`Gagal mengambil detail event ID ${slug}:`, error);
     throw error;
   }
 }
+

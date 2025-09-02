@@ -1,76 +1,86 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import { RiFilter3Fill } from "react-icons/ri";
 
-type Option = {
-    label: string;
-    value: string;
-};
+type Option = { label: string; value: string };
 
 type SortDropdownProps = {
-    selected: string;
-    onChange: (value: string) => void;
-    loading?: boolean;
+  selected: string;
+  onChange: (value: string) => void;
+  loading?: boolean;
 };
 
 const sortOptions: Option[] = [
-    { label: "Aktif - Berakhir", value: "terbaru" },
-    { label: "Berakhir - Aktif", value: "terlama" }
+  { label: "Populer", value: "terpopuler" },
+  { label: "Terbaru", value: "terbaru" },
+  { label: "Terlama", value: "terlama" },
 ];
 
-const SortDropdown: React.FC<SortDropdownProps> = ({ selected, onChange, loading = false }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const SortDropdown: React.FC<SortDropdownProps> = ({
+  selected,
+  onChange,
+  loading = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const selectedLabel = sortOptions.find(opt => opt.value === selected)?.label || sortOptions[0].label;
+  const selectedLabel =
+  sortOptions.find((opt) => opt.value === selected)?.label || "Terbaru";
 
-    if (loading) {
-        return (
-            <div className="relative w-full md:w-1/3">
-                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse"></div>
-            </div>
-        );
-    }
 
-    return (
-        <div className="relative w-full md:w-1/3 transition-all duration-300 ease-in-out hover:scale-[1.02] z-30">
-            {/* Toggle Button */}
-            <div
-                onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md cursor-pointer text-sm
-        ${isOpen ? "text-purple-500 border-purple-400" : "text-gray-700"}
-        hover:text-purple-500 hover:border-purple-400 focus:ring-3 focus:ring-purple-500`}
-            >
-                <RiFilter3Fill size={25} />
-                <span>{selectedLabel}</span>
-                <HiChevronDown
-                    className={`transition-transform duration-300 ease-in-out ${isOpen ? "rotate-180" : "rotate-0"}`}
-                />
-            </div>
+  // Tutup dropdown jika klik di luar
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-            {/* Dropdown Menu */}
-            <div
-                className={`absolute mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 transform transition-all duration-300 ease-in-out origin-top
-                ${isOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0 pointer-events-none"}`}
-                style={{ transformOrigin: "top" }}
-            >
-                <ul>
-                    {sortOptions.map((option) => (
-                        <li key={option.value}>
-                            <button
-                                onClick={() => {
-                                    onChange(option.value);
-                                    setIsOpen(false);
-                                }}
-                                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-100 hover:text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded"
-                            >
-                                {option.label}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+  if (loading) {
+    return <div className="h-8 w-32 bg-gray-200 rounded-md animate-pulse"></div>;
+  }
+
+  return (
+    <div ref={dropdownRef} className="relative inline-block text-sm">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`flex items-center gap-2 px-3 py-1.5 border rounded-md transition-colors duration-200 ${
+          isOpen ? "border-purple-500 text-purple-700" : "border-gray-300 text-gray-800"
+        } hover:border-purple-500 hover:text-purple-700`}
+      >
+        <span>{selectedLabel}</span>
+        <HiChevronDown
+          className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50">
+          <ul className="py-1" role="listbox">
+            {sortOptions.map((option) => (
+              <li key={option.value}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(option.value);
+                    setIsOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-100 hover:text-purple-700"
+                >
+                  {option.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default SortDropdown;
