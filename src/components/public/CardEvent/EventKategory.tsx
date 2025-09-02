@@ -23,11 +23,11 @@ type EventKategoryProps = {
 const CATEGORY_GROUPS: CategoryGroup[] = [
   { name: "Art & Design", count: 2, subcategories: [{ name: "Desain Grafis", count: 1 }, { name: "Video Editing", count: 1 }] },
   { name: "Bisuness", count: 1, subcategories: [{ name: "Unity", count: 1 }] },
-  { name: "Data Science", count: 1, subcategories: [{ name: "Python", count: 1 }] },
-  { name: "Development", count: 2, subcategories: [{ name: "Pemrograman Web", count: 1 }, { name: "Pemrograman Mobile", count: 1 }] },
-  { name: "Finance", count: 1, subcategories: [{ name: "Finansial", count: 1 }] },
-  { name: "Health & Fitness", count: 1, subcategories: [{ name: "Kesehatan", count: 1 }] },
-  { name: "Lifestyle", count: 1, subcategories: [{ name: "Hiburan", count: 1 }] },
+  // { name: "Data Science", count: 1, subcategories: [{ name: "Python", count: 1 }] },
+  // { name: "Development", count: 2, subcategories: [{ name: "Pemrograman Web", count: 1 }, { name: "Pemrograman Mobile", count: 1 }] },
+  // { name: "Finance", count: 1, subcategories: [{ name: "Finansial", count: 1 }] },
+  // { name: "Health & Fitness", count: 1, subcategories: [{ name: "Kesehatan", count: 1 }] },
+  // { name: "Lifestyle", count: 1, subcategories: [{ name: "Hiburan", count: 1 }] },
 ];
 
 const initialFilters: FiltersState = {
@@ -76,7 +76,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
   };
 
   return (
-    <div className="flex flex-col h-full font-sans w-full lg:w-60 space-y-5 sticky top-20">
+    <div className="flex flex-col self-start font-sans w-full lg:w-60 space-y-5 sticky top-20">
       <div className="flex-grow overflow-y-auto space-y-6 pb-2 scrollbar-hide">
         {/* Kategori */}
         <div className="bg-gray-100 rounded-lg shadow p-5">
@@ -201,20 +201,20 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
           </div>
         </div>
         {/* Tombol Terapkan */}
-      <div className="pt-4 flex-shrink-0 max-w-[230px] mb-50">
-        <button
-          onClick={applyFilters}
-          className="px-4 py-2 rounded-full font-semibold font-sans text-black
+        <div className="pt-4 flex-shrink-0 max-w-[230px] mb-50">
+          <button
+            onClick={applyFilters}
+            className="px-4 py-2 rounded-full font-semibold font-sans text-black
                        transition-all duration-200 ease-out w-full text-center
                        bg-[#FBBF24] shadow-[4px_4px_0px_0px_#0B1367]
                        hover:shadow-none active:translate-y-0.5"
-        >
-          Terapkan
-        </button>
-      </div>
+          >
+            Terapkan
+          </button>
+        </div>
       </div>
 
-      
+
     </div>
   );
 };
