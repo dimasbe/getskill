@@ -2,7 +2,7 @@ import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { formatRupiah } from "../../../utils/formatPrice";
 
-interface CourseCardProps {
+interface CourseCard {
   id: string;
   image: string;
   category: string;
@@ -26,20 +26,19 @@ export default function CourseCard({
   price,
   rating = 0,
   isFree = false,
-}: CourseCardProps) {
+}: CourseCard) {
   const navigate = useNavigate();
 
   return (
     <div
-  onClick={() => navigate(`/kursus/${id}`)}
-  className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
-             transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
+      onClick={() => navigate(`/kursus/${id}`)}
+      className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
+             transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px] max-w-[300px]
              hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
->
-
+    >
       {/* Bagian Gambar */}
       <div className="relative w-full aspect-video flex items-center justify-center p-2 sm:p-3 overflow-hidden">
-        <div className="relative overflow-hidden rounded-md shine__animate">
+        <div className="relative overflow-hidden rounded-2xl shine__animate w-full h-full">
           <img
             src={`/images/${image}`}
             alt={title}
@@ -79,46 +78,54 @@ export default function CourseCard({
               size={12}
               className="text-yellow-500 mr-1"
               style={{
-                stroke: "black",   // warna border
-                strokeWidth: 20,   // ketebalan border
+                stroke: "black",
+                strokeWidth: 20,
               }}
             />
             <span>({rating.toFixed(1)} Reviews)</span>
           </div>
-
         </div>
 
-        {/* Judul dengan clamp + underline animasi */}
-        <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold mb-3 leading-snug line-clamp-2">
-          <a className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
-                                                    bg-[length:0%_2px,0_2px]
-                                                    bg-[position:100%_100%,0_100%]
-                                                    bg-no-repeat
-                                                    transition-[background-size] duration-900
-                                                    hover:bg-[length:0_2px,100%_2px]">{title}</a>
-        </h3>
+        {/* Judul dengan tinggi minimum untuk konsistensi */}
+        <div className="min-h-[55px] mb-3"> {/* Tambahkan container dengan tinggi minimum */}
+          <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold leading-snug line-clamp-2">
+            <a className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
+                          bg-[length:0%_2px,0_2px]
+                          bg-[position:100%_100%,0_100%]
+                          bg-no-repeat
+                          transition-[background-size] duration-900
+                          hover:bg-[length:0_2px,100%_2px]">
+              {title}
+            </a>
+          </h3>
+        </div>
 
-        {/* Author */}
-        <p className="text-xs text-gray-500 mb-4 line-clamp-1">
-          By{" "}
-          <span className="font-semibold text-gray-700 font-sans">{author}</span>
-        </p>
-
-        {/* Footer */}
-        <div className="mb-2 mt-auto flex flex-row items-center justify-between gap-2">
-          <button
-            className="bg-yellow-400 text-gray-900 text-xs font-sans font-bold px-4 py-2 rounded-full border border-black 
-                       transition-all duration-300 ease-in-out 
-                       shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
-            onClick={() => navigate(`/kursus/${id}`)}
-          >
-            Detail Course →
-          </button>
-          <p
-            className={`font-bold font-sans ${isFree ? "text-purple-500" : "text-purple-700"}`}
-          >
-            {isFree ? "Free" : formatRupiah(price)}
+        {/* Author - diposisikan secara konsisten */}
+        <div className="mt-auto">
+          <p className="text-xs text-gray-500 mb-4 line-clamp-1">
+            By{" "}
+            <span className="font-semibold text-gray-700 font-sans">{author}</span>
           </p>
+
+          {/* Footer */}
+          <div className="mb-2 flex flex-row items-center justify-between gap-2">
+            <button
+              className="bg-yellow-400 text-gray-900 text-xs font-sans font-bold px-4 py-2 rounded-full border border-black 
+                         transition-all duration-300 ease-in-out 
+                         shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/kursus/${id}`);
+              }}
+            >
+              Detail Course →
+            </button>
+            <p
+              className={`font-bold font-sans ${isFree ? "text-purple-500" : "text-purple-700"}`}
+            >
+              {isFree ? "Free" : formatRupiah(price)}
+            </p>
+          </div>
         </div>
       </div>
     </div>
