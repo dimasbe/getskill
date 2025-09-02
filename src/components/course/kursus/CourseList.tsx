@@ -26,7 +26,7 @@ export default function CourseList({
   page = 1,
   setPage,
   limit,
-  columns = 3,
+
 }: CourseListProps) {
   const [loading, setLoading] = useState(true);
 
@@ -73,15 +73,9 @@ export default function CourseList({
     );
   }
 
-  // ✅ Mapping kolom agar Tailwind bisa compile
-  const columnsClass =
-    columns === 2
-      ? "lg:grid-cols-2"
-      : columns === 4
-        ? "lg:grid-cols-4"
-        : "lg:grid-cols-2 xl:grid-cols-3";
 
-  const gridClass = `grid grid-cols-1 ${columnsClass} gap-5 items-stretch`;
+  const gridClass = "grid grid-cols-[repeat(auto-fit,minmax(220px,max-content))] justify-center gap-5";
+
 
   return (
     <div className="flex flex-col min-h-[500px]">
