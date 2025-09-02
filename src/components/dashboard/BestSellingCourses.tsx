@@ -152,7 +152,7 @@ const PopularCourseList = () => {
     "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-4 w-full";
 
   return (
-    <div className="flex flex-col min-h-[500px]">
+    <div className="flex flex-col">
       <div className={gridClass}>
         {loading ? (
           Array.from({ length: 4 }).map((_, i) => (
@@ -182,7 +182,7 @@ const PopularCourseList = () => {
 // --- Komponen Utama PopularCourse ---
 export default function PopularCourse() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="py-[1vh] sm:py-[2vh] md:py-[2vh] lg:py-[1vh] xl:py-[1vh] 2xl:py-[1vh] bg-gray-50">
       <div className="font-sans antialiased px-4 pt-20">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center gap-3 mb-4">

@@ -40,7 +40,7 @@ const AboutUsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-[26vh] bg-white rounded-lg mt-0 overflow-hidden">
+    <section className="relative py-[10vh] sm:py-[13vh] md:py-[15vh] lg:py-[18vh] xl:py-[20vh] 2xl:py-[20vh] bg-white rounded-lg mt-0 overflow-hidden">
       <style>
         {`
           @keyframes fadeInUp {

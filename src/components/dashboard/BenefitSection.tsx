@@ -49,7 +49,7 @@ const BenefitPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 font-sans antialiased">
+    <div className=" bg-gray-100 font-sans antialiased">
       <style>
         {`
           @keyframes fadeInUp {
@@ -67,11 +67,11 @@ const BenefitPage: React.FC = () => {
           }
         `}
       </style>
-      <section className="py-[25vh] sm:py-[25vh] bg-white">
+      <section className="py-[10vh] sm:py-[13vh] md:py-[15vh] lg:py-[18vh] xl:py-[20vh] 2xl:py-[20vh] bg-white">
         {isLoading ? (
           <SkeletonBenefit />
         ) : (
-          <div className="container mx-auto px-4 sm:px-6 lg:px-20 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 fade-in-up">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-20 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-2 fade-in-up">
             {/* Gambar */}
             <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
               <img

@@ -33,7 +33,7 @@ const KelasIndustriPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans antialiased">
+    <div className="py-[3vh] sm:py-[4vh] md:py-[5vh] lg:py-[8vh] xl:py-[10vh] 2xl:py-[12vh] bg-gray-50 font-sans antialiased">
       <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-gray-50 rounded-lg relative overflow-hidden">
         {/* Dekorasi Gambar 1 */}
         <img

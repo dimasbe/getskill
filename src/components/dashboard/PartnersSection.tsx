@@ -29,7 +29,7 @@ const MitraKamiPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-1 bg-white font-sans antialiased p-8">
+    <div className="py-[1vh] sm:py-[2vh] md:py-[3vh] lg:py-[4vh] xl:py-[5vh] 2xl:py-[6vh] bg-white font-sans antialiased p-8">
       <section className="py-16 bg-white rounded-lg">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">MITRA KAMI</h1>
