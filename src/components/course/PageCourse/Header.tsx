@@ -1,5 +1,5 @@
 import { FiChevronRight } from "react-icons/fi";
-import BackgroundShapes from "../../../components/public/BackgroundShapes";
+import BackgroundShapes from "../../public/BackgroundShapes";
 
 export default function Header() {
   return (

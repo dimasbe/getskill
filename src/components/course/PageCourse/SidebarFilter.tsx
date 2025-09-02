@@ -1,7 +1,7 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { ChevronDown, ChevronUp, SlidersHorizontal, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import SidebarSkeleton from "../kursus/SidebarSkeleton";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 interface FiltersState {
   categories: string[];
@@ -10,7 +10,7 @@ interface FiltersState {
   search: string;
 }
 
-interface SidebarFilterProps {
+interface SidebarFilter{
   filters: FiltersState;
   setFilters: Dispatch<SetStateAction<FiltersState>>;
 }
@@ -41,7 +41,7 @@ const CATEGORY_GROUPS = [
   },
 ];
 
-export default function SidebarFilter({ filters, setFilters }: SidebarFilterProps) {
+export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
   const [openGroups, setOpenGroups] = useState<string[]>(["Software Development"]);
   const [isOpen, setIsOpen] = useState(false);
   const [localFilters, setLocalFilters] = useState<FiltersState>(filters);

@@ -1,4 +1,4 @@
-import CourseList from '../course/kursus/CourseList'
+import CourseList from '../course/PageCourse/CourseList'
 
 export default function KursusPage() {
   return (
