@@ -176,7 +176,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
               <input
                 type="number"
                 placeholder="Harga Minimum"
-                className="flex-1 py-2 outline-none text-start text-xs text-gray-800 placeholder-gray-700 font-normal"
+                className="flex-1 py-2 px-2 outline-none text-xs text-gray-800 placeholder-gray-700 font-normal"
                 value={localFilters.priceMin}
                 onChange={(e) =>
                   setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))
@@ -191,7 +191,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
               <input
                 type="number"
                 placeholder="Harga Maksimum"
-                className="flex-1 py-2 outline-none text-start text-xs text-gray-800 placeholder-gray-700 font-normal"
+                className="flex-1 py-2 px-2 outline-none text-xs text-gray-800 placeholder-gray-700 font-normal"
                 value={localFilters.priceMax}
                 onChange={(e) =>
                   setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))
