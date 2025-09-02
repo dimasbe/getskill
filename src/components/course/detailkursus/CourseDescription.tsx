@@ -1,11 +1,11 @@
 // CourseDescription.tsx
 import type { Course } from '../../../types/Course';
 
-interface CourseDescriptionProps {
+interface CourseDescription {
   courseData: Course;
 }
 
-export default function CourseDescription({ courseData }: CourseDescriptionProps) {
+export default function CourseDescription({ courseData }: CourseDescription) {
   return (
     <section className="text-justify font-sans text-[14px]">
       <p

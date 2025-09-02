@@ -111,10 +111,10 @@ export default function CourseCard({
                        shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
             onClick={() => navigate(`/kursus/${id}`)}
           >
-            Enroll Now →
+            Detail Course →
           </button>
           <p
-            className={`font-bold font-sans ${isFree ? "text-yellow-500" : "text-green-600"}`}
+            className={`font-bold font-sans ${isFree ? "text-purple-500" : "text-purple-700"}`}
           >
             {isFree ? "Free" : formatRupiah(price)}
           </p>
