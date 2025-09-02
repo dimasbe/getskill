@@ -205,10 +205,9 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilterProp
       </div>
 
       {/* Sidebar desktop */}
-      <aside className="hidden md:block w-[220px] lg:sticky top-4 h-[calc(100vh-2rem)] p-2 text-sm">
+      <aside className="hidden md:block w-[220px] sticky top-20 bottom-20 h-fit p-2 text-sm">
         {loading ? <SidebarSkeleton /> : SidebarContent}
       </aside>
-
       {/* Drawer mobile */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex justify-end">

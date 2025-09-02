@@ -34,7 +34,7 @@ export default function CourseMain({ courseData }: Props) {
 
         {/* Kategori + Rating */}
         <div className="flex items-center gap-x-3 mb-3">
-          <button className="bg-gray-100 font-semibold text-gray-800  text-[11px] px-2 py-0.5 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
+          <button className="bg-gray-200 font-semibold text-gray-800  text-[11px] px-2 py-2 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
             {courseData.category}
           </button>
 
@@ -59,8 +59,8 @@ export default function CourseMain({ courseData }: Props) {
               ).href}
               alt={courseData.author}
               className="rounded-full object-cover"
-              width={30}
-              height={30}
+              width={40}
+              height={40}
             />
 
             <span className=" text-gray-500">
@@ -95,7 +95,7 @@ export default function CourseMain({ courseData }: Props) {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`
-    relative py-1.5 px-4 sm:px-5 text-sm sm:text-[13px] font-semibold whitespace-nowrap
+    relative py-1.5 px-4 sm:px-5 text-sm sm:text-[14px] font-semibold whitespace-nowrap
     transition-all duration-200 ease-out rounded-full
     ${activeTab === tab.key
                   ? "bg-purple-700 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.7)]"
@@ -108,7 +108,7 @@ export default function CourseMain({ courseData }: Props) {
           ))}
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.1)] mt-7">
+        <div className="bg-white p-6 rounded-xl border border-gray-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-7">
           {activeTab === "deskripsi" && <CourseDescription courseData={courseData} />}
           {activeTab === "konten-kursus" && <CourseSyllabus courseData={courseData} />}
           {activeTab === "ulasan" && <CourseReviews courseData={courseData} />}

@@ -1,15 +1,39 @@
 import { useState } from "react";
+import certificateIcon from "../../../../public/images/icon/course_icon05.svg";
 import { useNavigate } from "react-router-dom";
 import {
   FaTag,
   FaBook,
   FaQuestionCircle,
   FaInfinity,
-  FaCertificate,
   FaFacebookF,
   FaTwitter,
   FaWhatsapp,
+  FaInstagram,
+  FaYoutube
 } from "react-icons/fa";
+
+const paymentLogos = [
+  { name: "BRI", src: "/public/images/payments/bri.png" },
+  { name: "BNI", src: "/public/images/payments/bni.png" },
+  { name: "BCA", src: "/public/images/payments/bca.png" },
+  { name: "DANA", src: "/public/images/payments/dana.jpg" },
+  { name: "GOPAY", src: "/public/images/payments/gopay.png" },
+  { name: "Mandiri", src: "/public/images/payments/mandiri.png" },
+  { name: "OVO", src: "/public/images/payments/ovo.png" },
+  { name: "VISA", src: "/public/images/payments/visa.png" },
+  { name: "Mastercard", src: "/public/images/payments/mastercard.jpeg" },
+  { name: "Alfamart", src: "/public/images/payments/alfamart.jpg" },
+  { name: "Indomaret", src: "/public/images/payments/indomaret.jpg" },
+  { name: "BJB", src: "/public/images/payments/bank bjb.png" },
+  { name: "Astra Pay", src: "/public/images/payments/astra pay.jpeg" },
+  { name: "BSI", src: "/public/images/payments/bnk bsi.jpg" },
+  { name: "JCB", src: "/public/images/payments/jcb.jpeg" },
+  { name: "Link Aja", src: "/public/images/payments/link aja.jpg" },
+  { name: "Permata Bank", src: "/public/images/payments/permata bank.jpg" },
+  { name: "Shopee Pay", src: "/public/images/payments/shopee pay.jpg" },
+  { name: "QRIS", src: "/public/images/payments/qris.jpg" },
+];
 
 interface Props {
   totalModul: number;
@@ -51,11 +75,11 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
   const SidebarContent = (
     <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-gray-300 w-full max-w-[280px] font-sans">
       {/* Harga */}
-      <div className="bg-purple-600 border border-purple-400 rounded-xl p-4 text-center shadow-sm">
-        <div className="flex items-center justify-center gap-2 font-semibold text-white">
-          <FaTag size={18} /> <span>Harga Kursus</span>
+      <div className="bg-purple-600 border border-purple-500 rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+        <div className="flex items-left justify-left gap-2 font-semibold text-white text-[15px]">
+          <FaTag size={15} /> <span>Harga Kursus</span>
         </div>
-        <p className={`font-bold text-[25px] mt-2 ${isFree ? "text-white" : "text-white"}`}>
+        <p className={`text-center font-bold text-[25px] mt-2 ${isFree ? "text-white" : "text-white"}`}>
           {isFree ? "Gratis" : `Rp ${formatRupiah(price)}`}
         </p>
       </div>
@@ -74,7 +98,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
       {/* Info kursus */}
       <div className="pt-3 pb-3">
-        <h4 className="text-left font-semibold text-black">Kursus ini mencakup:</h4>
+        <h4 className="text-left font-semibold text-black">Kursus ini mencakup</h4>
         <ul className="space-y-4 text-gray-600 text-sm mt-5">
           <li className="flex items-center gap-3 border-b border-gray-300 pb-4 ">
             <FaBook /> <span>{totalModul} Modul</span>
@@ -86,73 +110,77 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
             <FaInfinity /> <span>Akses penuh seumur hidup</span>
           </li>
           <li className="flex items-center gap-3 border-b border-gray-300 pb-4">
-            <FaCertificate /> <span>Sertifikat penyelesaian</span>
+            <img
+              src={certificateIcon}
+              alt="Sertifikat"
+              className="w-5 h-5 opacity-80"
+            />
+            <span>Sertifikat penyelesaian</span>
           </li>
         </ul>
       </div>
 
-      {/* Metode pembayaran */}
-      <div className="mb-3 pt-3 pb-3 border-b border-gray-300">
-        <h4 className="text-left font-semibold text-black">Metode Pembayaran:</h4>
-        <div className="grid grid-cols-6 gap-2 mt-5">
-          {[
-            "bri.png",
-            "bca.png",
-            "gopay.png",
-            "ovo.png",
-            "mastercard.jpeg",
-            "alfamart.jpg",
-            "astra pay.jpeg",
-            "bank bjb.png",
-            "bnk bsi.jpg",
-            "dana.jpg",
-            "indomaret.jpg",
-            "jcb.jpeg",
-            "link aja.jpg",
-            "mandiri.png",
-            "permata bank.jpg",
-            "qris.jpg",
-            "shopee pay.jpg",
-            "visa.png",
-          ].map((img, i) => (
-            <img
-              key={i}
-              src={`/images/payments/${img}`}
-              alt={img}
-              className="w-10 h-8 object-contain mx-auto"
-            />
+      {/* Metode Pembayaran */}
+      <div className="border-b border-gray-300 pb-5">
+        <p className="text-left font-semibold mb-4">Metode Pembayaran </p>
+        <div className="flex flex-wrap gap-2">
+          {paymentLogos.map((logo) => (
+            <div
+              key={logo.name}
+              className=" border border-gray-200 rounded-lg p-1 flex items-center justify-center w-12 h-10 
+                               transition-transform duration-300 hover:scale-110 hover:shadow-md hover:border-purple-400"
+            >
+              <img
+                src={logo.src}
+                alt={logo.name}
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Share */}
-      <div className="pt-3">
-        <h4 className="text-left font-semibold text-black">Bagikan kursus ini:</h4>
-        <div className="flex gap-3 justify-center mt-5">
-          <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-          >
-            <FaFacebookF className="text-xs" />
-          </a>
-          <a
-            href={`https://twitter.com/intent/tweet?url=${window.location.href}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition-colors"
-          >
-            <FaTwitter className="text-xs" />
-          </a>
-          <a
-            href={`https://wa.me/?text=${window.location.href}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors"
-          >
-            <FaWhatsapp className="text-xs" />
-          </a>
+      {/* Bagikan */}
+      <div className="border-b border-gray-300 pb-5 mt-4">
+        <p className="text-left font-semibold mb-4">Bagikan Kursus Ini</p>
+        <div className="flex gap-3">
+          {[
+            {
+              icon: <FaFacebookF />,
+              color: "hover:bg-blue-200 hover:text-blue-600",
+              url: "https://facebook.com/sharer/sharer.php?u=https://contoh.com",
+            },
+            {
+              icon: <FaTwitter />,
+              color: "hover:bg-sky-200 hover:text-sky-500",
+              url: "https://twitter.com/intent/tweet?url=https://contoh.com&text=Ikut%20Kursus%20Ini!",
+            },
+            {
+              icon: <FaWhatsapp />,
+              color: "hover:bg-green-200 hover:text-green-500",
+              url: "https://wa.me/?text=Ikut%20Kursus%20Ini%20https://contoh.com",
+            },
+            {
+              icon: <FaInstagram />,
+              color: "hover:bg-pink-200 hover:text-pink-500",
+              url: "https://instagram.com",
+            },
+            {
+              icon: <FaYoutube />,
+              color: "hover:bg-red-200 hover:text-red-500",
+              url: "https://youtube.com",
+            },
+          ].map((item, index) => (
+            <a
+              key={index}
+              href={item.url}
+              rel="noopener noreferrer"
+              className={`bg-gray-200 p-2 rounded-full text-gray-400 text-lg 
+                                transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md ${item.color}`}
+            >
+              {item.icon}
+            </a>
+          ))}
         </div>
       </div>
     </div>
