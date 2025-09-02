@@ -4,6 +4,7 @@ import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import { newsArticles } from "../../../data/newsData";
 import RelatedNews from "../../../components/public/CardNews/RelatedNews";
 import logoGetskill from "../../../assets/img/logo/get-skill/landscape.png";
+import { FiX } from "react-icons/fi"; // Import ikon X dari react-icons/fi
 
 // --- Skeleton ---
 const SkeletonDetailBerita: React.FC = () => {
@@ -61,7 +62,7 @@ const DetailBerita: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [berita, setBerita] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); // <- tambahan state modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -148,15 +149,21 @@ const DetailBerita: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-4 grid grid-cols-1 lg:grid-cols-4 gap-2">
         {/* Konten utama */}
         <div className="lg:col-span-3">
+          {/* Tambahan: Elemen div dengan `group` */}
           <div
-            className="relative rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer"
-            onClick={() => setIsModalOpen(true)} // klik buka modal
+            className="relative group rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
           >
             <img
               src={berita.image}
               alt={berita.title}
               className="w-full h-full object-cover"
             />
+            {/* Tambahan: Overlay dengan `group-hover` */}
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-lg font-semibold rounded-lg transition-opacity duration-300">
+              Klik untuk melihat ukuran penuh
+            </div>
+
             {/* Overlay gradient */}
             <div className="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-t from-purple-900/80 via-purple-700/10 to-transparent" />
 
@@ -229,14 +236,22 @@ const DetailBerita: React.FC = () => {
           {/* Modal */}
           {isModalOpen && (
             <div
-              className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+              className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-2"
               onClick={() => setIsModalOpen(false)}
             >
-              <img
-                src={berita.image}
-                alt={berita.title}
-                className="max-w-5xl max-h-[90vh] object-contain rounded-lg shadow-lg"
-              />
+              <div className="relative rounded-xl w-full max-w-5xl max-h-[95vh] overflow-y-auto">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute top-3 right-3 text-white hover:text-gray-300 text-2xl"
+                >
+                  <FiX />
+                </button>
+                <img
+                  src={berita.image}
+                  alt={berita.title}
+                  className="w-full max-h-[90vh] object-contain rounded-lg"
+                />
+              </div>
             </div>
           )}
 
