@@ -72,7 +72,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[60vh]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start min-h-[40vh]">
         <AnimatePresence mode="sync">
           {loading
             ? skeletonArray.map((_, index) => (
@@ -104,8 +104,8 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <Link to={`/event/${event.slug}`}>
-                  <Card className="h-full card-shine relative flex flex-col justify-between border rounded-2xl shadow-sm hover:shadow-[8px_8px_0_#D3DAD9] hover:scale-[1.02] transition-all duration-300 cursor-pointer p-0 overflow-hidden z-10">
-                    <div className="relative">
+                  <Card className="h-full card-shine relative flex flex-col justify-between border rounded-2xl shadow-sm hover:shadow-[8px_8px_0_#D3DAD9] hover:scale-[1.02] transition-all duration-300 cursor-pointer p-0 overflow-visible z-10">
+                    <div className="relative -mt-1 -mx-1">
                       <div className="shine__animate">
                         <img
                           src={event.image || "/src/assets/Default-Img.png"}
@@ -117,14 +117,21 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-purple-600/70 via-transparent to-transparent rounded-b-xl z-10" />
                       </div>
-                      <div className="absolute -bottom-1 -left-1 bg-yellow-400 text-sm font-extrabold text-gray-900 px-5 py-2 rounded-full border shadow-[5px_5px_0_#4c1d95] z-10">
+                      <div className="absolute -bottom-1 -left-1 bg-yellow-400 text-sm font-bold text-gray-900 px-5 py-2 rounded-full border shadow-[5px_5px_0_#4c1d95] z-10">
                         {event.start_date}
                       </div>
                     </div>
 
                     <div className="text-left flex-1 pt-3 px-2">
-                      <h3 className="text-lg font-semibold line-clamp-2 min-h-[50px]">
-                        {event.title}
+                      <h3 className="text-md font-semibold line-clamp-2 min-h-[50px]">
+                        <a className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
+                          bg-[length:0%_2px,0_2px]
+                          bg-[position:100%_100%,0_100%]
+                          bg-no-repeat
+                          transition-[background-size] duration-900
+                          hover:bg-[length:0_2px,100%_2px]">
+                          {event.title}
+                        </a>
                       </h3>
 
                       <div className="flex items-center gap-1 text-gray-500 text-sm mt-3">
@@ -155,7 +162,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
                       </span>
                     </div>
 
-                    <div className="border-t border-gray-200 pt-3 text-xs text-gray-500 pb-1">
+                    <div className="border-t border-gray-200 pt-4 text-xs text-gray-500 pb-1">
                       <div className="flex justify-between items-center w-full overflow-hidden">
                         <span className="flex items-center gap-1">
                           <HiOutlineUsers size={18} />
@@ -167,7 +174,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
                             {new Date(event.start_date) > new Date()
                               ? `${event.start_in} Hari Lagi`
                               : new Date(event.end_date) > new Date()
-                                ? "Sedang Berlangsung"
+                                ? "Berlangsung"
                                 : "Selesai"}
                           </span>
                         </span>
@@ -181,7 +188,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-20">
+      <div className="flex justify-center mt-10">
         <div className="flex gap-3 mb-10">
           {Array.from({ length: totalPages }).map((_, index) => {
             const page = index + 1;

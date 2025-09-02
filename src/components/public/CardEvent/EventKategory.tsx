@@ -76,7 +76,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
   };
 
   return (
-    <div className="flex flex-col self-start font-sans w-full lg:w-60 space-y-5 sticky top-20">
+    <div className="flex flex-col self-start font-sans w-full xl:w-60 lg:w-50 space-y-5 sticky top-20">
       <div className="flex-grow overflow-y-auto space-y-6 pb-2 scrollbar-hide">
         {/* Kategori */}
         <div className="bg-gray-100 rounded-lg shadow p-5">
@@ -176,7 +176,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
               <input
                 type="number"
                 placeholder="Harga Minimum"
-                className="flex-1 py-2 outline-none text-center text-xs text-gray-800 placeholder-gray-700 font-normal"
+                className="flex-1 py-2 outline-none text-start text-xs text-gray-800 placeholder-gray-700 font-normal"
                 value={localFilters.priceMin}
                 onChange={(e) =>
                   setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))
@@ -191,7 +191,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
               <input
                 type="number"
                 placeholder="Harga Maksimum"
-                className="flex-1 py-2 outline-none text-center text-xs text-gray-800 placeholder-gray-700 font-normal"
+                className="flex-1 py-2 outline-none text-start text-xs text-gray-800 placeholder-gray-700 font-normal"
                 value={localFilters.priceMax}
                 onChange={(e) =>
                   setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))
@@ -201,10 +201,10 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
           </div>
         </div>
         {/* Tombol Terapkan */}
-        <div className="pt-4 flex-shrink-0 max-w-[230px] mb-50">
+        <div className="pt-2 flex-shrink-0 xl:max-w-[230px] lg:max-w-[190px] mb-50">
           <button
             onClick={applyFilters}
-            className="px-4 py-2 rounded-full font-semibold font-sans text-black
+            className="px-4 py-2  rounded-full font-semibold font-sans text-black
                        transition-all duration-200 ease-out w-full text-center
                        bg-[#FBBF24] shadow-[4px_4px_0px_0px_#0B1367]
                        hover:shadow-none active:translate-y-0.5"

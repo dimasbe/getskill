@@ -128,7 +128,7 @@ const EventPriceCard: React.FC<{ event: Event; eventIsOver: boolean }> = ({
                 >
                   {/* Jika ada nama platform → tampilkan, jika tidak → fallback */}
                   {event.location ?? "YouTube"}
-                  <FiExternalLink className="w-4 h-4 text-purple-500" />
+                  <FiExternalLink size={15} className=" text-purple-500" />
                 </a>
               </p>
               <p className="text-gray-500 font-semibold">Online</p>
@@ -142,10 +142,10 @@ const EventPriceCard: React.FC<{ event: Event; eventIsOver: boolean }> = ({
                   href={event.map_link ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-purple-500 hover:underline inline-flex items-center gap-1 "
+                  className="text-purple-500 hover:underline inline-flex items-center gap-1"
                 >
-                  {event.location ?? "Lihat Lokasi"}
-                  <FiExternalLink className="w-4 h-4 text-purple-500 line-clamp-1" />
+                  <span className="truncate">{event.location ?? "Lihat Lokasi"}</span>
+                  <FiExternalLink size={15} className=" text-purple-500 " />
                 </a>
               </p>
               <p className="text-gray-500 font-semibold">Offline</p>

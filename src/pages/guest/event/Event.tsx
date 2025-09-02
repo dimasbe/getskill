@@ -66,10 +66,13 @@ const Event: React.FC = () => {
         )}
       </div>
 
-      <div className="w-full max-w-7xl mx-auto px-4 lg:px-8 xl:px-8 2xl:px-5 py-10 grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div className="xl:max-w-7xl lg:max-w-6xl mx-auto 
+    px-3 sm:px-5 lg:px-20 xl:px-8 2xl:px-8 
+    py-8 sm:py-10 
+    grid grid-cols-1 lg:grid-cols-[240px_1fr] xl:gap-10">
+
         {/* Sidebar */}
         <motion.div
-          className="lg:col-span-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -79,7 +82,7 @@ const Event: React.FC = () => {
 
         {/* Konten Utama */}
         <motion.div
-          className="lg:col-span-3"
+          className="w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
