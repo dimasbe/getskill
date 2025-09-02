@@ -5,8 +5,9 @@ import { FaStar } from "react-icons/fa";
 import { formatRupiah } from "../../utils/formatPrice";
 import dummyCourses from "../../data/dummyCourses";
 import type { Course } from "../../types/Course";
+import CourseSkeleton from "../../components/course/PageCourse/CourseSkeleton";
 
-// --- Course Card Component (disematkan) ---
+// --- Course Card Component ---
 interface CourseCardProps {
   id: string;
   image: string;
@@ -38,8 +39,8 @@ const CourseCard = ({
     <div
       onClick={() => navigate(`/kursus/${id}`)}
       className="card-shine w-full max-w-[260px] h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm
-      transition-all duration-300 cursor-pointer overflow-hidden min-h-[280px]
-      hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
+        transition-all duration-300 cursor-pointer overflow-hidden min-h-[280px]
+        hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
     >
       {/* Bagian Gambar */}
       <div className="relative w-full aspect-video flex items-center justify-center p-2 sm:p-3 overflow-hidden">
@@ -88,32 +89,42 @@ const CourseCard = ({
             <span>({rating.toFixed(1)} Reviews)</span>
           </div>
         </div>
-        {/* Judul dengan clamp + underline animasi */}
+        {/* Judul */}
         <h3 className="group relative text-[14px] font-sans text-black font-semibold mb-2 leading-snug line-clamp-2">
-          <span className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
-          bg-[length:0%_2px,0_2px]
-          bg-[position:100%_100%,0_100%]
-          bg-no-repeat
-          transition-[background-size] duration-900
-          hover:bg-[length:0_2px,100%_2px]">{title}</span>
+          <span
+            className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
+            bg-[length:0%_2px,0_2px]
+            bg-[position:100%_100%,0_100%]
+            bg-no-repeat
+            transition-[background-size] duration-900
+            hover:bg-[length:0_2px,100%_2px]"
+          >
+            {title}
+          </span>
         </h3>
         {/* Author */}
         <p className="text-xs text-gray-500 mb-3 line-clamp-1">
           By{" "}
-          <span className="font-semibold text-gray-700 font-sans">{author}</span>
+          <span className="font-semibold text-gray-700 font-sans">
+            {author}
+          </span>
         </p>
         {/* Footer */}
         <div className="mb-2 mt-auto flex flex-row items-center justify-between gap-1">
           <button
             className="bg-yellow-400 text-gray-900 text-[10px] font-sans font-bold px-3 py-1.5 rounded-full border border-black
-            transition-all duration-300 ease-in-out
-            shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
-            onClick={(e) => { e.stopPropagation(); navigate(`/kursus/${id}`); }}
+              transition-all duration-300 ease-in-out
+              shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/kursus/${id}`);
+            }}
           >
             Detail Course →
           </button>
           <p
-            className={`font-bold font-sans text-sm ${isFree ? "text-purple-500" : "text-purple-700"}`}
+            className={`font-bold font-sans text-sm ${isFree ? "text-purple-500" : "text-purple-700"
+              }`}
           >
             {isFree ? "Free" : formatRupiah(price)}
           </p>
@@ -123,50 +134,33 @@ const CourseCard = ({
   );
 };
 
-// --- Course List (disematkan) ---
-const CourseSkeleton = () => (
-  <div className="card-shine w-full max-w-[260px] h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm overflow-hidden min-h-[280px] animate-pulse">
-    <div className="relative w-full aspect-video p-2 sm:p-3">
-      <div className="h-full w-full bg-gray-200 rounded-md"></div>
-    </div>
-    <div className="flex-1 px-3 py-2 text-left flex flex-col">
-      <div className="flex items-center justify-between mb-2">
-        <div className="h-3 w-1/4 bg-gray-200 rounded-full"></div>
-        <div className="h-3 w-1/4 bg-gray-200 rounded-full"></div>
-      </div>
-      <div className="h-5 w-3/4 bg-gray-200 rounded mb-2"></div>
-      <div className="h-3 w-1/2 bg-gray-200 rounded mb-3"></div>
-      <div className="mt-auto flex flex-row items-center justify-between gap-1">
-        <div className="h-7 w-1/2 bg-gray-200 rounded-full"></div>
-        <div className="h-5 w-1/4 bg-gray-200 rounded"></div>
-      </div>
-    </div>
-  </div>
-);
-
+// --- Course List ---
 const PopularCourseList = () => {
   const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
+    // Simulasi fetch data
+    const timer = setTimeout(() => {
+      setCourses(dummyCourses.slice(0, 4));
+      setLoading(false);
+    }, 1200);
     return () => clearTimeout(timer);
   }, []);
 
-  const currentCourses: Course[] = dummyCourses.slice(0, 4);
-  const gridClass = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-4 w-full";
+  const gridClass =
+    "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-4 w-full";
 
   return (
     <div className="flex flex-col min-h-[500px]">
       <div className={gridClass}>
-        <AnimatePresence mode="popLayout">
-          {loading ? (
-            Array.from({ length: 4 }).map((_, idx) => (
-              <motion.div key={`skeleton-${idx}`} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <CourseSkeleton />
-              </motion.div>
-            ))
-          ) : (
-            currentCourses.map((course) => (
+        {loading ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <CourseSkeleton key={i} viewMode="grid" />
+          ))
+        ) : (
+          <AnimatePresence mode="popLayout">
+            {courses.map((course) => (
               <motion.div
                 key={course.id}
                 layout
@@ -177,9 +171,9 @@ const PopularCourseList = () => {
               >
                 <CourseCard {...course} />
               </motion.div>
-            ))
-          )}
-        </AnimatePresence>
+            ))}
+          </AnimatePresence>
+        )}
       </div>
     </div>
   );
@@ -203,7 +197,7 @@ export default function PopularCourse() {
             Kelas kursus terbaik kami
           </p>
         </div>
-        < div className="px-4 py-14 bg-gray-50 mx-0 sm:mx-24 md:mx-24 lg:mx-28 xl:mx-30 2xl:mx-60">
+        <div className="px-4 py-14 bg-gray-50 mx-0 sm:mx-24 md:mx-24 lg:mx-28 xl:mx-30 2xl:mx-60">
           <PopularCourseList />
         </div>
       </div>
