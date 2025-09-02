@@ -76,7 +76,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
   };
 
   return (
-    <div className="flex flex-col self-start font-sans w-full xl:w-60 lg:w-50 space-y-5 sticky top-20">
+    <div className="flex flex-col self-start font-sans w-full 2xl:w-60 xl:w-50 lg:w-50 space-y-5 sticky top-20">
       <div className="flex-grow overflow-y-auto space-y-6 pb-2 scrollbar-hide">
         {/* Kategori */}
         <div className="bg-gray-100 rounded-lg shadow p-5">
@@ -201,7 +201,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
           </div>
         </div>
         {/* Tombol Terapkan */}
-        <div className="pt-2 flex-shrink-0 xl:max-w-[230px] lg:max-w-[190px] mb-50">
+        <div className="pt-2 flex-shrink-0 2xl:max-w-[230px] xl:max-w-[190px] lg:max-w-[190px] mb-50">
           <button
             onClick={applyFilters}
             className="px-4 py-2  rounded-full font-semibold font-sans text-black
