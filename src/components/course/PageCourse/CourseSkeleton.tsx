@@ -1,9 +1,9 @@
 // components/course/kursus/CourseSkeleton.tsx
-interface CourseSkeletonProps {
+interface CourseSkeleton {
   viewMode?: "grid" | "list";
 }
 
-export default function CourseSkeleton({ viewMode = "grid" }: CourseSkeletonProps) {
+export default function CourseSkeleton({ viewMode = "grid" }: CourseSkeleton) {
   if (viewMode === "list") {
     return (
       <div className="flex flex-col sm:flex-row gap-4 w-full bg-white rounded-xl border border-gray-300 p-4 animate-pulse">

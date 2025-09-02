@@ -1,7 +1,7 @@
 import { useState, } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import SidebarSkeleton from "../../course/kursus/SidebarSkeleton";
+import SidebarSkeleton from "../../course/PageCourse/SidebarSkeleton";
 
 type FiltersState = {
   categories: string[];

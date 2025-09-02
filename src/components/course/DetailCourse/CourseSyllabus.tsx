@@ -2,11 +2,11 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, Trophy, FileText } from "lucide-react";
 import type { Course } from "../../../types/Course";
 
-interface CourseSyllabusProps {
+interface CourseSyllabus {
   courseData: Course;
 }
 
-export default function CourseSyllabus({ courseData }: CourseSyllabusProps) {
+export default function CourseSyllabus({ courseData }: CourseSyllabus) {
   const [openModuleIndex, setOpenModuleIndex] = useState<number | null>(null);
 
   // Toggle buka/tutup modul

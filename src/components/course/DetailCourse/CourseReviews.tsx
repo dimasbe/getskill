@@ -1,7 +1,7 @@
 // CourseReviews.tsx
 import type { Course } from '../../../types/Course';
 
-interface CourseReviewsProps {
+interface CourseReviews {
   courseData: Course;
 }
 
@@ -42,7 +42,7 @@ const renderRatingBars = (rating: number) => {
   });
 };
 
-export default function CourseReviews({ courseData }: CourseReviewsProps) {
+export default function CourseReviews({ courseData }: CourseReviews) {
   return (
     <div className="p-1">
       <h3 className="text-[24px] font-verdana font-semibold mb-4 text-black text-left">Reviews</h3>

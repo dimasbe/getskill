@@ -1,12 +1,12 @@
 // components/course/kursus/CourseList.tsx
 import { useEffect, useState } from "react";
-import CourseCard from "../kursus/CourseCard";
-import CourseSkeleton from "../kursus/CourseSkeleton";
+import CourseCard from "./CourseCard";
+import CourseSkeleton from "./CourseSkeleton";
 import dummyCourses from "../../../data/dummyCourses";
 import type { Course } from "../../../types/Course";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface CourseListProps {
+interface CourseList {
   filters?: {
     categories: string[];
     priceMin: string;
@@ -26,13 +26,12 @@ export default function CourseList({
   page = 1,
   setPage,
   limit,
-
-}: CourseListProps) {
+}: CourseList) {
   const [loading, setLoading] = useState(true);
 
   // ✅ Loading hanya saat pertama kali mount
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800); // lebih cepat
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -74,8 +73,7 @@ export default function CourseList({
   }
 
 
-  const gridClass = "grid grid-cols-[repeat(auto-fit,minmax(220px,max-content))] justify-center gap-5";
-
+  const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 justify-start";
 
   return (
     <div className="flex flex-col min-h-[500px]">
@@ -89,6 +87,7 @@ export default function CourseList({
                 layout
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                className="min-w-[220px] max-w-[300px]"
               >
                 <CourseSkeleton />
               </motion.div>
@@ -102,6 +101,7 @@ export default function CourseList({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
+                className="min-w-[220px] max-w-[300px]" // Batasi lebar maksimum
               >
                 <CourseCard {...course} />
               </motion.div>
@@ -135,8 +135,8 @@ export default function CourseList({
                     key={pageNumber}
                     onClick={() => setPage(pageNumber)}
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${pageNumber === page
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-purple-100"
                       }`}
                   >
                     {pageNumber}

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/dashboard/Dashboard";
-import Kursus from "../pages/guest/kursus/KursusPage";
+import Kursus from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
 import Berita from "../pages/guest/news/News";
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
-import CourseDetail from '../pages/guest/kursus/CourseDetail'
+import CourseDetail from '../pages/guest/Course/CourseDetail'
 import DetailEvent from "../pages/guest/event/DetailEvent";
 import Login from "../pages/guest/auth/login";
 import Register from "../pages/guest/auth/register";
