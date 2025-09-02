@@ -66,10 +66,10 @@ const Event: React.FC = () => {
         )}
       </div>
 
-<div className="xl:max-w-7xl lg:max-w-6xl mx-auto 
+<div className="2xl:max-w-7xl xl:max-w-6xl lg:max-w-6xl mx-auto 
     px-3 sm:px-5 lg:px-20 xl:px-8 2xl:px-8 
     py-8 sm:py-10 
-    grid grid-cols-1 lg:grid-cols-[240px_1fr] xl:gap-10">
+    grid grid-cols-1 lg:grid-cols-[240px_1fr] 2xl:gap-10">
 
         {/* Sidebar */}
         <motion.div
