@@ -117,7 +117,7 @@ const Navbar = () => {
       className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md 
       ${showNavbar ? (scrollDirection === "down" ? "animate-slideDown" : "translate-y-0 opacity-100") : "-translate-y-full opacity-0"}`}
     >
-      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex  font-sans justify-between items-center">
+      <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex font-sans justify-between items-center">
         {/* Logo & Links */}
         <div className="flex items-center space-x-10">
           <NavLink to="/">
@@ -135,7 +135,7 @@ const Navbar = () => {
             />
           </NavLink>
 
-          <ul className="hidden lg:flex items-center space-x-6">
+          <ul className="hidden lg:flex items-center space-x-6 ">
             {navLinks.map(({ name, to }) => (
               <li key={name}>
                 <NavLink
@@ -212,7 +212,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden px-6 md:px-20 pt-2 pb-4 space-y-2 bg-white">
+        <div className="lg:hidden px-6 md:px-20 pt-2 pb-4 space-y-2 border-t-4 border-amber-100 shadow-md bg-white">
           {navLinks.map(({ name, to }) => (
             <NavLink
               key={name}

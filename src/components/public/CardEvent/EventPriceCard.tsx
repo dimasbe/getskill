@@ -94,7 +94,7 @@ const EventPriceCard: React.FC<{ event: Event; eventIsOver: boolean }> = ({
               <FiAward size={20} className="text-gray-600" />
               <span className="font-medium">Sertifikat</span>
             </div>
-            <span>{event.is_online ? "Online Certificate" : "Include"}</span>
+            <span>{event.has_certificate ? "Online Certificate" : "Include"}</span>
           </div>
 
           {/* Kuota */}

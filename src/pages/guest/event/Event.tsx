@@ -66,18 +66,17 @@ const Event: React.FC = () => {
         )}
       </div>
 
-<div className="2xl:max-w-7xl xl:max-w-6xl lg:max-w-6xl mx-auto 
-    px-3 sm:px-5 lg:px-20 xl:px-8 2xl:px-8 
-    py-8 sm:py-10 
-    grid grid-cols-1 lg:grid-cols-[240px_1fr] 2xl:gap-10">
-
+      <div className="2xl:max-w-7xl xl:max-w-6xl lg:max-w-6xl md:max-w-1xl mx-auto 
+            px-10 sm:px-10 md:px-25 lg:px-20 xl:px-8 2xl:px-8 
+            py-8 sm:py-10 
+            grid grid-cols-1 md:grid-cols-0 lg:grid-cols-[240px_1fr] 2xl:gap-10">
         {/* Sidebar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <EventKategory loading={loading}/>
+          <EventKategory loading={loading} />
         </motion.div>
 
         {/* Konten Utama */}
