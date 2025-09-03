@@ -42,7 +42,7 @@ export default function CourseDetail() {
       <CourseHeader title={courseData.title} />
 
       {/* Layout Utama */}
-      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 grid grid-cols-1 lg:grid-cols-12 gap-1">
         {/* Konten Utama */}
         <div className="lg:col-span-8">
           <CourseMain courseData={courseData} />

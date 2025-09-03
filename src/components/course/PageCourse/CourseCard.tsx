@@ -33,16 +33,17 @@ export default function CourseCard({
     <div
       onClick={() => navigate(`/kursus/${id}`)}
       className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
-             transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px] max-w-[300px]
-             hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
+         transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
+         hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
     >
+
       {/* Bagian Gambar */}
       <div className="relative w-full aspect-video flex items-center justify-center p-2 sm:p-3 overflow-hidden">
-        <div className="relative overflow-hidden rounded-2xl shine__animate w-full h-full">
+        <div className="relative overflow-hidden rounded-xl shine__animate w-full h-full">
           <img
             src={`/images/${image}`}
             alt={title}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover" 
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = "/images/placeholder-course.jpg";
