@@ -76,7 +76,7 @@ const FiturUnggulanPage: React.FC = () => {
           {isLoading ? (
             <SkeletonFeatures />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <FeatureItem
                 icon={<img src={iconKomponen5} alt="Mentor Terpercaya" className="w-12 h-12" />}
                 title="Mentor Terpercaya"

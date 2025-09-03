@@ -106,8 +106,8 @@ const KelasIndustriPage: React.FC = () => {
             </div>
 
             {/* Bagian Statistik */}
-            <div className="md:w-1/2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 text-center">
-              <div className="bg-white p-4 sm:p-6 aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
+            <div className="md:w-1/2 grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-5 text-center">
+              <div className="bg-white p-4 sm:p-6 md:p-2 lg:p-6 aspect-[4/3] md:aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#9900FF]">
                   755+
                 </span>
@@ -115,7 +115,8 @@ const KelasIndustriPage: React.FC = () => {
                   Siswa Kelas Industri
                 </p>
               </div>
-              <div className="bg-white p-4 sm:p-6 aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
+
+              <div className="bg-white p-4 sm:p-6 md:p-2 lg:p-6 aspect-[4/3] md:aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#9900FF]">
                   97+
                 </span>
@@ -123,7 +124,8 @@ const KelasIndustriPage: React.FC = () => {
                   Alumni Kelas Industri
                 </p>
               </div>
-              <div className="bg-white p-4 sm:p-6 aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
+
+              <div className="bg-white p-4 sm:p-6 md:p-2 lg:p-6 aspect-[4/3] md:aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#9900FF]">
                   18+
                 </span>
