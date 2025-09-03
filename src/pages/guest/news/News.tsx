@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import NewsCard from "../../../components/public/CardNews/NewsCard";
-import { newsArticles } from "../../../data/newsData"; // Pastikan Anda mengimpor tipe NewsArticle jika digunakan di NewsCard
+import { fetchNews } from "../../../features/news/services/news_service";
+import type { News } from "../../../features/news/news";
 
+// Skeleton untuk search, filter, sort
 const SkeletonSearchFilterSort: React.FC = () => {
   return (
     <div className="flex flex-wrap gap-3 justify-center items-center mt-6 p-4 md:p-0">
@@ -27,7 +29,7 @@ const SkeletonSearchFilterSort: React.FC = () => {
   );
 };
 
-// --- Skeleton ---
+// Skeleton untuk kartu berita
 const SkeletonNewsCard: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 animate-pulse">
@@ -41,35 +43,52 @@ const SkeletonNewsCard: React.FC = () => {
       <div className="bg-gray-200 h-4 w-5/6 rounded"></div>
     </div>
   );
-}
+};
 
 const Berita: React.FC = () => {
+  const [newsList, setNewsList] = useState<News[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [sortOrder, setSortOrder] = useState("Terbaru");
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const itemsPerPage = 8;
-  const categories = ["Semua", ...new Set(newsArticles.map((item) => item.category))];
 
-  const filteredArticles = newsArticles
+  const itemsPerPage = 8;
+
+  // Fetch API berita
+  useEffect(() => {
+    const loadNews = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchNews();
+        setNewsList(data);
+      } catch (error) {
+        console.error("Gagal memuat berita:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadNews();
+  }, []);
+
+  // Filter berita berdasarkan search & kategori
+  const categories = ["Semua", ...new Set(newsList.map((item) => item.slug.split("-")[0]))]; // contoh kategori dari slug
+  const filteredArticles = newsList
     .filter((article) => {
       const matchSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
       const matchCategory =
-        selectedCategory === "Semua" || article.category === selectedCategory;
+        selectedCategory === "Semua" || article.slug.includes(selectedCategory.toLowerCase());
       return matchSearch && matchCategory;
     })
     .sort((a, b) => {
-      const dateA = new Date(a.dateISO);
-      const dateB = new Date(b.dateISO);
+      const dateA = new Date(a.created);
+      const dateB = new Date(b.created);
       return sortOrder === "Terbaru"
         ? dateB.getTime() - dateA.getTime()
         : dateA.getTime() - dateB.getTime();
     });
 
-
   const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
-
   const paginatedArticles = filteredArticles.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -79,34 +98,8 @@ const Berita: React.FC = () => {
     if (page < 1) page = 1;
     else if (page > totalPages) page = totalPages;
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm, selectedCategory, sortOrder, currentPage]);
-
-  useEffect(() => {
-    const savedScrollY = localStorage.getItem('beritaScrollPosition');
-    if (savedScrollY) {
-      window.scrollTo(0, parseInt(savedScrollY));
-    }
-
-    const handleBeforeUnload = () => {
-      localStorage.setItem('beritaScrollPosition', window.scrollY.toString());
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -116,9 +109,11 @@ const Berita: React.FC = () => {
 
         {/* Konten tengah */}
         <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">Berita</h1>
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
+            Berita
+          </h1>
           <p className="mt-2 text-sm sm:text-xs text-gray-800">
-            <a href="/" >Beranda</a>
+            <a href="/">Beranda</a>
             <span className="mx-1">&gt;</span>
             <span className="text-purple-600">Berita</span>
           </p>
@@ -158,7 +153,7 @@ const Berita: React.FC = () => {
             </svg>
           </div>
 
-          {/* Filter Kategori */}
+          {/* Filter */}
           <select
             value={selectedCategory}
             onChange={(e) => {
@@ -196,8 +191,8 @@ const Berita: React.FC = () => {
             {isLoading ? (
               [...Array(itemsPerPage)].map((_, index) => <SkeletonNewsCard key={index} />)
             ) : paginatedArticles.length > 0 ? (
-              paginatedArticles.map((article, index) => (
-                <NewsCard key={index} {...article} />
+              paginatedArticles.map((article) => (
+                <NewsCard key={article.id} news={article} />
               ))
             ) : (
               <p className="col-span-full text-gray-500">Tidak ada berita yang cocok.</p>
