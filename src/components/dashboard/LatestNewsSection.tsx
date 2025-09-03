@@ -56,7 +56,7 @@ const BeritaTerbaruPage: React.FC = () => {
 
   return (
     <div className="bg-white font-sans antialiased">
-      <section className="py-0 pb-16 bg-white rounded-lg">
+      <section className="py-0 pb-16 bg-white rounded-lg -mt-20">
         <div className="container mx-auto px-6 sm:px-10 lg:px-20 text-center">
           <span className="px-3 py-2 text-[10px] sm:text-xs font-semibold bg-[#F6EEFE] text-[#9425FE] rounded-full">
             Berita Terbaru
