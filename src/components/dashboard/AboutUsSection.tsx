@@ -81,7 +81,7 @@ const AboutUsSection: React.FC = () => {
       ) : (
         <div className="relative z-10 container mx-auto px-6 sm:px-10 lg:px-20 flex flex-col md:flex-row items-center justify-center fade-in-up">
           {/* Logo */}
-          <div className="w-full md:w-5/12 flex justify-center pr-0 md:pr-4">
+          <div className="w-full md:w-5/12 flex justify-center pr-0 md:pr-0">
             <img
               src={logoDesktop}
               alt="Getskill Desktop"
@@ -95,7 +95,7 @@ const AboutUsSection: React.FC = () => {
           </div>
 
           {/* Teks */}
-          <div className="w-full md:w-7/12 text-center md:text-left pl-0 md:pl-4">
+          <div className="w-full md:w-7/12 text-center md:text-left pl-0 md:pl-0">
             <span className="px-3 py-2 text-[10px] sm:text-xs font-semibold bg-[#F6EEFE] text-[#9425FE] rounded-full">
               Tentang Kami
             </span>

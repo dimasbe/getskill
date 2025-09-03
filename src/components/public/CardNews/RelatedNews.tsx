@@ -19,7 +19,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ relatedArticles }) => {
   return (
     <div className="bg-gray-50 rounded-lg shadow p-4 space-y-4">
       <h2 className="font-bold text-lg mb-3 border-b pb-2">Berita Terbaru</h2>
-      <div className="flex flex-col space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
         {relatedArticles.map((article) => (
           <MiniNewsCard
             key={article.id}

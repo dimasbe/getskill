@@ -90,7 +90,7 @@ const CourseCard = ({
           </div>
         </div>
         {/* Judul */}
-        <h3 className="group relative text-[14px] font-sans text-black font-semibold mb-2 leading-snug line-clamp-2">
+        <h3 className="group relative text-[14px] font-sans text-black font-semibold mb-2 leading-snug line-clamp-2 min-h-[40px]">
           <span
             className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
             bg-[length:0%_2px,0_2px]
