@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import NewsCard from '../public/CardNews/NewsCard';
-import { newsArticles, type NewsArticle } from '../../data/newsData';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import NewsCard from "../public/CardNews/NewsCard";
+import { fetchNews } from "../../features/news/services/news_service";
+import type { News } from "../../features/news/news";
 
 const SkeletonCard: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const SkeletonCard: React.FC = () => {
           {/* Badge "Berita" */}
           <div className="absolute top-2 left-2 h-5 w-14 bg-gray-300 rounded-full"></div>
 
-          {/* Watermark logo (bulat di bawah) */}
+          {/* Watermark logo */}
           <div className="absolute -bottom-[-6px] left-1/2 transform -translate-x-1/2 bg-white rounded-full p-2 shadow-md">
             <div className="bg-gray-200 w-14 h-4 rounded"></div>
           </div>
@@ -23,17 +24,12 @@ const SkeletonCard: React.FC = () => {
 
       {/* Konten */}
       <div className="relative z-10 p-6">
-        {/* Tanggal */}
         <div className="mb-3 -mt-6 flex items-center gap-2">
           <div className="bg-gray-200 h-4 w-4 rounded"></div>
           <div className="bg-gray-200 h-4 w-20 rounded"></div>
         </div>
-
-        {/* Judul (2 baris) */}
         <div className="bg-gray-200 h-5 w-5/6 rounded mb-2"></div>
         <div className="bg-gray-200 h-5 w-2/3 rounded mb-4"></div>
-
-        {/* Ringkasan (3 baris) */}
         <div className="bg-gray-200 h-4 w-full rounded mb-2"></div>
         <div className="bg-gray-200 h-4 w-5/6 rounded mb-2"></div>
         <div className="bg-gray-200 h-4 w-4/5 rounded"></div>
@@ -45,13 +41,20 @@ const SkeletonCard: React.FC = () => {
 const BeritaTerbaruPage: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [latestFourArticles, setLatestFourArticles] = useState<NewsArticle[]>([]);
+  const [latestFourArticles, setLatestFourArticles] = useState<News[]>([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLatestFourArticles(newsArticles.slice(0, 4));
-      setIsLoading(false);
-    }, 2000);
+    const loadNews = async () => {
+      try {
+        const data = await fetchNews();
+        setLatestFourArticles(data.slice(0, 4));
+      } catch (error) {
+        console.error("Gagal fetch berita:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadNews();
   }, []);
 
   return (
@@ -65,17 +68,24 @@ const BeritaTerbaruPage: React.FC = () => {
             Berita Terbaru
           </h1>
           <p className="text-md text-gray-600 mb-6">
-            Kumpulan berita terbaru dari getskill
+            Kumpulan berita terbaru dari GetSkill
           </p>
+
+          {/* List berita */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {isLoading
               ? [...Array(4)].map((_, index) => <SkeletonCard key={index} />)
-              : latestFourArticles.map((article, index) => (
-                <NewsCard key={index} {...article} />
+              : latestFourArticles.map((news) => (
+                <NewsCard key={news.id} news={news} />
               ))}
           </div>
-          {/* Tombol */}
-          <div className="mt-6 flex justify-center" data-aos="fade" data-aos-delay="700">
+
+          {/* Tombol lihat semua */}
+          <div
+            className="mt-6 flex justify-center"
+            data-aos="fade"
+            data-aos-delay="700"
+          >
             <button
               onClick={() => navigate("/berita")}
               className="group bg-[#9425FE] text-white font-semibold py-2 px-4 
