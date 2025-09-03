@@ -32,11 +32,11 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
     result.sort((a, b) => {
       switch (sortOption) {
         case "terpopuler":
-          return (b.capacity ?? 0) - (a.capacity ?? 0);
+          return (b.capacity_left ?? 0) - (a.capacity_left ?? 0);
         case "terbaru":
-          return new Date(b.start_date).getTime() - new Date(a.start_date).getTime();
+          return new Date(b.start_date_raw).getTime() - new Date(a.start_date_raw).getTime();
         case "terlama":
-          return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
+          return new Date(a.start_date_raw).getTime() - new Date(b.start_date_raw).getTime();
       }
     });
     return result;
@@ -96,7 +96,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
             ))
             : currentEvents.map((event) => (
               <motion.div
-                key={event.slug}
+                key={event.id}
                 layout
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}

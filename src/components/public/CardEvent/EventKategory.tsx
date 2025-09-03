@@ -1,5 +1,5 @@
-import { useState, } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SidebarSkeleton from "../../course/PageCourse/SidebarSkeleton";
 
@@ -41,6 +41,9 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
   const [openGroups, setOpenGroups] = useState<string[]>(["Art & Design"]);
   const [localFilters, setLocalFilters] = useState<FiltersState>(initialFilters);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   const toggleGroup = (name: string) => {
     setIsInitialRender(false);
@@ -67,15 +70,28 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
     });
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   if (loading) {
     return <SidebarSkeleton />;
   }
+
+  
 
   const applyFilters = () => {
     console.log("Filter diterapkan:", localFilters);
   };
 
-  return (
+  const renderSidebarContent = () => (
     <div className="flex flex-col self-start font-sans w-full 2xl:w-60 xl:w-50 lg:w-50 space-y-5 sticky top-20">
       <div className="flex-grow overflow-y-auto space-y-6 pb-2 scrollbar-hide">
         {/* Kategori */}
@@ -201,7 +217,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
           </div>
         </div>
         {/* Tombol Terapkan */}
-        <div className="pt-2 flex-shrink-0 2xl:max-w-[230px] xl:max-w-[190px] lg:max-w-[190px] mb-50">
+        <div className="pt-2 flex-shrink-0 max-w-[270px] 2xl:max-w-[230px] xl:max-w-[190px] lg:max-w-[190px] md:max-w-[270px] sm:max-w-[270px] mb-2">
           <button
             onClick={applyFilters}
             className="px-4 py-2  rounded-full font-semibold font-sans text-black
@@ -213,8 +229,62 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
           </button>
         </div>
       </div>
+    </div>
+  );
 
+  return (
+    <div className="flex gap-6">
+      {/* Tombol Filter (Mobile) */}
+      <div className="flex justify-start lg:hidden mb-4 w-full">
+        <button
+          onClick={toggleSidebar}
+          className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-black font-medium 
+               rounded-xl shadow hover:bg-purple-600 hover:text-white hover:shadow-[5px_5px_0_#D3DAD9] active:scale-95 transition"
+          aria-label="Buka filter"
+        >
+          <SlidersHorizontal size={18} />
+          <span>Filter</span>
+        </button>
+      </div>
 
+      {/* Sidebar Desktop */}
+      <div className="hidden lg:block w-60 sticky top-20">
+        {renderSidebarContent()}
+      </div>
+
+      {/* Sidebar Mobile */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-opacity-40 z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={toggleSidebar}
+            />
+            <motion.div
+              className="absolute top-1/2 left-1/2 transform -translate-x-[55%] translate-y-[5%] md:-translate-x-[90%] sm:-translate-x-[85%] md:translate-y-[26%] sm:translate-y-[26%]
+                   w-80 max-h-[150vh] bg-white shadow-2xl z-40 p-5 overflow-y-auto rounded-2xl"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-bold">Filter</h2>
+                <button
+                  onClick={toggleSidebar}
+                  className="text-gray-500 hover:text-black"
+                >
+                  ✕
+                </button>
+              </div>
+              {renderSidebarContent()}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
