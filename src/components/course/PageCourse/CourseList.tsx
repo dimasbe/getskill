@@ -73,7 +73,7 @@ export default function CourseList({
   }
 
 
-  const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 justify-start";
+  const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
 
   return (
     <div className="flex flex-col min-h-[500px]">
@@ -101,10 +101,11 @@ export default function CourseList({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="min-w-[220px] max-w-[300px]" // Batasi lebar maksimum
+                className="w-full"
               >
                 <CourseCard {...course} />
               </motion.div>
+
             ))
           ) : (
             <motion.p

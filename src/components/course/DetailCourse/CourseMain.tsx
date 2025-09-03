@@ -15,8 +15,8 @@ export default function CourseMain({ courseData }: Props) {
   return (
     <div className="max-w-5xl mx-auto">
       {/* Gambar Kursus */}
-      <div className="rounded-xl overflow-hidden mb-5 max-w-3xl mx-auto">
-        <div className="w-full aspect-[50/25]">
+      <div className="rounded-xl overflow-hidden mb-5 w-full">
+        <div className="w-full aspect-[16/9]">
           <img
             src={`/images/${courseData.image}`}
             alt={courseData.title}
@@ -28,29 +28,35 @@ export default function CourseMain({ courseData }: Props) {
       {/* Info Kursus */}
       <div className="space-y-2 px-4 sm:px-0 text-left">
         {/* Judul */}
-        <h1 className="text-lg sm:text-wrap md:text-2xl font-bold text-gray-800 leading-snug font-poppins">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 leading-snug break-words font-poppins">
           {courseData.title}
         </h1>
-
         {/* Kategori + Rating */}
-        <div className="flex items-center gap-x-3 mb-3">
-          <button className="bg-gray-200 font-semibold text-gray-800  text-[11px] px-2 py-2 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
+        <div className="flex items-center mb-3 gap-4">
+          {/* Kategori */}
+          <button className="bg-gray-200 font-semibold text-gray-800 text-[11px] px-2 py-2 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
             {courseData.category}
           </button>
 
+          {/* Rating */}
           <div className="flex items-center text-gray-500 text-[12px]">
-            <FaStar className="text-yellow-500 font-medium mr-1" size={12} 
-            style={{
-                stroke: "black",   // warna border
-                strokeWidth: 20,   // ketebalan border
+            <FaStar
+              className="text-yellow-500 font-medium mr-1"
+              size={12}
+              style={{
+                stroke: "black", // warna border
+                strokeWidth: 20, // ketebalan border
               }}
             />
             <span>({courseData.rating.toFixed(1)} Reviews)</span>
           </div>
         </div>
 
-        {/* Author */}
-        <div className="flex items-center gap-2 mt-5 mb-1 text-[13px] text-gray-500 gap-x-4">
+
+        {/* Author + Info tambahan */}
+        <div className="flex flex-col sm:flex-row sm:items-center w-full mt-5 mb-1 text-[13px] text-gray-500 gap-6">
+
+          {/* Author */}
           <div className="flex items-center gap-2">
             <img
               src={new URL(
@@ -58,14 +64,11 @@ export default function CourseMain({ courseData }: Props) {
                 import.meta.url
               ).href}
               alt={courseData.author}
-              className="rounded-full object-cover"
-              width={40}
-              height={40}
+              className="rounded-full object-cover w-10 h-10"
             />
-
-            <span className=" text-gray-500">
+            <span className="text-gray-500">
               by{" "}
-              <span className="font-semibold text-gray-700 ">
+              <span className="font-semibold text-gray-700">
                 {courseData.author}
               </span>
             </span>

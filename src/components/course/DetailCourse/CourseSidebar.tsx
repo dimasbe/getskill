@@ -10,7 +10,7 @@ import {
   FaTwitter,
   FaWhatsapp,
   FaInstagram,
-  FaYoutube
+  FaYoutube,
 } from "react-icons/fa";
 
 const paymentLogos = [
@@ -71,15 +71,14 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
     }
   };
 
-  // Sidebar content (biar reusable)
   const SidebarContent = (
-    <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-gray-300 w-full max-w-[280px] font-sans">
+    <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-gray-300 w-full lg:max-w-2xs mx-auto">
       {/* Harga */}
       <div className="bg-purple-600 border border-purple-500 rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
         <div className="flex items-left justify-left gap-2 font-semibold text-white text-[15px]">
           <FaTag size={15} /> <span>Harga Kursus</span>
         </div>
-        <p className={`text-center font-bold text-[25px] mt-2 ${isFree ? "text-white" : "text-white"}`}>
+        <p className="text-center font-bold text-[25px] mt-2 text-white">
           {isFree ? "Gratis" : `Rp ${formatRupiah(price)}`}
         </p>
       </div>
@@ -110,11 +109,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
             <FaInfinity /> <span>Akses penuh seumur hidup</span>
           </li>
           <li className="flex items-center gap-3 border-b border-gray-300 pb-4">
-            <img
-              src={certificateIcon}
-              alt="Sertifikat"
-              className="w-5 h-5 opacity-80"
-            />
+            <img src={certificateIcon} alt="Sertifikat" className="w-5 h-5 opacity-80" />
             <span>Sertifikat penyelesaian</span>
           </li>
         </ul>
@@ -123,18 +118,14 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
       {/* Metode Pembayaran */}
       <div className="border-b border-gray-300 pb-5">
         <p className="text-left font-semibold mb-4">Metode Pembayaran </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap justify-left gap-2">
           {paymentLogos.map((logo) => (
             <div
               key={logo.name}
-              className=" border border-gray-200 rounded-lg p-1 flex items-center justify-center w-12 h-10 
-                               transition-transform duration-300 hover:scale-110 hover:shadow-md hover:border-purple-400"
+              className="border border-gray-200 rounded-lg p-1 flex items-center justify-center w-12 h-10
+                         transition-transform duration-300 hover:scale-110 hover:shadow-md hover:border-purple-400"
             >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                className="max-h-full max-w-full object-contain"
-              />
+              <img src={logo.src} alt={logo.name} className="max-h-full max-w-full object-contain" />
             </div>
           ))}
         </div>
@@ -145,38 +136,18 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         <p className="text-left font-semibold mb-4">Bagikan Kursus Ini</p>
         <div className="flex gap-3">
           {[
-            {
-              icon: <FaFacebookF />,
-              color: "hover:bg-blue-200 hover:text-blue-600",
-              url: "https://facebook.com/sharer/sharer.php?u=https://contoh.com",
-            },
-            {
-              icon: <FaTwitter />,
-              color: "hover:bg-sky-200 hover:text-sky-500",
-              url: "https://twitter.com/intent/tweet?url=https://contoh.com&text=Ikut%20Kursus%20Ini!",
-            },
-            {
-              icon: <FaWhatsapp />,
-              color: "hover:bg-green-200 hover:text-green-500",
-              url: "https://wa.me/?text=Ikut%20Kursus%20Ini%20https://contoh.com",
-            },
-            {
-              icon: <FaInstagram />,
-              color: "hover:bg-pink-200 hover:text-pink-500",
-              url: "https://instagram.com",
-            },
-            {
-              icon: <FaYoutube />,
-              color: "hover:bg-red-200 hover:text-red-500",
-              url: "https://youtube.com",
-            },
+            { icon: <FaFacebookF />, color: "hover:bg-blue-200 hover:text-blue-600", url: "https://facebook.com/sharer/sharer.php?u=https://contoh.com" },
+            { icon: <FaTwitter />, color: "hover:bg-sky-200 hover:text-sky-500", url: "https://twitter.com/intent/tweet?url=https://contoh.com&text=Ikut%20Kursus%20Ini!" },
+            { icon: <FaWhatsapp />, color: "hover:bg-green-200 hover:text-green-500", url: "https://wa.me/?text=Ikut%20Kursus%20Ini%20https://contoh.com" },
+            { icon: <FaInstagram />, color: "hover:bg-pink-200 hover:text-pink-500", url: "https://instagram.com" },
+            { icon: <FaYoutube />, color: "hover:bg-red-200 hover:text-red-500", url: "https://youtube.com" },
           ].map((item, index) => (
             <a
               key={index}
               href={item.url}
               rel="noopener noreferrer"
               className={`bg-gray-200 p-2 rounded-full text-gray-400 text-lg 
-                                transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md ${item.color}`}
+                          transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md ${item.color}`}
             >
               {item.icon}
             </a>
@@ -189,9 +160,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
   return (
     <>
       {/* Desktop: sticky */}
-      <div className="hidden lg:block sticky top-6 self-start">
-        {SidebarContent}
-      </div>
+      <div className="hidden lg:block sticky top-6 self-start">{SidebarContent}</div>
 
       {/* Mobile: tombol buka drawer */}
       <div className="fixed bottom-5 right-5 z-40 lg:hidden">
@@ -207,13 +176,10 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
       {open && (
         <div className="fixed inset-0 z-50 flex">
           {/* Overlay */}
-          <div
-            onClick={() => setOpen(false)}
-            className="flex-1 bg-black/40"
-          ></div>
+          <div onClick={() => setOpen(false)} className="flex-1 bg-black/40"></div>
 
           {/* Sidebar drawer */}
-          <div className="w-80 max-w-full h-full bg-white shadow-xl p-5 overflow-y-auto animate-slideInRight">
+          <div className="w-full sm:w-96 h-full bg-white shadow-xl p-5 overflow-y-auto animate-slideInRight">
             <button
               onClick={() => setOpen(false)}
               className="mb-4 px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 text-sm"
