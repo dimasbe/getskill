@@ -24,7 +24,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
 }) => {
   const [sortOption, setSortOption] = useState<"terbaru" | "terlama" | "terpopuler">("terbaru");
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const eventsPerPage = 8;
+  const eventsPerPage = 6;
 
   // Sorting
   const sortedEvents = useMemo(() => {
