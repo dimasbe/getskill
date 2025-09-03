@@ -17,7 +17,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ relatedArticles }) => {
   }
 
   return (
-    <div className="bg-gray-50 rounded-lg shadow p-4 space-y-4">
+    <div className="bg-gray-50 rounded-lg shadow p-4 space-y-4 lg:ml-6">
       <h2 className="font-bold text-lg mb-3 border-b pb-2">Berita Terbaru</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
         {relatedArticles.map((article) => (

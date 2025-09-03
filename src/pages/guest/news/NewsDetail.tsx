@@ -282,15 +282,15 @@ const DetailBerita: React.FC = () => {
 
         {/* Sidebar */}
         <div>
-          <div className="relative mb-6">
+          <div className="relative mt-20 lg:mt-0 mb-6 lg:ml-6 flex justify-center lg:justify-center">
             <input
               type="text"
               placeholder="Cari Berita"
-              className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 placeholder-gray-400"
+              className="w-[100%] md:w-[40%] lg:w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700 placeholder-gray-400"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-purple-500 absolute right-3 top-2.5"
+              className="h-5 w-5 text-purple-500 absolute right-[3%] md:right-[32%] lg:right-3 top-2.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
