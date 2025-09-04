@@ -1,4 +1,3 @@
-// src/components/BenefitsSection.tsx
 import React, { useState, useEffect } from "react";
 import lampImg from "../../assets/img/icons/lampid.png";
 import searchImg from "../../assets/img/icons/searchid.png";
@@ -11,7 +10,7 @@ const SkeletonBenefits: React.FC = () => {
     <section className="benefits-section py-10 sm:py-14 lg:py-12 xl:py-16 2xl:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 2xl:px-16">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20 animate-pulse">
-          
+
           {/* Left Content (Skeleton Teks) */}
           <div className="w-full md:w-full lg:w-8/12 xl:w-6/12 text-left px-4 sm:px-6 md:px-8 lg:px-0 xl:pl-10 2xl:pl-16 mx-auto space-y-5">
             <div className="bg-gray-300 h-6 w-32 rounded-full mb-3"></div>
@@ -56,7 +55,7 @@ const IndustrialClassBenefits: React.FC = () => {
     <section className="benefits-section py-10 sm:py-14 lg:py-12 xl:py-16 2xl:py-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 2xl:px-16">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
-          
+
           {/* Left Content (Teks) */}
           <div className="w-full md:w-full lg:w-8/12 xl:w-6/12 2xl:w-7/12 text-left px-4 sm:px-6 md:px-8 lg:px-0 xl:pl-25 2xl:pl-20 mx-auto relative z-10">
             <span className="inline-block text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-semibold text-indigo-500 bg-blue-50 px-3 py-1.5 rounded-full mb-3">
@@ -111,7 +110,7 @@ const IndustrialClassBenefits: React.FC = () => {
                       className={`absolute -bottom-1 -left-1 w-5 h-5 rounded-full ${item.badge} text-white text-[10px] flex items-center justify-center`}
                     >
                       {item.id}
-                    </div> 
+                    </div>
                   </div>
                   <div className="ml-3 flex-1">
                     <h4 className="font-semibold text-sm sm:text-base lg:text-base xl:text-base 2xl:text-base">

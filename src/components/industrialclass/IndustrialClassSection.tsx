@@ -1,14 +1,14 @@
-// src/components/IndustrialClassSection.tsx
 import React, { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import manfaatImg from "../../assets/img/others/manfaatid.png";
+import type { Division } from "../../features/IndustrialClass/industrialclass";
+import { fetchDivisions } from "../../features/IndustrialClass/services/industrialclass_services";
 
 const SkeletonIndustrialClass: React.FC = () => {
   return (
     <section className="industrial-section py-16 xl:py-20 2xl:py-24">
       <div className="container mx-auto px-4 md:px-6 xl:px-12 2xl:px-16">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16 xl:gap-20 2xl:gap-24">
-
           {/* Left side - Image Skeleton */}
           <div className="w-full lg:w-5/12 xl:w-4/12 2xl:w-3/12 flex justify-center lg:justify-start relative lg:-mt-16 lg:-ml-6 md:px-6">
             <div className="relative bg-gray-200/40 p-4 w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto lg:max-w-[345px] xl:max-w-[400px] 2xl:max-w-[450px] h-[240px] md:h-[300px] lg:h-[340px] xl:h-[380px] 2xl:h-[420px] overflow-hidden">
@@ -38,7 +38,6 @@ const SkeletonIndustrialClass: React.FC = () => {
               ))}
             </ul>
           </div>
-
         </div>
       </div>
     </section>
@@ -47,10 +46,16 @@ const SkeletonIndustrialClass: React.FC = () => {
 
 const IndustrialClassSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [divisions, setDivisions] = useState<Division[]>([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
+    const loadDivisions = async () => {
+      const data = await fetchDivisions();
+      setDivisions(data);
+      setIsLoading(false);
+    };
+
+    loadDivisions();
   }, []);
 
   if (isLoading) {
@@ -61,7 +66,6 @@ const IndustrialClassSection: React.FC = () => {
     <section className="industrial-section py-16 xl:py-20 2xl:py-24">
       <div className="container mx-auto px-4 md:px-6 xl:px-12 2xl:px-16">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16 xl:gap-20 2xl:gap-24">
-
           {/* Left side - Image */}
           <div className="w-full lg:w-5/12 xl:w-4/12 2xl:w-3/12 flex justify-center lg:justify-start relative lg:-mt-16 lg:-ml-6 md:px-6 xl:ml-10 2xl:ml-12">
             <div className="relative bg-white p-4">
@@ -94,24 +98,22 @@ const IndustrialClassSection: React.FC = () => {
               </p>
 
               <ul className="space-y-3">
-                {[
-                  "Rekayasa Perangkat Lunak",
-                  "Desain Komunikasi Visual",
-                  "Teknik Komputer Jaringan",
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-center">
+                {divisions.map((division) => (
+                  <li key={division.id} className="flex items-center">
                     <span className="bg-yellow-400 rounded-full p-1.5 mr-3 flex-shrink-0">
                       <ArrowRight size={14} className="text-white" />
                     </span>
-                    <span className="font-semibold text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-base lg:font-bold">
-                      {item}
-                    </span>
+                    <button
+                      type="button"
+                      className="font-semibold text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-base lg:font-bold text-left cursor-pointer"
+                    >
+                      {division.name}
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-
         </div>
       </div>
     </section>

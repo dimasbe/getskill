@@ -1,4 +1,3 @@
-// src/components/TechnologySection.tsx
 import React, { useState, useEffect } from "react";
 import conceptImg from "../../assets/img/others/concept3.png.png";
 import { ArrowRight } from "lucide-react";
@@ -62,12 +61,11 @@ const TechnologySection: React.FC = () => {
 
           {/* Left side - Image */}
           <div className="w-full lg:w-5/12 xl:w-4/12 2xl:w-3/12 flex justify-center lg:justify-start relative lg:-ml-6 md:px-6 xl:ml-10 2xl:ml-12">
-            {/* Background telur miring */}
             <div
               className="absolute bg-orange-50 hidden sm:block"
               style={{
-                width: "clamp(220px, 40vw, 460px)",  // responsif: min 220px, max 460px
-                height: "clamp(140px, 25vw, 300px)", // responsif: min 140px, max 300px
+                width: "clamp(220px, 40vw, 460px)",
+                height: "clamp(140px, 25vw, 300px)",
                 borderRadius: "50% 100% 100% 50% / 60% 100% 100% 60%",
                 transform: "rotate(-3deg) translateY(30px)",
               }}
