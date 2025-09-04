@@ -4,7 +4,7 @@ import komponen1 from "../../assets/kelasindustri/Icon1.png";
 import komponen3 from "../../assets/kelasindustri/Icon3.png";
 import komponen4 from "../../assets/kelasindustri/Icon4.png";
 
-// Interface FeatureCard
+
 interface FeatureCardProps {
   icon?: React.ReactNode;
   iconSrc?: string;

@@ -1,4 +1,3 @@
-// src/components/ContactSection.tsx
 import React, { useState, useEffect } from "react";
 import Illustration from "../../assets/img/others/concept12.png.png";
 

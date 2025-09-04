@@ -1,4 +1,3 @@
-// src/components/TechnologySection.tsx
 import React, { useState, useEffect } from "react";
 import conceptImg from "../../assets/img/others/concept3.png.png";
 import { ArrowRight } from "lucide-react";

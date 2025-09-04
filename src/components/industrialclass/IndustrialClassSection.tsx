@@ -1,4 +1,3 @@
-// src/components/IndustrialClassSection.tsx
 import React, { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import manfaatImg from "../../assets/img/others/manfaatid.png";
