@@ -36,7 +36,7 @@ function RouteChangeLoader() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [location.pathname]); 
+  }, [location.pathname]);
 
   if (loading) return <Spinner animateOut={animateOut} />;
 
@@ -58,7 +58,7 @@ function RouteChangeLoader() {
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<DetailEvent />} />
         <Route path="/berita" element={<Berita />} />
-        <Route path="/berita/:id" element={<DetailBerita />} />
+        <Route path="/berita/:slug" element={<DetailBerita />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
         <Route path="/faq" element={<Faq />} />
       </Route>

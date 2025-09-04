@@ -15,7 +15,7 @@ export async function fetchNews(): Promise<News[]> {
 // Fetch detail berita by slug
 export async function fetchNewsDetail(slug: string): Promise<News> {
     try {
-        const response = await api.get(`/api/blogs/${slug}`);
+        const response = await api.get(`/api/blog-detail/${slug}`);
         return response.data?.data;
     } catch (error) {
         console.error(`Gagal mengambil detail berita slug ${slug}:`, error);
