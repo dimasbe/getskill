@@ -186,7 +186,7 @@ const Berita: React.FC = () => {
 
       {/* Isi Halaman */}
       <section className="py-10 bg-white rounded-lg">
-        <div className="container mx-auto px-5 md:px-20 text-center">
+        <div className="container mx-auto px-5 md:px-20 lg:px-3 xl:px-22 2xl:px-35 text-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {isLoading ? (
               [...Array(itemsPerPage)].map((_, index) => <SkeletonNewsCard key={index} />)

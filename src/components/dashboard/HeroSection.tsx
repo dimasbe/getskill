@@ -21,7 +21,7 @@ const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-[55vh] md:min-h-[40vh] lg:min-h-[90vh] xl:min-h-[80vh] 2xl:min-h-[85vh] m-0 pt-0">
+    <section className="relative bg-gradient-to-br from-white via-[#faf9fb] to-[#ebe9f0] overflow-hidden min-h-[50vh] md:min-h-[40vh] lg:min-h-[90vh] xl:min-h-[80vh] 2xl:min-h-[85vh] m-0 pt-0">
       {/* Garis lengkung pojok kiri */}
       <img
         src={garislengkung}

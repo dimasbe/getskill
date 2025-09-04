@@ -72,13 +72,16 @@ const BeritaTerbaruPage: React.FC = () => {
           </p>
 
           {/* List berita */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {isLoading
-              ? [...Array(4)].map((_, index) => <SkeletonCard key={index} />)
-              : latestFourArticles.map((news) => (
-                <NewsCard key={news.id} news={news} />
-              ))}
-          </div>
+          <div className="container mx-auto px-5 md:px-20 lg:px-0 xl:px-6 2xl:px-20 text-center">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    {latestFourArticles.map((news) => (
+      <div className="w-full lg:w-[110%] xl:w-auto mx-auto">
+        <NewsCard news={news} />
+      </div>
+    ))}
+  </div>
+</div>
+
 
           {/* Tombol lihat semua */}
           <div

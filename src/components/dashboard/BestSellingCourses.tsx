@@ -116,7 +116,7 @@ const CourseCard = ({
           {/* Footer */}
           <div className="mb-2 flex flex-row items-center justify-between gap-2">
             <button
-              className="bg-yellow-400 text-gray-900 text-xs sm:text-xs md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-xs font-sans font-bold px-4 py-2 rounded-full border border-black
+              className="bg-yellow-400 text-gray-900 text-xs sm:text-xs md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[10px] font-sans font-bold px-4 py-2 rounded-full border border-black
                 transition-all duration-300 ease-in-out
                 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
               onClick={(e) => {
@@ -213,7 +213,7 @@ export default function PopularCourse() {
             Daftar kursus yang paling laris di getskill
           </p>
         </div>
-        <div className="px-4 py-14 bg-gray-50 mx-0 sm:mx-4 md:mx-6 lg:mx-20 xl:mx-24 2xl:mx-60">
+        <div className="px-4 py-14 bg-gray-50 mx-0 sm:mx-4 md:mx-6 lg:mx-20 xl:mx-24 2xl:mx-30">
           <PopularCourseList />
         </div>
       </div>
