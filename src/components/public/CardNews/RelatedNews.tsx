@@ -1,14 +1,9 @@
 import React from "react";
 import MiniNewsCard from "./MiniNewsCard";
+import type { News } from "../../../features/news/news";
 
 interface RelatedNewsProps {
-  relatedArticles: {
-    id: string;
-    image: string;
-    date: string;
-    title: string;
-    summary: string;
-  }[];
+  relatedArticles: News[];
 }
 
 const RelatedNews: React.FC<RelatedNewsProps> = ({ relatedArticles }) => {
@@ -22,10 +17,10 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ relatedArticles }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
         {relatedArticles.map((article) => (
           <MiniNewsCard
-            key={article.id}
+            key={article.slug}
             id={article.id}
-            image={article.image}
-            date={article.date}
+            image={article.thumbnail}
+            date={article.created}
             title={article.title}
           />
         ))}

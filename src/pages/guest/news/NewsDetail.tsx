@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
-import { newsArticles } from "../../../data/newsData";
 import RelatedNews from "../../../components/public/CardNews/RelatedNews";
 import logoGetskill from "../../../assets/img/logo/get-skill/landscape.png";
-import { FiX } from "react-icons/fi"; // Import ikon X dari react-icons/fi
+import { FiX } from "react-icons/fi";
+
+import { fetchNewsDetail, fetchNews } from "../../../features/news/services/news_service";
+import type { News } from "../../../features/news/news";
 
 // --- Skeleton ---
 const SkeletonDetailBerita: React.FC = () => {
@@ -59,20 +61,38 @@ const SkeletonDetailBerita: React.FC = () => {
 };
 
 const DetailBerita: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const [berita, setBerita] = useState<any>(null);
+  const { slug } = useParams<{ slug: string }>();
+  const [berita, setBerita] = useState<News | null>(null);
+  const [relatedBerita, setRelatedBerita] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      const foundBerita = newsArticles.find((item) => item.id === id);
-      setBerita(foundBerita);
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, [id]);
+    const getBerita = async () => {
+      try {
+        setIsLoading(true);
+
+        // Fetch berita detail
+        const detail = await fetchNewsDetail(slug!);
+        setBerita(detail);
+
+        // Fetch semua berita untuk related
+        const allNews = await fetchNews();
+        const related = allNews
+          .filter((item) => item.category_id === detail.category_id && item.slug !== slug)
+          .slice(0, 5);
+        setRelatedBerita(related);
+
+      } catch (error) {
+        console.error(error);
+        setBerita(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getBerita();
+  }, [slug]);
 
   useEffect(() => {
     const savedScrollY = localStorage.getItem("detailBeritaScrollPosition");
@@ -122,10 +142,6 @@ const DetailBerita: React.FC = () => {
     );
   }
 
-  const beritaTerkait = newsArticles
-    .filter((item) => item.category === berita.category && item.id !== id)
-    .slice(0, 5);
-
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
@@ -155,7 +171,7 @@ const DetailBerita: React.FC = () => {
             onClick={() => setIsModalOpen(true)}
           >
             <img
-              src={berita.image}
+              src={berita.thumbnail}
               alt={berita.title}
               className="w-full h-full object-cover"
             />
@@ -247,7 +263,7 @@ const DetailBerita: React.FC = () => {
                   <FiX />
                 </button>
                 <img
-                  src={berita.image}
+                  src={berita.thumbnail}
                   alt={berita.title}
                   className="w-full max-h-[90vh] object-contain rounded-lg"
                 />
@@ -268,16 +284,18 @@ const DetailBerita: React.FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="leading-none">{berita.date}</span>
+            <span className="leading-none">{berita.created}</span>
           </div>
 
           <h2 className="mt-2 text-2xl font-extrabold text-gray-900 text-left">
             {berita.title}
           </h2>
 
-          <div className="-mt-4 text-gray-700 leading-relaxed whitespace-pre-line text-justify">
-            {berita.content}
-          </div>
+          <p
+            className="text-gray-700 leading-relaxed whitespace-pre-line text-justify"
+            dangerouslySetInnerHTML={{ __html: berita.description }}
+          />
+
         </div>
 
         {/* Sidebar */}
@@ -303,7 +321,7 @@ const DetailBerita: React.FC = () => {
               />
             </svg>
           </div>
-          <RelatedNews relatedArticles={beritaTerkait} />
+          <RelatedNews relatedArticles={relatedBerita} />
         </div>
       </div>
     </div>

@@ -72,7 +72,7 @@ const Berita: React.FC = () => {
   }, []);
 
   // Filter berita berdasarkan search & kategori
-  const categories = ["Semua", ...new Set(newsList.map((item) => item.slug.split("-")[0]))]; // contoh kategori dari slug
+  const categories = ["Semua", ...new Set(newsList.map((item) => item.slug.split("-")[0]))];
   const filteredArticles = newsList
     .filter((article) => {
       const matchSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
