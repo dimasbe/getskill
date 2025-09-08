@@ -174,6 +174,9 @@ const DetailBerita: React.FC = () => {
               src={berita.thumbnail}
               alt={berita.title}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/src/assets/Default-Img.png";
+              }}
             />
             {/* Tambahan: Overlay dengan `group-hover` */}
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-lg font-semibold rounded-lg transition-opacity duration-300">
@@ -266,6 +269,9 @@ const DetailBerita: React.FC = () => {
                   src={berita.thumbnail}
                   alt={berita.title}
                   className="w-full max-h-[90vh] object-contain rounded-lg"
+                  onError={(e) => {
+                    e.currentTarget.src = "/src/assets/Default-Img.png";
+                  }}
                 />
               </div>
             </div>
