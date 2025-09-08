@@ -1,9 +1,9 @@
-// components/course/kursus/CourseList.tsx
 import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import CourseSkeleton from "./CourseSkeleton";
-import dummyCourses from "../../../data/dummyCourses";
-import type { Course } from "../../../types/Course";
+import type { Course } from "../../../features/course/_course";
+import { fetchCourses } from "../../../features/course/_service/course_service";
+import { getSubCategoryName } from "../../../features/course/_service/course_service";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface CourseList {
@@ -16,7 +16,6 @@ interface CourseList {
   page?: number;
   setPage?: (page: number) => void;
   limit?: number;
-  columns?: number;
 }
 
 const COURSES_PER_PAGE = 6;
@@ -28,34 +27,42 @@ export default function CourseList({
   limit,
 }: CourseList) {
   const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState<Course[]>([]);
 
-  // ✅ Loading hanya saat pertama kali mount
+  // Fetch dari API
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
+    setLoading(true);
+    fetchCourses()
+      .then((data) => {
+        setCourses(data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   }, []);
 
   // 🔍 Filter data
-  const filteredCourses = dummyCourses.filter((course: Course) => {
-    const price = parseInt(course.price.replace(/\./g, "")) || 0;
-    const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
-    const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
+  const filteredCourses = courses.filter((course) => {
+  const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
+  const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
 
-    const matchCategory =
-      filters.categories.length === 0 ||
-      filters.categories.includes(course.category);
+  const subCategoryName = getSubCategoryName(course.sub_category);
 
-    const matchPriceMin = price >= min;
-    const matchPriceMax = price <= max;
+  const matchCategory =
+    filters.categories.length === 0 ||
+    filters.categories.includes(subCategoryName);
 
-    const matchSearch =
-      !filters.search.trim() ||
-      course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-      course.author.toLowerCase().includes(filters.search.toLowerCase()) ||
-      course.category.toLowerCase().includes(filters.search.toLowerCase());
+  const matchPriceMin = course.price >= min;
+  const matchPriceMax = course.price <= max;
 
-    return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
-  });
+  const matchSearch =
+    !filters.search.trim() ||
+    course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+    subCategoryName.toLowerCase().includes(filters.search.toLowerCase());
+
+  return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
+});
+
+
 
   // 🔄 Data yang ditampilkan
   let currentCourses: Course[] = [];
@@ -72,12 +79,10 @@ export default function CourseList({
     );
   }
 
-
   const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
 
   return (
     <div className="flex flex-col min-h-[500px]">
-      {/* Grid courses */}
       <div className={gridClass}>
         <AnimatePresence mode="popLayout">
           {loading ? (
@@ -103,9 +108,8 @@ export default function CourseList({
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="w-full"
               >
-                <CourseCard {...course} />
+                <CourseCard course={course} />
               </motion.div>
-
             ))
           ) : (
             <motion.p
@@ -120,8 +124,9 @@ export default function CourseList({
         </AnimatePresence>
       </div>
 
-      {/* Pagination hanya muncul kalau tidak ada limit */}
-      {!loading && !limit && setPage && totalPages > 1 && (
+        {/* PAGINATION */}
+
+      {!loading && !limit && setPage && totalPages > 0 && (
         <div className="mt-auto pt-6 sm:pt-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -135,10 +140,11 @@ export default function CourseList({
                   <button
                     key={pageNumber}
                     onClick={() => setPage(pageNumber)}
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${pageNumber === page
-                      ? "bg-purple-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-purple-100"
-                      }`}
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
+                      pageNumber === page
+                        ? "bg-purple-600 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+                    }`}
                   >
                     {pageNumber}
                   </button>

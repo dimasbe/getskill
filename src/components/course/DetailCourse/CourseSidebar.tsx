@@ -38,7 +38,7 @@ const paymentLogos = [
 interface Props {
   totalModul: number;
   totalKuis: number;
-  price: string;
+  price: number;
   isFree?: boolean;
 }
 
@@ -78,7 +78,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         <div className="flex items-left justify-left gap-2 font-semibold text-white text-[15px]">
           <FaTag size={15} /> <span>Harga Kursus</span>
         </div>
-        <p className="text-center font-bold text-[25px] mt-2 text-white">
+        <p className="text-left font-bold text-[25px] mt-2 text-white">
           {isFree ? "Gratis" : `Rp ${formatRupiah(price)}`}
         </p>
       </div>
@@ -179,15 +179,23 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
           <div onClick={() => setOpen(false)} className="flex-1 bg-black/40"></div>
 
           {/* Sidebar drawer */}
-          <div className="w-full sm:w-96 h-full bg-white shadow-xl p-5 overflow-y-auto animate-slideInRight">
-            <button
-              onClick={() => setOpen(false)}
-              className="mb-4 px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 text-sm"
-            >
-              ✕ Tutup
-            </button>
-            {SidebarContent}
+          <div className="w-full sm:w-96 h-full bg-white shadow-xl animate-slideInRight flex flex-col">
+            {/* Header tombol tutup */}
+            <div className="p-4 border-b border-gray-200 flex-shrink-0">
+              <button
+                onClick={() => setOpen(false)}
+                className="px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 text-sm"
+              >
+                ✕ Tutup
+              </button>
+            </div>
+
+            {/* Konten scrollable */}
+            <div className="flex-1 overflow-y-auto scrollbar-hide p-5">
+              {SidebarContent}
+            </div>
           </div>
+
         </div>
       )}
     </>

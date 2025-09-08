@@ -1,0 +1,203 @@
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "Berhasil fetch data"
+    },
+    "data": {
+        "id": "b4726307-4716-3d13-ab2b-c454f9cf5b15",
+        "user_course": null,
+        "completed": null,
+        "course_test_id": "7810952e-7fa7-367d-80e1-12cef0e29a1f",
+        "sub_category_name": "Pemrograman Website",
+        "title": "Pemrograman Front End Web dengan Bootstrap",
+        "sub_title": "Pemrograman Front End Web",
+        "description": "<span id=\"docs-internal-guid-68e6ce7b-7fff-1277-c480-36d6fdb993cd\" style=\"font-size: 14.6667px; white-space: pre;\"><div style=\"font-size: 14.6667px;\"><p class=\"p1\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;; white-space: normal;\">Mata pelajaran ini dirancang untuk membekali peserta didik dengan pengetahuan dan keterampilan dasar dalam\r\n            membangun tampilan antarmuka (user interface) web menggunakan teknologi HTML dan framework Bootstrap.\r\n            Pembelajaran dimulai dari pengenalan struktur dasar HTML hingga penggunaan komponen Bootstrap untuk\r\n            menciptakan tampilan web yang responsif dan profesional.</p><br><p class=\"p1\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;; white-space: normal;\">\r\n            Peserta akan mempelajari cara menuliskan kode HTML yang benar dan terstruktur, memahami penggunaan\r\n            elemen-elemen penting seperti block elements, inline elements, tabel, form, dan list, serta menerapkan\r\n            praktik terbaik menggunakan semantic HTML. Selanjutnya, peserta akan dikenalkan dengan framework Bootstrap\r\n            sebagai alat bantu untuk mempercepat proses styling dan layouting halaman web, termasuk penggunaan grid\r\n            system, komponen UI, dan utility class.<br><br></p>        <p class=\"p1\" style=\"margin-bottom: 2px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: &quot;Helvetica Neue&quot;; white-space: normal;\">\r\n            <b>Materi Pembelajaran:</b></p><br><ol class=\"ol1\" style=\"font-size: medium; white-space: normal;\">\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>Pengenalan HTML</b><br>Mengenal sejarah, fungsi, dan struktur dasar HTML sebagai fondasi pembuatan\r\n                halaman web.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>Atribut HTML &amp; Block Elements</b><br>Mempelajari berbagai atribut dasar HTML dan elemen blok\r\n                seperti &lt;div&gt;, &lt;p&gt;, &lt;h1&gt; - &lt;h6&gt;, &lt;section&gt;, dan lainnya.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>HTML Images &amp; Formatted Text</b><br>Menyisipkan gambar ke dalam halaman web dan mengatur teks\r\n                dengan tag seperti &lt;br&gt;, &lt;hr&gt;, &lt;pre&gt;, dan lainnya.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>Inline Elements</b><br>Mengenal elemen inline seperti &lt;a&gt;, &lt;span&gt;, &lt;strong&gt;,\r\n                &lt;em&gt;, &lt;u&gt;, &lt;b&gt;, &lt;i&gt;, dan penggunaannya dalam halaman.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>Semantic HTML dan Generic Elements</b><br>Memahami pentingnya elemen semantik seperti &lt;header&gt;,\r\n                &lt;footer&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;section&gt;, &lt;aside&gt;, yang membuat\r\n                kode lebih mudah dibaca dan diindeks oleh mesin pencari.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>HTML Table</b><br>Membuat dan mengatur tabel HTML menggunakan tag seperti &lt;table&gt;, &lt;tr&gt;,\r\n                &lt;th&gt;, &lt;td&gt;, serta atribut pendukung seperti colspan dan rowspan.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>HTML List</b><br>Menyusun daftar terurut dan tak terurut menggunakan &lt;ul&gt;, &lt;ol&gt;, dan\r\n                &lt;li&gt; untuk menampilkan informasi dalam bentuk list.</li>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>HTML Forms</b><br>Membuat form input menggunakan berbagai jenis elemen seperti:</li>\r\n            <ul class=\"ul1\">\r\n                <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                    <span class=\"s1\" style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 9px; line-height: normal; font-family: Menlo;\"></span>&lt;input\r\n                    type=\"text\"&gt;, &lt;input type=\"email\"&gt;, &lt;input type=\"password\"&gt;, &lt;input\r\n                    type=\"date\"&gt;, &lt;input type=\"number\"&gt;</li>\r\n                <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                    <span class=\"s1\" style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 9px; line-height: normal; font-family: Menlo;\"></span>&lt;textarea&gt;,\r\n                    &lt;button&gt;, dan &lt;input type=\"file\"&gt;<br>Peserta juga belajar membuat label dan menyusun\r\n                    form yang mudah digunakan.</li>\r\n            </ul>\r\n            <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                <b>Bootstrap</b><br>Mengenal dan mengimplementasikan framework Bootstrap:</li>\r\n            <ul class=\"ul1\">\r\n                <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                    <span class=\"s1\" style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 9px; line-height: normal; font-family: Menlo;\"></span>Menyisipkan\r\n                    Bootstrap ke dalam proyek</li>\r\n                <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                    <span class=\"s1\" style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 9px; line-height: normal; font-family: Menlo;\"></span>Menggunakan\r\n                    Grid System untuk layout</li>\r\n                <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                    <span class=\"s1\" style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 9px; line-height: normal; font-family: Menlo;\"></span>Menggunakan\r\n                    komponen seperti navbar, button, card, alert, modal, dan lainnya</li>\r\n                <li class=\"li2\" style=\"margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;\">\r\n                    <span class=\"s1\" style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 9px; line-height: normal; font-family: Menlo;\"></span>Menerapkan\r\n                    class utilitas untuk margin, padding, text, color, dan responsivitas.</li></ul></ol><blockquote style=\"margin-bottom: 2px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: &quot;Helvetica Neue&quot;; white-space: normal;\" class=\"\"><b>Tujuan Akhir Pembelajaran:<br></b><b>Setelah mengikuti pembelajaran ini, peserta diharapkan\r\n                mampu membuat halaman web statis yang rapi, terstruktur, semantik, dan responsif menggunakan HTML dan\r\n                Bootstrap.</b></blockquote>\r\n    </div>\r\n</span>",
+        "slug": "pemrograman-front-end-web-dengan-bootstrap",
+        "price": 300000,
+        "promotional_price": null,
+        "ratings": {
+            "5": 0,
+            "4": 0,
+            "3": 0,
+            "2": 0,
+            "1": 0
+        },
+        "ratings_percentage": {
+            "5": 0,
+            "4": 0,
+            "3": 0,
+            "2": 0,
+            "1": 0
+        },
+        "rating": "0.0",
+        "photo": "https://api-getskill.mijurnal.com/storage/courses/685ba468bcf21.jpeg",
+        "modules": [
+            {
+                "id": "b7e27691-94c1-3f22-9731-2e4cb4a8beec",
+                "title": "HTML",
+                "sub_title": "Bahasa markup dasar untuk menyusun struktur konten di halaman web seperti teks, gambar, dan tautan.",
+                "course_id": "b4726307-4716-3d13-ab2b-c454f9cf5b15",
+                "quizzes": [
+                    {
+                        "module_slug": "pemrograman-front-end-web-dengan-bootstrap-html",
+                        "total_question": 5
+                    }
+                ],
+                "quizz_count": 1,
+                "sub_modules": [
+                    {
+                        "id": "2cf41331-25da-381d-bc17-e9c69e6aef2e",
+                        "title": "Pengenalan HTML"
+                    },
+                    {
+                        "id": "1244be9d-25a1-3368-b733-8f9ebf91ad1d",
+                        "title": "Atribut HTML & Blocks Element"
+                    },
+                    {
+                        "id": "f5cf6d95-d2e9-3037-9147-9d37a5045195",
+                        "title": "HTML images & Formatted Text"
+                    },
+                    {
+                        "id": "b85c9b68-4398-34c8-8edc-3e2ed78fcfdd",
+                        "title": "Inline Elements"
+                    },
+                    {
+                        "id": "d4bbb888-01a8-3a3e-87b1-b3916194e349",
+                        "title": "Semantic HTML dan Generic Elements"
+                    },
+                    {
+                        "id": "60ab74e5-2028-3ab6-940f-96b4eb32e20e",
+                        "title": "HTML Table"
+                    },
+                    {
+                        "id": "2902e916-67b1-3f2a-8da0-4e0f4a6573b0",
+                        "title": "HTML List"
+                    },
+                    {
+                        "id": "9bbc18b1-ba2e-3ac6-9c2e-0746de120672",
+                        "title": "HTML Forms"
+                    }
+                ],
+                "sub_module_count": 8,
+                "module_task_count": 8
+            },
+            {
+                "id": "349e360a-1922-3d6d-8dd2-34c17c4dbbe3",
+                "title": "Javascript",
+                "sub_title": "Bahasa pemrograman yang membuat halaman web menjadi interaktif dan responsif terhadap tindakan pengguna.",
+                "course_id": "b4726307-4716-3d13-ab2b-c454f9cf5b15",
+                "quizzes": [],
+                "quizz_count": 0,
+                "sub_modules": [
+                    {
+                        "id": "0cb028c8-9a40-3f81-8650-ffefa84e45b0",
+                        "title": "Pengertian Javascript"
+                    },
+                    {
+                        "id": "5efbec24-684b-3732-893c-2ae1e3c2dff3",
+                        "title": "BOM (Browser Object Model )"
+                    },
+                    {
+                        "id": "5e902212-7a21-3d2c-8b6e-d544cba86bf9",
+                        "title": "DOM (Document Object Model )"
+                    },
+                    {
+                        "id": "336b5c07-694d-323d-aa58-f43ce19862e2",
+                        "title": "Web Interaktif"
+                    },
+                    {
+                        "id": "4b2e0e7c-9670-3918-a23b-7097f2a1ae6f",
+                        "title": "LocalStorage"
+                    },
+                    {
+                        "id": "1e891696-e001-3cfd-9126-d4fe60ae3906",
+                        "title": "Framework Java Script"
+                    }
+                ],
+                "sub_module_count": 6,
+                "module_task_count": 7
+            },
+            {
+                "id": "6c7b7955-5c35-3c3d-be45-4546c0c345d9",
+                "title": "CSS",
+                "sub_title": "Digunakan untuk mengatur tampilan dan gaya visual halaman web, termasuk warna, ukuran, dan tata letak.",
+                "course_id": "b4726307-4716-3d13-ab2b-c454f9cf5b15",
+                "quizzes": [],
+                "quizz_count": 0,
+                "sub_modules": [
+                    {
+                        "id": "795513de-2396-34ee-8c62-2837e831f2b3",
+                        "title": "Pengertian CSS"
+                    },
+                    {
+                        "id": "13fbad7a-0079-33bf-bfb3-a085f43a3b78",
+                        "title": "CSS Float, Position, Background, Text, Font, Alignment, Margin, Padding"
+                    },
+                    {
+                        "id": "fce8c438-8570-35fd-a74e-a00d4375de9f",
+                        "title": "CSS Selector, Cascade, Spacing, Inheritance, Color, Pseudo Class, Sizing Unit"
+                    },
+                    {
+                        "id": "94e23ac8-d324-3af4-bc6b-e6539ddec860",
+                        "title": "CSS Border, Shadow, Focus, Z-Index, Function"
+                    },
+                    {
+                        "id": "0b7645cc-e2bb-388b-9c4b-dea3b58a7b8c",
+                        "title": "CSS Animations, Filters, Blend Modes, Lists, Transitions, Overflow"
+                    },
+                    {
+                        "id": "d9c57ca9-6f66-3413-a716-613ca0b96dfc",
+                        "title": "Teknik Layouting dengan CSS Grid (Flexbox vs CSS Grid, Grid Container dan Grid Item)"
+                    }
+                ],
+                "sub_module_count": 6,
+                "module_task_count": 5
+            },
+            {
+                "id": "74d2503f-57c1-3322-9454-5b3bd30c3e6c",
+                "title": "Bootstrap",
+                "sub_title": "Framework CSS siap pakai untuk membuat antarmuka web yang responsif dan konsisten dengan cepat.",
+                "course_id": "b4726307-4716-3d13-ab2b-c454f9cf5b15",
+                "quizzes": [
+                    {
+                        "module_slug": "pemrograman-front-end-web-dengan-bootstrap-bootstrap",
+                        "total_question": 2
+                    }
+                ],
+                "quizz_count": 1,
+                "sub_modules": [
+                    {
+                        "id": "48994e5c-4870-3665-aeee-a4d35541e635",
+                        "title": "Instalasi Bootstrap dan menerapkan pada project Web"
+                    },
+                    {
+                        "id": "63009947-93b7-390e-aec0-bf953d35985d",
+                        "title": "Bootstrap Layout: Container dan Grid System"
+                    },
+                    {
+                        "id": "6fbcbbf9-6fc3-3cf7-a57b-1bc7c5834edb",
+                        "title": "Bootstrap Content: Typography, Tables, Images, Navbar"
+                    },
+                    {
+                        "id": "9e719824-a374-38dd-b202-ae8a0c295480",
+                        "title": "Bootstrap Forms"
+                    },
+                    {
+                        "id": "c70d3ea0-8a80-3e25-8c23-eea9731088bd",
+                        "title": "Bootstrap Components"
+                    }
+                ],
+                "sub_module_count": 5,
+                "module_task_count": 1
+            }
+        ],
+        "course_reviews": [],
+        "course_review_count": 0,
+        "user_courses_count": 9,
+        "created": "2025-01-31T02:03:31.000000Z",
+        "is_admin": false,
+        "is_student": false
+    },
+    "success": true
+}

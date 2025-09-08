@@ -2,6 +2,8 @@ import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { ChevronDown, ChevronUp, SlidersHorizontal, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SidebarSkeleton from "./SidebarSkeleton";
+import { fetchCategories } from "../../../features/course/_service/course_service";
+import type { Category } from "../../../features/course/_course";
 
 interface FiltersState {
   categories: string[];
@@ -10,47 +12,31 @@ interface FiltersState {
   search: string;
 }
 
-interface SidebarFilter{
+interface SidebarFilterProps {
   filters: FiltersState;
   setFilters: Dispatch<SetStateAction<FiltersState>>;
 }
 
-const CATEGORY_GROUPS = [
-  {
-    name: "Software Development",
-    count: 5,
-    subcategories: [
-      { name: "Github", count: 1 },
-      { name: "Pemrograman Website", count: 3 },
-      { name: "Pemrograman Android", count: 0 },
-      { name: "Pemrograman Desktop", count: 1 },
-    ],
-  },
-  {
-    name: "Multimedia",
-    count: 0,
-    subcategories: [],
-  },
-  {
-    name: "Game Development",
-    count: 1,
-    subcategories: [
-      { name: "Scratch", count: 1 },
-      { name: "Unity", count: 0 },
-    ],
-  },
-];
-
-export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
-  const [openGroups, setOpenGroups] = useState<string[]>(["Software Development"]);
+export default function SidebarFilter({ filters, setFilters }: SidebarFilterProps) {
+  const [openGroups, setOpenGroups] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [localFilters, setLocalFilters] = useState<FiltersState>(filters);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
+    async function loadCategories() {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCategories();
   }, []);
 
   const toggleGroup = (name: string) => {
@@ -74,7 +60,6 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
     setIsOpen(false);
   };
 
-  // Gabungkan semua konten filter termasuk tombol dalam satu komponen untuk kerapian
   const SidebarContent = (
     <div className="flex flex-col h-full font-sans">
       <div className="space-y-6 pb-2 overflow-y-auto scrollbar-hide text-sm flex-grow">
@@ -84,8 +69,8 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
             Kategori
           </h3>
           <div className="space-y-2 ml-1">
-            {CATEGORY_GROUPS.map((group) => (
-              <div key={group.name}>
+            {categories.map((group) => (
+              <div key={group.id}>
                 {/* Tombol grup kategori */}
                 <button
                   className="flex items-center justify-between w-full text-left font-normal text-gray-700 px-2 py-2 rounded-lg hover:bg-gray-50 focus:outline-none text-[13px]"
@@ -93,7 +78,9 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
                 >
                   <div className="flex items-center gap-1 text-[13px]">
                     <span>{group.name}</span>
-                    <span className="text-gray-400 text-[11px]">({group.count})</span>
+                    <span className="text-gray-400 text-[11px]">
+                      ({group.course_item_count})
+                    </span>
                   </div>
                   {openGroups.includes(group.name) ? (
                     <ChevronUp size={12} className="text-gray-400" />
@@ -103,43 +90,45 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
                 </button>
                 {/* Subkategori */}
                 <AnimatePresence initial={!isInitialRender}>
-                  {openGroups.includes(group.name) && group.subcategories.length > 0 && (
-                    <motion.div
-                      key="subcategories"
-                      initial={isInitialRender ? false : { height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                      <div className="pl-5 pr-3 pt-2 space-y-1">
-                        {group.subcategories.map((subcategory) => (
-                          <label
-                            key={subcategory.name}
-                            className="flex items-center gap-2 cursor-pointer text-[12px] text-gray-600"
-                          >
-                            <input
-                              type="checkbox"
-                              className="accent-purple-600 w-3 h-3 rounded"
-                              checked={localFilters.categories.includes(subcategory.name)}
-                              onChange={() => handleCheckbox(subcategory.name)}
-                              disabled={subcategory.count === 0}
-                            />
-                            <span className="flex-1 text-left">{subcategory.name}</span>
-                            <span className="text-gray-400 text-[11px]">
-                              ({subcategory.count})
-                            </span>
-                          </label>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
+                  {openGroups.includes(group.name) &&
+                    group.sub_category.length > 0 && (
+                      <motion.div
+                        key="subcategories"
+                        initial={isInitialRender ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="pl-5 pr-3 pt-2  space-y-1">
+                          {group.sub_category.map((subcategory) => (
+                            <label
+                              key={subcategory.id}
+                              className="flex items-center gap-2 cursor-pointer text-[12px] text-gray-600"
+                            >
+                              <input
+                                type="checkbox"
+                                className="accent-purple-600 w-3 h-3 rounded"
+                                checked={localFilters.categories.includes(subcategory.name)}
+                                onChange={() => handleCheckbox(subcategory.name)}
+                                disabled={subcategory.course_count === 0}
+                              />
+                              <span className="flex-1 text-left">{subcategory.name}</span>
+                              <span className="text-gray-400 text-[11px]">
+                                ({subcategory.course_count})
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
                 </AnimatePresence>
               </div>
             ))}
           </div>
         </div>
+
         {/* Harga */}
-        <div className="bg-gray-100 rounded-lg shadow p-3 max-w-[220px]">
+        <div className="bg-gray-100 rounded-lg shadow p-3 max-w-[220px] mb-5">
           <h3 className="text-[16px] font-semibold text-black mb-5 text-left">Harga</h3>
           <div className="flex flex-col gap-2">
             {/* Harga Minimum */}
@@ -175,8 +164,8 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
             </div>
           </div>
         </div>
-
       </div>
+
       {/* Tombol Terapkan */}
       <div className="pt-4 flex-shrink-0 mb-30">
         <button
@@ -205,9 +194,10 @@ export default function SidebarFilter({ filters, setFilters }: SidebarFilter) {
       </div>
 
       {/* Sidebar desktop */}
-      <aside className="hidden md:block w-[220px] sticky top-20 bottom-20 h-fit p-2 text-sm">
+      <aside className="hidden md:block w-[220px] sticky top-25 bottom-20 h-fit p-2 text-sm">
         {loading ? <SidebarSkeleton /> : SidebarContent}
       </aside>
+
       {/* Drawer mobile */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex justify-end">
