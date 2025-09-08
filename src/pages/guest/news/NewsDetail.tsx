@@ -291,11 +291,22 @@ const DetailBerita: React.FC = () => {
             {berita.title}
           </h2>
 
-          <p
-            className="text-gray-700 leading-relaxed whitespace-pre-line text-justify"
+          <div
+            id="detail-description"
+            className="
+            text-gray-800 leading-relaxed
+            [&>p]:mb-4 [&>p]:text-justify
+            [&>h3]:text-xl [&>h3]:font-bold [&>h3]:-mt-4 [&>h3]:mb-2
+            [&>blockquote]:bg-purple-100 [&>blockquote]:text-purple-900 [&>blockquote]:italic
+            [&>blockquote]:p-6 [&>blockquote]:rounded-md [&>blockquote]:relative [&>blockquote]:my-6
+            [&>blockquote::after]:content-['”'] [&>blockquote::after]:absolute [&>blockquote::after]:text-7xl
+            [&>blockquote::after]:text-purple-300 [&>blockquote::after]:right-4 [&>blockquote::after]:top-2
+            [&>blockquote::after]:font-[Arial]
+            [&_*em]:italic [&_*em]:text-gray-700 [&_em]:text-sm
+            [&>hr]:hidden
+          "
             dangerouslySetInnerHTML={{ __html: berita.description }}
           />
-
         </div>
 
         {/* Sidebar */}
