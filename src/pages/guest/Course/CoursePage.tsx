@@ -39,7 +39,7 @@ export default function KursusPage() {
       <Header />
 
       {/* MAIN CONTENT */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-5 lg:px-8 py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5 lg:px-8 py-8 sm:py-10 grid lg:grid-cols-4 gap-6 lg:gap-8">
         {/* Sidebar */}
         <motion.div
           initial={{ x: -40, opacity: 0 }}

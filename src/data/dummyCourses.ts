@@ -9,7 +9,7 @@ const dummyCourses: Course[] = [
     category: 'Scratch',
     title: 'Belajar Coding Untuk Anak Menggunakan Scratch',
     author: 'Get Skill',
-    price: '250.000',
+    price: '250.000.000',
     rating: 4.5,
     date: '25 Jul 2025',
     description: `Kursus ini mengajak anak-anak untuk mengenal dunia coding sejak dini melalui cara yang seru dan mudah dipahami. Dengan menggunakan Scratch—platform pemrograman visual yang dirancang khusus untuk anak-anak, peserta akan belajar menyusun logika, mengenali pola, dan membuat proyek digital seperti animasi dan game sederhana.

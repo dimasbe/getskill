@@ -1,14 +1,36 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import dummyCourses from "../../../data/dummyCourses";
-import type { Course } from "../../../types/Course";
+import { fetchCourseDetail } from "../../../features/course/_service/course_service";
+import type { DetailCourse } from "../../../features/course/_course";
 import CourseHeader from "../../../components/course/DetailCourse/CourseHeader";
 import CourseMain from "../../../components/course/DetailCourse/CourseMain";
 import CourseSidebar from "../../../components/course/DetailCourse/CourseSidebar";
+import CourseDetailSkeleton from "../../../components/course/DetailCourse/CourseDetailSkeleton";
 
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
-  const courseData = dummyCourses.find((course: Course) => course.id === id);
+  const [courseData, setCourseData] = useState<DetailCourse| null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (id) {
+      fetchCourseDetail(id)
+        .then((data) => {
+          setCourseData(data);
+        })
+        .catch((err) => {
+          console.error("Error fetching course:", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [id]);
+
+  if (loading) {
+    return <CourseDetailSkeleton />;
+  }
 
   if (!courseData) {
     return (
@@ -23,10 +45,10 @@ export default function CourseDetail() {
     );
   }
 
-  const totalModul = courseData.syllabus?.length || 0;
+  const totalModul = courseData.modules?.length || 0;
   const totalKuis =
-    courseData.syllabus?.reduce(
-      (total, modul) => total + (modul.quizzes || 0),
+    courseData.modules?.reduce(
+      (total, modul) => total + (modul.quizz_count || 0),
       0
     ) || 0;
 
@@ -53,12 +75,11 @@ export default function CourseDetail() {
           <CourseSidebar
             totalModul={totalModul}
             totalKuis={totalKuis}
-            price={courseData.price || "0"}
-            isFree={courseData.isFree || false}
+            price={courseData.price}
+            isFree={courseData.promotional_price === 0}
           />
         </div>
       </div>
-
     </motion.div>
   );
 }
