@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logoGetskill from "../../../assets/img/logo/get-skill/landscape.png";
+import defaultImg from "../../../assets/Default-Img.png";
 import type { News } from "../../../features/news/news";
 
 interface NewsCardProps {
@@ -24,8 +25,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
             alt={title}
             className="w-full h-full object-cover"
             onError={(e) => {
-              e.currentTarget.src =
-                "https://placehold.co/400x200/EAB308/FFFFFF?text=News";
+              e.currentTarget.src = defaultImg;
             }}
           />
           <span className="absolute top-2 left-2 bg-yellow-400 text-white text-[10px] font-semibold px-2 py-1 rounded-full">

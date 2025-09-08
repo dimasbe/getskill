@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import RelatedNews from "../../../components/public/CardNews/RelatedNews";
 import logoGetskill from "../../../assets/img/logo/get-skill/landscape.png";
+import defaultImg from "../../../assets/Default-Img.png";
 import { FiX } from "react-icons/fi";
 
 import { fetchNewsDetail, fetchNews } from "../../../features/news/services/news_service";
@@ -175,7 +176,7 @@ const DetailBerita: React.FC = () => {
               alt={berita.title}
               className="w-full h-full object-cover"
               onError={(e) => {
-                e.currentTarget.src = "/src/assets/Default-Img.png";
+                e.currentTarget.src = defaultImg;
               }}
             />
             {/* Tambahan: Overlay dengan `group-hover` */}
@@ -270,7 +271,7 @@ const DetailBerita: React.FC = () => {
                   alt={berita.title}
                   className="w-full max-h-[90vh] object-contain rounded-lg"
                   onError={(e) => {
-                    e.currentTarget.src = "/src/assets/Default-Img.png";
+                    e.currentTarget.src = defaultImg;
                   }}
                 />
               </div>
