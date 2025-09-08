@@ -1,28 +1,38 @@
 import { useState, useEffect } from "react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventCardGrid from "../../../components/public/CardEvent/EventCardGrid";
-import { fetchEvents } from "../../../features/event/_services/eventService";
-import type { Event as ApiEvent } from "../../../features/event/_event";
+// import { fetchEvents } from "../../../features/event/_services/eventService";
+import dumyevents from "../../../data/events";
+import type { Event } from "../../../features/event/_event";
+// import type { Event as ApiEvent } from "../../../features/event/_event";
 import { motion } from "framer-motion";
 import EventKategory from "../../../components/public/CardEvent/EventKategory";
 
 const Event: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [events, setEvents] = useState<ApiEvent[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    const loadEvents = async () => {
-      try {
-        const data = await fetchEvents();
-        setEvents(data);
-      } catch (error) {
-        console.error("Gagal memuat event:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadEvents();
+    setEvents(dumyevents);
+    setFilteredEvents(dumyevents);
+    setLoading(false);
   }, []);
+
+
+  // useEffect(() => {
+  //   const loadEvents = async () => {
+  //     try {
+  //       const data = await fetchEvents();
+  //       setEvents(data);
+  //     } catch (error) {
+  //       console.error("Gagal memuat event:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   loadEvents();
+  // }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -76,7 +86,14 @@ const Event: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <EventKategory loading={loading} />
+          <EventKategory
+            loading={loading}
+            events={events}
+            onFilter={(filteredEvents) => {
+              setFilteredEvents(filteredEvents);
+            }}
+          />
+
         </motion.div>
 
         {/* Konten Utama */}
@@ -86,7 +103,7 @@ const Event: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <EventCardGrid loading={loading} events={events} />
+          <EventCardGrid loading={loading} events={filteredEvents} />
         </motion.div>
       </div>
     </div>

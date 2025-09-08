@@ -44,4 +44,10 @@ export interface Event {
   created_at: string;
   eventAttendance: EventAttendance;
   event_details: EventDetail[];
+
+
+
+  category: string;
+  subcategory?: string;
+  event_type: "Gratis" | "Berbayar";
 }

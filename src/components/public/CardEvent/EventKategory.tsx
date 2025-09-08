@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SidebarSkeleton from "../../course/PageCourse/SidebarSkeleton";
+
+import type { Event } from "../../../features/event/_event";
+// import events from '../../../data/events';
 
 type FiltersState = {
   categories: string[];
@@ -18,17 +21,9 @@ type CategoryGroup = {
 
 type EventKategoryProps = {
   loading: boolean;
+  events: Event[];
+  onFilter: (filteredEvents: Event[]) => void;
 };
-
-const CATEGORY_GROUPS: CategoryGroup[] = [
-  { name: "Art & Design", count: 2, subcategories: [{ name: "Desain Grafis", count: 1 }, { name: "Video Editing", count: 1 }] },
-  { name: "Bisuness", count: 1, subcategories: [{ name: "Unity", count: 1 }] },
-  // { name: "Data Science", count: 1, subcategories: [{ name: "Python", count: 1 }] },
-  // { name: "Development", count: 2, subcategories: [{ name: "Pemrograman Web", count: 1 }, { name: "Pemrograman Mobile", count: 1 }] },
-  // { name: "Finance", count: 1, subcategories: [{ name: "Finansial", count: 1 }] },
-  // { name: "Health & Fitness", count: 1, subcategories: [{ name: "Kesehatan", count: 1 }] },
-  // { name: "Lifestyle", count: 1, subcategories: [{ name: "Hiburan", count: 1 }] },
-];
 
 const initialFilters: FiltersState = {
   categories: [],
@@ -37,7 +32,7 @@ const initialFilters: FiltersState = {
   eventTypes: [],
 };
 
-const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
+const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter }) => {
   const [openGroups, setOpenGroups] = useState<string[]>(["Art & Design"]);
   const [localFilters, setLocalFilters] = useState<FiltersState>(initialFilters);
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -70,13 +65,51 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
     });
   };
 
+  const CATEGORY_GROUPS: CategoryGroup[] = useMemo(() => {
+    const groups: Record<string, Record<string, number>> = {};
+    events.forEach((e) => {
+      const sub = e.subcategory ?? e.category;
+      if (!groups[e.category]) groups[e.category] = {};
+      groups[e.category][sub] = (groups[e.category][sub] || 0) + 1;
+    });
+    return Object.entries(groups).map(([name, subs]) => ({
+      name,
+      count: Object.values(subs).reduce((a, b) => a + b, 0),
+      subcategories: Object.entries(subs).map(([subName, count]) => ({ name: subName, count })),
+    }));
+  }, [events]);
+
+  const applyFilters = () => {
+    let filtered = events;
+
+    // Filter kategori/subkategori
+    if (localFilters.categories.length > 0) {
+      filtered = filtered.filter((event) =>
+        localFilters.categories.includes(event.subcategory ?? event.category)
+      );
+    }
+
+    // Filter jenis event
+    if (localFilters.eventTypes.length > 0) {
+      filtered = filtered.filter((event) =>
+        localFilters.eventTypes.includes(event.event_type)
+      );
+    }
+
+    // Filter harga
+    const min = Number(localFilters.priceMin) || 0;
+    const max = Number(localFilters.priceMax) || Infinity;
+    filtered = filtered.filter((event) => event.price >= min && event.price <= max);
+
+    onFilter(filtered); // Kirim hasil ke parent
+  };
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setIsSidebarOpen(false);
       }
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -85,32 +118,30 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
     return <SidebarSkeleton />;
   }
 
-  
+  const freeCount = events.filter(e => e.event_type === "Gratis").length;
+const paidCount = events.filter(e => e.event_type === "Berbayar").length;
 
-  const applyFilters = () => {
-    console.log("Filter diterapkan:", localFilters);
-  };
 
   const renderSidebarContent = () => (
-    <div className="flex flex-col self-start font-sans w-full 2xl:w-60 xl:w-50 lg:w-50 space-y-5 sticky top-20">
-      <div className="flex-grow overflow-y-auto space-y-6 pb-2 scrollbar-hide">
+    <div className="flex flex-col self-start font-sans w-full 2xl:w-60 xl:w-50 lg:w-50 space-y-5">
+      <div className="flex-grow overflow-y-auto space-y-6 pb-30 scrollbar-hide">
         {/* Kategori */}
         <div className="bg-gray-100 rounded-lg shadow p-5">
           <h3 className="text-[16px] font-semibold text-black mb-5 text-left">
             Kategori
           </h3>
           <div className="space-y-2 ml-1">
-            {CATEGORY_GROUPS.map((group) => (
-              <div key={group.name}>
+            {CATEGORY_GROUPS.map((event) => (
+              <div key={event.name}>
                 <button
                   className="flex items-center justify-between w-full text-left font-normal text-gray-700 px-2 py-2 rounded-lg hover:bg-gray-50 focus:outline-none text-[13px]"
-                  onClick={() => toggleGroup(group.name)}
+                  onClick={() => toggleGroup(event.name)}
                 >
                   <div className="flex items-center gap-1 text-[13px]">
-                    <span>{group.name}</span>
-                    <span className="text-gray-400 text-[11px]">({group.count})</span>
+                    <span>{event.name}</span>
+                    <span className="text-gray-400 text-[11px]">({event.count})</span>
                   </div>
-                  {openGroups.includes(group.name) ? (
+                  {openGroups.includes(event.name) ? (
                     <ChevronUp size={12} className="text-gray-400" />
                   ) : (
                     <ChevronDown size={12} className="text-gray-400" />
@@ -118,7 +149,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
                 </button>
 
                 <AnimatePresence initial={!isInitialRender}>
-                  {openGroups.includes(group.name) && group.subcategories.length > 0 && (
+                  {openGroups.includes(event.name) && event.subcategories.length > 0 && (
                     <motion.div
                       key="subcategories"
                       initial={isInitialRender ? false : { height: 0, opacity: 0 }}
@@ -127,7 +158,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       <div className="pl-5 pr-3 pt-2 space-y-1">
-                        {group.subcategories.map((subcategory) => (
+                        {event.subcategories.map((subcategory) => (
                           <label
                             key={subcategory.name}
                             className="flex items-center gap-2 cursor-pointer text-[12px] text-gray-600"
@@ -168,6 +199,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
                 onChange={() => handleEventType("Gratis")}
               />
               <span>Gratis</span>
+              <span className="text-gray-400 text-[11px]">({freeCount})</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer text-[12px] text-gray-600">
               <input
@@ -177,6 +209,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
                 onChange={() => handleEventType("Berbayar")}
               />
               <span>Berbayar</span>
+              <span className="text-gray-400 text-[11px]">({paidCount})</span>
             </label>
           </div>
         </div>
@@ -194,9 +227,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
                 placeholder="Harga Minimum"
                 className="flex-1 py-2 px-2 outline-none text-xs text-gray-800 placeholder-gray-700 font-normal"
                 value={localFilters.priceMin}
-                onChange={(e) =>
-                  setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))
-                }
+                onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))}
               />
             </div>
 
@@ -209,15 +240,13 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
                 placeholder="Harga Maksimum"
                 className="flex-1 py-2 px-2 outline-none text-xs text-gray-800 placeholder-gray-700 font-normal"
                 value={localFilters.priceMax}
-                onChange={(e) =>
-                  setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))
-                }
+                onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))}
               />
             </div>
           </div>
         </div>
         {/* Tombol Terapkan */}
-        <div className="pt-2 flex-shrink-0 max-w-[270px] 2xl:max-w-[230px] xl:max-w-[190px] lg:max-w-[190px] md:max-w-[270px] sm:max-w-[270px] mb-2">
+        <div className="pt-2 flex-shrink-0 max-w-[190px] 2xl:max-w-[230px] xl:max-w-[190px] lg:max-w-[190px] md:max-w-[230px] sm:max-w-[190px] mb-2">
           <button
             onClick={applyFilters}
             className="px-4 py-2  rounded-full font-semibold font-sans text-black
@@ -233,7 +262,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
   );
 
   return (
-    <div className="flex gap-6">
+    <>
       {/* Tombol Filter (Mobile) */}
       <div className="flex justify-start lg:hidden mb-4 w-full">
         <button
@@ -248,7 +277,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
       </div>
 
       {/* Sidebar Desktop */}
-      <div className="hidden lg:block w-60 sticky top-20">
+      <div className="hidden lg:block sticky top-25">
         {renderSidebarContent()}
       </div>
 
@@ -264,12 +293,11 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
               onClick={toggleSidebar}
             />
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-[55%] translate-y-[5%] md:-translate-x-[90%] sm:-translate-x-[85%] md:translate-y-[26%] sm:translate-y-[26%]
-                   w-80 max-h-[150vh] bg-white shadow-2xl z-40 p-5 overflow-y-auto rounded-2xl"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="fixed top-20 left-0 h-full w-60 md:w-70 sm:w-60 max-h-screen bg-white shadow-2xl z-40 p-5 overflow-y-auto"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold">Filter</h2>
@@ -285,7 +313,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading }) => {
           </>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 

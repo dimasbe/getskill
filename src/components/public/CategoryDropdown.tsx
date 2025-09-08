@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HiChevronDown, HiOutlineViewGridAdd } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 type SubItem = string | { name: string; to: string };
 
@@ -57,39 +58,55 @@ const CategoryDropdown = ({ setFilters }: CategoryDropdownProps) => {
       </div>
 
       {/* Dropdown Menu */}
-      {isOpen && (
-        <ul className="absolute left-0 mt-5 w-40 bg-white border text-left border-gray-200 rounded-md shadow-lg z-50">
-          {categories.map((category, index) => (
-            <li
-              key={index}
-              className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-xs text-gray-700 cursor-pointer whitespace-nowrap"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              {category.name}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute left-0 mt-5 w-40 bg-white border text-left border-gray-200 rounded-md shadow-lg z-50"
+          >
+            {categories.map((category, index) => (
+              <li
+                key={index}
+                className="group relative py-2 pl-4 pr-2 hover:bg-gray-100 text-xs text-gray-700 cursor-pointer whitespace-nowrap"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                {category.name}
 
-              {/* Submenu */}
-              {hoveredIndex === index && (
-                <ul className="absolute top-0 left-full ml-1 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                  {category.sub.map((sub, subIndex) => (
-                    <li
-                      key={subIndex}
-                      className="py-2 pl-4 pr-2 hover:bg-purple-100 text-xs text-purple-600 whitespace-nowrap"
-                      onClick={() =>
-                        typeof sub === "string"
-                          ? handleCategoryClick(sub)
-                          : handleCategoryClick(sub.name)
-                      }
+                {/* Submenu with Animation */}
+                <AnimatePresence>
+                  {hoveredIndex === index && (
+                    <motion.ul
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -8 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="absolute top-0 left-full ml-1 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50"
                     >
-                      {typeof sub === "string" ? sub : sub.name}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+                      {category.sub.map((sub, subIndex) => (
+                        <li
+                          key={subIndex}
+                          className="py-2 pl-4 pr-2 hover:bg-purple-100 text-xs text-purple-600 whitespace-nowrap"
+                          onClick={() =>
+                            typeof sub === "string"
+                              ? handleCategoryClick(sub)
+                              : handleCategoryClick(sub.name)
+                          }
+                        >
+                          {typeof sub === "string" ? sub : sub.name}
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
