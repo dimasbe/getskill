@@ -64,10 +64,11 @@ const TechnologySection: React.FC = () => {
             <div
               className="absolute bg-orange-50 hidden sm:block"
               style={{
-                width: "clamp(220px, 40vw, 460px)",
+                width: "clamp(220px, 41vw, 460px)",
                 height: "clamp(140px, 25vw, 300px)",
-                borderRadius: "50% 100% 100% 50% / 60% 100% 100% 60%",
-                transform: "rotate(-3deg) translateY(30px)",
+                borderRadius: "50%",
+                transform: "rotate(-3deg)",
+                left: "-20px",
               }}
             ></div>
 

@@ -39,7 +39,7 @@ const IndustrialHero: React.FC = () => {
 
       <div className="relative z-10 px-6 py-20 2xl:px-16 2xl:py-32">
         <div className="text-center mx-auto max-w-3xl 2xl:max-w-6xl">
-          <h3 className="text-purple-600 text-sm md:text-sm 2xl:text-base font-semibold tracking-wide uppercase">
+          <h3 className="text-[#9425FE] text-sm md:text-sm 2xl:text-base font-semibold tracking-wide uppercase">
             KELAS INDUSTRI HUMMATECH
           </h3>
 

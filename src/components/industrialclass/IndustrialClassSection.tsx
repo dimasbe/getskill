@@ -52,7 +52,7 @@ const IndustrialClassSection: React.FC = () => {
     const loadDivisions = async () => {
       const data = await fetchDivisions();
       setDivisions(data);
-      setIsLoading(false);
+      setTimeout(() => setIsLoading(false), 1500);
     };
 
     loadDivisions();
@@ -105,9 +105,13 @@ const IndustrialClassSection: React.FC = () => {
                     </span>
                     <button
                       type="button"
-                      className="font-semibold text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-base lg:font-bold text-left cursor-pointer"
+                      className="relative font-semibold text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-base lg:font-bold text-left cursor-pointer group"
                     >
                       {division.name}
+                      <span
+                        className="absolute left-0 bottom-[1px] h-[2px] w-0 bg-black
+                        transition-all duration-900 ease-out group-hover:w-full"
+                      ></span>
                     </button>
                   </li>
                 ))}
