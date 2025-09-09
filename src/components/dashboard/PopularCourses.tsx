@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { formatRupiah } from "../../utils/formatPrice";
 import CourseSkeleton from "../../components/course/PageCourse/CourseSkeleton";
+import defaultImg from "../../../assets/Default-Img.png";
 
 import { fetchTopCourses } from "../../features/course/_service/course_service";
 import type { TopCourse } from "../../features/course/_course";
@@ -36,7 +37,7 @@ const CourseCard = ({
   return (
     <div
       onClick={() => navigate(`/kursus/${slug}`)}
-      className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm
+      className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm
         transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
         hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
     >
@@ -49,7 +50,7 @@ const CourseCard = ({
             className="w-full h-full object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = "/images/placeholder-course.jpg";
+              target.src = defaultImg;
             }}
           />
         </div>

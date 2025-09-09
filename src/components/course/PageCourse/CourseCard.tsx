@@ -22,7 +22,7 @@ export default function CourseCard({ course }: CourseCardProps) {
   return (
     <div
       onClick={() => navigate(`/kursus/${course.slug}`)}
-      className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm 
+      className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm 
         transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
         hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
     >
