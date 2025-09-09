@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
             </h3>
             <ul className="list-none p-0 mt-3">
               <li className="mb-3 text-[12px]">
-                <Link to="/hubungi-kami" className="relative inline-block text-[#B2BBCC] hover:text-yellow-400 transition-colors duration-300
+                <Link to="/contact" className="relative inline-block text-[#B2BBCC] hover:text-yellow-400 transition-colors duration-300
                   after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1px] after:bg-yellow-500
                   hover:after:w-full after:transition-all after:duration-500"
                 >
