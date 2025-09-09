@@ -1,10 +1,17 @@
 import api from "../../../services/api";
 import type { Course, Category, SubCategory, DetailCourse, TopCourse } from "../_course";
 
-// Ambil semua course
+// =============================
+// COURSE
+// =============================
+
+/**
+ * Ambil daftar semua course
+ */
 export async function fetchCourses(): Promise<Course[]> {
   try {
     const response = await api.get("/api/courses");
+    // response.data.data.data → karena pagination biasanya nested
     return response.data?.data?.data || [];
   } catch (error) {
     console.error("Gagal mengambil data courses:", error);
@@ -12,6 +19,9 @@ export async function fetchCourses(): Promise<Course[]> {
   }
 }
 
+/**
+ * Ambil detail course berdasarkan slug
+ */
 export async function fetchCourseDetail(slug: string): Promise<DetailCourse | null> {
   try {
     const response = await api.get(`/api/courses/${slug}`);
@@ -22,7 +32,13 @@ export async function fetchCourseDetail(slug: string): Promise<DetailCourse | nu
   }
 }
 
-// Ambil kategori flat (tanpa nested)
+// =============================
+// CATEGORY & SUBCATEGORY
+// =============================
+
+/**
+ * Ambil semua sub kategori (flat, tanpa nested)
+ */
 export async function fetchSubCategories(): Promise<SubCategory[]> {
   try {
     const response = await api.get("/api/sub-categories");
@@ -33,10 +49,13 @@ export async function fetchSubCategories(): Promise<SubCategory[]> {
   }
 }
 
-// Ambil kategori utama (dengan nested sub_category)
+/**
+ * Ambil kategori utama (dengan nested sub_category)
+ */
 export async function fetchCategories(): Promise<Category[]> {
   try {
     const response = await api.get("/api/categories");
+    // response.data.data.data → biasanya untuk paginated response
     return response.data?.data?.data || [];
   } catch (error) {
     console.error("Gagal mengambil data kategori:", error);
@@ -44,7 +63,13 @@ export async function fetchCategories(): Promise<Category[]> {
   }
 }
 
-// Utility untuk mendapatkan nama subkategori
+// =============================
+// UTILS
+// =============================
+
+/**
+ * Utility: Ambil nama subkategori (string atau object)
+ */
 export function getSubCategoryName(sub: string | SubCategory): string {
   return typeof sub === "string" ? sub : sub?.name ?? "";
 }

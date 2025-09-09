@@ -1,6 +1,6 @@
 import { useState } from "react";
-import certificateIcon from "../../../../public/images/icon/course_icon05.svg";
 import { useNavigate } from "react-router-dom";
+import certificateIcon from "../../../../public/images/icon/course_icon05.svg";
 import {
   FaTag,
   FaBook,
@@ -13,6 +13,9 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 
+// =========================
+// Data: Logo Pembayaran
+// =========================
 const paymentLogos = [
   { name: "BRI", src: "/public/images/payments/bri.png" },
   { name: "BNI", src: "/public/images/payments/bni.png" },
@@ -35,6 +38,9 @@ const paymentLogos = [
   { name: "QRIS", src: "/public/images/payments/qris.jpg" },
 ];
 
+// =========================
+// Props
+// =========================
 interface Props {
   totalModul: number;
   totalKuis: number;
@@ -42,10 +48,14 @@ interface Props {
   isFree?: boolean;
 }
 
+// =========================
+// Komponen Utama
+// =========================
 export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: Props) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
+  // Format harga ke Rupiah
   const formatRupiah = (value: string | number) => {
     if (typeof value === "string") {
       value = value.replace(/\./g, "");
@@ -53,8 +63,10 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
     return Number(value).toLocaleString("id-ID");
   };
 
+  // Aksi ketika tombol "Beli Sekarang" ditekan
   const handleBuyNow = () => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       navigate("/login");
     } else {
@@ -71,19 +83,23 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
     }
   };
 
+  // =========================
+  // Konten Sidebar
+  // =========================
   const SidebarContent = (
     <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-gray-300 w-full lg:max-w-2xs mx-auto">
-      {/* Harga */}
+      
+      {/* === Harga Kursus === */}
       <div className="bg-purple-600 border border-purple-500 rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
-        <div className="flex items-left justify-left gap-2 font-semibold text-white text-[15px]">
+        <div className="flex items-left gap-2 font-semibold text-white text-[15px]">
           <FaTag size={15} /> <span>Harga Kursus</span>
         </div>
-        <p className="text-left font-bold text-[25px] mt-2 text-white">
+        <p className="mt-2 text-left font-bold text-[25px] text-white">
           {isFree ? "Gratis" : `Rp ${formatRupiah(price)}`}
         </p>
       </div>
 
-      {/* Tombol */}
+      {/* === Tombol Beli === */}
       <button
         onClick={handleBuyNow}
         className="my-6 w-full relative group overflow-hidden text-black font-sans font-semibold text-base py-3 px-5 
@@ -91,18 +107,18 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
           ease-in-out shadow-[4px_4px_0px_0px_rgba(0,0,0,0.7)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] 
           active:translate-y-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:text-white"
       >
-        <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"></span>
+        <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
         <span className="relative z-10 text-[15px]">Beli Sekarang →</span>
       </button>
 
-      {/* Info kursus */}
+      {/* === Info Kursus === */}
       <div className="pt-3 pb-3">
         <h4 className="text-left font-semibold text-black">Kursus ini mencakup</h4>
-        <ul className="space-y-4 text-gray-600 text-sm mt-5">
-          <li className="flex items-center gap-3 border-b border-gray-300 pb-4 ">
+        <ul className="mt-5 space-y-4 text-gray-600 text-sm">
+          <li className="flex items-center gap-3 border-b border-gray-300 pb-4">
             <FaBook /> <span>{totalModul} Modul</span>
           </li>
-          <li className="flex items-center gap-3 border-b border-gray-300 pb-4 ">
+          <li className="flex items-center gap-3 border-b border-gray-300 pb-4">
             <FaQuestionCircle /> <span>{totalKuis} Kuis</span>
           </li>
           <li className="flex items-center gap-3 border-b border-gray-300 pb-4">
@@ -115,9 +131,9 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         </ul>
       </div>
 
-      {/* Metode Pembayaran */}
+      {/* === Metode Pembayaran === */}
       <div className="border-b border-gray-300 pb-5">
-        <p className="text-left font-semibold mb-4">Metode Pembayaran </p>
+        <p className="mb-4 text-left font-semibold">Metode Pembayaran </p>
         <div className="flex flex-wrap justify-left gap-2">
           {paymentLogos.map((logo) => (
             <div
@@ -131,9 +147,9 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         </div>
       </div>
 
-      {/* Bagikan */}
-      <div className="border-b border-gray-300 pb-5 mt-4">
-        <p className="text-left font-semibold mb-4">Bagikan Kursus Ini</p>
+      {/* === Bagikan Kursus === */}
+      <div className="mt-4 border-b border-gray-300 pb-5">
+        <p className="mb-4 text-left font-semibold">Bagikan Kursus Ini</p>
         <div className="flex gap-3">
           {[
             { icon: <FaFacebookF />, color: "hover:bg-blue-200 hover:text-blue-600", url: "https://facebook.com/sharer/sharer.php?u=https://contoh.com" },
@@ -157,12 +173,15 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
     </div>
   );
 
+  // =========================
+  // Return (Desktop + Mobile)
+  // =========================
   return (
     <>
-      {/* Desktop: sticky */}
+      {/* === Desktop (Sticky Sidebar) === */}
       <div className="hidden lg:block sticky top-6 self-start">{SidebarContent}</div>
 
-      {/* Mobile: tombol buka drawer */}
+      {/* === Mobile (Tombol Drawer) === */}
       <div className="fixed bottom-5 right-5 z-40 lg:hidden">
         <button
           onClick={() => setOpen(true)}
@@ -172,15 +191,16 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* === Mobile (Drawer Sidebar) === */}
       {open && (
         <div className="fixed inset-0 z-50 flex">
           {/* Overlay */}
           <div onClick={() => setOpen(false)} className="flex-1 bg-black/40"></div>
 
-          {/* Sidebar drawer */}
+          {/* Drawer */}
           <div className="w-full sm:w-96 h-full bg-white shadow-xl animate-slideInRight flex flex-col">
-            {/* Header tombol tutup */}
+            
+            {/* Header */}
             <div className="p-4 border-b border-gray-200 flex-shrink-0">
               <button
                 onClick={() => setOpen(false)}
@@ -190,12 +210,11 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
               </button>
             </div>
 
-            {/* Konten scrollable */}
+            {/* Konten Scrollable */}
             <div className="flex-1 overflow-y-auto scrollbar-hide p-5">
               {SidebarContent}
             </div>
           </div>
-
         </div>
       )}
     </>

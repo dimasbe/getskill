@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, type LoginFormValues } from "./validation/loginScema";
 import { Checkbox, Button, Toast } from "flowbite-react";
-import { authService } from "../services/authService";
+import { authService } from "../features/user/user_service";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +26,9 @@ const LoginForm = () => {
       });
 
       if (user) {
-        setToast({ type: "success", message: `Login berhasil! Selamat datang, ${user.fullName}` });
+        setToast({ type: "success", message: `Login berhasil! Selamat datang, ${user.name}` });
+
+        window.location.href = "/dashboard-user";
       } else {
         setToast({ type: "error", message: "Email atau password salah" });
       }
@@ -35,8 +37,7 @@ const LoginForm = () => {
       setToast({ type: "error", message: "Terjadi kesalahan saat login" });
     }
 
-    // Auto hilang 5 detik
-    setTimeout(() => setToast(null), 5000);
+    setTimeout(() => setToast(null), 20000);
   };
 
   return (
@@ -142,16 +143,23 @@ const LoginForm = () => {
         </div>
 
         {/* Remember me & Forgot password */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center">
-            <Checkbox
-              id="remember"
-              className="accent-purple-500 focus:outline-none focus:ring-0"
-            />
-            <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
-              Remember me
-            </label>
+        <div className="flex justify-between items-start mb-6">
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <Checkbox
+                id="remember"
+                {...register("remember")}
+                className="accent-purple-500 focus:outline-none focus:ring-0"
+              />
+              <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
+                Remember me
+              </label>
+            </div>
+            {errors.remember && (
+              <p className="text-red-500 text-xs mt-1 ml-6">{errors.remember.message}</p>
+            )}
           </div>
+
           <a href="/password/email" className="text-sm text-purple-500">
             Forgot Password
           </a>
