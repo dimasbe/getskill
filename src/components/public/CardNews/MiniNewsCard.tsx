@@ -79,11 +79,11 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                     <h3 className="text-sm font-semibold line-clamp-2 cursor-pointer">
                         <a
                             className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
-                         bg-[length:0%_2px,0_2px]
-                         bg-[position:100%_100%,0_100%]
-                         bg-no-repeat
-                         transition-[background-size] duration-700
-                         hover:bg-[length:0_2px,100%_2px]"
+                            bg-[length:0%_2px,0_2px]
+                            bg-[position:100%_100%,0_100%]
+                            bg-no-repeat
+                            transition-[background-size] duration-1200
+                            hover:bg-[length:0_2px,100%_2px]"
                         >
                             {title}
                         </a>
