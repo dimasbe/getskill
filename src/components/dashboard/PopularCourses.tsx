@@ -4,41 +4,38 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { formatRupiah } from "../../utils/formatPrice";
-import dummyCourses from "../../data/dummyCourses";
-import type { Course } from "../../types/Course";
 import CourseSkeleton from "../../components/course/PageCourse/CourseSkeleton";
+
+import { fetchTopCourses } from "../../features/course/_service/course_service";
+import type { TopCourse } from "../../features/course/_course";
 
 // --- Course Card Component ---
 interface CourseCardProps {
-  id: string;
-  image: string;
-  category: string;
-  level?: string;
-  badge?: string;
+  slug: string;
+  photo: string;
+  sub_category: string;
   title: string;
-  author: string;
-  price: string;
-  rating?: number;
-  isFree?: boolean;
+  price: number;
+  promotional_price: number | null;
+  rating: number | null;
 }
 
 const CourseCard = ({
-  id,
-  image,
-  category,
-  level,
-  badge,
+  slug,
+  photo,
+  sub_category,
   title,
-  author,
   price,
-  rating = 0,
-  isFree = false,
+  promotional_price,
+  rating,
 }: CourseCardProps) => {
   const navigate = useNavigate();
+  const isFree = price === 0;
+  // const finalPrice = promotional_price ?? price;
 
   return (
     <div
-      onClick={() => navigate(`/kursus/${id}`)}
+      onClick={() => navigate(`/kursus/${slug}`)}
       className="card-shine w-full h-full flex flex-col bg-white rounded-xl border border-gray-400 shadow-sm
         transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
         hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
@@ -47,7 +44,7 @@ const CourseCard = ({
       <div className="relative w-full aspect-video flex items-center justify-center p-2 sm:p-3 overflow-hidden">
         <div className="relative overflow-hidden rounded-xl shine__animate w-full h-full">
           <img
-            src={`/images/${image}`}
+            src={photo}
             alt={title}
             className="w-full h-full object-cover"
             onError={(e) => {
@@ -56,19 +53,6 @@ const CourseCard = ({
             }}
           />
         </div>
-        {/* Badge */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1 z-30">
-          {level && (
-            <span className="bg-white text-[10px] font-semibold font-sans px-2 py-0.5 rounded-full shadow">
-              {level}
-            </span>
-          )}
-          {badge && (
-            <span className="bg-white text-[10px] font-semibold font-sans px-2 py-0.5 rounded-full shadow">
-              {badge}
-            </span>
-          )}
-        </div>
       </div>
 
       {/* Konten Bagian Bawah */}
@@ -76,7 +60,7 @@ const CourseCard = ({
         {/* Kategori dan Rating */}
         <div className="flex items-center justify-between mb-3">
           <span className="bg-gray-100 font-semibold text-gray-800 font-sans text-[10px] px-2 py-0.5 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
-            {category}
+            {sub_category}
           </span>
           <div className="flex items-center text-gray-500 text-[11px]">
             <FaStar
@@ -87,7 +71,7 @@ const CourseCard = ({
                 strokeWidth: 20,
               }}
             />
-            <span>({rating.toFixed(1)} Reviews)</span>
+            <span>({rating !== null ? rating.toFixed(1) : "0.0"} Reviews)</span>
           </div>
         </div>
         {/* Judul */}
@@ -105,14 +89,13 @@ const CourseCard = ({
             </span>
           </h3>
         </div>
+
         {/* Author */}
         <div className="mt-auto">
           <p className="text-xs text-gray-500 mb-4 line-clamp-1">
-            By{" "}
-            <span className="font-semibold text-gray-700 font-sans">
-              {author}
-            </span>
+            By <span className="font-semibold text-gray-700 font-sans">GetSkill</span>
           </p>
+
           {/* Footer */}
           <div className="mb-2 flex flex-row items-center justify-between gap-2">
             <button
@@ -121,17 +104,29 @@ const CourseCard = ({
                 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-none active:translate-y-0.5"
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(`/kursus/${id}`);
+                navigate(`/kursus/${slug}`);
               }}
             >
               Detail Course →
             </button>
-            <p
-              className={`font-bold font-sans ${isFree ? "text-purple-500" : "text-purple-700"
-                }`}
-            >
-              {isFree ? "Free" : formatRupiah(price)}
-            </p>
+            <div className="flex flex-col items-end">
+              {promotional_price ? (
+                <>
+                  <span className="line-through text-gray-400 text-xs">
+                    {formatRupiah(price)}
+                  </span>
+                  <span className="font-bold text-purple-700">
+                    {formatRupiah(promotional_price)}
+                  </span>
+                </>
+              ) : (
+                <p
+                  className={`font-bold font-sans ${isFree ? "text-purple-500" : "text-purple-700"} text-[clamp(10px,2vw,14px)]`}
+                >
+                  {isFree ? "Free" : formatRupiah(price)}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -139,18 +134,37 @@ const CourseCard = ({
   );
 };
 
-// --- Course List ---
+// --- Popular Course List ---
 const PopularCourseList = () => {
   const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<TopCourse[]>([]);
 
   useEffect(() => {
-    // Simulasi fetch data
-    const timer = setTimeout(() => {
-      setCourses(dummyCourses.slice(0, 4));
-      setLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
+    async function loadPopularCourses() {
+      try {
+        const data = await fetchTopCourses();
+        const processedData = data
+          .sort((a, b) => {
+            const ratingA = a.rating || 0;
+            const ratingB = b.rating || 0;
+            if (ratingB === ratingA) {
+              return b.course_review_count - a.course_review_count;
+            }
+            return ratingB - ratingA;
+          })
+          .map((course, index) => ({
+            ...course,
+            order: index + 1
+          }));
+
+        setCourses(processedData.slice(0, 4));
+      } catch (err) {
+        console.error("Error load popular courses:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadPopularCourses();
   }, []);
 
   const gridClass =
