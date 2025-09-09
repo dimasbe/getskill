@@ -19,6 +19,8 @@ import DetailBerita from "../pages/guest/news/NewsDetail";
 import PaymentPage from "../components/payment/PaymentPage";
 import usePageTitle from "../hooks/public/usePageTitle";
 
+import Dashboard from "../pages/user/Dashboard";
+
 function RouteChangeLoader() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
@@ -61,6 +63,9 @@ function RouteChangeLoader() {
         <Route path="/berita/:slug" element={<DetailBerita />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
         <Route path="/faq" element={<Faq />} />
+
+
+        <Route path="/dashboard-user" element={<Dashboard />} />
       </Route>
     </Routes>
   );

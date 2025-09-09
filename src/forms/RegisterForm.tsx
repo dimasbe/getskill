@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema, type RegisterFormValues } from "./validation/registerScema";
 import { Button, Toast } from "flowbite-react";
+import { authService } from "../features/user/user_service";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,15 +29,31 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      console.log("Register Data:", data);
 
-      setToast({ type: "success", message: "Pendaftaran berhasil! Silakan login." });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const payload = {
+        name: data.fullName,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
+      };
+
+      const result = await authService.register(payload);
+
+      if (result && result.success) {
+        setToast({ type: "success", message: result.message || "Pendaftaran berhasil! Silakan login." });
+        window.location.href = "/login";
+      } else {
+        setToast({ type: "error", message: result?.message || "Pendaftaran gagal. Coba lagi." });
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setToast({ type: "error", message: "Terjadi kesalahan saat mendaftar." });
     }
-    setTimeout(() => setToast(null), 5000);
+
+    setTimeout(() => setToast(null), 20000);
   };
+
 
   return (
     <>
