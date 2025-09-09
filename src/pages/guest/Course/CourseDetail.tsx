@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
 import { fetchCourseDetail } from "../../../features/course/_service/course_service";
 import type { DetailCourse } from "../../../features/course/_course";
+
 import CourseHeader from "../../../components/course/DetailCourse/CourseHeader";
 import CourseMain from "../../../components/course/DetailCourse/CourseMain";
 import CourseSidebar from "../../../components/course/DetailCourse/CourseSidebar";
@@ -10,28 +12,34 @@ import CourseDetailSkeleton from "../../../components/course/DetailCourse/Course
 
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
-  const [courseData, setCourseData] = useState<DetailCourse| null>(null);
+
+  const [courseData, setCourseData] = useState<DetailCourse | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // 🔹 Fetch data detail kursus berdasarkan ID
   useEffect(() => {
-    if (id) {
-      fetchCourseDetail(id)
-        .then((data) => {
-          setCourseData(data);
-        })
-        .catch((err) => {
-          console.error("Error fetching course:", err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
+    if (!id) return;
+
+    const loadCourseDetail = async () => {
+      try {
+        const data = await fetchCourseDetail(id);
+        setCourseData(data);
+      } catch (err) {
+        console.error("Error fetching course:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCourseDetail();
   }, [id]);
 
+  // 🔹 Loading state
   if (loading) {
     return <CourseDetailSkeleton />;
   }
 
+  // 🔹 Data kosong
   if (!courseData) {
     return (
       <motion.div
@@ -45,13 +53,15 @@ export default function CourseDetail() {
     );
   }
 
-  const totalModul = courseData.modules?.length || 0;
+  // 🔹 Hitung total modul & kuis
+  const totalModul = courseData.modules?.length ?? 0;
   const totalKuis =
     courseData.modules?.reduce(
       (total, modul) => total + (modul.quizz_count || 0),
       0
-    ) || 0;
+    ) ?? 0;
 
+  // 🔹 Render layout utama
   return (
     <motion.div
       className="min-h-screen bg-gray-50"
@@ -64,7 +74,7 @@ export default function CourseDetail() {
       <CourseHeader title={courseData.title} />
 
       {/* Layout Utama */}
-      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 grid grid-cols-1 lg:grid-cols-12 gap-1">
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Konten Utama */}
         <div className="lg:col-span-8">
           <CourseMain courseData={courseData} />
