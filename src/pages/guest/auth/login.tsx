@@ -11,7 +11,7 @@ const Login = () => {
                 <BackgroundShape />
 
                 {/* Konten Kiri */}
-                <div className="relative bg-purple-300 px-80 2xl:px-80 xl:px-80 lg:px-60 md:px-40 py-75 2xl:py-75 xl:py-75 lg:py-65 md:py-60 rounded-3xl overflow-hidden">
+                <div className="relative bg-purple-300 px-80 2xl:px-80 xl:px-80 lg:px-65 md:px-40 py-75 2xl:py-75 xl:py-75 lg:py-65 md:py-60 rounded-3xl overflow-hidden">
                     <div className="absolute top-7 2xl:top-7 xl:top-7 lg:top-6 md:top-7 left-7 2xl:left-7 xl:left-7 lg:left-6 md:left-7 p-6 2xl:p-6 xl:p-6 lg:p-4 md:p-0  z-10 ">
                         <h1 className="text-4xl 2xl:text-4xl xl:text-4xl lg:text-3xl md:text-2xl text-white font-bold text-left leading-normal">
                             Tingkatkan <br />
@@ -30,7 +30,7 @@ const Login = () => {
                         {/* Shape */}
                         <Shape />
                     </div>
-                    <div className="absolute top-95 2xl:top-95 xl:top-95 lg:top-80 md:top-70 left-85 2xl:left-85 xl:left-85 lg:left-65 md:left-45">
+                    <div className="absolute top-95 2xl:top-95 xl:top-95 lg:top-80 md:top-70 left-85 2xl:left-85 xl:left-85 lg:left-70 md:left-45">
                         <p className=" text-white text-left font-medium z-10 text-1xl 2xl:text-1xl xl:text-1xl lg:text-sm md:text-xs max-w-xs">
                             Selamat Datang di GetSkill.id. <br />
                             Silakan masuk untuk <br />
