@@ -18,8 +18,8 @@ import UpdatePassword from '../pages/guest/auth/updatepassword';
 import DetailBerita from "../pages/guest/news/NewsDetail";
 import PaymentPage from "../components/payment/PaymentPage";
 import usePageTitle from "../hooks/public/usePageTitle";
-
 import Dashboard from "../pages/user/Dashboard";
+import ContactPage from "../pages/guest/contact/ContactPage";
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -63,9 +63,8 @@ function RouteChangeLoader() {
         <Route path="/berita/:slug" element={<DetailBerita />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
         <Route path="/faq" element={<Faq />} />
-
-
         <Route path="/dashboard-user" element={<Dashboard />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Route>
     </Routes>
   );
