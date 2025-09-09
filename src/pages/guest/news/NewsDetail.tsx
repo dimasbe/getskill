@@ -304,8 +304,8 @@ const DetailBerita: React.FC = () => {
             text-gray-800 leading-relaxed
             [&>p]:mb-4 [&>p]:text-justify
             [&>h3]:text-xl [&>h3]:font-bold [&>h3]:-mt-4 [&>h3]:mb-2
-            [&>blockquote]:bg-purple-100 [&>blockquote]:text-purple-900 [&>blockquote]:italic
-            [&>blockquote]:p-6 [&>blockquote]:rounded-md [&>blockquote]:relative [&>blockquote]:my-6
+            [&>blockquote]:bg-purple-100 [&>blockquote]:text-purple-900 [&>blockquote]:italic [&>blockquote]:text-justify
+            [&>blockquote]:p-10 [&>blockquote]:rounded-md [&>blockquote]:relative [&>blockquote]:my-6
             [&>blockquote::after]:content-['”'] [&>blockquote::after]:absolute [&>blockquote::after]:text-7xl
             [&>blockquote::after]:text-purple-300 [&>blockquote::after]:right-4 [&>blockquote::after]:top-2
             [&>blockquote::after]:font-[Arial]
