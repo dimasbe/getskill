@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigate hook
 import Illustration from "../../assets/img/others/concept12.png.png";
 
+// Skeleton Loader
 const SkeletonContact: React.FC = () => {
   return (
     <section className="contact-section py-16 xl:py-20 2xl:py-24">
       <div className="container mx-auto px-4 md:px-6 xl:px-12 2xl:px-16">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16 xl:gap-20 2xl:gap-24">
-
           {/* Left side - Image Skeleton */}
           <div className="w-full lg:w-5/12 xl:w-4/12 2xl:w-3/12 flex justify-center lg:justify-start relative lg:-ml-6 md:px-6 xl:ml-10 2xl:ml-12">
             <div className="relative bg-gray-200/40 p-4 w-[85%] sm:w-[70%] md:w-[60%] lg:w-auto
@@ -32,15 +33,16 @@ const SkeletonContact: React.FC = () => {
 
             <div className="bg-gray-300/50 h-10 w-40 rounded-full mt-6 animate-pulse"></div>
           </div>
-
         </div>
       </div>
     </section>
   );
 };
 
+// Main Component
 const ContactSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); // ✅ React Router Hook
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1500);
@@ -48,6 +50,11 @@ const ContactSection: React.FC = () => {
   }, []);
 
   if (isLoading) return <SkeletonContact />;
+
+  // Handler redirect
+  const handleRedirect = () => {
+    navigate("/login");
+  };
 
   return (
     <section className="contact-section py-16 xl:py-20 2xl:py-24">
@@ -59,12 +66,14 @@ const ContactSection: React.FC = () => {
             <div
               className="absolute bg-orange-50 hidden sm:block"
               style={{
-                width: "clamp(220px, 40vw, 460px)",
+                width: "clamp(220px, 41vw, 460px)",
                 height: "clamp(140px, 25vw, 300px)",
-                borderRadius: "50% 100% 100% 50% / 60% 100% 100% 60%",
-                transform: "rotate(-3deg) translateY(30px)",
+                borderRadius: "50%",
+                transform: "rotate(-3deg)",
+                left: "-20px",
               }}
             ></div>
+
 
             <img
               src={Illustration}
@@ -99,6 +108,7 @@ const ContactSection: React.FC = () => {
               {/* Button */}
               <div className="mt-6" data-aos="" data-aos-delay="700">
                 <button
+                  onClick={handleRedirect} 
                   className="group bg-[#9425FE] text-white font-semibold py-2 px-4
                   rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                   transition-all duration-500 ease-in-out
