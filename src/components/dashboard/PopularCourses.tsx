@@ -134,23 +134,37 @@ const CourseCard = ({
   );
 };
 
-// --- Course List ---
+// --- Popular Course List ---
 const PopularCourseList = () => {
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState<TopCourse[]>([]);
 
   useEffect(() => {
-    async function loadCourses() {
+    async function loadPopularCourses() {
       try {
         const data = await fetchTopCourses();
-        setCourses(data.slice(0, 4));
+        const processedData = data
+          .sort((a, b) => {
+            const ratingA = a.rating || 0;
+            const ratingB = b.rating || 0;
+            if (ratingB === ratingA) {
+              return b.course_review_count - a.course_review_count;
+            }
+            return ratingB - ratingA;
+          })
+          .map((course, index) => ({
+            ...course,
+            order: index + 1
+          }));
+
+        setCourses(processedData.slice(0, 4));
       } catch (err) {
-        console.error("Error load courses:", err);
+        console.error("Error load popular courses:", err);
       } finally {
         setLoading(false);
       }
     }
-    loadCourses();
+    loadPopularCourses();
   }, []);
 
   const gridClass =

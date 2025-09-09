@@ -184,4 +184,20 @@ export interface TopCourse {
   rating: number | null;
   sub_category: string;
   user: string;
+  course_review_count: number;
+  order?: number;
+}
+
+export interface TopRatingCourse {
+  id: string;
+  title: string;
+  slug: string;
+  photo: string;
+  price: number;
+  promotional_price: number | null;
+  rating: number | null;
+  sub_category: string;
+  user: string;
+  user_courses_count: number;
+  order?: number;
 }

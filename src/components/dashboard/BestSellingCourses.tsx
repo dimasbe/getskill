@@ -6,8 +6,8 @@ import { FaStar } from "react-icons/fa";
 import { formatRupiah } from "../../utils/formatPrice";
 import CourseSkeleton from "../../components/course/PageCourse/CourseSkeleton";
 
-import { fetchTopCourses } from "../../features/course/_service/course_service";
-import type { TopCourse } from "../../features/course/_course";
+import { fetchTopRatingCourses } from "../../features/course/_service/course_service";
+import type { TopRatingCourse } from "../../features/course/_course";
 
 // --- Course Card Component ---
 interface CourseCardProps {
@@ -28,10 +28,10 @@ const CourseCard = ({
   price,
   promotional_price,
   rating,
-}: CourseCardProps) => {
+}:
+  CourseCardProps) => {
   const navigate = useNavigate();
   const isFree = price === 0;
-  // const finalPrice = promotional_price ?? price;
 
   return (
     <div
@@ -134,23 +134,33 @@ const CourseCard = ({
   );
 };
 
-// --- Course List ---
-const PopularCourseList = () => {
+// --- Best Selling Course List ---
+const BestSellingCourseList = () => {
   const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState<TopCourse[]>([]);
+  const [courses, setCourses] = useState<TopRatingCourse[]>([]);
 
   useEffect(() => {
-    async function loadCourses() {
+    async function loadBestSellingCourses() {
       try {
-        const data = await fetchTopCourses();
-        setCourses(data.slice(0, 4));
+        const data = await fetchTopRatingCourses();
+        // Pastikan data memiliki user_courses_count
+        const processedData = data
+          .map((course, index) => ({
+            ...course,
+            user_courses_count: course.user_courses_count ?? 0,
+            order: index + 1
+          }))
+          .sort((a, b) => b.user_courses_count - a.user_courses_count);
+        ;
+
+        setCourses(processedData.slice(0, 4));
       } catch (err) {
-        console.error("Error load courses:", err);
+        console.error("Error load best selling courses:", err);
       } finally {
         setLoading(false);
       }
     }
-    loadCourses();
+    loadBestSellingCourses();
   }, []);
 
   const gridClass =
@@ -214,7 +224,7 @@ export default function PopularCourse() {
           </p>
         </div>
         <div className="px-4 py-14 bg-gray-50 mx-0 sm:mx-4 md:mx-6 lg:mx-20 xl:mx-24 2xl:mx-30">
-          <PopularCourseList />
+          <BestSellingCourseList />
         </div>
       </div>
     </div>

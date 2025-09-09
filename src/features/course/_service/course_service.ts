@@ -1,5 +1,5 @@
 import api from "../../../services/api";
-import type { Course, Category, SubCategory, DetailCourse, TopCourse } from "../_course";
+import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse } from "../_course";
 
 // =============================
 // COURSE
@@ -78,6 +78,17 @@ export function getSubCategoryName(sub: string | SubCategory): string {
 export async function fetchTopCourses(): Promise<TopCourse[]> {
   try {
     const response = await api.get("/api/top-courses");
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Gagal mengambil data top courses:", error);
+    throw error;
+  }
+}
+
+// fetch khusus top rating course
+export async function fetchTopRatingCourses(): Promise<TopRatingCourse[]> {
+  try {
+    const response = await api.get("/api/top-rating-courses");
     return response.data?.data || [];
   } catch (error) {
     console.error("Gagal mengambil data top courses:", error);
