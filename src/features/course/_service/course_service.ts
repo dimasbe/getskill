@@ -1,5 +1,5 @@
 import api from "../../../services/api";
-import type { Course,Category, SubCategory, DetailCourse } from "../_course";
+import type { Course, Category, SubCategory, DetailCourse, TopCourse } from "../_course";
 
 // Ambil semua course
 export async function fetchCourses(): Promise<Course[]> {
@@ -47,4 +47,15 @@ export async function fetchCategories(): Promise<Category[]> {
 // Utility untuk mendapatkan nama subkategori
 export function getSubCategoryName(sub: string | SubCategory): string {
   return typeof sub === "string" ? sub : sub?.name ?? "";
+}
+
+// fetch khusus top course
+export async function fetchTopCourses(): Promise<TopCourse[]> {
+  try {
+    const response = await api.get("/api/top-courses");
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Gagal mengambil data top courses:", error);
+    throw error;
+  }
 }

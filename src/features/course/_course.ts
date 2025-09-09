@@ -140,3 +140,15 @@ export interface Category {
   course_item_count: number;
   sub_category: SubCategory[];
 }
+
+export interface TopCourse {
+  id: string;
+  title: string;
+  slug: string;
+  photo: string;
+  price: number;
+  promotional_price: number | null;
+  rating: number | null;
+  sub_category: string;
+  user: string;
+}
