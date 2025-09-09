@@ -1,46 +1,53 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import SidebarFilter from '../../../components/course/PageCourse/SidebarFilter';
-import CourseList from '../../../components/course/PageCourse/CourseList';
-import Header from '../../../components/course/PageCourse/Header';
+
+// Components
+import SidebarFilter from "../../../components/course/PageCourse/SidebarFilter";
+import CourseList from "../../../components/course/PageCourse/CourseList";
+import Header from "../../../components/course/PageCourse/Header";
 
 export default function KursusPage() {
   const location = useLocation();
 
+  // State untuk filter pencarian & kategori
   const [filters, setFilters] = useState({
     categories: [] as string[],
-    priceMin: '',
-    priceMax: '',
-    search: '',
+    priceMin: "",
+    priceMax: "",
+    search: "",
   });
 
+  // State untuk pagination
   const [page, setPage] = useState(1);
 
+  // Ambil query parameter dari URL (search & category)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const searchQuery = params.get('search') || '';
-    const category = params.get('category') || '';
+    const searchQuery = params.get("search") || "";
+    const category = params.get("category") || "";
 
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       search: searchQuery,
       categories: category ? [category] : prev.categories,
     }));
   }, [location.search]);
 
+  // Reset halaman ke 1 jika filter berubah
   useEffect(() => {
     setPage(1);
   }, [filters]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
-      {/* HEADER */}
+      {/* Header Halaman */}
       <Header />
 
-      {/* MAIN CONTENT */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-5 lg:px-8 py-8 sm:py-10 grid lg:grid-cols-4 gap-6 lg:gap-8">
-        {/* Sidebar */}
+      {/* Konten Utama */}
+      <div className="max-w-6xl mx-auto grid gap-6 lg:grid-cols-4 lg:gap-8 px-4 sm:px-5 lg:px-8 py-8 sm:py-10">
+        
+        {/* Sidebar Filter */}
         <motion.div
           initial={{ x: -40, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}

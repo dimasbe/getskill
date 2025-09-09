@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import CourseCard from "./CourseCard";
-import CourseSkeleton from "./CourseSkeleton";
-import type { Course } from "../../../features/course/_course";
-import { fetchCourses } from "../../../features/course/_service/course_service";
-import { getSubCategoryName } from "../../../features/course/_service/course_service";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface CourseList {
+// Components
+import CourseCard from "./CourseCard";
+import CourseSkeleton from "./CourseSkeleton";
+
+// Types & Services
+import type { Course } from "../../../features/course/_course";
+import { fetchCourses, getSubCategoryName } from "../../../features/course/_service/course_service";
+
+interface CourseListProps {
   filters?: {
     categories: string[];
     priceMin: string;
@@ -25,67 +28,71 @@ export default function CourseList({
   page = 1,
   setPage,
   limit,
-}: CourseList) {
+}: CourseListProps) {
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState<Course[]>([]);
 
-  // Fetch dari API
+  /**
+   * 🚀 Fetch courses dari API saat pertama kali render
+   */
   useEffect(() => {
     setLoading(true);
     fetchCourses()
-      .then((data) => {
-        setCourses(data);
-      })
+      .then((data) => setCourses(data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
 
-  // 🔍 Filter data
+  /**
+   * 🔍 Filtering data berdasarkan:
+   * - kategori
+   * - range harga
+   * - keyword pencarian
+   */
   const filteredCourses = courses.filter((course) => {
-  const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
-  const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
+    const min = filters.priceMin ? parseInt(filters.priceMin) : 0;
+    const max = filters.priceMax ? parseInt(filters.priceMax) : Infinity;
+    const subCategoryName = getSubCategoryName(course.sub_category);
 
-  const subCategoryName = getSubCategoryName(course.sub_category);
+    const matchCategory =
+      filters.categories.length === 0 || filters.categories.includes(subCategoryName);
 
-  const matchCategory =
-    filters.categories.length === 0 ||
-    filters.categories.includes(subCategoryName);
+    const matchPriceMin = course.price >= min;
+    const matchPriceMax = course.price <= max;
 
-  const matchPriceMin = course.price >= min;
-  const matchPriceMax = course.price <= max;
+    const matchSearch =
+      !filters.search.trim() ||
+      course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+      subCategoryName.toLowerCase().includes(filters.search.toLowerCase());
 
-  const matchSearch =
-    !filters.search.trim() ||
-    course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-    subCategoryName.toLowerCase().includes(filters.search.toLowerCase());
+    return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
+  });
 
-  return matchCategory && matchPriceMin && matchPriceMax && matchSearch;
-});
-
-
-
-  // 🔄 Data yang ditampilkan
+  /**
+   * 📄 Pagination & limit data
+   */
   let currentCourses: Course[] = [];
   let totalPages = 1;
 
   if (limit) {
+    // Mode "limit" → ambil sejumlah tertentu saja
     currentCourses = filteredCourses.slice(0, limit);
   } else {
+    // Mode "pagination"
     totalPages = Math.ceil(filteredCourses.length / COURSES_PER_PAGE);
     const startIndex = (page - 1) * COURSES_PER_PAGE;
-    currentCourses = filteredCourses.slice(
-      startIndex,
-      startIndex + COURSES_PER_PAGE
-    );
+    currentCourses = filteredCourses.slice(startIndex, startIndex + COURSES_PER_PAGE);
   }
 
   const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
 
   return (
     <div className="flex flex-col min-h-[500px]">
+      {/* LIST KURSUS */}
       <div className={gridClass}>
         <AnimatePresence mode="popLayout">
           {loading ? (
+            // Skeleton saat loading
             Array.from({ length: limit || COURSES_PER_PAGE }).map((_, idx) => (
               <motion.div
                 key={`skeleton-${idx}`}
@@ -98,6 +105,7 @@ export default function CourseList({
               </motion.div>
             ))
           ) : currentCourses.length > 0 ? (
+            // Daftar kursus
             currentCourses.map((course) => (
               <motion.div
                 key={course.id}
@@ -112,6 +120,7 @@ export default function CourseList({
               </motion.div>
             ))
           ) : (
+            // Jika data kosong
             <motion.p
               key="no-course"
               initial={{ opacity: 0 }}
@@ -124,8 +133,7 @@ export default function CourseList({
         </AnimatePresence>
       </div>
 
-        {/* PAGINATION */}
-
+      {/* PAGINATION */}
       {!loading && !limit && setPage && totalPages > 0 && (
         <div className="mt-auto pt-6 sm:pt-8">
           <motion.div
