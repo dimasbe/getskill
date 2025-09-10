@@ -19,7 +19,7 @@ export interface EventDetail {
   event_date: string;
 }
 
-export interface Event {
+export interface Eventype {
   id: string;
   title: string;
   slug: string;

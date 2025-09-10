@@ -3,15 +3,15 @@ import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventCardGrid from "../../../components/public/CardEvent/EventCardGrid";
 // import { fetchEvents } from "../../../features/event/_services/eventService";
 import dumyevents from "../../../data/events";
-import type { Event } from "../../../features/event/_event";
+import type { Eventype } from "../../../features/event/_event";
 // import type { Event as ApiEvent } from "../../../features/event/_event";
 import { motion } from "framer-motion";
 import EventKategory from "../../../components/public/CardEvent/EventKategory";
 
 const Event: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [events, setEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<Eventype[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Eventype[]>([]);
 
   useEffect(() => {
     setEvents(dumyevents);

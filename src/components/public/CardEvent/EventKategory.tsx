@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SidebarSkeleton from "../../course/PageCourse/SidebarSkeleton";
 
-import type { Event } from "../../../features/event/_event";
+import type { Eventype } from "../../../features/event/_event";
 // import events from '../../../data/events';
 
 type FiltersState = {
@@ -21,8 +21,8 @@ type CategoryGroup = {
 
 type EventKategoryProps = {
   loading: boolean;
-  events: Event[];
-  onFilter: (filteredEvents: Event[]) => void;
+  events: Eventype[];
+  onFilter: (filteredEvents: Eventype[]) => void;
 };
 
 const initialFilters: FiltersState = {
