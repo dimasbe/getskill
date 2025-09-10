@@ -135,33 +135,31 @@ export default function CourseList({
 
       {/* PAGINATION */}
       {!loading && !limit && setPage && totalPages > 0 && (
-        <div className="mt-auto pt-6 sm:pt-8">
+        <div className="pt-6 sm:pt-8 mb-15 flex justify-center">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex justify-center"
+            className="flex gap-2 sm:gap-3"
           >
-            <div className="flex gap-2 sm:gap-3">
-              {Array.from({ length: totalPages }).map((_, index) => {
-                const pageNumber = index + 1;
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => setPage(pageNumber)}
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${
-                      pageNumber === page
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+            {Array.from({ length: totalPages }).map((_, index) => {
+              const pageNumber = index + 1;
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => setPage(pageNumber)}
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition ${pageNumber === page
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-purple-100"
                     }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              })}
-            </div>
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
           </motion.div>
         </div>
       )}
+
     </div>
   );
 }
