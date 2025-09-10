@@ -8,11 +8,11 @@ import {
 import { Link } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Event } from "../../../features/event/_event";
+import type { Eventype } from "../../../features/event/_event";
 import SortDropdown from "../SortDropdown";
 
 type EventCardGridProps = {
-  events: Event[];
+  events: Eventype[];
   loading?: boolean;
   initialPage?: number;
 };

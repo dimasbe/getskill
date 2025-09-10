@@ -8,12 +8,12 @@ import { FiX } from "react-icons/fi";
 import { IoIosAlert } from "react-icons/io";
 
 // import { fetchEventDetail } from "../../../features/event/_services/eventService";
-import type { Event } from "../../../features/event/_event";
+import type { Eventype } from "../../../features/event/_event";
 import events from "../../../data/events";
 
 const DetailEvent: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
-    const [event, setEvent] = useState<Event | null>(null);
+    const [event, setEvent] = useState<Eventype | null>(null);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const eventIsOver =

@@ -1,10 +1,11 @@
-import { FiAward, FiClock, FiArrowRight, FiExternalLink } from "react-icons/fi";
+import { FiClock, FiArrowRight, FiExternalLink } from "react-icons/fi";
 import { BsCalendar2Event, BsCalendar2X } from "react-icons/bs";
 import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { GraduationCap } from "lucide-react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
-import type { Event } from "../../../features/event/_event";
+import type { Eventype } from "../../../features/event/_event";
+import certificateIcon from "../../../../public/images/icon/course_icon05.svg";
 
 
 // Daftar Logo Pembayaran
@@ -31,7 +32,7 @@ const paymentLogos = [
 ];
 
 
-const EventPriceCard: React.FC<{ event: Event; eventIsOver: boolean }> = ({
+const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
   event,
   eventIsOver,
 }) => (
@@ -91,7 +92,7 @@ const EventPriceCard: React.FC<{ event: Event; eventIsOver: boolean }> = ({
           {/* Sertifikat */}
           <div className="flex justify-between items-center border-b border-gray-200 pb-2">
             <div className="flex items-center gap-2">
-              <FiAward size={20} className="text-gray-600" />
+              <img src={certificateIcon} alt="Sertifikat" className="w-5 h-5 opacity-80" />
               <span className="font-medium">Sertifikat</span>
             </div>
             <span>{event.has_certificate ? "Online Certificate" : "Include"}</span>
