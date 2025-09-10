@@ -82,7 +82,7 @@ export default function CourseMain({ courseData }: Props) {
 
         {/* Kategori & Rating */}
         <div className="flex items-center gap-4 mb-3">
-          <button className="bg-gray-200 text-[11px] font-semibold text-gray-800 px-2 py-2 rounded-full transition-all duration-300 hover:bg-purple-700 hover:text-white hover:shadow-md">
+          <button className="bg-gray-200 text-[10px] font-semibold text-gray-800 px-2 py-1 rounded-full transition-all duration-300 hover:bg-purple-700 hover:text-white hover:shadow-md">
             {getSubCategoryName(courseData.sub_category)}
           </button>
 

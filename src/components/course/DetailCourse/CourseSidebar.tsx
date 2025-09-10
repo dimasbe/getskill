@@ -88,7 +88,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
   // =========================
   const SidebarContent = (
     <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-gray-300 w-full lg:max-w-2xs mx-auto">
-      
+
       {/* === Harga Kursus === */}
       <div className="bg-purple-600 border border-purple-500 rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
         <div className="flex items-left gap-2 font-semibold text-white text-[15px]">
@@ -102,19 +102,19 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
       {/* === Tombol Beli === */}
       <button
         onClick={handleBuyNow}
-        className="my-6 w-full relative group overflow-hidden text-black font-sans font-semibold text-base py-3 px-5 
-          rounded-full flex items-center justify-center gap-2 border border-black transition-all duration-500 
-          ease-in-out shadow-[4px_4px_0px_0px_rgba(0,0,0,0.7)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] 
-          active:translate-y-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:text-white"
+        className="my-6 w-full relative group overflow-hidden text-black font-sans font-semibold text-sm py-2.5 px-4
+    rounded-full flex items-center justify-center gap-2 border border-black transition-all duration-500 
+    ease-in-out shadow-[3px_3px_0px_0px_rgba(0,0,0,0.6)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] 
+    active:translate-y-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:text-white"
       >
         <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-        <span className="relative z-10 text-[15px]">Beli Sekarang →</span>
+        <span className="relative z-10 text-[14px]">Beli Sekarang →</span>
       </button>
 
       {/* === Info Kursus === */}
       <div className="pt-3 pb-3">
-        <h4 className="text-left font-semibold text-black">Kursus ini mencakup</h4>
-        <ul className="mt-5 space-y-4 text-gray-600 text-sm">
+        <h4 className="text-left font-semibold text-black text-[15px]">Kursus ini mencakup</h4>
+        <ul className="mt-5 space-y-4 text-gray-600 text-[12px]">
           <li className="flex items-center gap-3 border-b border-gray-300 pb-4">
             <FaBook /> <span>{totalModul} Modul</span>
           </li>
@@ -133,7 +133,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
       {/* === Metode Pembayaran === */}
       <div className="border-b border-gray-300 pb-5">
-        <p className="mb-4 text-left font-semibold">Metode Pembayaran </p>
+        <p className="mb-4 text-left font-semibold text-[15px] ">Metode Pembayaran </p>
         <div className="flex flex-wrap justify-left gap-2">
           {paymentLogos.map((logo) => (
             <div
@@ -149,7 +149,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
       {/* === Bagikan Kursus === */}
       <div className="mt-4 border-b border-gray-300 pb-5">
-        <p className="mb-4 text-left font-semibold">Bagikan Kursus Ini</p>
+        <p className="mb-4 text-left font-semibold text-[15px]">Bagikan Kursus Ini</p>
         <div className="flex gap-3">
           {[
             { icon: <FaFacebookF />, color: "hover:bg-blue-200 hover:text-blue-600", url: "https://facebook.com/sharer/sharer.php?u=https://contoh.com" },
@@ -199,7 +199,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
           {/* Drawer */}
           <div className="w-full sm:w-96 h-full bg-white shadow-xl animate-slideInRight flex flex-col">
-            
+
             {/* Header */}
             <div className="p-4 border-b border-gray-200 flex-shrink-0">
               <button
