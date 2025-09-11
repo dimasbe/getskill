@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/dashboard/Dashboard";
-import Kursus from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
 import Berita from "../pages/guest/news/News";
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
@@ -20,6 +19,7 @@ import PaymentPage from "../components/payment/PaymentPage";
 import usePageTitle from "../hooks/public/usePageTitle";
 import Dashboard from "../pages/user/Dashboard";
 import ContactPage from "../pages/guest/contact/ContactPage";
+import CoursePage from "../pages/guest/Course/CoursePage";
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -54,8 +54,8 @@ function RouteChangeLoader() {
 
       <Route element={<GuestLayout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/kursus" element={<Kursus />} />
-        <Route path="/kursus/:id" element={<CourseDetail />} />
+        <Route path="/course" element={<CoursePage />} />
+        <Route path="/course/:id" element={<CourseDetail />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<DetailEvent />} />
