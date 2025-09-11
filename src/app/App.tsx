@@ -62,7 +62,9 @@ function RouteChangeLoader() {
         <Route path="/berita" element={<Berita />} />
         <Route path="/berita/:slug" element={<DetailBerita />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/faq/:id" element={<FaqDetailPage />} />
+        <Route path="/faq/category/:id" element={<FaqCategoryDetailPage />} />
         <Route path="/dashboard-user" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
       </Route>
