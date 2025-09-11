@@ -10,10 +10,9 @@ import { fetchNewsDetail, fetchNews } from "../../../features/news/services/news
 import type { News } from "../../../features/news/news";
 
 // --- Skeleton ---
-const SkeletonDetailBerita: React.FC = () => {
+const SkeletonNewsDetail: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8 animate-pulse">
-      {/* Skeleton untuk Konten utama */}
       <div className="lg:col-span-3">
         <div className="bg-gray-200 h-[350px] w-full rounded-lg shadow-md mb-4"></div>
         <div className="flex items-center gap-2 mt-4 text-sm">
@@ -61,48 +60,48 @@ const SkeletonDetailBerita: React.FC = () => {
   );
 };
 
-const DetailBerita: React.FC = () => {
+const NewsDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [berita, setBerita] = useState<News | null>(null);
-  const [relatedBerita, setRelatedBerita] = useState<News[]>([]);
+  const [news, setNews] = useState<News | null>(null);
+  const [relatedNews, setRelatedNews] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const getBerita = async () => {
+    const getNews = async () => {
       try {
         setIsLoading(true);
 
-        // Fetch berita detail
+        // Fetch News Detail
         const detail = await fetchNewsDetail(slug!);
-        setBerita(detail);
+        setNews(detail);
 
-        // Fetch semua berita untuk related
+        // Fetch All News
         const allNews = await fetchNews();
         const related = allNews
           .filter((item) => item.category_id === detail.category_id && item.slug !== slug)
           .slice(0, 5);
-        setRelatedBerita(related);
+        setRelatedNews(related);
 
       } catch (error) {
         console.error(error);
-        setBerita(null);
+        setNews(null);
       } finally {
         setIsLoading(false);
       }
     };
 
-    getBerita();
+    getNews();
   }, [slug]);
 
   useEffect(() => {
-    const savedScrollY = localStorage.getItem("detailBeritaScrollPosition");
+    const savedScrollY = localStorage.getItem("newsDetailScrollPosition");
     if (savedScrollY) {
       window.scrollTo(0, parseInt(savedScrollY));
     }
     const handleBeforeUnload = () => {
       localStorage.setItem(
-        "detailBeritaScrollPosition",
+        "newsDetailScrollPosition",
         window.scrollY.toString()
       );
     };
@@ -112,7 +111,7 @@ const DetailBerita: React.FC = () => {
     };
   }, []);
 
-  if (!isLoading && !berita) {
+  if (!isLoading && !news) {
     return (
       <div className="text-center py-20 text-gray-500">
         Berita tidak ditemukan.
@@ -120,10 +119,9 @@ const DetailBerita: React.FC = () => {
     );
   }
 
-  if (isLoading || !berita) {
+  if (isLoading || !news) {
     return (
       <div className="min-h-screen bg-white pb-20">
-        {/* Header tetap muncul */}
         <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
           <BackgroundShapes />
           <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
@@ -138,7 +136,7 @@ const DetailBerita: React.FC = () => {
           </div>
         </div>
 
-        <SkeletonDetailBerita />
+        <SkeletonNewsDetail />
       </div>
     );
   }
@@ -157,29 +155,27 @@ const DetailBerita: React.FC = () => {
             <span className="mx-1">&gt;</span>
             <Link to="/berita">Berita</Link>
             <span className="mx-1">&gt;</span>
-            <span className="text-purple-600">{berita.title}</span>
+            <span className="text-purple-600">{news.title}</span>
           </p>
         </div>
       </div>
 
-      {/* Konten utama & sidebar */}
+      {/* Content & sidebar */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-4 grid grid-cols-1 lg:grid-cols-4 gap-2">
-        {/* Konten utama */}
         <div className="lg:col-span-3">
-          {/* Tambahan: Elemen div dengan `group` */}
           <div
             className="relative group rounded-lg overflow-hidden shadow-md max-h-[350px] w-full cursor-pointer"
             onClick={() => setIsModalOpen(true)}
           >
             <img
-              src={berita.thumbnail}
-              alt={berita.title}
+              src={news.thumbnail}
+              alt={news.title}
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.currentTarget.src = defaultImg;
               }}
             />
-            {/* Tambahan: Overlay dengan `group-hover` */}
+            {/* Overlay with group-hover */}
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-lg font-semibold rounded-lg transition-opacity duration-300">
               Klik untuk melihat ukuran penuh
             </div>
@@ -187,9 +183,9 @@ const DetailBerita: React.FC = () => {
             {/* Overlay gradient */}
             <div className="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-t from-purple-900/80 via-purple-700/10 to-transparent" />
 
-            {/* Watermark bawah */}
+            {/* Watermark */}
             <div className="absolute bottom-0 left-2 right-2 flex items-center justify-between rounded-lg px-6 py-2 select-none pointer-events-none text-white text-xs font-base">
-              {/* Social Icons kiri */}
+              {/* Social Icons left */}
               <div className="flex space-x-2 text-white">
                 <a
                   href="https://instagram.com/getskill"
@@ -239,7 +235,7 @@ const DetailBerita: React.FC = () => {
                 <div>@getskill</div>
               </div>
 
-              {/* Logo tengah */}
+              {/* Getskill Logo */}
               <div className="bg-white rounded-full p-0.5 shadow-md inline-block -ml-19">
                 <img
                   src={logoGetskill}
@@ -248,7 +244,7 @@ const DetailBerita: React.FC = () => {
                 />
               </div>
 
-              {/* Teks kanan */}
+              {/* Right Text */}
               <div>getskill.id</div>
             </div>
           </div>
@@ -267,8 +263,8 @@ const DetailBerita: React.FC = () => {
                   <FiX />
                 </button>
                 <img
-                  src={berita.thumbnail}
-                  alt={berita.title}
+                  src={news.thumbnail}
+                  alt={news.title}
                   className="w-full max-h-[90vh] object-contain rounded-lg"
                   onError={(e) => {
                     e.currentTarget.src = defaultImg;
@@ -291,11 +287,11 @@ const DetailBerita: React.FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="leading-none">{berita.created}</span>
+            <span className="leading-none">{news.created}</span>
           </div>
 
           <h2 className="mt-2 text-2xl font-extrabold text-gray-900 text-left">
-            {berita.title}
+            {news.title}
           </h2>
 
           <div
@@ -312,7 +308,7 @@ const DetailBerita: React.FC = () => {
             [&_*em]:italic [&_*em]:text-gray-700 [&_em]:text-sm
             [&>hr]:hidden
           "
-            dangerouslySetInnerHTML={{ __html: berita.description }}
+            dangerouslySetInnerHTML={{ __html: news.description }}
           />
         </div>
 
@@ -339,11 +335,11 @@ const DetailBerita: React.FC = () => {
               />
             </svg>
           </div>
-          <RelatedNews relatedArticles={relatedBerita} />
+          <RelatedNews relatedArticles={relatedNews} />
         </div>
       </div>
     </div>
   );
 };
 
-export default DetailBerita;
+export default NewsDetail;

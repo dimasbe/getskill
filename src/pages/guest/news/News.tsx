@@ -4,7 +4,6 @@ import NewsCard from "../../../components/public/CardNews/NewsCard";
 import { fetchNews } from "../../../features/news/services/news_service";
 import type { News } from "../../../features/news/news";
 
-// Skeleton untuk search, filter, sort
 const SkeletonSearchFilterSort: React.FC = () => {
   return (
     <div className="flex flex-wrap gap-3 justify-center items-center mt-6 p-4 md:p-0">
@@ -29,7 +28,7 @@ const SkeletonSearchFilterSort: React.FC = () => {
   );
 };
 
-// Skeleton untuk kartu berita
+// Skeleton News Card
 const SkeletonNewsCard: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 animate-pulse">
@@ -45,7 +44,7 @@ const SkeletonNewsCard: React.FC = () => {
   );
 };
 
-const Berita: React.FC = () => {
+const News: React.FC = () => {
   const [newsList, setNewsList] = useState<News[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
@@ -54,8 +53,6 @@ const Berita: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const itemsPerPage = 8;
-
-  // Fetch API berita
   useEffect(() => {
     const loadNews = async () => {
       try {
@@ -71,7 +68,7 @@ const Berita: React.FC = () => {
     loadNews();
   }, []);
 
-  // Filter berita berdasarkan search & kategori
+  // News filter
   const categories = ["Semua", ...new Set(newsList.map((item) => item.slug.split("-")[0]))];
   const filteredArticles = newsList
     .filter((article) => {
@@ -106,8 +103,6 @@ const Berita: React.FC = () => {
       {/* Header */}
       <div className="relative px-6 py-11 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
         <BackgroundShapes />
-
-        {/* Konten tengah */}
         <div className="max-w-6xl mx-auto px-4 2xl:px-2 xl:px-18 lg:px-35 md:px-30 sm:px-30 text-left relative z-10">
           <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
             Berita
@@ -184,7 +179,7 @@ const Berita: React.FC = () => {
         </div>
       )}
 
-      {/* Isi Halaman */}
+      {/* Content */}
       <section className="py-10 bg-white rounded-lg">
         <div className="container mx-auto px-5 md:px-20 lg:px-3 xl:px-22 2xl:px-35 text-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -226,4 +221,4 @@ const Berita: React.FC = () => {
   );
 };
 
-export default Berita;
+export default News;

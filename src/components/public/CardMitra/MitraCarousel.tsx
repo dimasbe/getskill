@@ -20,7 +20,6 @@ const MitraCarousel: React.FC = () => {
                   <div className="gradient-overlay-right"></div>
 
                   <div className="flex animate-marquee whitespace-nowrap">
-                        {/* Track pertama */}
                         {partners.map((partner, index) => (
                               <div
                                     key={`track1-${partner.id || index}`}
@@ -33,7 +32,6 @@ const MitraCarousel: React.FC = () => {
                                     />
                               </div>
                         ))}
-                        {/* Track kedua (duplikat untuk transisi mulus) */}
                         {partners.map((partner, index) => (
                               <div
                                     key={`track2-${partner.id || index}`}
