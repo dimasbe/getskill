@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import logoDesktop from '../../assets/img/logo/get-skill/logo.png';
 import logoMobile from '../../assets/img/logo/get-skill/landscape.png';
-import bintang from '../../assets/landingpage/beranda/bintang.png';
-import layer1 from '../../assets/landingpage/beranda/layer1.png';
-import layer2 from '../../assets/landingpage/beranda/Layer 2.png';
+import star from '../../assets/landingpage/home/star.png';
+import layer1 from '../../assets/landingpage/home/layer1.png';
+import layer2 from '../../assets/landingpage/home/layer2.png';
 
 // --- Skeleton Loader ---
 const SkeletonAboutUs: React.FC = () => {
   return (
     <div className="relative z-10 container mx-auto px-6 sm:px-10 lg:px-20 flex flex-col md:flex-row items-center justify-center animate-pulse">
-      {/* Skeleton untuk Logo */}
+      {/* Skeleton for Logo */}
       <div className="w-full md:w-5/12 flex justify-center pr-0 md:pr-4 mb-6 md:mb-0">
         <div className="bg-gray-200 h-[100px] w-full max-w-[200px] sm:max-w-[250px] rounded-lg"></div>
       </div>
 
-      {/* Skeleton untuk Teks */}
+      {/* Skeleton for Text */}
       <div className="w-full md:w-7/12 text-center md:text-left pl-0 md:pl-4">
         <div className="bg-gray-200 h-6 w-32 rounded-full mb-4 mx-auto md:mx-0"></div>
         <div className="bg-gray-200 h-8 w-64 rounded mb-6 mx-auto md:mx-0"></div>
@@ -60,8 +60,8 @@ const AboutUsSection: React.FC = () => {
       </style>
 
       <img
-        src={bintang}
-        alt="bintang"
+        src={star}
+        alt="Star"
         className="absolute top-[15%] right-[8%] w-8 sm:w-12 opacity-100 z-0 bounce-star"
       />
       <img
@@ -75,7 +75,7 @@ const AboutUsSection: React.FC = () => {
         className="absolute -bottom-10 right-0 w-[180px] sm:w-[250px] md:w-[500px] opacity-100 z-0"
       />
 
-      {/* Kondisional Render */}
+      {/* Conditional Render */}
       {isLoading ? (
         <SkeletonAboutUs />
       ) : (
@@ -94,7 +94,7 @@ const AboutUsSection: React.FC = () => {
             />
           </div>
 
-          {/* Teks */}
+          {/* Text */}
           <div className="w-full md:w-7/12 text-center md:text-left pl-0 md:pl-0">
             <span className="px-3 py-2 text-[10px] sm:text-xs font-semibold bg-[#F6EEFE] text-[#9425FE] rounded-full">
               Tentang Kami

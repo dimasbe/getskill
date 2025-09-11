@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import komponen1 from "../../assets/landingpage/beranda/komponen1.png";
-import komponen2 from "../../assets/landingpage/beranda/komponen2.png";
-import komponen3 from "../../assets/landingpage/beranda/komponen3.png";
-import komponen4 from "../../assets/landingpage/beranda/komponen4.png";
+import component1 from "../../assets/landingpage/home/component1.png";
+import component2 from "../../assets/landingpage/home/component2.png";
+import component3 from "../../assets/landingpage/home/component3.png";
+import component4 from "../../assets/landingpage/home/component4.png";
 
 //Interface FeatureCard
 interface FeatureCardProps {
@@ -48,7 +48,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         <img src={iconSrc} alt={altText} className="w-12 h-12 object-contain" />
       </motion.div>
 
-      {/* Judul & Deskripsi */}
+      {/* Title */}
       <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3>
       <p className="text-xs text-gray-600">{description}</p>
     </motion.div>
@@ -89,26 +89,26 @@ const FeaturesSection: React.FC = () => {
           ) : (
             <>
               <FeatureCard
-                iconSrc={komponen1}
-                altText="Belajar Dari Ahli"
+                iconSrc={component1}
+                altText="Text 1"
                 title="Belajar Dari Ahli"
                 description="Kami menyediakan kursus online dengan instruktur berpengalaman."
               />
               <FeatureCard
-                iconSrc={komponen2}
-                altText="Kursus Profesional"
+                iconSrc={component2}
+                altText="Text 2"
                 title="Kursus Profesional"
                 description="Tingkatkan keterampilan Anda dengan berbagai kursus berkualitas."
               />
               <FeatureCard
-                iconSrc={komponen3}
-                altText="Program Sertifikat"
+                iconSrc={component3}
+                altText="Text 3"
                 title="Program Sertifikat"
                 description="Dapatkan sertifikat resmi untuk mendukung karier Anda."
               />
               <FeatureCard
-                iconSrc={komponen4}
-                altText="Event Pelatihan"
+                iconSrc={component4}
+                altText="Text 4"
                 title="Event Pelatihan"
                 description="Ikuti berbagai event dan pelatihan eksklusif secara online."
               />

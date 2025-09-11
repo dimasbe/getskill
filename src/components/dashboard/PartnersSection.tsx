@@ -1,33 +1,7 @@
 import React from 'react';
-import MitraCarousel from '../public/CardMitra/MitraCarousel';
-import logosmk1 from '../../assets/landingpage/beranda/17muncar.png';
-import logosmk2 from '../../assets/landingpage/beranda/alazhar.jpeg';
-import logosmk3 from '../../assets/landingpage/beranda/antartika.png';
-import logosmk4 from '../../assets/landingpage/beranda/kraksakan.png';
-import logosmk5 from '../../assets/landingpage/beranda/muhi.png';
-import logosmk6 from '../../assets/landingpage/beranda/pamekasan.jpg';
-import logosmk7 from '../../assets/landingpage/beranda/smk6jember.jpeg';
-import logosmk8 from '../../assets/landingpage/beranda/smk8jember.png';
-import logosmk9 from '../../assets/landingpage/beranda/smk9malang.jpeg';
-import logosmk10 from '../../assets/landingpage/beranda/smuhero.jpeg';
-import logosmk11 from '../../assets/landingpage/beranda/widyagama.png';
+import MitraCarousel from "../public/CardMitra/MitraCarousel";
 
-const MitraKamiPage: React.FC = () => {
-
-  const mitraImages: string[] = [
-    logosmk1,
-    logosmk2,
-    logosmk3,
-    logosmk4,
-    logosmk5,
-    logosmk6,
-    logosmk7,
-    logosmk8,
-    logosmk9,
-    logosmk10,
-    logosmk11,
-  ];
-
+const PartnersSection: React.FC = () => {
   return (
     <div className="py-[1vh] sm:py-[2vh] md:py-[3vh] lg:py-[4vh] xl:py-[5vh] 2xl:py-[6vh] bg-white font-sans antialiased p-8">
       <section className="py-16 bg-white rounded-lg">
@@ -36,7 +10,7 @@ const MitraKamiPage: React.FC = () => {
           <p className="text-md text-gray-600 mb-5 lg:mb-15">Kolaborasi menuju kesuksesan</p>
 
           <div className="w-full mx-auto">
-            <MitraCarousel images={mitraImages} />
+            <MitraCarousel />
           </div>
         </div>
       </section>
@@ -44,4 +18,4 @@ const MitraKamiPage: React.FC = () => {
   );
 };
 
-export default MitraKamiPage;
+export default PartnersSection;

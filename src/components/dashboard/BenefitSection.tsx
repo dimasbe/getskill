@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import fotomodel2 from '../../assets/landingpage/beranda/fotomodel2.png';
-
+import modelPhoto2 from '../../assets/landingpage/home/modelPhoto2.png';
 
 const SkeletonBenefit: React.FC = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-20 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 animate-pulse">
-      {/* Skeleton untuk Gambar */}
+      {/* Skeleton for Image */}
       <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
         <div className="w-full max-w-[250px] sm:max-w-sm md:max-w-md h-[300px] bg-gray-200 rounded-lg"></div>
       </div>
@@ -42,7 +41,6 @@ const BenefitPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulasikan pengambilan data selama 2 detik
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -72,16 +70,16 @@ const BenefitPage: React.FC = () => {
           <SkeletonBenefit />
         ) : (
           <div className="container mx-auto px-4 sm:px-6 lg:px-20 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-2 fade-in-up">
-            {/* Gambar */}
+            {/* Picture */}
             <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
               <img
-                src={fotomodel2}
-                alt="Belajar Online"
+                src={modelPhoto2}
+                alt="Model Photo 2"
                 className="w-full max-w-[250px] sm:max-w-sm md:max-w-md rounded-lg object-contain"
               />
             </div>
 
-            {/* Konten */}
+            {/* Content */}
             <div className="w-full md:w-1/2 text-center md:text-left">
               <span className="px-3 py-2 text-[10px] sm:text-xs font-semibold bg-[#F6EEFE] text-[#9425FE] rounded-full">
                 Benefit Yang Didapat
@@ -95,7 +93,7 @@ const BenefitPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Poin-poin */}
+              {/* Point-point */}
               <ul className="space-y-4 text-gray-700 text-sm sm:text-base text-left px-7 md:px-0">
                 <li className="flex items-center">
                   <svg className="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,7 +115,7 @@ const BenefitPage: React.FC = () => {
                 </li>
               </ul>
 
-              {/* Tombol */}
+              {/* Button Register */}
               <div className="mt-6" data-aos="fade" data-aos-delay="700">
                 <Link to="/register">
                   <button
