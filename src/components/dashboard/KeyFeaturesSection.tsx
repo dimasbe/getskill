@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import iconKomponen5 from '../../assets/landingpage/beranda/komponen5.png';
-import iconKomponen6 from '../../assets/landingpage/beranda/komponen6.png';
-import iconKomponen7 from '../../assets/landingpage/beranda/komponen7.png';
+import Component5 from '../../assets/landingpage/home/component5.png';
+import Component6 from '../../assets/landingpage/home/component6.png';
+import Component7 from '../../assets/landingpage/home/component7.png';
 
 interface FeatureItemProps {
   icon: React.ReactNode;
@@ -16,7 +16,7 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, bgC
       className={`w-full p-5 rounded-xl shadow-md border border-gray-200 transition-all duration-200 ease-in-out flex flex-col items-start ${bgColor} 
       hover:scale-[1.01] hover:shadow-lg hover:-translate-y-0.5 hover:border-gray-300`}
     >
-      {/* Icon + Title sebaris rata kiri */}
+      {/* Icon + Title */}
       <div className="flex items-center gap-3 mb-3">
         <div className="w-12 h-12 flex items-center justify-center">
           {icon}
@@ -24,7 +24,7 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, bgC
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
       </div>
 
-      {/* Description di bawah, rata kiri */}
+      {/* Description */}
       <p className="text-gray-600 text-sm text-left">{description}</p>
     </div>
   );
@@ -48,11 +48,10 @@ const SkeletonFeatures: React.FC = () => {
   );
 };
 
-const FiturUnggulanPage: React.FC = () => {
+const KeyFeaturesPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulasikan loading data selama 2 detik
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -72,28 +71,28 @@ const FiturUnggulanPage: React.FC = () => {
             Belajar dari instruktur terbaik di kelas langsung terlibat, berinteraksi, dan menyelesaikan keraguan
           </p>
 
-          {/* Grid responsif */}
+          {/* Grid */}
           {isLoading ? (
             <SkeletonFeatures />
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <FeatureItem
-                icon={<img src={iconKomponen5} alt="Mentor Terpercaya" className="w-12 h-12" />}
+                icon={<img src={Component5} alt="Mentor Terpercaya" className="w-12 h-12" />}
                 title="Mentor Terpercaya"
                 description="Mentor Kami ramah dan ahli dalam domain untuk membuat Anda belajar dengan mudah"
-                bgColor="bg-purple-100" // light
+                bgColor="bg-purple-100"
               />
               <FeatureItem
-                icon={<img src={iconKomponen6} alt="Kursus Terbaik" className="w-12 h-12" />}
+                icon={<img src={Component6} alt="Kursus Terbaik" className="w-12 h-12" />}
                 title="Kursus Terbaik"
                 description="Semua kursus kami dibuat dan untuk membuat Anda menikmati mempelajari hal-hal baru"
-                bgColor="bg-blue-100" // light
+                bgColor="bg-blue-100"
               />
               <FeatureItem
-                icon={<img src={iconKomponen7} alt="Tugas Kompetensi" className="w-12 h-12" />}
+                icon={<img src={Component7} alt="Tugas Kompetensi" className="w-12 h-12" />}
                 title="Tugas Kompetensi"
                 description="Bergabunglah dengan kelas kami dengan alat interaktif dan dukungan keraguan"
-                bgColor="bg-orange-100" // light
+                bgColor="bg-orange-100"
               />
             </div>
           )}
@@ -103,4 +102,4 @@ const FiturUnggulanPage: React.FC = () => {
   );
 };
 
-export default FiturUnggulanPage;
+export default KeyFeaturesPage;

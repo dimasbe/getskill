@@ -32,7 +32,6 @@ const CourseCard = ({
 }: CourseCardProps) => {
   const navigate = useNavigate();
   const isFree = price === 0;
-  // const finalPrice = promotional_price ?? price;
 
   return (
     <div
@@ -41,7 +40,7 @@ const CourseCard = ({
         transition-all duration-300 cursor-pointer overflow-hidden min-h-[300px]
         hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1"
     >
-      {/* Bagian Gambar */}
+      {/* Image Section */}
       <div className="relative w-full aspect-video flex items-center justify-center p-2 sm:p-3 overflow-hidden">
         <div className="relative overflow-hidden rounded-xl shine__animate w-full h-full">
           <img
@@ -56,9 +55,9 @@ const CourseCard = ({
         </div>
       </div>
 
-      {/* Konten Bagian Bawah */}
+      {/* Bottom Section Content */}
       <div className="flex-1 px-4 py-3 text-left flex flex-col">
-        {/* Kategori dan Rating */}
+        {/* Category and Rating */}
         <div className="flex items-center justify-between mb-3">
           <span className="bg-gray-100 font-semibold text-gray-800 font-sans text-[10px] px-2 py-0.5 rounded-full leading-none transition-all duration-300 ease-in-out hover:bg-purple-700 hover:text-white hover:shadow-md">
             {sub_category}
@@ -75,7 +74,7 @@ const CourseCard = ({
             <span>({rating !== null ? rating.toFixed(1) : "0.0"} Reviews)</span>
           </div>
         </div>
-        {/* Judul */}
+        {/* Title */}
         <div className="min-h-[55px] mb-3">
           <h3 className="group relative sm:text-[15px] font-sans text-black font-semibold leading-snug line-clamp-2">
             <span
@@ -210,7 +209,6 @@ const PopularCourseList = () => {
   );
 };
 
-// --- Komponen Utama PopularCourse ---
 export default function PopularCourse() {
   return (
     <div className="py-[1vh] sm:py-[2vh] md:py-[2vh] lg:py-[1vh] xl:py-[1vh] 2xl:py-[1vh] bg-gray-50">

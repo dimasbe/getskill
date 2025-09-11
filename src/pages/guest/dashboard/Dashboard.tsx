@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import HeroSection from '../../../components/dashboard/HeroSection';
 import FeaturesSection from '../../../components/dashboard/FeaturesSection';
 import AboutUsSection from '../../../components/dashboard/AboutUsSection';
-import KursusTerpopuler from '../../../components/dashboard/PopularCourses';
-import BenefitPage from '../../../components/dashboard/BenefitSection';
-import FiturUnggulanPage from '../../../components/dashboard/KeyFeaturesSection';
-import KursusTerlarisPage from '../../../components/dashboard/BestSellingCourses';
-import KelasIndustriPage from '../../../components/dashboard/IndustryClassSection';
-import MitraKamiPage from '../../../components/dashboard/PartnersSection';
-import BeritaTerbaruPage from '../../../components/dashboard/LatestNewsSection';
+import PopularCourses from '../../../components/dashboard/PopularCourses';
+import BenefitSection from '../../../components/dashboard/BenefitSection';
+import KeyFeaturesSection from '../../../components/dashboard/KeyFeaturesSection';
+import BestSellingCourses from '../../../components/dashboard/BestSellingCourses';
+import IndustryClassSection from '../../../components/dashboard/IndustryClassSection';
+import PartnersSection from '../../../components/dashboard/PartnersSection';
+import LatestNewsSection from '../../../components/dashboard/LatestNewsSection';
 
 const LandingPage: React.FC = () => {
 
@@ -34,13 +34,13 @@ const LandingPage: React.FC = () => {
             <HeroSection />
             <FeaturesSection />
             <AboutUsSection />
-            <KursusTerpopuler />
-            <BenefitPage />
-            <FiturUnggulanPage />
-            <KursusTerlarisPage />
-            <KelasIndustriPage />
-            <MitraKamiPage />
-            <BeritaTerbaruPage />
+            <PopularCourses />
+            <BenefitSection />
+            <KeyFeaturesSection />
+            <BestSellingCourses />
+            <IndustryClassSection />
+            <PartnersSection />
+            <LatestNewsSection />
         </div>
     );
 };

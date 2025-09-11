@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import komponen8 from '../../assets/landingpage/beranda/komponen8.png';
-import komponen9 from '../../assets/landingpage/beranda/komponen9.png';
+import component8 from '../../assets/landingpage/home/component8.png';
+import component9 from '../../assets/landingpage/home/component9.png';
 
-const SkeletonKelasIndustri: React.FC = () => {
+const SkeletonIndustryClass: React.FC = () => {
   return (
     <div className="container max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col md:flex-row items-center justify-center gap-10 z-10 relative animate-pulse">
       <div className="md:w-1/2 text-center md:text-left">
@@ -25,7 +25,7 @@ const SkeletonKelasIndustri: React.FC = () => {
   );
 };
 
-const KelasIndustriPage: React.FC = () => {
+const IndustryClassSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -35,21 +35,18 @@ const KelasIndustriPage: React.FC = () => {
   return (
     <div className="py-[3vh] sm:py-[4vh] md:py-[5vh] lg:py-[8vh] xl:py-[10vh] 2xl:py-[12vh] bg-gray-50 font-sans antialiased">
       <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-gray-50 rounded-lg relative overflow-hidden">
-        {/* Dekorasi Gambar 1 */}
         <img
-          src={komponen8}
-          alt="Dekorasi Gelombang"
+          src={component8}
+          alt="Component 8"
           className="absolute z-0 opacity-100 animate-rotate
                      hidden sm:block
                      top-4 sm:top-6 md:top-10
                      right-6 sm:right-16 md:right-[120px]
                      w-8 sm:w-10 md:w-14 h-auto"
         />
-
-        {/* Dekorasi Gambar 2 */}
         <img
-          src={komponen9}
-          alt="Dekorasi Geometris"
+          src={component9}
+          alt="Component 9"
           className="absolute z-0 opacity-100 animate-jump
                      hidden sm:block
                      bottom-8 sm:bottom-12 md:bottom-[45px]
@@ -58,10 +55,9 @@ const KelasIndustriPage: React.FC = () => {
         />
 
         {isLoading ? (
-          <SkeletonKelasIndustri />
+          <SkeletonIndustryClass />
         ) : (
           <div className="container max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col md:flex-row items-center justify-center gap-10 z-10 relative">
-            {/* Bagian Teks */}
             <div className="md:w-1/2 text-center md:text-left">
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
                 Jelajahi Kelas{' '}
@@ -75,7 +71,7 @@ const KelasIndustriPage: React.FC = () => {
                 langsung dari para ahli dan siapkan diri untuk karier yang kompetitif.
               </p>
 
-              {/* Tombol */}
+              {/* Button Login */}
               <div className="mt-6" data-aos="fade" data-aos-delay="700">
                 <Link to="/login">
                   <button
@@ -105,7 +101,7 @@ const KelasIndustriPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Bagian Statistik */}
+            {/* Statistics Section */}
             <div className="md:w-1/2 grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-5 text-center">
               <div className="bg-white p-4 sm:p-6 md:p-2 lg:p-6 aspect-[4/3] md:aspect-square rounded-xl shadow-lg flex flex-col items-center justify-center">
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#9900FF]">
@@ -141,4 +137,4 @@ const KelasIndustriPage: React.FC = () => {
   );
 };
 
-export default KelasIndustriPage;
+export default IndustryClassSection;
