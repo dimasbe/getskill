@@ -116,7 +116,6 @@ const Navbar = () => {
     }
   }, [filters.categories, navigate]);
 
-
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
@@ -136,7 +135,13 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md 
-      ${showNavbar ? (scrollDirection === "down" ? "animate-slideDown" : "translate-y-0 opacity-100") : "-translate-y-full opacity-0"}`}
+      ${
+        showNavbar
+          ? scrollDirection === "down"
+            ? "animate-slideDown"
+            : "translate-y-0 opacity-100"
+          : "-translate-y-full opacity-0"
+      }`}
     >
       <div className="xl:w-full px-9 2xl:px-30 xl:px-25 lg:px-25 md:px-25 h-20 flex font-sans justify-between items-center">
         {/* Logo & Links */}
@@ -227,7 +232,7 @@ const Navbar = () => {
               {/* Tombol Logout */}
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 bg-red-500 text-white text-xs hover:text-black font-bold px-4 py-2 rounded-full hover:bg-red-600 transition"
+                className="hidden lg:block items-center gap-2 bg-red-500 text-white text-xs hover:text-black font-bold px-4 py-2 rounded-full hover:bg-red-600 transition"
               >
                 <BsBoxArrowLeft size={20} />
                 <span>Logout</span>
@@ -254,18 +259,24 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden px-6 pt-2 pb-4 space-y-2 border-t bg-white">
-          {/* navLinks kamu */}
-
+        <div className="lg:hidden px-6 pt-2 pb-4 space-y-2 border-t-4 border-amber-100 bg-white">
+          {navLinks.map(({ name, to }) => (
+            <NavLink
+              key={name}
+              to={to}
+              onClick={() => setIsMenuOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? "block text-purple-700 font-semibold text-sm"
+                  : "block text-gray-800 font-semibold text-sm hover:text-purple-700"
+              }
+            >
+              {" "}
+              {name}{" "}
+            </NavLink>
+          ))}
           {isLoggedIn ? (
             <div className="flex flex-col space-y-2">
-              <Link
-                to="/profile"
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center space-x-2 text-sm font-semibold text-gray-700 hover:text-purple-700"
-              >
-                <FaUserCircle size={20} />
-              </Link>
               <button
                 onClick={handleLogout}
                 className="bg-red-500 text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-red-600 transition"
