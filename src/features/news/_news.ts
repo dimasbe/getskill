@@ -1,4 +1,4 @@
-export interface News {
+export interface _News {
     id: string;
     title: string;
     slug: string;

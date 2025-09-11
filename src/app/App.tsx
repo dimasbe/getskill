@@ -4,7 +4,6 @@ import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/dashboard/Dashboard";
 import Kursus from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
-import Berita from "../pages/guest/news/News";
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
@@ -15,11 +14,12 @@ import Register from "../pages/guest/auth/register";
 import AuthLayout from "./route/AuthLayout";
 import ForgotPassword from "../pages/guest/auth/forgotpassword";
 import UpdatePassword from '../pages/guest/auth/updatepassword';
-import DetailBerita from "../pages/guest/news/NewsDetail";
 import PaymentPage from "../components/payment/PaymentPage";
 import usePageTitle from "../hooks/public/usePageTitle";
 import Dashboard from "../pages/user/Dashboard";
 import ContactPage from "../pages/guest/contact/ContactPage";
+import NewsDetail from "../pages/guest/news/NewsDetail";
+import News from "../pages/guest/news/News";
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -59,8 +59,8 @@ function RouteChangeLoader() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<EventDetails />} />
-        <Route path="/berita" element={<Berita />} />
-        <Route path="/berita/:slug" element={<DetailBerita />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/news/:slug" element={<NewsDetail />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/dashboard-user" element={<Dashboard />} />

@@ -7,7 +7,7 @@ import defaultImg from "../../../assets/Default-Img.png";
 import { FiX } from "react-icons/fi";
 
 import { fetchNewsDetail, fetchNews } from "../../../features/news/services/news_service";
-import type { News } from "../../../features/news/news";
+import type { _News } from "../../../features/news/_news";
 
 // --- Skeleton ---
 const SkeletonNewsDetail: React.FC = () => {
@@ -62,8 +62,8 @@ const SkeletonNewsDetail: React.FC = () => {
 
 const NewsDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [news, setNews] = useState<News | null>(null);
-  const [relatedNews, setRelatedNews] = useState<News[]>([]);
+  const [news, setNews] = useState<_News | null>(null);
+  const [relatedNews, setRelatedNews] = useState<_News[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
