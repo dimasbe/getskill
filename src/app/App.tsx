@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/dashboard/Dashboard";
+import Kursus from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
-import Berita from "../pages/guest/news/News";
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import FaqPage from "../pages/guest/Faq";
 import FaqDetailPage from "../pages/guest/FaqDetail";
@@ -16,12 +16,12 @@ import Register from "../pages/guest/auth/register";
 import AuthLayout from "./route/AuthLayout";
 import ForgotPassword from "../pages/guest/auth/forgotpassword";
 import UpdatePassword from '../pages/guest/auth/updatepassword';
-import DetailBerita from "../pages/guest/news/NewsDetail";
 import PaymentPage from "../components/payment/PaymentPage";
 import usePageTitle from "../hooks/public/usePageTitle";
 import Dashboard from "../pages/user/Dashboard";
 import ContactPage from "../pages/guest/contact/ContactPage";
-import CoursePage from "../pages/guest/Course/CoursePage";
+import NewsDetail from "../pages/guest/news/NewsDetail";
+import News from "../pages/guest/news/News";
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -56,13 +56,13 @@ function RouteChangeLoader() {
 
       <Route element={<GuestLayout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/course" element={<CoursePage />} />
-        <Route path="/course/:id" element={<CourseDetail />} />
+        <Route path="/kursus" element={<Kursus />} />
+        <Route path="/kursus/:id" element={<CourseDetail />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<EventDetails />} />
-        <Route path="/berita" element={<Berita />} />
-        <Route path="/berita/:slug" element={<DetailBerita />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/news/:slug" element={<NewsDetail />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:id" element={<FaqDetailPage />} />
