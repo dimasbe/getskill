@@ -9,7 +9,7 @@ import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import Faq from '../pages/guest/Faq';
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/Course/CourseDetail'
-import DetailEvent from "../pages/guest/event/DetailEvent";
+import EventDetails from "../pages/guest/event/EventDetails";
 import Login from "../pages/guest/auth/login";
 import Register from "../pages/guest/auth/register";
 import AuthLayout from "./route/AuthLayout";
@@ -58,7 +58,7 @@ function RouteChangeLoader() {
         <Route path="/kursus/:id" element={<CourseDetail />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/event" element={<Event />} />
-        <Route path="/event/:slug" element={<DetailEvent />} />
+        <Route path="/event/:slug" element={<EventDetails />} />
         <Route path="/berita" element={<Berita />} />
         <Route path="/berita/:slug" element={<DetailBerita />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
