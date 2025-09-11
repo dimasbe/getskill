@@ -55,9 +55,9 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                 </div>
             </div>
 
-            {/* Konten */}
+            {/* Content */}
             <div className="relative z-10 p-3">
-                {/* Tanggal */}
+                {/* Date */}
                 <div className="flex items-center text-[11px] text-gray-500 mb-1">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
                     <span className="leading-none">{date}</span>
                 </div>
 
-                {/* Judul */}
+                {/* Title */}
                 <div className="text-left flex-1 pt-0 px-0">
                     <h3 className="text-sm font-semibold line-clamp-2 cursor-pointer">
                         <a

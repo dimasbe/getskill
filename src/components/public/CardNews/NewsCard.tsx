@@ -33,20 +33,20 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
           </span>
           <div className="absolute inset-0 bg-gradient-to-t from-purple-600/70 via-transparent to-transparent" />
 
-          {/* Logo watermark */}
+          {/* Watermark */}
           <div className="absolute -bottom-[-6px] left-1/2 transform -translate-x-1/2 bg-white rounded-full p-1 shadow-md">
             <img
               src={logoGetskill}
-              alt="GetSkill Logo"
+              alt="watermark"
               className="w-13 h-3 object-contain"
             />
           </div>
         </div>
       </div>
 
-      {/* Konten */}
+      {/* Content */}
       <div className="relative z-10 p-6">
-        {/* Tanggal */}
+        {/* Date */}
         <div className="mb-3 -mt-6 flex items-center text-sm text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +63,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
           <span className="leading-none">{created}</span>
         </div>
 
-        {/* Judul */}
+        {/* Title */}
         <div className="text-left flex-1 pt-0 px-0">
           <h3 className="text-base font-semibold line-clamp-2 cursor-pointer">
             <span
