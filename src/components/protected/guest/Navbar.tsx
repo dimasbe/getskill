@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { HiSearch, HiMenu, HiX } from "react-icons/hi";
+import { FaUserCircle } from "react-icons/fa";
+import { BsBoxArrowLeft } from "react-icons/bs";
 import dummyCourses from "../../../data/dummyCourses";
 import CategoryDropdown from "../../public/CategoryDropdown";
 
@@ -26,6 +28,8 @@ const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // 🔹 Filter state
   const [filters, setFilters] = useState({
@@ -105,12 +109,29 @@ const Navbar = () => {
     }
   };
 
-  /** 🔹 Navigasi otomatis ke /kursus jika pilih kategori */
+  /** Navigasi otomatis ke /kursus jika pilih kategori */
   useEffect(() => {
     if (filters.categories.length > 0) {
       navigate(`/kursus?category=${encodeURIComponent(filters.categories[0])}`);
     }
   }, [filters.categories, navigate]);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  /** Logout function */
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   return (
     <nav
@@ -192,13 +213,34 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Login Button */}
-          <Link
-            to="/login"
-            className="hidden lg:block bg-yellow-500 text-black text-xs font-semibold px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
-          >
-            Masuk
-          </Link>
+          {/* Auth Button */}
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-3">
+              {/* Icon User ke halaman profile */}
+              <Link
+                to="/profile"
+                className="flex items-center space-x-2 text-sm font-semibold text-gray-700"
+              >
+                <FaUserCircle size={30} />
+              </Link>
+
+              {/* Tombol Logout */}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 bg-red-500 text-white text-xs hover:text-black font-bold px-4 py-2 rounded-full hover:bg-red-600 transition"
+              >
+                <BsBoxArrowLeft size={20} />
+                <span>Logout</span>
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden lg:block bg-yellow-500 text-black text-xs font-semibold px-5 py-3 rounded-full hover:bg-purple-700 hover:text-white transition"
+            >
+              Masuk
+            </Link>
+          )}
 
           {/* Mobile Menu Toggle */}
           <button
@@ -212,27 +254,33 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden px-6 md:px-20 pt-2 pb-4 space-y-2 border-t-4 border-amber-100 shadow-md bg-white">
-          {navLinks.map(({ name, to }) => (
-            <NavLink
-              key={name}
-              to={to}
-              onClick={() => setIsMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block text-purple-700 font-semibold text-sm"
-                  : "block text-gray-800 font-semibold text-sm hover:text-purple-700"
-              }
+        <div className="lg:hidden px-6 pt-2 pb-4 space-y-2 border-t bg-white">
+          {/* navLinks kamu */}
+
+          {isLoggedIn ? (
+            <div className="flex flex-col space-y-2">
+              <Link
+                to="/profile"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center space-x-2 text-sm font-semibold text-gray-700 hover:text-purple-700"
+              >
+                <FaUserCircle size={20} />
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="block text-center bg-yellow-500 text-black text-xs font-semibold px-4 py-2 rounded-full hover:bg-purple-700 hover:text-white transition"
             >
-              {name}
-            </NavLink>
-          ))}
-          <Link
-            to="/login"
-            className="block text-center bg-yellow-500 text-black text-xs font-semibold px-4 py-2 rounded-full hover:bg-purple-700 hover:text-white transition"
-          >
-            Masuk
-          </Link>
+              Masuk
+            </Link>
+          )}
         </div>
       )}
     </nav>
