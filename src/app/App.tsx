@@ -5,7 +5,9 @@ import LandingPage from "../pages/guest/dashboard/Dashboard";
 import Event from '../pages/guest/event/Event';
 import Berita from "../pages/guest/news/News";
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
-import Faq from '../pages/guest/Faq';
+import FaqPage from "../pages/guest/Faq";
+import FaqDetailPage from "../pages/guest/FaqDetail";
+import FaqCategoryDetailPage from "../pages/guest/FaqCategoryDetail";
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/Course/CourseDetail'
 import EventDetails from "../pages/guest/event/EventDetails";
