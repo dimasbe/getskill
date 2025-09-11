@@ -1,6 +1,6 @@
 import React from "react";
 import MiniNewsCard from "./MiniNewsCard";
-import type { News } from "../../../features/news/news";
+import type { News } from "../../../features/news/_news";
 
 interface RelatedNewsProps {
   relatedArticles: News[];

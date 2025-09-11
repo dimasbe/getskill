@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NewsCard from "../public/CardNews/NewsCard";
 import { fetchNews } from "../../features/news/services/news_service";
-import type { News } from "../../features/news/news";
+import type { _News } from "../../features/news/_news";
 
 const SkeletonCard: React.FC = () => {
   return (
@@ -39,7 +39,7 @@ const SkeletonCard: React.FC = () => {
 const LatestNewsPage: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [latestFourArticles, setLatestFourArticles] = useState<News[]>([]);
+  const [latestFourArticles, setLatestFourArticles] = useState<_News[]>([]);
 
   useEffect(() => {
     const loadNews = async () => {

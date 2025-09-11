@@ -129,7 +129,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     setIsLoggedIn(false);
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -232,7 +232,7 @@ const Navbar = () => {
               {/* Tombol Logout */}
               <button
                 onClick={handleLogout}
-                className="hidden lg:block items-center gap-2 bg-red-500 text-white text-xs hover:text-black font-bold px-4 py-2 rounded-full hover:bg-red-600 transition"
+                className="hidden lg:flex items-center gap-2 bg-red-500 text-white text-xs hover:text-black font-bold px-4 py-3 rounded-full hover:bg-red-600 transition"
               >
                 <BsBoxArrowLeft size={20} />
                 <span>Logout</span>

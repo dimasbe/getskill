@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import NewsCard from "../../../components/public/CardNews/NewsCard";
 import { fetchNews } from "../../../features/news/services/news_service";
-import type { News } from "../../../features/news/news";
+import type { _News } from "../../../features/news/_news";
 
 const SkeletonSearchFilterSort: React.FC = () => {
   return (
@@ -45,7 +45,7 @@ const SkeletonNewsCard: React.FC = () => {
 };
 
 const News: React.FC = () => {
-  const [newsList, setNewsList] = useState<News[]>([]);
+  const [newsList, setNewsList] = useState<_News[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [sortOrder, setSortOrder] = useState("Terbaru");

@@ -1,19 +1,19 @@
 import api from "../../../services/api";
-import type { News } from "../news";
+import type { _News } from "../_news";
 
-// Fetch list berita
-export async function fetchNews(): Promise<News[]> {
+// Fetch news list
+export async function fetchNews(): Promise<_News[]> {
     try {
         const response = await api.get("/api/blogs");
-        return response.data?.data?.data || []; // sesuai struktur API kamu
+        return response.data?.data?.data || [];
     } catch (error) {
         console.error("Gagal mengambil data berita:", error);
         throw error;
     }
 }
 
-// Fetch detail berita by slug
-export async function fetchNewsDetail(slug: string): Promise<News> {
+// Fetch news detail by slug
+export async function fetchNewsDetail(slug: string): Promise<_News> {
     try {
         const response = await api.get(`/api/blog-detail/${slug}`);
         return response.data?.data;
