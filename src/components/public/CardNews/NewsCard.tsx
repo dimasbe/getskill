@@ -13,7 +13,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
 
   return (
     <Link
-      to={`/berita/${slug}`}
+      to={`/news/${slug}`}
       tabIndex={0}
       className="relative block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm transition-transform duration-700 hover:scale-105 cursor-pointer hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)] card-shine"
     >

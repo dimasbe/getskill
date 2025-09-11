@@ -16,7 +16,7 @@ const MiniNewsCard: React.FC<MiniNewsCardProps> = ({ id, image, date, title, sum
 
     return (
         <Link
-            to={`/berita/${id}`}
+            to={`/news/${id}`}
             tabIndex={0}
             className="relative block bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm transition-transform duration-500 hover:scale-[1.02] cursor-pointer
                  hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.15)] card-shine w-full sm:w-[90%] md:w-[100%] lg:w-[100%] mx-auto"

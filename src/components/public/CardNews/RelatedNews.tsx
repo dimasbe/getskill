@@ -1,9 +1,9 @@
 import React from "react";
 import MiniNewsCard from "./MiniNewsCard";
-import type { News } from "../../../features/news/_news";
+import type { _News } from "../../../features/news/_news";
 
 interface RelatedNewsProps {
-  relatedArticles: News[];
+  relatedArticles: _News[];
 }
 
 const RelatedNews: React.FC<RelatedNewsProps> = ({ relatedArticles }) => {

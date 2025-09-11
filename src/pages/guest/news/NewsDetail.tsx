@@ -131,7 +131,7 @@ const NewsDetail: React.FC = () => {
             <p className="mt-2 text-xs sm:text-xs text-gray-800">
               <Link to="/">Beranda</Link>
               <span className="mx-1">&gt;</span>
-              <Link to="/berita">Berita</Link>
+              <Link to="/news">Berita</Link>
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ const NewsDetail: React.FC = () => {
           <p className="mt-2 text-xs sm:text-xs text-gray-800">
             <Link to="/">Beranda</Link>
             <span className="mx-1">&gt;</span>
-            <Link to="/berita">Berita</Link>
+            <Link to="/news">Berita</Link>
             <span className="mx-1">&gt;</span>
             <span className="text-purple-600">{news.title}</span>
           </p>
