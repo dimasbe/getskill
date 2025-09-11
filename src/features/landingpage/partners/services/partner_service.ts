@@ -1,19 +1,13 @@
+import api from "../../../../services/api";
 import type { Partner } from "../Partner";
 
-const API_URL = "https://core.getskill.id/api/partners2";
-
-export const fetchPartners = async (): Promise<Partner[]> => {
+// Fetch partners list
+export async function fetchPartners(): Promise<Partner[]> {
     try {
-        const response = await fetch(API_URL);
-        const result = await response.json();
-
-        if (result.success && result.data) {
-            return result.data as Partner[];
-        }
-
-        return [];
+        const response = await api.get("/api/partners2");
+        return response.data?.data || [];
     } catch (error) {
-        console.error("Failed to fetch partners:", error);
-        return [];
+        console.error("Gagal mengambil data partners:", error);
+        throw error;
     }
-};
+}
