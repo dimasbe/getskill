@@ -5,7 +5,9 @@ import LandingPage from "../pages/guest/dashboard/Dashboard";
 import Kursus from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
-import Faq from '../pages/guest/Faq';
+import FaqPage from "../pages/guest/Faq";
+import FaqDetailPage from "../pages/guest/FaqDetail";
+import FaqCategoryDetailPage from "../pages/guest/FaqCategoryDetail";
 import Spinner from "../components/public/Spinner";
 import CourseDetail from '../pages/guest/Course/CourseDetail'
 import EventDetails from "../pages/guest/event/EventDetails";
@@ -62,7 +64,9 @@ function RouteChangeLoader() {
         <Route path="/news" element={<News />} />
         <Route path="/news/:slug" element={<NewsDetail />} />
         <Route path="/kelas-industri" element={<KelasIndustri />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/faq/:id" element={<FaqDetailPage />} />
+        <Route path="/faq/category/:id" element={<FaqCategoryDetailPage />} />
         <Route path="/dashboard-user" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
       </Route>

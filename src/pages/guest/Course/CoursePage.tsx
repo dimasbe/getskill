@@ -7,7 +7,7 @@ import SidebarFilter from "../../../components/course/PageCourse/SidebarFilter";
 import CourseList from "../../../components/course/PageCourse/CourseList";
 import Header from "../../../components/course/PageCourse/Header";
 
-export default function KursusPage() {
+export default function CoursePage() {
   const location = useLocation();
 
   // State untuk filter pencarian & kategori
