@@ -16,12 +16,14 @@ import Register from "../pages/guest/auth/register";
 import AuthLayout from "./route/AuthLayout";
 import ForgotPassword from "../pages/guest/auth/forgotpassword";
 import UpdatePassword from '../pages/guest/auth/updatepassword';
-import PaymentPage from "../components/payment/PaymentPage";
+import TransactionPage from "../pages/user/transaction/Transaction";
+import TransactionDetailPage from "../pages/user/transaction/TransactionDetail";
 import usePageTitle from "../hooks/public/usePageTitle";
 import Dashboard from "../pages/user/Dashboard";
 import ContactPage from "../pages/guest/contact/ContactPage";
 import NewsDetail from "../pages/guest/news/NewsDetail";
 import News from "../pages/guest/news/News";
+
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -58,7 +60,8 @@ function RouteChangeLoader() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/kursus" element={<Kursus />} />
         <Route path="/kursus/:id" element={<CourseDetail />} />
-        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/transaction" element={<TransactionPage />} />
+        <Route path="/transaction/:transactionCode" element={<TransactionDetailPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<EventDetails />} />
         <Route path="/news" element={<News />} />

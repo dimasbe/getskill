@@ -65,12 +65,12 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
   // Aksi ketika tombol "Beli Sekarang" ditekan
   const handleBuyNow = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
 
     if (!token) {
       navigate("/login");
     } else {
-      navigate("/payment", {
+      navigate("/transaction", {
         state: {
           course: {
             price,
@@ -101,25 +101,25 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
 
       {/* === Tombol Beli === */}
       <button
-  onClick={() => {
-    if (isFree) {
-      // 👉 kalau gratis langsung arahkan ke halaman kursus
-      navigate(`/kursus/${window.location.pathname.split("/").pop()}`);
-    } else {
-      // 👉 kalau berbayar jalankan logika beli
-      handleBuyNow();
-    }
-  }}
-  className="my-6 w-full relative group overflow-hidden text-black font-sans font-semibold text-sm py-2.5 px-4
+        onClick={() => {
+          if (isFree) {
+            // 👉 kalau gratis langsung arahkan ke halaman kursus
+            navigate(`/kursus/${window.location.pathname.split("/").pop()}`);
+          } else {
+            // 👉 kalau berbayar jalankan logika beli
+            handleBuyNow();
+          }
+        }}
+        className="my-6 w-full relative group overflow-hidden text-black font-sans font-semibold text-sm py-2.5 px-4
   rounded-full flex items-center justify-center gap-2 border border-black transition-all duration-500 
   ease-in-out shadow-[3px_3px_0px_0px_rgba(0,0,0,0.6)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] 
   active:translate-y-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:text-white"
->
-  <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-  <span className="relative z-10 text-[14px]">
-    {isFree ? "Mulai Belajar →" : "Beli Sekarang →"}
-  </span>
-</button>
+      >
+        <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+        <span className="relative z-10 text-[14px]">
+          {isFree ? "Mulai Belajar →" : "Beli Sekarang →"}
+        </span>
+      </button>
 
       {/* === Info Kursus === */}
       <div className="pt-3 pb-3">
