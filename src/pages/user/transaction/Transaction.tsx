@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import bniLogo from "/public/images/payments/bni.png";
 import briLogo from "/public/images/payments/bri.png";
 import mandiriLogo from "/public/images/payments/mandiri.png";
@@ -9,6 +10,7 @@ import gopayLogo from "/public/images/payments/gopay.png";
 import ovoLogo from "/public/images/payments/ovo.png";
 import alfamartLogo from "/public/images/payments/alfamart.jpg";
 import indomaretLogo from "/public/images/payments/indomaret.jpg";
+import defaultimg from "../../../assets/Default-Img.png";
 
 interface Course {
     title: string;
@@ -34,7 +36,9 @@ const paymentMethods = {
     ],
 };
 
-const CheckoutPage: React.FC = () => {
+const TransactionPage: React.FC = () => {
+    const navigate = useNavigate();
+
     const [loading, setLoading] = useState(true);
     const [course, setCourse] = useState<Course | null>(null);
     const [voucher, setVoucher] = useState("");
@@ -71,15 +75,19 @@ const CheckoutPage: React.FC = () => {
         }
     };
 
+    const handleBuyNow = () => {
+        const transactionCode = `TX-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        navigate(`/transaction/${transactionCode}`);
+    };
+
     return (
         <div className="bg-white min-h-screen">
             <div className="container mx-auto p-4 px-25 grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
                 {/* Course Section */}
                 <div className="lg:col-span-2">
-                    <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300">
+                    <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300 transition-all duration-500 hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)]">
                         {loading ? (
                             <div className="flex items-start gap-4 animate-pulse">
-                                {/* Kotak placeholder untuk gambar */}
                                 <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-45 md:h-45 bg-gray-300 rounded-lg"></div>
                                 <div className="flex-1 space-y-3">
                                     <div className="h-6 bg-gray-200 rounded w-3/4"></div>
@@ -91,30 +99,24 @@ const CheckoutPage: React.FC = () => {
                             course && (
                                 <>
                                     <div className="flex flex-col sm:flex-row items-start gap-4">
-                                        <img
-                                            src={course.image}
-                                            alt={course.title}
-                                            className="rounded-lg w-24 h-24 sm:w-32 sm:h-32 md:w-45 md:h-45 object-cover"
-                                        />
+                                        <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-45 md:h-45 rounded-lg overflow-hidden">
+                                            <img src={defaultimg} alt={course.title} className="w-full h-full object-cover" />
+                                        </div>
                                         <div className="text-left">
-                                                <span className="text-xs bg-gray-100 text-black px-2 py-1 rounded-full">
+                                            <span className="text-xs bg-gray-100 text-black px-2 py-1 rounded-full transition-colors duration-300 hover:bg-purple-600 hover:text-white">
                                                 Game Development
                                             </span>
                                             <h2 className="text-sm font-semibold mt-2">{course.title}</h2>
-                                                <p className="text-gray-500 text-xs mt-2 mb-2">By GetSkill</p>
-                                                <div className="flex items-center gap-2 mt-1">
-                                                    <p className="text-purple-600 font-semibold text-xs">
-                                                        Rp {course.price.toLocaleString("id-ID")}
-                                                    </p>
-                                                    <span className="text-gray-500 text-xs">/ (0.0 Reviews)</span>
-                                                </div>
+                                            <p className="text-gray-500 text-xs mt-2 mb-2">By GetSkill</p>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <p className="text-purple-600 font-semibold text-xs">Rp {course.price.toLocaleString("id-ID")}</p>
+                                                <span className="text-gray-500 text-xs">/ (0.0 Reviews)</span>
+                                            </div>
                                         </div>
                                     </div>
-                                        <div className="text-left border-t border-gray-300 pt-4 mt-4">
+                                    <div className="text-justify border-t border-gray-300 pt-4">
                                         <h3 className="font-bold text-gray-800 text-base mb-2">Deskripsi:</h3>
-                                            <p className="text-gray-600 whitespace-pre-line text-xs leading-relaxed">
-                                            {course.description}
-                                        </p>
+                                        <p className="text-gray-600 whitespace-pre-line text-xs leading-relaxed">{course.description}</p>
                                     </div>
                                 </>
                             )
@@ -124,18 +126,13 @@ const CheckoutPage: React.FC = () => {
 
                 {/* Payment Section */}
                 <div className="lg:col-span-1 space-y-4 text-left">
-                    {/* Metode pembayaran */}
                     <div className="bg-white shadow rounded-xl p-4 border border-gray-300">
                         <h3 className="text-lg font-semibold mb-4">Pilih Metode Pembayaran</h3>
-
                         {/* Virtual Account */}
                         <div className="border-b border-gray-200">
                             <button
                                 onClick={() => setOpenSection(openSection === "va" ? null : "va")}
-                                className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition
-                                ${openSection === "va"
-                                        ? "bg-blue-50 text-blue-700"
-                                        : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === "va" ? "bg-blue-50 text-blue-700" : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                     }`}
                             >
                                 <span>Virtual Account</span>
@@ -144,8 +141,6 @@ const CheckoutPage: React.FC = () => {
                                         }`}
                                 />
                             </button>
-
-
                             <AnimatePresence>
                                 {openSection === "va" && (
                                     <motion.div
@@ -159,16 +154,9 @@ const CheckoutPage: React.FC = () => {
                                             <p>Pembayaran terhubung langsung dengan akun bank kamu</p>
                                             <div className="flex items-center gap-6 flex-wrap">
                                                 {paymentMethods.virtualAccount.map((method) => (
-                                                    <label
-                                                        key={method.id}
-                                                        className="flex flex-col items-center gap-1 cursor-pointer"
-                                                    >
+                                                    <label key={method.id} className="flex flex-col items-center gap-1 cursor-pointer">
                                                         <input type="radio" name="va" className="accent-blue-600" />
-                                                        <img
-                                                            src={method.logo}
-                                                            alt={method.name}
-                                                            className="w-12 h-12 object-contain"
-                                                        />
+                                                        <img src={method.logo} alt={method.name} className="w-12 h-12 object-contain" />
                                                         <span className="text-xs">{method.name}</span>
                                                     </label>
                                                 ))}
@@ -183,10 +171,7 @@ const CheckoutPage: React.FC = () => {
                         <div className="border-b border-gray-200">
                             <button
                                 onClick={() => setOpenSection(openSection === "ewallet" ? null : "ewallet")}
-                                className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition
-                                ${openSection === "ewallet"
-                                        ? "bg-blue-50 text-blue-700"
-                                        : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === "ewallet" ? "bg-blue-50 text-blue-700" : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                     }`}
                             >
                                 <span>E-Wallet</span>
@@ -208,16 +193,9 @@ const CheckoutPage: React.FC = () => {
                                             <p>Pembayaran terhubung langsung dengan akun e-wallet kamu</p>
                                             <div className="flex items-center gap-6 flex-wrap">
                                                 {paymentMethods.eWallet.map((method) => (
-                                                    <label
-                                                        key={method.id}
-                                                        className="flex flex-col items-center gap-1 cursor-pointer"
-                                                    >
+                                                    <label key={method.id} className="flex flex-col items-center gap-1 cursor-pointer">
                                                         <input type="radio" name="ewallet" className="accent-blue-600" />
-                                                        <img
-                                                            src={method.logo}
-                                                            alt={method.name}
-                                                            className="w-12 h-12 object-contain"
-                                                        />
+                                                        <img src={method.logo} alt={method.name} className="w-12 h-12 object-contain" />
                                                         <span className="text-xs">{method.name}</span>
                                                     </label>
                                                 ))}
@@ -231,13 +209,8 @@ const CheckoutPage: React.FC = () => {
                         {/* Mini Market */}
                         <div>
                             <button
-                                onClick={() =>
-                                    setOpenSection(openSection === "minimarket" ? null : "minimarket")
-                                }
-                                className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition
-                                ${openSection === "minimarket"
-                                        ? "bg-blue-50 text-blue-700"
-                                        : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                onClick={() => setOpenSection(openSection === "minimarket" ? null : "minimarket")}
+                                className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === "minimarket" ? "bg-blue-50 text-blue-700" : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                     }`}
                             >
                                 <span>Mini Market</span>
@@ -246,9 +219,6 @@ const CheckoutPage: React.FC = () => {
                                         }`}
                                 />
                             </button>
-
-
-
                             <AnimatePresence>
                                 {openSection === "minimarket" && (
                                     <motion.div
@@ -262,20 +232,9 @@ const CheckoutPage: React.FC = () => {
                                             <p>Pembayaran bisa lewat mini market terdekat</p>
                                             <div className="flex items-center gap-6 flex-wrap">
                                                 {paymentMethods.convenienceStore.map((method) => (
-                                                    <label
-                                                        key={method.id}
-                                                        className="flex flex-col items-center gap-1 cursor-pointer"
-                                                    >
-                                                        <input
-                                                            type="radio"
-                                                            name="convenienceStore"
-                                                            className="accent-blue-600"
-                                                        />
-                                                        <img
-                                                            src={method.logo}
-                                                            alt={method.name}
-                                                            className="w-12 h-12 object-contain"
-                                                        />
+                                                    <label key={method.id} className="flex flex-col items-center gap-1 cursor-pointer">
+                                                        <input type="radio" name="convenienceStore" className="accent-blue-600" />
+                                                        <img src={method.logo} alt={method.name} className="w-12 h-12 object-contain" />
                                                         <span className="text-xs">{method.name}</span>
                                                     </label>
                                                 ))}
@@ -287,12 +246,9 @@ const CheckoutPage: React.FC = () => {
                         </div>
                     </div>
 
-
                     {/* Ringkasan pembayaran */}
                     <div className="bg-white shadow rounded-xl p-6 text-left border border-gray-300">
                         <h3 className="text-lg font-semibold mb-5">Pembayaran</h3>
-
-                        {/* Input voucher */}
                         <form onSubmit={handleVoucherCheck} className="flex gap-3 mb-6">
                             <input
                                 type="text"
@@ -303,22 +259,12 @@ const CheckoutPage: React.FC = () => {
                             />
                             <button
                                 type="submit"
-                                className="group bg-purple-600 text-white font-semibold text-sm py-2 px-6 rounded-full
-                                flex items-center justify-center gap-2
-                                transition-all duration-500 ease-in-out
-                                shadow-[3px_3px_0px_black]
-                                hover:bg-yellow-400 hover:text-black hover:shadow-none
-                                active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
-                                focus:outline-none"
+                                className="group bg-purple-600 text-white font-semibold text-sm py-2 px-6 rounded-full flex items-center justify-center gap-2 transition-all duration-500 ease-in-out shadow-[3px_3px_0px_black] hover:bg-yellow-400 hover:text-black hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none focus:outline-none"
                             >
-                                <span className="transition-colors duration-500 group-hover:text-black">
-                                    Cek
-                                </span>
+                                <span className="transition-colors duration-500 group-hover:text-black">Cek</span>
                             </button>
-
                         </form>
 
-                        {/* Rincian harga */}
                         <div className="border-t border-gray-300 pt-7 mt-7 space-y-4 text-left text-gray-500 text-sm">
                             <div className="flex justify-between">
                                 <span>Harga Pesanan</span>
@@ -328,33 +274,23 @@ const CheckoutPage: React.FC = () => {
                                 <span>Biaya Layanan</span>
                                 <span>Rp {feeService.toLocaleString("id-ID")}</span>
                             </div>
-
                             <div className="border-t border-gray-300 pt-7 mt-10 flex justify-between font-semibold text-gray-500">
                                 <span>Total Pesanan</span>
                                 <span className="text-lg">Rp {totalAmount.toLocaleString("id-ID")}</span>
                             </div>
                         </div>
 
-                        {/* Tombol beli sekarang */}
                         <button
-                            className="group mt-6 w-full rounded-full bg-yellow-400 text-black font-semibold py-3
-             shadow-[3px_3px_0px_black]
-             transition-all duration-500 ease-in-out
-             hover:bg-purple-600 hover:text-white hover:shadow-none
-             active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
-             focus:outline-none"
+                            onClick={handleBuyNow}
+                            className="group mt-6 w-full rounded-full bg-yellow-400 text-black font-semibold py-3 shadow-[3px_3px_0px_black] transition-all duration-500 ease-in-out hover:bg-purple-600 hover:text-white hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none focus:outline-none"
                         >
-                            <span className="transition-colors duration-500 group-hover:text-white">
-                                Beli Sekarang
-                            </span>
+                            <span className="transition-colors duration-500 group-hover:text-white">Beli Sekarang</span>
                         </button>
-
                     </div>
-
                 </div>
             </div>
         </div>
     );
 };
 
-export default CheckoutPage;
+export default TransactionPage;
