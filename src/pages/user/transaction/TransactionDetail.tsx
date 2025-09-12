@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FiRefreshCw, FiCopy } from "react-icons/fi";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import PaymentStatus from "../../../assets/img/payment-status/7.png"
@@ -30,6 +30,7 @@ interface PaymentStatus {
 
 const PaymentPage: React.FC = () => {
     const { transactionCode } = useParams<{ transactionCode: string }>();
+    const navigate = useNavigate();
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
     const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -100,7 +101,7 @@ const PaymentPage: React.FC = () => {
     };
 
     const handleBack = (): void => {
-        window.history.back();
+        navigate("/transaction");
     };
 
     if (isLoading || !transaction) {
@@ -120,25 +121,29 @@ const PaymentPage: React.FC = () => {
                         Rincian Pembayaran
                     </h2>
 
-                    <div className="mb-4">
+                    <div className="mb-3">
                         <div className="flex justify-between items-center mb-2">
                             <p className="text-sm text-gray-600">Produk yang dibeli</p>
                         </div>
                         <h3 className="flex justify-between items-center text-lg font-semibold text-gray-600">
                             {transaction.product.name}
-                            <span className="text-purple-600 font-semibold text-sm">
+                            <span className="text-purple-600 font-semibold text-md">
                                 {formatCurrency(transaction.product_price)}
                             </span>
                         </h3>
                     </div>
 
-                    <div className="flex justify-between items-center py-2 border-t border-gray-200">
-                        <p className="text-sm text-gray-600">Voucher Diskon</p>
-                        <p className="text-sm text-gray-600">- Rp 0</p>
+                    <div className="flex justify-between items-center py-3 border-t border-gray-200">
+                        <p className="text-sm text-gray-600">
+                            Voucher Diskon
+                        </p>
+                        <h3 className="text-sm font-medium text-purple-600">
+                            - Rp 0
+                        </h3>
                     </div>
 
-                    <div className="flex justify-between py-4 border-t border-b border-gray-200 mt-4 mb-4">
-                        <p className="text-sm text-gray-600">Total Pembayaran</p>
+                    <div className="flex justify-between py-3 border-t border-b border-gray-200 mt-0 mb-4">
+                        <p className="mt-1 text-sm text-gray-600">Total Pembayaran</p>
                         <h3 className="text-lg font-bold text-purple-600">
                             {formatCurrency(transaction.total_amount)}
                         </h3>
@@ -155,9 +160,9 @@ const PaymentPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-3">
                         <div className="flex justify-between items-center">
-                            <p className="text-left text-sm text-gray-500">
+                            <p className="text-left text-sm text-gray-600">
                                 Kode Pembayaran (1 × 24 Jam)
                             </p>
                             <div className="flex items-center gap-2">
@@ -174,17 +179,17 @@ const PaymentPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-3">
                         <div className="flex justify-between items-center">
-                            <p className="text-sm text-gray-500">Kode Transaksi</p>
-                            <p className="text-sm font-mono">{transaction.code}</p>
+                            <p className="text-sm text-gray-600">Kode Transaksi</p>
+                            <p className="text-sm font-mono text-gray-600">{transaction.code}</p>
                         </div>
                     </div>
 
                     <div className="mb-4">
                         <div className="flex justify-between items-center">
-                            <p className="text-sm text-gray-500">Bayar Sebelum</p>
-                            <p className="text-sm font-semibold text-gray-700">
+                            <p className="text-sm text-gray-600">Bayar Sebelum</p>
+                            <p className="text-sm font-semibold text-gray-600">
                                 {formatDate(transaction.payment_deadline)}
                             </p>
                         </div>
@@ -192,7 +197,7 @@ const PaymentPage: React.FC = () => {
 
                     <button
                         onClick={handlePayment}
-                        className="mt-15 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-5 2xl:py-4 2xl:px-8
+                        className="mt-18 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-5 2xl:py-4 2xl:px-8
                         rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                         transition-all duration-500 ease-in-out
                         shadow-[4px_4px_0_#0A0082] 
