@@ -3,34 +3,49 @@ import api from "../../../services/api";
 import type {
   Faq,
   FaqCategory,
-  FaqResponse,
-  FaqDetailResponse,
-  FaqCategoryResponse,
-  FaqCategoryDetailResponse,
 } from "../_faq";
+
+// Ambil semua FAQ (list untuk landing page)
+export async function fetchFaq(): Promise<Faq[]> {
+  try {
+    const response = await api.get("/api/faq-user");
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Gagal mengambil FAQ landing:", error);
+    throw error;
+  }
+}
+
+// Ambil detail FAQ by ID
+export async function fetchFaqDetail(id: number): Promise<Faq> {
+  try {
+    const response = await api.get(`/api/faq-user/${id}`);
+    return response.data?.data;
+  } catch (error) {
+    console.error(`Gagal mengambil detail FAQ ID ${id}:`, error);
+    throw error;
+  }
+}
+
 
 // Ambil semua kategori FAQ
 export async function fetchFaqCategories(): Promise<FaqCategory[]> {
-  const response = await api.get<FaqCategoryResponse>("/api/faq-categories");
-  return response.data?.data || [];
+  try {
+    const response = await api.get("/api/faqs-category");
+    return response.data?.data || [];
+  } catch (error) {
+    console.error("Gagal mengambil FAQ categories:", error);
+    throw error;
+  }
 }
 
 // Ambil detail kategori FAQ
 export async function fetchFaqCategoryDetail(id: number): Promise<FaqCategory> {
-  const response = await api.get<FaqCategoryDetailResponse>(
-    `/api/faq-categories/${id}`
-  );
-  return response.data?.data;
-}
-
-// Ambil semua FAQ untuk landing page
-export async function fetchFaqs(): Promise<Faq[]> {
-  const response = await api.get<FaqResponse>("/api/faqs");
-  return response.data?.data || [];
-}
-
-// Ambil detail FAQ
-export async function fetchFaqDetail(id: number): Promise<Faq> {
-  const response = await api.get<FaqDetailResponse>(`/api/faqs/${id}`);
-  return response.data?.data;
+  try {
+    const response = await api.get(`/api/faqs-category/${id}`);
+    return response.data?.data;
+  } catch (error) {
+    console.error(`Gagal mengambil detail FAQ category ID ${id}:`, error);
+    throw error;
+  }
 }
