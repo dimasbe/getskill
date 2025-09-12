@@ -6,7 +6,7 @@ export default function CourseDetailSkeleton() {
       className="min-h-screen bg-gray-50 p-6"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.1, ease: "easeOut" }}
     >
       {/* Header Skeleton */}
       <div className="max-w-6xl mx-auto mb-8">
