@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FiRefreshCw, FiCopy } from "react-icons/fi";
-import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import PaymentStatus from "../../../assets/img/payment-status/7.png"
 
 interface TransactionDetail {
     id: string;
@@ -33,6 +33,7 @@ const PaymentPage: React.FC = () => {
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
     const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [openSection, setOpenSection] = useState<string | null>(null);
 
     const formatCurrency = (amount: number): string =>
         new Intl.NumberFormat("id-ID", {
@@ -111,30 +112,27 @@ const PaymentPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-4">
+        <div className="min-h-screen bg-gray-50 py-8 px-28">
             <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
                 {/* Kiri - Rincian */}
-                <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-6">
+                <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-3">
                     <h2 className="text-left text-lg font-semibold text-gray-800 mb-4">
                         Rincian Pembayaran
                     </h2>
 
                     <div className="mb-4">
-                        <div className="flex justify-between items-center mb-1">
+                        <div className="flex justify-between items-center mb-2">
                             <p className="text-sm text-gray-600">Produk yang dibeli</p>
+                        </div>
+                        <h3 className="flex justify-between items-center text-lg font-semibold text-gray-600">
+                            {transaction.product.name}
                             <span className="text-purple-600 font-semibold text-sm">
                                 {formatCurrency(transaction.product_price)}
                             </span>
-                        </div>
-                        <h3 className="text-left text-lg font-medium text-gray-900">
-                            {transaction.product.name}
                         </h3>
-                        <p className="text-left text-sm text-gray-600">
-                            {transaction.product.description}
-                        </p>
                     </div>
 
-                    <div className="flex justify-between py-2 border-t border-gray-200">
+                    <div className="flex justify-between items-center py-2 border-t border-gray-200">
                         <p className="text-sm text-gray-600">Voucher Diskon</p>
                         <p className="text-sm text-gray-600">- Rp 0</p>
                     </div>
@@ -147,8 +145,8 @@ const PaymentPage: React.FC = () => {
                     </div>
 
                     <div className="mb-4 border-b pb-4">
-                        <p className="text-left text-sm text-gray-600 mb-2">Metode Pembayaran</p>
-                        <div className="flex items-center justify-end">
+                        <div className="flex justify-between items-center">
+                            <p className="text-left text-sm text-gray-600 mb-2">Metode Pembayaran</p>
                             <img
                                 src="https://seeklogo.com/images/B/bri-bank-rakyat-indonesia-logo-7E2C8BDA37-seeklogo.com.png"
                                 alt="BRIVA"
@@ -158,32 +156,34 @@ const PaymentPage: React.FC = () => {
                     </div>
 
                     <div className="mb-4">
-                        <p className="text-left text-xs text-gray-500 mb-1">
-                            Kode Pembayaran (1 × 24 Jam)
-                        </p>
-                        <div className="flex justify-end items-center gap-2">
-                            <p className="text-xl font-mono text-purple-600 font-bold">
-                                150090045757209407
+                        <div className="flex justify-between items-center">
+                            <p className="text-left text-sm text-gray-500">
+                                Kode Pembayaran (1 × 24 Jam)
                             </p>
-                            <button
-                                onClick={() => handleCopy("150090045757209407")}
-                                className="p-2 rounded-md bg-gray-100 hover:bg-gray-200"
-                            >
-                                <FiCopy />
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <p className="text-xl font-mono text-purple-600 font-bold">
+                                    150090045757209407
+                                </p>
+                                <button
+                                    onClick={() => handleCopy("150090045757209407")}
+                                    className="p-2 rounded-md bg-gray-100 hover:bg-gray-200"
+                                >
+                                    <FiCopy />
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div className="mb-4">
                         <div className="flex justify-between items-center">
-                            <p className="text-xs text-gray-500">Kode Transaksi</p>
+                            <p className="text-sm text-gray-500">Kode Transaksi</p>
                             <p className="text-sm font-mono">{transaction.code}</p>
                         </div>
                     </div>
 
                     <div className="mb-4">
                         <div className="flex justify-between items-center">
-                            <p className="text-xs text-gray-500">Bayar Sebelum</p>
+                            <p className="text-sm text-gray-500">Bayar Sebelum</p>
                             <p className="text-sm font-semibold text-gray-700">
                                 {formatDate(transaction.payment_deadline)}
                             </p>
@@ -209,19 +209,19 @@ const PaymentPage: React.FC = () => {
                 {/* Kanan - Status & Instruksi */}
                 <div className="col-span-1 space-y-6">
                     {/* Status */}
-                    <div className="bg-white rounded-md shadow-md p-6 border border-gray-300">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                    <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
+                        <h2 className="text-left text-md font-semibold text-gray-800 mb-4">
                             Status Pembayaran
                         </h2>
 
                         <div className="flex flex-col items-center text-center">
                             <img
-                                src="https://cdn-icons-png.flaticon.com/512/6598/6598519.png"
-                                alt="status"
-                                className="h-32 mb-4"
+                                src={PaymentStatus}
+                                alt="Payment Status"
+                                className="h-42"
                             />
                             <h3
-                                className={`text-lg font-semibold ${paymentStatus?.status === "Belum Terbayar"
+                                className={`text-sm font-semibold ${paymentStatus?.status === "Belum Terbayar"
                                     ? "text-red-600"
                                     : "text-green-600"
                                     }`}
@@ -230,8 +230,8 @@ const PaymentPage: React.FC = () => {
                             </h3>
                             <button
                                 onClick={handleCheckStatus}
-                                className="mt-5 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
-                                font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-27 2xl:py-4 2xl:px-8
+                                className="mt-2 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
+                                font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-26 2xl:py-4 2xl:px-8
                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                 transition-all duration-500 ease-in-out
                                 shadow-[4px_4px_0_#0A0082] 
@@ -247,33 +247,41 @@ const PaymentPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Instruksi */}
-                    <div className="bg-white rounded-md shadow-md p-6 border border-gray-300">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                    {/* Instruksi Pembayaran */}
+                    <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
+                        <h2 className="text-left text-md font-semibold text-gray-800 mb-4">
                             Instruksi Pembayaran
                         </h2>
-                        {["Internet Banking", "Aplikasi BRImo", "ATM BRI"].map(
-                            (item, idx) => (
-                                <Disclosure key={idx}>
-                                    {({ open }) => (
-                                        <div className="border-b last:border-none">
-                                            <Disclosure.Button className="w-full flex justify-between items-center py-3 text-sm font-medium text-gray-700">
-                                                {item}
-                                                <ChevronDownIcon
-                                                    className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""
-                                                        }`}
-                                                />
-                                            </Disclosure.Button>
-                                            <Disclosure.Panel className="pb-3 text-sm text-gray-600">
-                                                Langkah-langkah {item} untuk melakukan pembayaran akan
-                                                ditampilkan di sini.
-                                            </Disclosure.Panel>
+
+                        <div className="flex flex-col gap-2">
+                            {["Internet Banking", "Aplikasi BRImo", "ATM BRI"].map((item, idx) => (
+                                <div key={idx}>
+                                    <button
+                                        onClick={() =>
+                                            setOpenSection(openSection === item ? null : item)
+                                        }
+                                        className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === item
+                                            ? "bg-blue-50 text-blue-700"
+                                            : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                            }`}
+                                    >
+                                        <span>{item}</span>
+                                        <ChevronDownIcon
+                                            className={`w-5 h-5 transition-transform duration-300 stroke-[1.5] ${openSection === item ? "rotate-180" : "rotate-0"
+                                                }`}
+                                        />
+                                    </button>
+                                    {openSection === item && (
+                                        <div className="px-3 pb-3 text-sm text-gray-600">
+                                            Langkah-langkah {item} untuk melakukan pembayaran akan ditampilkan
+                                            di sini.
                                         </div>
                                     )}
-                                </Disclosure>
-                            )
-                        )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
 
                     {/* Tombol Kembali */}
                     <div className="flex justify-center">
