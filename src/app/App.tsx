@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/dashboard/Dashboard";
-import Kursus from "../pages/guest/Course/CoursePage";
+import Cursus from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
 import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
 import FaqPage from "../pages/guest/faq/FaqPage";
@@ -23,6 +23,7 @@ import Dashboard from "../pages/user/Dashboard";
 import ContactPage from "../pages/guest/contact/ContactPage";
 import NewsDetail from "../pages/guest/news/NewsDetail";
 import News from "../pages/guest/news/News";
+import PreTes from "../pages/user/PreTes/tes";
 
 
 function RouteChangeLoader() {
@@ -58,8 +59,8 @@ function RouteChangeLoader() {
 
       <Route element={<GuestLayout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/kursus" element={<Kursus />} />
-        <Route path="/kursus/:id" element={<CourseDetail />} />
+        <Route path="/course" element={<Cursus />} />
+        <Route path="/course:id" element={<CourseDetail />} />
         <Route path="/transaction" element={<TransactionPage />} />
         <Route path="/transaction/:transactionCode" element={<TransactionDetailPage />} />
         <Route path="/event" element={<Event />} />
@@ -72,6 +73,8 @@ function RouteChangeLoader() {
         <Route path="/faq/category/:id" element={<FaqCategoryDetailPage />} />
         <Route path="/dashboard-user" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
+
+        <Route path="/course/pre-tes" element={<PreTes/>} />
       </Route>
     </Routes>
   );
