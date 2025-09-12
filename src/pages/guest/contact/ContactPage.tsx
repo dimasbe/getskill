@@ -14,8 +14,8 @@ const ContactPage: React.FC = () => {
                     <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 text-left">
                         Hubungi Kami
                     </h1>
-                    <p className="mt-2 text-xs sm:text-sm text-gray-800 text-left">
-                        <a href="/" className="hover:underline">Home</a>
+                    <p className="mt-2 text-xs sm:text-xs text-gray-800 text-left">
+                        <a href="/" className="hover:underline">Beranda</a>
                         <span className="mx-1">&gt;</span>
                         <span className="text-purple-600">Hubungi Kami</span>
                     </p>
@@ -30,7 +30,7 @@ const ContactPage: React.FC = () => {
                 {/* Kiri: Info Kontak */}
                 <div className="space-y-6 ">
                     {/* Address */}
-                    <div className="flex items-start space-x-5 p-6 sm:p-8 bg-gray-100 shadow rounded-xl text-left">
+                    <div className="flex items-start space-x-5 p-6 sm:p-8 bg-gray-100 border border-gray-200 shadow rounded-xl text-left">
                         <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-purple-600">
                             <img
                                 src={MapIcon}
@@ -47,7 +47,7 @@ const ContactPage: React.FC = () => {
                     </div>
 
                     {/* Phone */}
-                    <div className="flex items-start space-x-5 p-6 sm:p-8 bg-gray-100 shadow rounded-xl text-left">
+                    <div className="flex items-start space-x-5 p-6 sm:p-8 bg-gray-100 border border-gray-200 shadow rounded-xl text-left">
                         <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-purple-600">
                             <img
                                 src={PhoneIcon}
@@ -62,7 +62,7 @@ const ContactPage: React.FC = () => {
                     </div>
 
                     {/* Email */}
-                    <div className="flex items-start space-x-5 p-6 sm:p-8 bg-gray-100 shadow rounded-xl text-left">
+                    <div className="flex items-start space-x-5 p-6 sm:p-8 bg-gray-100 border border-gray-200 shadow rounded-xl text-left">
                         <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-purple-600">
                             <img
                                 src={EmailIcon}
@@ -78,7 +78,7 @@ const ContactPage: React.FC = () => {
                 </div>
 
                 {/* Kanan: Form */}
-                <div className="lg:col-span-2 bg-gray-100 shadow rounded-xl p-6 sm:p-10 text-left">
+                <div className="lg:col-span-2 bg-gray-100 border border-gray-200 shadow rounded-xl p-6 sm:p-10 text-left">
                     <h3 className="text-lg sm:text-2xl font-semibold text-gray-800 mb-3 text-left">
                         Tuliskan Pesan
                     </h3>
