@@ -147,17 +147,12 @@ const LoginForm = () => {
           <div className="flex flex-col">
             <div className="flex items-center">
               <Checkbox
-                id="remember"
-                {...register("remember")}
                 className="accent-purple-500 focus:outline-none focus:ring-0"
               />
               <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
                 Remember me
               </label>
             </div>
-            {errors.remember && (
-              <p className="text-red-500 text-xs mt-1 ml-6">{errors.remember.message}</p>
-            )}
           </div>
 
           <a href="/password/email" className="text-sm text-purple-500">

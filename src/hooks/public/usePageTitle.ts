@@ -9,7 +9,7 @@ const usePageTitle = (customTitle?: string) => {
 
     const pathTitles: Record<string, string> = {
       '/': 'GetSkill.id - Get Your Skill',
-      '/kursus': 'Kursus',
+      '/course': 'Kursus',
       '/event': 'Event',
       '/kelas-industri': 'Kelas Industri',
       '/berita': 'Berita',
@@ -22,7 +22,7 @@ const usePageTitle = (customTitle?: string) => {
 
 
     const dynamicRoutes: { pattern: RegExp; title: string }[] = [
-      { pattern: /^\/kursus\/[^/]+$/, title: 'Detail Kursus' },
+      { pattern: /^\/course\/[^/]+$/, title: 'Detail Kursus' },
       { pattern: /^\/event\/[^/]+$/, title: 'Detail Event' },
       { pattern: /^\/berita\/[^/]+$/, title: 'Detail Berita' },
     ];

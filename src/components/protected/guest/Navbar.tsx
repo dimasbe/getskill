@@ -13,7 +13,7 @@ type Course = {
 
 const navLinks = [
   { name: "Beranda", to: "/" },
-  { name: "Kursus", to: "/kursus" },
+  { name: "Kursus", to: "/course" },
   { name: "Event", to: "/event" },
   { name: "Kelas Industri", to: "/kelas-industri" },
   { name: "Berita", to: "/news" },

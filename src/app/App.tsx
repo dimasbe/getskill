@@ -23,7 +23,9 @@ import Dashboard from "../pages/user/Dashboard";
 import ContactPage from "../pages/guest/contact/ContactPage";
 import NewsDetail from "../pages/guest/news/NewsDetail";
 import News from "../pages/guest/news/News";
+
 import PreTes from "../pages/user/PreTes/tes";
+import Exam from "../pages/user/PreTes/exam";
 
 
 function RouteChangeLoader() {
@@ -60,7 +62,7 @@ function RouteChangeLoader() {
       <Route element={<GuestLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/course" element={<Cursus />} />
-        <Route path="/course:id" element={<CourseDetail />} />
+        <Route path="/course/:slug" element={<CourseDetail />} />
         <Route path="/transaction" element={<TransactionPage />} />
         <Route path="/transaction/:transactionCode" element={<TransactionDetailPage />} />
         <Route path="/event" element={<Event />} />
@@ -75,6 +77,7 @@ function RouteChangeLoader() {
         <Route path="/contact" element={<ContactPage />} />
 
         <Route path="/course/pre-tes" element={<PreTes/>} />
+        <Route path="/course/pre-tes/exam" element={<Exam/>} />
       </Route>
     </Routes>
   );
