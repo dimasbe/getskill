@@ -11,28 +11,31 @@ import CourseSidebar from "../../../components/course/DetailCourse/CourseSidebar
 import CourseDetailSkeleton from "../../../components/course/DetailCourse/CourseDetailSkeleton";
 
 export default function CourseDetail() {
-  const { id } = useParams<{ id: string }>();
+  // 🔹 ambil slug dari url param
+  const { slug } = useParams<{ slug: string }>();
 
   const [courseData, setCourseData] = useState<DetailCourse | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Fetch data detail kursus berdasarkan ID
+  // 🔹 Fetch data detail kursus berdasarkan slug
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
 
     const loadCourseDetail = async () => {
       try {
-        const data = await fetchCourseDetail(id);
+        console.log("📡 Fetching detail kursus slug:", slug);
+        const data = await fetchCourseDetail(slug);
+        console.log("✅ Data kursus:", data);
         setCourseData(data);
       } catch (err) {
-        console.error("Error fetching course:", err);
+        console.error("❌ Error fetching course:", err);
       } finally {
         setLoading(false);
       }
     };
 
     loadCourseDetail();
-  }, [id]);
+  }, [slug]);
 
   // 🔹 Loading state
   if (loading) {
