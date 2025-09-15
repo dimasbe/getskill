@@ -82,10 +82,10 @@ const TransactionPage: React.FC = () => {
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="container mx-auto p-4 px-25 grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
+            <div className="container mx-auto p-4 px-5 md:px-10 xl:px-22 grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
                 {/* Course Section */}
                 <div className="lg:col-span-2">
-                    <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300 transition-all duration-500 hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)]">
+                    <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300 transition-all duration-500 hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)] group">
                         {loading ? (
                             <div className="flex items-start gap-4 animate-pulse">
                                 <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-45 md:h-45 bg-gray-300 rounded-lg"></div>
@@ -99,30 +99,44 @@ const TransactionPage: React.FC = () => {
                             course && (
                                 <>
                                     <div className="flex flex-col sm:flex-row items-start gap-4">
-                                        <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-45 md:h-45 rounded-lg overflow-hidden">
-                                            <img src={defaultimg} alt={course.title} className="w-full h-full object-cover" />
+                                        <div className="relative w-81 h-40 sm:w-32 sm:h-32 md:w-50 md:h-45 rounded-lg overflow-hidden">
+                                            <img
+                                                src={defaultimg}
+                                                alt={course.title}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-pointer shine__animate"
+                                            />
+
+                                            {/* Efek Shine */}
+
                                         </div>
-                                        <div className="text-left">
+
+                                        <div className="text-left pl-2 sm:pl-6">
                                             <span className="text-xs bg-gray-100 text-black px-2 py-1 rounded-full transition-colors duration-300 hover:bg-purple-600 hover:text-white">
                                                 Game Development
                                             </span>
                                             <h2 className="text-sm font-semibold mt-2">{course.title}</h2>
                                             <p className="text-gray-500 text-xs mt-2 mb-2">By GetSkill</p>
                                             <div className="flex items-center gap-2 mt-1">
-                                                <p className="text-purple-600 font-semibold text-xs">Rp {course.price.toLocaleString("id-ID")}</p>
+                                                <p className="text-purple-600 font-semibold text-xs">
+                                                    Rp {course.price.toLocaleString("id-ID")}
+                                                </p>
                                                 <span className="text-gray-500 text-xs">/ (0.0 Reviews)</span>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className="text-justify border-t border-gray-300 pt-4">
                                         <h3 className="font-bold text-gray-800 text-base mb-2">Deskripsi:</h3>
-                                        <p className="text-gray-600 whitespace-pre-line text-xs leading-relaxed">{course.description}</p>
+                                        <p className="text-gray-600 whitespace-pre-line text-xs leading-relaxed">
+                                            {course.description}
+                                        </p>
                                     </div>
                                 </>
                             )
                         )}
                     </div>
                 </div>
+
 
                 {/* Payment Section */}
                 <div className="lg:col-span-1 space-y-4 text-left">
