@@ -63,8 +63,8 @@ function RouteChangeLoader() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/course" element={<Cursus />} />
         <Route path="/course/:slug" element={<CourseDetail />} />
-        <Route path="/transaction" element={<TransactionPage />} />
-        <Route path="/transaction/:transactionCode" element={<TransactionDetailPage />} />
+        <Route path="/transaction/course/:slug" element={<TransactionPage />} />
+        <Route path="/transaction/detail/:transactionCode" element={<TransactionDetailPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<EventDetails />} />
         <Route path="/news" element={<News />} />
@@ -76,8 +76,8 @@ function RouteChangeLoader() {
         <Route path="/dashboard-user" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        <Route path="/course/pre-tes" element={<PreTes/>} />
-        <Route path="/course/pre-tes/exam" element={<Exam/>} />
+        <Route path="/course/pre-tes" element={<PreTes />} />
+        <Route path="/course/pre-tes/exam" element={<Exam />} />
       </Route>
     </Routes>
   );
