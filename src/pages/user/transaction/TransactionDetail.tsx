@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiRefreshCw, FiCopy } from "react-icons/fi";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import PaymentStatus from "../../../assets/img/payment-status/7.png"
+import PaymentStatusImg from "../../../assets/img/payment-status/7.png"
 
 interface TransactionDetail {
     id: string;
@@ -104,17 +104,31 @@ const PaymentPage: React.FC = () => {
         navigate("/transaction");
     };
 
-    if (isLoading || !transaction) {
+    if (isLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <p>Loading...</p>
+            <div className="min-h-screen bg-gray-50 py-8 px-28 animate-pulse">
+                <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+                    <div className="col-span-2 space-y-4">
+                        <div className="h-6 bg-gray-300 rounded w-1/3"></div>
+                        <div className="h-6 bg-gray-300 rounded w-full"></div>
+                        <div className="h-6 bg-gray-300 rounded w-full"></div>
+                        <div className="h-6 bg-gray-300 rounded w-2/3"></div>
+                        <div className="h-6 bg-gray-300 rounded w-1/2"></div>
+                        <div className="h-12 bg-gray-300 rounded w-full"></div>
+                    </div>
+                    <div className="col-span-1 space-y-4">
+                        <div className="h-40 bg-gray-300 rounded w-full"></div>
+                        <div className="h-48 bg-gray-300 rounded w-full"></div>
+                        <div className="h-12 bg-gray-300 rounded w-full"></div>
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-28">
-            <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+        <div className="min-h-screen bg-gray-50 py-8 px-30 md:px-30 lg:px-29 xl:px-29 2xl:px-34">
+            <div className="max-w-8xl mx-auto grid md:grid-cols-3 gap-6">
                 {/* Kiri - Rincian */}
                 <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-3">
                     <h2 className="text-left text-lg font-semibold text-gray-800 mb-4">
@@ -126,9 +140,9 @@ const PaymentPage: React.FC = () => {
                             <p className="text-sm text-gray-600">Produk yang dibeli</p>
                         </div>
                         <h3 className="flex justify-between items-center text-lg font-semibold text-gray-600">
-                            {transaction.product.name}
+                            {transaction?.product.name}
                             <span className="text-purple-600 font-semibold text-md">
-                                {formatCurrency(transaction.product_price)}
+                                {formatCurrency(transaction?.product_price || 0)}
                             </span>
                         </h3>
                     </div>
@@ -145,7 +159,7 @@ const PaymentPage: React.FC = () => {
                     <div className="flex justify-between py-3 border-t border-b border-gray-200 mt-0 mb-4">
                         <p className="mt-1 text-sm text-gray-600">Total Pembayaran</p>
                         <h3 className="text-lg font-bold text-purple-600">
-                            {formatCurrency(transaction.total_amount)}
+                            {formatCurrency(transaction?.total_amount ?? 0)}
                         </h3>
                     </div>
 
@@ -182,7 +196,7 @@ const PaymentPage: React.FC = () => {
                     <div className="mb-3">
                         <div className="flex justify-between items-center">
                             <p className="text-sm text-gray-600">Kode Transaksi</p>
-                            <p className="text-sm font-mono text-gray-600">{transaction.code}</p>
+                            <p className="text-sm font-mono text-gray-600">{transaction?.code}</p>
                         </div>
                     </div>
 
@@ -190,14 +204,14 @@ const PaymentPage: React.FC = () => {
                         <div className="flex justify-between items-center">
                             <p className="text-sm text-gray-600">Bayar Sebelum</p>
                             <p className="text-sm font-semibold text-gray-600">
-                                {formatDate(transaction.payment_deadline)}
+                                {formatDate(transaction?.payment_deadline ?? new Date().toISOString())}
                             </p>
                         </div>
                     </div>
 
                     <button
                         onClick={handlePayment}
-                        className="mt-18 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-5 2xl:py-4 2xl:px-8
+                        className="mt-18 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-4 2xl:py-4 md:px-1 lg:px-5 xl:px-6 2xl:px-7
                         rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                         transition-all duration-500 ease-in-out
                         shadow-[4px_4px_0_#0A0082] 
@@ -220,11 +234,7 @@ const PaymentPage: React.FC = () => {
                         </h2>
 
                         <div className="flex flex-col items-center text-center">
-                            <img
-                                src={PaymentStatus}
-                                alt="Payment Status"
-                                className="h-42"
-                            />
+                            <img src={PaymentStatusImg} alt="Payment Status" className="h-42" />
                             <h3
                                 className={`text-sm font-semibold ${paymentStatus?.status === "Belum Terbayar"
                                     ? "text-red-600"
@@ -235,8 +245,8 @@ const PaymentPage: React.FC = () => {
                             </h3>
                             <button
                                 onClick={handleCheckStatus}
-                                className="mt-2 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
-                                font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-26 2xl:py-4 2xl:px-8
+                                className="mt-2 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-sm 2xl:text-md 
+                                font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-20 lg:px-24 xl:px-26 2xl:px-36
                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                 transition-all duration-500 ease-in-out
                                 shadow-[4px_4px_0_#0A0082] 
@@ -293,7 +303,7 @@ const PaymentPage: React.FC = () => {
                         <button
                             onClick={handleBack}
                             className="group bg-yellow-400 text-[#0A0082] text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
-                            font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 md:px-1 lg:px-6 xl:px-38 2xl:py-4 2xl:px-8
+                            font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-20 lg:px-32 xl:px-37 2xl:px-49
                             rounded-md flex items-center justify-center gap-2
                             transition-all duration-500 ease-in-out
                             shadow-[4px_4px_0_#0A0082] 
