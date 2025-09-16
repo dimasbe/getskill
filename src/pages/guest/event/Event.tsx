@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import EventCardGrid from "../../../components/public/CardEvent/EventCardGrid";
-// import { fetchEvents } from "../../../features/event/_services/eventService";
-import dumyevents from "../../../data/events";
+import { fetchEvents } from "../../../features/event/_services/eventService";
+// import dumyevents from "../../../data/events";
 import type { Eventype } from "../../../features/event/_event";
 // import type { Event as ApiEvent } from "../../../features/event/_event";
 import { motion } from "framer-motion";
@@ -13,26 +13,33 @@ const Event: React.FC = () => {
   const [events, setEvents] = useState<Eventype[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Eventype[]>([]);
 
+  // useEffect(() => {
+  //   setEvents(dumyevents);
+  //   setFilteredEvents(dumyevents);
+  //   setLoading(false);
+  // }, []);
+
+
   useEffect(() => {
-    setEvents(dumyevents);
-    setFilteredEvents(dumyevents);
-    setLoading(false);
+    const loadEvents = async () => {
+      try {
+        const data = await fetchEvents();
+        setEvents(data);
+      } catch (error) {
+        console.error("Gagal memuat event:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadEvents();
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      setFilteredEvents(events); // langsung tampil semua data
+    }
+  }, [events, loading]);
 
-  // useEffect(() => {
-  //   const loadEvents = async () => {
-  //     try {
-  //       const data = await fetchEvents();
-  //       setEvents(data);
-  //     } catch (error) {
-  //       console.error("Gagal memuat event:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   loadEvents();
-  // }, []);
 
   return (
     <div className="min-h-screen bg-white">

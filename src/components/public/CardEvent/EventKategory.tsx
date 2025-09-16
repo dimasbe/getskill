@@ -101,7 +101,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
     const max = Number(localFilters.priceMax) || Infinity;
     filtered = filtered.filter((event) => event.price >= min && event.price <= max);
 
-    onFilter(filtered); // Kirim hasil ke parent
+    onFilter(filtered);
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
   }
 
   const freeCount = events.filter(e => e.event_type === "Gratis").length;
-const paidCount = events.filter(e => e.event_type === "Berbayar").length;
+  const paidCount = events.filter(e => e.event_type === "Berbayar").length;
 
 
   const renderSidebarContent = () => (

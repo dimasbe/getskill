@@ -201,3 +201,64 @@ export interface TopRatingCourse {
   user_courses_count: number;
   order?: number;
 }
+
+// PreTes
+export interface PreTest {
+  id: string;
+  duration: number;
+  total_question: number;   
+  is_submitted: number; 
+
+   course: {
+    id: string;            
+    user: {              
+      id: string;
+      photo: string | null;
+      name: string;
+      email: string;
+      points: number;
+      phone_number: string;
+      user_courses: string; 
+      total_courses: number;
+      total_reviews: number;
+      course_reviews: string;
+      total_certificate: number;
+      total_course_certificate: number;
+      total_all_certificates: number;
+      course_activities: string;
+      event_activities: string; 
+      address: string;
+      banner: string | null;
+      gender: string;
+      created: string;    
+      is_not_guest: boolean;
+    };
+    sub_category: string;
+    course_test_id: string;
+    category: string;
+    title: string;
+    sub_title: string;
+    description: string;    
+    slug: string;
+    is_premium: number;    
+    price: number;
+    promotional_price: number;
+    photo: string;       
+    modules_count: number;
+    rating: string;        
+    course_reviews: string;
+    course_review_count: number;
+    user_courses_count: number;
+    created: string;       
+    is_ready: number;    
+  };
+
+  courseTestQuestions: {
+    id: number;
+    module: {
+      id: string;
+      title: string;
+    };
+    question_count: number;
+  }[];
+}

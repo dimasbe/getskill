@@ -1,5 +1,5 @@
 import api from "../../../services/api";
-import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse } from "../_course";
+import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse, PreTest } from "../_course";
 
 // =============================
 // COURSE
@@ -95,3 +95,18 @@ export async function fetchTopRatingCourses(): Promise<TopRatingCourse[]> {
     throw error;
   }
 }
+
+
+// PreTest
+export async function fetchPreTest(slug: string): Promise<PreTest | null> {
+  try {
+    const response = await api.get("/api/course-tests-get");
+    const all = response.data.data as PreTest[];
+
+    return all.find((item) => item.course.slug === slug) || null;
+  } catch (error) {
+    console.error("Gagal mengambil data pretest:", error);
+    throw error;
+  }
+}
+

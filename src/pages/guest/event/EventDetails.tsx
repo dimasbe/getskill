@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import { IoIosAlert } from "react-icons/io";
 
-// import { fetchEventDetail } from "../../../features/event/_services/eventService";
+import { fetchEventDetail } from "../../../features/event/_services/eventService";
 import type { Eventype } from "../../../features/event/_event";
-import events from "../../../data/events";
+// import events from "../../../data/events";
 
 const DetailEvent: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -20,12 +20,30 @@ const DetailEvent: React.FC = () => {
         event?.start_in === "selesai" ||
         (!!event?.end_date_raw && new Date(event.end_date_raw) < new Date());
 
+    // useEffect(() => {
+    //     const loadEvent = async () => {
+    //         if (!slug) return;
+    //         try {
+    //             setLoading(true);
+    //             const eventData = events.find((e) => e.slug === slug) || null;
+    //             setEvent(eventData);
+    //         } catch (error) {
+    //             console.error("Gagal memuat detail event:", error);
+    //             setEvent(null);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+    //     loadEvent();
+    // }, [slug]);
+
+
     useEffect(() => {
         const loadEvent = async () => {
             if (!slug) return;
             try {
                 setLoading(true);
-                const eventData = events.find((e) => e.slug === slug) || null;
+                const eventData = await fetchEventDetail(slug);
                 setEvent(eventData);
             } catch (error) {
                 console.error("Gagal memuat detail event:", error);
@@ -37,23 +55,7 @@ const DetailEvent: React.FC = () => {
         loadEvent();
     }, [slug]);
 
-
-    // useEffect(() => {
-    //     const loadEvent = async () => {
-    //         if (!slug) return;
-    //         try {
-    //             setLoading(true);
-    //             const eventData = await fetchEventDetail(slug);
-    //             setEvent(eventData);
-    //         } catch (error) {
-    //             console.error("Gagal memuat detail event:", error);
-    //             setEvent(null);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     loadEvent();
-    // }, [slug]);
+    
 
     if (!event && !loading) {
         return <div className="text-center py-20 text-gray-500">Event tidak ditemukan</div>;
@@ -135,7 +137,7 @@ const DetailEvent: React.FC = () => {
                             </div>
                         ) : (
                             <>
-                                <EventPriceCard event={event!} eventIsOver={eventIsOver} />
+                                <EventPriceCard  event={event!} eventIsOver={eventIsOver} />
                             </>
                         )}
                     </div>
