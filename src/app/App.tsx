@@ -26,6 +26,7 @@ import News from "../pages/guest/news/News";
 
 import PreTes from "../pages/user/PreTes/tes";
 import Exam from "../pages/user/PreTes/exam";
+import TesResults from "../pages/user/PreTes/testResults";
 
 
 function RouteChangeLoader() {
@@ -76,8 +77,10 @@ function RouteChangeLoader() {
         <Route path="/dashboard-user" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        <Route path="/course/pre-tes" element={<PreTes />} />
-        <Route path="/course/pre-tes/exam" element={<Exam />} />
+        <Route path="/course/:slug/pre-tes" element={<PreTes />} />
+        <Route path="/course/:slug/pre-tes/exam" element={<Exam />} />
+        <Route path="/course/:slug/pre-tes/exam/results" element={<TesResults />} />
+
       </Route>
     </Routes>
   );

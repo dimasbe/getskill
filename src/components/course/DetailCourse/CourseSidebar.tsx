@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import certificateIcon from "../../../../public/images/icon/course_icon05.svg";
 import {
   FaTag,
@@ -53,6 +53,7 @@ interface Props {
 // =========================
 export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: Props) {
   const navigate = useNavigate();
+  const { slug } = useParams<{ slug: string }>();
   const [open, setOpen] = useState(false);
 
   // Format harga ke Rupiah
@@ -77,7 +78,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
           course: {
             price,
             isFree,
-            id: slug,
+            id: slug || "",
             title: document.title,
           },
         },
@@ -107,7 +108,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         onClick={() => {
           if (isFree) {
             // 👉 kalau gratis langsung arahkan ke halaman kursus
-            navigate(`/kursus/${window.location.pathname.split("/").pop()}`);
+            navigate(`/course/${slug}/pre-tes`);
           } else {
             // 👉 kalau berbayar jalankan logika beli
             handleBuyNow();

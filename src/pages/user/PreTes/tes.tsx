@@ -1,19 +1,52 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { fetchPreTest } from "../../../features/course/_service/course_service";
+import type { PreTest } from "../../../features/course/_course";
+
+
 const Tes = () => {
+    const navigate = useNavigate();
+    const { slug } = useParams<{ slug: string }>();
+
+    const [pretest, setPretest] = useState<PreTest | null>(null);
+
+    // Fetch data pretest ketika komponen mount
+        useEffect(() => {
+        if (!slug) return; // pastikan slug ada
+
+        const loadPretest = async () => {
+            try {
+                const data = await fetchPreTest(slug);
+                setPretest(data);
+            } catch (error) {
+                console.error("Gagal load pretest:", error);
+            }
+        };
+
+        loadPretest();
+    }, [slug]);
+
     return (
         <div className="min-h-screen bg-gray-100 mb-15">
             {/* Header */}
             <div className="bg-gradient-to-br from-purple-500 to-purple-700 py-6 px-6">
+                {pretest ? (
                 <h1 className="text-white font-semibold text-left ml-13 2xl:ml-51 xl:ml-38 lg:ml-23 md:ml-32 sm:ml-15">
-                    Ujian - Resolving Conflicts Between Designers And Engineers
+                    Pre Test - {pretest.course.title}
                 </h1>
+                ) : (
+                <h1 className="text-white font-semibold text-left ml-13 2xl:ml-51 xl:ml-38 lg:ml-23 md:ml-32 sm:ml-15">
+                    Pre Test
+                </h1>
+                )}
             </div>
 
             {/* Main Content */}
             <div className="2xl:max-w-6xl xl:max-w-5xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl max-w-md mx-auto mt-8">
                 {/* Card Intro */}
-                <div className="relative min-h-35 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row items-center md:items-center justify-between">
+                <div className="relative min-h-37 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row items-center md:items-center justify-between">
                     <div className="text-left px-5 mb-4 md:mb-0 md:flex-1">
-                        <h2 className="text-xl font-bold text-white">
+                        <h2 className="text-2xl font-bold text-white">
                             Test Sebelum Masuk Kursus
                         </h2>
                         <p className="text-white mt-1 sm:text-base md:text-base">
@@ -24,7 +57,7 @@ const Tes = () => {
                         <img
                             src="/src/assets/img/book.png"
                             alt="Ilustrasi Ujian"
-                            className="w-80 sm:w-80 md:w-60 mx-8 mt-6 md:mt-0"
+                            className="w-80 sm:w-80 md:w-60 mx-8 mt-6 md:mt-0 2xl:absolute xl:absolute lg:absolute 2xl:right-2 2xl:-bottom-0 xl:right-2 xl:-bottom-0 lg:right-2 lg:-bottom-0"
                         />
                     </div>
                 </div>
@@ -65,16 +98,42 @@ const Tes = () => {
                     </div>
 
                     {/* Detail Aturan */}
-                    <ul className="mt-6 text-gray-700 space-y-1 text-left px-5">
-                        <li>• Jumlah Soal: 5</li>
-                        <li>• Syarat Nilai Kelulusan: 80</li>
-                        <li>• Durasi Ujian: 5 Menit</li>
-                        <li>• Waktu tunggu ujian ulang: 1 menit</li>
-                    </ul>
+                    {pretest ? (
+                        <ul className="mt-6 text-gray-700 space-y-1 text-left px-5">
+                            <li>• Jumlah Soal: {pretest.total_question}</li>
+                            <li>• Syarat Nilai Kelulusan: {pretest.course.is_premium ?? 80}</li>
+                            <li>• Durasi Ujian: {pretest.duration} Menit</li>
+                            <li>• Waktu tunggu ujian ulang: {pretest.is_submitted ?? 1} menit</li>
+                        </ul>
+                    ) : (
+                        <p className="mt-6 text-gray-500 px-5">Memuat data pretest...</p>
+                    )}
 
                     {/* Button */}
                     <div className="text-center mt-8 mb-10">
-                        <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg shadow">
+                        <button
+                            onClick={() => {
+                                navigate(`/course/${slug}/pre-tes/exam`);
+                            }}
+                            // onClick={async () => {
+                            //     try {
+                            //         const response = await fetch("/api/exam/submit", {
+                            //             method: "POST",
+                            //             headers: { "Content-Type": "application/json" },
+                            //             body: JSON.stringify({ answers: slug }),
+                            //         });
+
+                            //         if (response.ok) {
+                            //             navigate(`/course/${slug}/pre-tes/result`);
+                            //         } else {
+                            //             alert("Gagal submit ujian, coba lagi!");
+                            //         }
+                            //     } catch (err) {
+                            //         console.error(err);
+                            //         alert("Terjadi kesalahan koneksi.");
+                            //     }
+                            // }}
+                            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg shadow">
                             Mulai Ujian
                         </button>
                     </div>
