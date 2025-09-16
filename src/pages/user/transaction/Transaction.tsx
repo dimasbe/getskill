@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -12,35 +13,32 @@ import alfamartLogo from "/public/images/payments/alfamart.jpg";
 import indomaretLogo from "/public/images/payments/indomaret.jpg";
 import defaultimg from "../../../assets/Default-Img.png";
 
-interface Course {
-    title: string;
-    description: string;
-    price: number;
-    image: string;
-}
+import type { DetailCourse } from "../../../features/course/_course";
+import { fetchCourseDetail } from "../../../features/course/_service/course_service";
 
 const paymentMethods = {
     virtualAccount: [
-        { id: "bni", name: "BNI", logo: bniLogo },
-        { id: "bca", name: "BCA", logo: bcaLogo },
-        { id: "mandiri", name: "Mandiri", logo: mandiriLogo },
-        { id: "bri", name: "BRI", logo: briLogo },
+        { id: "bni", logo: bniLogo },
+        { id: "bca", logo: bcaLogo },
+        { id: "mandiri", logo: mandiriLogo },
+        { id: "bri", logo: briLogo },
     ],
     eWallet: [
-        { id: "gopay", name: "GoPay", logo: gopayLogo },
-        { id: "ovo", name: "OVO", logo: ovoLogo },
+        { id: "gopay", logo: gopayLogo },
+        { id: "ovo", logo: ovoLogo },
     ],
     convenienceStore: [
-        { id: "alfamart", name: "Alfamart", logo: alfamartLogo },
-        { id: "indomaret", name: "Indomaret", logo: indomaretLogo },
+        { id: "alfamart", logo: alfamartLogo },
+        { id: "indomaret", logo: indomaretLogo },
     ],
 };
 
 const TransactionPage: React.FC = () => {
     const navigate = useNavigate();
+    const { slug } = useParams<{ slug: string }>();
 
     const [loading, setLoading] = useState(true);
-    const [course, setCourse] = useState<Course | null>(null);
+    const [course, setCourse] = useState<DetailCourse | null>(null);
     const [voucher, setVoucher] = useState("");
     const [orderAmount, setOrderAmount] = useState(0);
     const [feeService, setFeeService] = useState(0);
@@ -48,22 +46,28 @@ const TransactionPage: React.FC = () => {
     const [openSection, setOpenSection] = useState<string | null>(null);
 
     useEffect(() => {
-        const dummyCourse: Course = {
-            title: "Belajar Coding Untuk Anak Menggunakan Scratch",
-            description:
-                "Kursus ini mengajak anak-anak untuk mengenal dunia coding sejak dini melalui cara yang seru dan mudah dipahami. Dengan menggunakan Scratch — platform pemrograman visual yang dirancang khusus untuk anak-anak. Peserta akan belajar menyusun logika, mengenali pola, dan membuat proyek digital seperti animasi dan game sederhana.\n\nMelalui pendekatan berbasis bermain sambil belajar, anak-anak akan mengembangkan keterampilan berpikir logis, kreativitas, dan pemecahan masalah. Kursus ini cocok untuk pemula yang belum memiliki pengalaman, dan dirancang agar setiap anak bisa belajar dengan menyenangkan, mandiri, dan penuh rasa ingin tahu..",
-            price: 250000,
-            image: "/images/default-course.png",
+        const loadCourse = async () => {
+            try {
+                setLoading(true);
+                if (!slug) return;
+
+                const data = await fetchCourseDetail(slug);
+                if (!data) return;
+
+                setCourse(data);
+                const price = data.promotional_price ?? data.price;
+                setOrderAmount(price);
+                setFeeService(0);
+                setTotalAmount(price);
+            } catch (error) {
+                console.error("Gagal mengambil detail course:", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
-        setTimeout(() => {
-            setCourse(dummyCourse);
-            setOrderAmount(dummyCourse.price);
-            setFeeService(0);
-            setTotalAmount(dummyCourse.price);
-            setLoading(false);
-        }, 1000);
-    }, []);
+        loadCourse();
+    }, [slug]);
 
     const handleVoucherCheck = (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,16 +80,19 @@ const TransactionPage: React.FC = () => {
     };
 
     const handleBuyNow = () => {
+        if (!course) return;
         const transactionCode = `TX-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-        navigate(`/transaction/${transactionCode}`);
+
+        // nanti bisa dikembangkan: kirim course.id, metode pembayaran, dll ke API transaksi
+        navigate(`/transaction/detail/${transactionCode}`);
     };
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="container mx-auto p-4 px-5 md:px-10 xl:px-22 grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
+            <div className="container mx-auto p-4 px-5 md:px-25 grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
                 {/* Course Section */}
                 <div className="lg:col-span-2">
-                    <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300 transition-all duration-500 hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)] group">
+                    <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300 transition-all duration-500 hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)]">
                         {loading ? (
                             <div className="flex items-start gap-4 animate-pulse">
                                 <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-45 md:h-45 bg-gray-300 rounded-lg"></div>
@@ -101,35 +108,35 @@ const TransactionPage: React.FC = () => {
                                     <div className="flex flex-col sm:flex-row items-start gap-4">
                                         <div className="relative w-81 h-40 sm:w-32 sm:h-32 md:w-50 md:h-45 rounded-lg overflow-hidden">
                                             <img
-                                                src={defaultimg}
+                                                src={course.photo || defaultimg}
                                                 alt={course.title}
-                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-pointer shine__animate"
+                                                className="w-full h-full object-cover"
                                             />
-
-                                            {/* Efek Shine */}
-
                                         </div>
-
                                         <div className="text-left pl-2 sm:pl-6">
                                             <span className="text-xs bg-gray-100 text-black px-2 py-1 rounded-full transition-colors duration-300 hover:bg-purple-600 hover:text-white">
-                                                Game Development
+                                                {typeof course.sub_category === "string"
+                                                    ? course.sub_category
+                                                    : course.sub_category?.name}
                                             </span>
                                             <h2 className="text-sm font-semibold mt-2">{course.title}</h2>
                                             <p className="text-gray-500 text-xs mt-2 mb-2">By GetSkill</p>
                                             <div className="flex items-center gap-2 mt-1">
                                                 <p className="text-purple-600 font-semibold text-xs">
-                                                    Rp {course.price.toLocaleString("id-ID")}
+                                                    Rp {orderAmount.toLocaleString("id-ID")}
                                                 </p>
-                                                <span className="text-gray-500 text-xs">/ (0.0 Reviews)</span>
+                                                <span className="text-gray-500 text-xs">
+                                                    / ({course.course_review_count} Reviews)
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div className="text-justify border-t border-gray-300 pt-4">
                                         <h3 className="font-bold text-gray-800 text-base mb-2">Deskripsi:</h3>
-                                        <p className="text-gray-600 whitespace-pre-line text-xs leading-relaxed">
-                                            {course.description}
-                                        </p>
+                                        <div
+                                            className="text-gray-600 whitespace-pre-line text-xs leading-relaxed"
+                                            dangerouslySetInnerHTML={{ __html: course.description }}
+                                        />
                                     </div>
                                 </>
                             )
@@ -137,11 +144,11 @@ const TransactionPage: React.FC = () => {
                     </div>
                 </div>
 
-
                 {/* Payment Section */}
                 <div className="lg:col-span-1 space-y-4 text-left">
                     <div className="bg-white shadow rounded-xl p-4 border border-gray-300">
-                        <h3 className="text-lg font-semibold mb-4">Pilih Metode Pembayaran</h3>
+                        <h3 className="text-lg font-semibold mb-4 ml-2">Pilih Metode Pembayaran</h3>
+
                         {/* Virtual Account */}
                         <div className="border-b border-gray-200">
                             <button
@@ -170,8 +177,7 @@ const TransactionPage: React.FC = () => {
                                                 {paymentMethods.virtualAccount.map((method) => (
                                                     <label key={method.id} className="flex flex-col items-center gap-1 cursor-pointer">
                                                         <input type="radio" name="va" className="accent-blue-600" />
-                                                        <img src={method.logo} alt={method.name} className="w-12 h-12 object-contain" />
-                                                        <span className="text-xs">{method.name}</span>
+                                                        <img src={method.logo} alt="Bank Logo" className="w-13 h-13 object-contain" />
                                                     </label>
                                                 ))}
                                             </div>
@@ -209,8 +215,7 @@ const TransactionPage: React.FC = () => {
                                                 {paymentMethods.eWallet.map((method) => (
                                                     <label key={method.id} className="flex flex-col items-center gap-1 cursor-pointer">
                                                         <input type="radio" name="ewallet" className="accent-blue-600" />
-                                                        <img src={method.logo} alt={method.name} className="w-12 h-12 object-contain" />
-                                                        <span className="text-xs">{method.name}</span>
+                                                        <img src={method.logo} alt="E-Wallet Logo" className="w-12 h-12 object-contain" />
                                                     </label>
                                                 ))}
                                             </div>
@@ -248,8 +253,7 @@ const TransactionPage: React.FC = () => {
                                                 {paymentMethods.convenienceStore.map((method) => (
                                                     <label key={method.id} className="flex flex-col items-center gap-1 cursor-pointer">
                                                         <input type="radio" name="convenienceStore" className="accent-blue-600" />
-                                                        <img src={method.logo} alt={method.name} className="w-12 h-12 object-contain" />
-                                                        <span className="text-xs">{method.name}</span>
+                                                        <img src={method.logo} alt="Mini Market Logo" className="w-12 h-12 object-contain" />
                                                     </label>
                                                 ))}
                                             </div>
@@ -259,6 +263,7 @@ const TransactionPage: React.FC = () => {
                             </AnimatePresence>
                         </div>
                     </div>
+
 
                     {/* Ringkasan pembayaran */}
                     <div className="bg-white shadow rounded-xl p-6 text-left border border-gray-300">
