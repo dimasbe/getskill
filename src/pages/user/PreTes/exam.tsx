@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchPreTest } from "../../../features/course/_service/course_service";
 import type { PreTest } from "../../../features/course/_course";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Exam = () => {
     const navigate = useNavigate();
     const { slug } = useParams<{ slug: string }>();
 
-    const [pretest, setPretest] = useState<PreTest| null>(null);
+    const [pretest, setPretest] = useState<PreTest | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [answers, setAnswers] = useState<Record<number, string>>({});
@@ -36,15 +37,27 @@ const Exam = () => {
     }, [slug]);
 
     if (loading) {
-        return <p className="p-6 text-center">Memuat ujian...</p>;
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p className="text-xl font-semibold text-gray-700">Memuat ujian...</p>
+            </div>
+        );
     }
 
     if (error) {
-        return <p className="p-6 text-center text-red-500">{error}</p>;
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p className="text-xl font-semibold text-red-500">{error}</p>
+            </div>
+        );
     }
 
     if (!pretest) {
-        return <p className="p-6 text-center">Data ujian tidak ditemukan.</p>;
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p className="text-xl font-semibold text-gray-700">Data ujian tidak ditemukan.</p>
+            </div>
+        );
     }
 
     const answeredCount = currentQuestion + 1;
@@ -173,32 +186,49 @@ const Exam = () => {
                     </div>
                 </div>
             </div>
-            {/* Modal Konfirmasi */}
-            {showConfirm && (
-                <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
-                    <div className="bg-white rounded-lg shadow-lg p-6 w-96 text-center">
-                        <h2 className="text-lg font-semibold mb-4">Konfirmasi</h2>
-                        <p className="mb-6">Apakah kamu yakin ingin menyelesaikan pre tes?</p>
-                        <div className="flex justify-center space-x-4">
-                            <button
-                                onClick={() => setShowConfirm(false)}
-                                className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
-                            >
-                                No
-                            </button>
-                            <button
-                                onClick={() => {
-                                    console.log("Jawaban:", answers);
-                                    navigate(`/course/${slug}/pre-tes/exam/results`);
-                                }}
-                                className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
-                            >
-                                Yes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+
+            {/* Konfirmasi */}
+            <AnimatePresence>
+                {showConfirm && (
+                    <motion.div
+                        key="overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50"
+                    >
+                        <motion.div
+                            key="modal"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="bg-white rounded-lg shadow-lg p-6 w-96 text-center"
+                        >
+                            <h2 className="text-lg font-semibold mb-4">Konfirmasi</h2>
+                            <p className="mb-6">Apakah kamu yakin ingin menyelesaikan pre tes?</p>
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                    onClick={() => setShowConfirm(false)}
+                                    className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
+                                >
+                                    No
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        console.log("Jawaban:", answers);
+                                        navigate(`/course/${slug}/pre-tes/exam/results`);
+                                    }}
+                                    className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
+                                >
+                                    Yes
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
