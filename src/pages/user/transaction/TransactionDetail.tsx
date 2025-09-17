@@ -106,20 +106,48 @@ const PaymentPage: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-50 py-8 px-28 animate-pulse">
-                <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
-                    <div className="col-span-2 space-y-4">
-                        <div className="h-6 bg-gray-300 rounded w-1/3"></div>
+            <div className="min-h-screen bg-gray-50 py-8 px-8 md:px-26 lg:px-29 xl:px-29 2xl:px-34 animate-pulse">
+                <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                    {/* Kiri - Skeleton Rincian Pembayaran */}
+                    <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-3 space-y-4">
+                        <div className="h-5 bg-gray-300 rounded w-1/3"></div>
+
+                        <div className="h-4 bg-gray-300 rounded w-2/3"></div>
                         <div className="h-6 bg-gray-300 rounded w-full"></div>
+
+                        <div className="h-4 bg-gray-300 rounded w-1/2"></div>
                         <div className="h-6 bg-gray-300 rounded w-full"></div>
-                        <div className="h-6 bg-gray-300 rounded w-2/3"></div>
-                        <div className="h-6 bg-gray-300 rounded w-1/2"></div>
-                        <div className="h-12 bg-gray-300 rounded w-full"></div>
+
+                        <div className="h-8 bg-gray-300 rounded w-1/3"></div>
+                        <div className="h-6 bg-gray-300 rounded w-full"></div>
+
+                        <div className="h-10 bg-gray-300 rounded w-2/3 mx-auto"></div>
                     </div>
-                    <div className="col-span-1 space-y-4">
-                        <div className="h-40 bg-gray-300 rounded w-full"></div>
-                        <div className="h-48 bg-gray-300 rounded w-full"></div>
-                        <div className="h-12 bg-gray-300 rounded w-full"></div>
+
+                    {/* Kanan - Skeleton Status & Instruksi */}
+                    <div className="col-span-2 lg:col-span-1 space-y-6">
+
+                        {/* Skeleton Status */}
+                        <div className="bg-white border border-gray-300 rounded-md shadow-md p-3 space-y-3">
+                            <div className="h-5 bg-gray-300 rounded w-1/2"></div>
+                            <div className="h-28 bg-gray-300 rounded w-full"></div>
+                            <div className="h-4 bg-gray-300 rounded w-1/3 mx-auto"></div>
+                            <div className="h-8 bg-gray-300 rounded w-2/3 mx-auto"></div>
+                        </div>
+
+                        {/* Skeleton Instruksi */}
+                        <div className="bg-white border border-gray-300 rounded-md shadow-md p-3 space-y-3">
+                            <div className="h-5 bg-gray-300 rounded w-1/3"></div>
+                            <div className="h-8 bg-gray-300 rounded w-full"></div>
+                            <div className="h-8 bg-gray-300 rounded w-full"></div>
+                            <div className="h-8 bg-gray-300 rounded w-full"></div>
+                        </div>
+
+                        {/* Skeleton Tombol Kembali */}
+                        <div className="flex justify-center">
+                            <div className="h-10 bg-gray-300 rounded w-1/2"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,45 +155,45 @@ const PaymentPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-30 md:px-30 lg:px-29 xl:px-29 2xl:px-34">
-            <div className="max-w-8xl mx-auto grid md:grid-cols-3 gap-6">
+        <div className="min-h-screen bg-gray-50 py-8 px-8 md:px-26 lg:px-29 xl:px-29 2xl:px-34">
+            <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Kiri - Rincian */}
                 <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-3">
-                    <h2 className="text-left text-lg font-semibold text-gray-800 mb-4">
+                    <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                         Rincian Pembayaran
                     </h2>
 
                     <div className="mb-3">
                         <div className="flex justify-between items-center mb-2">
-                            <p className="text-sm text-gray-600">Produk yang dibeli</p>
+                            <p className="text-[10px] md:text-sm text-gray-600">Produk yang dibeli</p>
                         </div>
-                        <h3 className="flex justify-between items-center text-lg font-semibold text-gray-600">
+                        <h3 className="flex justify-between items-center text-sm md:text-lg font-semibold text-gray-600">
                             {transaction?.product.name}
-                            <span className="text-purple-600 font-semibold text-md">
+                            <span className="text-purple-600 font-semibold text-xs md:text-md">
                                 {formatCurrency(transaction?.product_price || 0)}
                             </span>
                         </h3>
                     </div>
 
                     <div className="flex justify-between items-center py-3 border-t border-gray-200">
-                        <p className="text-sm text-gray-600">
+                        <p className="text-[10px] md:text-sm text-gray-600">
                             Voucher Diskon
                         </p>
-                        <h3 className="text-sm font-medium text-purple-600">
+                        <h3 className="text-xs md:text-sm font-medium text-purple-600">
                             - Rp 0
                         </h3>
                     </div>
 
                     <div className="flex justify-between py-3 border-t border-b border-gray-200 mt-0 mb-4">
-                        <p className="mt-1 text-sm text-gray-600">Total Pembayaran</p>
-                        <h3 className="text-lg font-bold text-purple-600">
+                        <p className="mt-1 text-[10px] md:text-sm text-gray-600">Total Pembayaran</p>
+                        <h3 className="text-sm md:text-lg font-bold text-purple-600">
                             {formatCurrency(transaction?.total_amount ?? 0)}
                         </h3>
                     </div>
 
                     <div className="mb-4 border-b pb-4">
                         <div className="flex justify-between items-center">
-                            <p className="text-left text-sm text-gray-600 mb-2">Metode Pembayaran</p>
+                            <p className="text-left text-[10px] md:text-sm text-gray-600 mb-2">Metode Pembayaran</p>
                             <img
                                 src="https://seeklogo.com/images/B/bri-bank-rakyat-indonesia-logo-7E2C8BDA37-seeklogo.com.png"
                                 alt="BRIVA"
@@ -176,16 +204,16 @@ const PaymentPage: React.FC = () => {
 
                     <div className="mb-3">
                         <div className="flex justify-between items-center">
-                            <p className="text-left text-sm text-gray-600">
+                            <p className="text-left text-[10px] md:text-sm text-gray-600">
                                 Kode Pembayaran (1 × 24 Jam)
                             </p>
                             <div className="flex items-center gap-2">
-                                <p className="text-xl font-mono text-purple-600 font-bold">
+                                <p className="text-xs md:text-xl font-mono text-purple-600 font-bold">
                                     150090045757209407
                                 </p>
                                 <button
                                     onClick={() => handleCopy("150090045757209407")}
-                                    className="p-2 rounded-md bg-gray-100 hover:bg-gray-200"
+                                    className="p-0.5 md:p-2 rounded-md bg-gray-100 hover:bg-gray-200"
                                 >
                                     <FiCopy />
                                 </button>
@@ -195,15 +223,15 @@ const PaymentPage: React.FC = () => {
 
                     <div className="mb-3">
                         <div className="flex justify-between items-center">
-                            <p className="text-sm text-gray-600">Kode Transaksi</p>
-                            <p className="text-sm font-mono text-gray-600">{transaction?.code}</p>
+                            <p className="text-[10px] md:text-sm text-gray-600">Kode Transaksi</p>
+                            <p className="text-xs md:text-sm font-mono text-gray-600">{transaction?.code}</p>
                         </div>
                     </div>
 
                     <div className="mb-4">
                         <div className="flex justify-between items-center">
-                            <p className="text-sm text-gray-600">Bayar Sebelum</p>
-                            <p className="text-sm font-semibold text-gray-600">
+                            <p className="text-[10px] md:text-sm text-gray-600">Bayar Sebelum</p>
+                            <p className="text-[10px] md:text-sm font-semibold text-gray-600">
                                 {formatDate(transaction?.payment_deadline ?? new Date().toISOString())}
                             </p>
                         </div>
@@ -211,7 +239,7 @@ const PaymentPage: React.FC = () => {
 
                     <button
                         onClick={handlePayment}
-                        className="mt-18 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-4 2xl:py-4 md:px-1 lg:px-5 xl:px-6 2xl:px-7
+                        className="mt-18 md:mt-10 lg:mt-18 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-3 md:py-3 lg:py-3 xl:py-4 2xl:py-4 md:px-4 lg:px-5 xl:px-6 2xl:px-7
                         rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                         transition-all duration-500 ease-in-out
                         shadow-[4px_4px_0_#0A0082] 
@@ -226,17 +254,17 @@ const PaymentPage: React.FC = () => {
                 </div>
 
                 {/* Kanan - Status & Instruksi */}
-                <div className="col-span-1 space-y-6">
+                <div className="col-span-2 lg:col-span-1 space-y-6">
                     {/* Status */}
                     <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
-                        <h2 className="text-left text-md font-semibold text-gray-800 mb-4">
+                        <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                             Status Pembayaran
                         </h2>
 
                         <div className="flex flex-col items-center text-center">
                             <img src={PaymentStatusImg} alt="Payment Status" className="h-42" />
                             <h3
-                                className={`text-sm font-semibold ${paymentStatus?.status === "Belum Terbayar"
+                                className={`text-xs md:text-sm font-semibold ${paymentStatus?.status === "Belum Terbayar"
                                     ? "text-red-600"
                                     : "text-green-600"
                                     }`}
@@ -245,8 +273,8 @@ const PaymentPage: React.FC = () => {
                             </h3>
                             <button
                                 onClick={handleCheckStatus}
-                                className="mt-2 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-sm 2xl:text-md 
-                                font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-20 lg:px-24 xl:px-26 2xl:px-36
+                                className="mt-2 group bg-[#9425FE] text-white text-[8px] md:text-[10px] lg:text-xs xl:text-sm 2xl:text-md 
+                                font-semibold py-2 px-3 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-5 lg:px-24 xl:px-26 2xl:px-36
                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                 transition-all duration-500 ease-in-out
                                 shadow-[4px_4px_0_#0A0082] 
@@ -264,7 +292,7 @@ const PaymentPage: React.FC = () => {
 
                     {/* Instruksi Pembayaran */}
                     <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
-                        <h2 className="text-left text-md font-semibold text-gray-800 mb-4">
+                        <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                             Instruksi Pembayaran
                         </h2>
 
@@ -275,14 +303,14 @@ const PaymentPage: React.FC = () => {
                                         onClick={() =>
                                             setOpenSection(openSection === item ? null : item)
                                         }
-                                        className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === item
+                                        className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-xs md:text-sm transition ${openSection === item
                                             ? "bg-blue-50 text-blue-700"
                                             : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                             }`}
                                     >
                                         <span>{item}</span>
                                         <ChevronDownIcon
-                                            className={`w-5 h-5 transition-transform duration-300 stroke-[1.5] ${openSection === item ? "rotate-180" : "rotate-0"
+                                            className={`w-3 h-3 md:w-5 md:h-5 transition-transform duration-300 stroke-[1.5] ${openSection === item ? "rotate-180" : "rotate-0"
                                                 }`}
                                         />
                                     </button>
@@ -302,8 +330,8 @@ const PaymentPage: React.FC = () => {
                     <div className="flex justify-center">
                         <button
                             onClick={handleBack}
-                            className="group bg-yellow-400 text-[#0A0082] text-[10px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
-                            font-semibold py-2 px-1 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-20 lg:px-32 xl:px-37 2xl:px-49
+                            className="group bg-yellow-400 text-[#0A0082] text-[8px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
+                            font-semibold py-2 px-6 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-8 lg:px-32 xl:px-37 2xl:px-49
                             rounded-md flex items-center justify-center gap-2
                             transition-all duration-500 ease-in-out
                             shadow-[4px_4px_0_#0A0082] 
@@ -316,7 +344,6 @@ const PaymentPage: React.FC = () => {
                             </span>
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
