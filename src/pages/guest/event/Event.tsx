@@ -36,7 +36,7 @@ const Event: React.FC = () => {
 
   useEffect(() => {
     if (!loading) {
-      setFilteredEvents(events); // langsung tampil semua data
+      setFilteredEvents(events);
     }
   }, [events, loading]);
 
