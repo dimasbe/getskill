@@ -222,7 +222,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-3">
               {/* Icon User ke halaman profile */}
               <Link
-                to="/profile"
+                to="/dashboard/user"
                 className="flex items-center space-x-2 text-sm font-semibold text-gray-700"
               >
                 <FaUserCircle size={30} />
@@ -234,7 +234,7 @@ const Navbar = () => {
                 className="hidden lg:flex items-center gap-2 bg-red-500 text-white text-xs hover:text-black font-bold px-4 py-3 rounded-full hover:bg-red-600 transition"
               >
                 <BsBoxArrowLeft size={20} />
-                <span>Logout</span>
+                <span>Keluar</span>
               </button>
             </div>
           ) : (
