@@ -239,7 +239,7 @@ const PaymentPage: React.FC = () => {
 
                     <button
                         onClick={handlePayment}
-                        className="mt-18 md:mt-10 lg:mt-18 group bg-[#9425FE] text-white text-[10px] md:text-[10px] lg:text-xs xl:text-xs 2xl:text-md font-semibold py-2 px-3 md:py-3 lg:py-3 xl:py-4 2xl:py-4 md:px-4 lg:px-5 xl:px-6 2xl:px-7
+                        className="mt-18 md:mt-10 lg:mt-18 group bg-[#9425FE] text-white text-xs md:text-xs lg:text-xs xl:text-xs 2xl:text-md font-semibold py-3 px-21 md:py-3 lg:py-3 xl:py-4 2xl:py-4 md:px-4 lg:px-5 xl:px-6 2xl:px-7
                         rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
                         transition-all duration-500 ease-in-out
                         shadow-[4px_4px_0_#0A0082] 
@@ -273,8 +273,8 @@ const PaymentPage: React.FC = () => {
                             </h3>
                             <button
                                 onClick={handleCheckStatus}
-                                className="mt-2 group bg-[#9425FE] text-white text-[8px] md:text-[10px] lg:text-xs xl:text-sm 2xl:text-md 
-                                font-semibold py-2 px-3 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-5 lg:px-24 xl:px-26 2xl:px-36
+                                className="mt-2 group bg-[#9425FE] text-white text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
+                                font-semibold py-3 px-28 md:py-3 lg:py-3 xl:py-3 2xl:py-4 md:px-8 lg:px-24 xl:px-26 2xl:px-36
                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                 transition-all duration-500 ease-in-out
                                 shadow-[4px_4px_0_#0A0082] 
@@ -330,8 +330,8 @@ const PaymentPage: React.FC = () => {
                     <div className="flex justify-center">
                         <button
                             onClick={handleBack}
-                            className="group bg-yellow-400 text-[#0A0082] text-[8px] md:text-[10px] lg:text-sm xl:text-sm 2xl:text-md 
-                            font-semibold py-2 px-6 md:py-2 lg:py-3 xl:py-3 2xl:py-4 md:px-8 lg:px-32 xl:px-37 2xl:px-49
+                            className="group bg-yellow-400 text-[#0A0082] text-xs md:text-xs lg:text-sm xl:text-sm 2xl:text-md 
+                            font-semibold py-3 px-37 md:py-3 lg:py-3 xl:py-3 2xl:py-4 md:px-12 lg:px-32 xl:px-37 2xl:px-49
                             rounded-md flex items-center justify-center gap-2
                             transition-all duration-500 ease-in-out
                             shadow-[4px_4px_0_#0A0082] 
