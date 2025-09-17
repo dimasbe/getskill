@@ -19,7 +19,7 @@ import UpdatePassword from '../pages/guest/auth/updatepassword';
 import TransactionPage from "../pages/user/transaction/Transaction";
 import TransactionDetailPage from "../pages/user/transaction/TransactionDetail";
 import usePageTitle from "../hooks/public/usePageTitle";
-import Dashboard from "../pages/user/Dashboard";
+import DashboardProfile from "../pages/user/Profile/Dashboard_Profile";
 import ContactPage from "../pages/guest/contact/ContactPage";
 import NewsDetail from "../pages/guest/news/NewsDetail";
 import News from "../pages/guest/news/News";
@@ -74,9 +74,9 @@ function RouteChangeLoader() {
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:id" element={<FaqDetailPage />} />
         <Route path="/faq/category/:id" element={<FaqCategoryDetailPage />} />
-        <Route path="/dashboard-user" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
 
+        <Route path="/dashboard/user" element={<DashboardProfile />} />
         <Route path="/course/:slug/pre-tes" element={<PreTes />} />
         <Route path="/course/:slug/pre-tes/exam" element={<Exam />} />
         <Route path="/course/:slug/pre-tes/exam/results" element={<TesResults />} />
