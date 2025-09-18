@@ -3,7 +3,7 @@ import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { HiSearch, HiMenu, HiX } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
 import { BsBoxArrowLeft } from "react-icons/bs";
-import dummyCourses from "../../../data/dummyCourses";
+import { fetchCourses } from "../../../features/course/_service/course_service";
 import CategoryDropdown from "../../public/CategoryDropdown";
 
 type Course = {
@@ -72,16 +72,33 @@ const Navbar = () => {
 
   /** Update hasil suggestion ketika searchTerm berubah */
   useEffect(() => {
-    if (searchTerm.trim() === "") {
-      setSearchResults([]);
-    } else {
-      const filtered = dummyCourses.filter(
-        (course) =>
-          course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          course.title.toLowerCase() !== searchTerm.toLowerCase()
-      );
-      setSearchResults(filtered);
+    let active = true;
+
+    async function loadCourses() {
+      if (searchTerm.trim() === "") {
+        setSearchResults([]);
+        return;
+      }
+      try {
+        const data = await fetchCourses();
+        if (active) {
+          // asumsinya data.courses itu array
+          const filtered = data.filter(
+            (course: Course) =>
+              course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+              course.title.toLowerCase() !== searchTerm.toLowerCase()
+          );
+          setSearchResults(filtered);
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
+
+    loadCourses();
+    return () => {
+      active = false;
+    };
   }, [searchTerm]);
 
   /** Reset ke /kursus tanpa query jika search dikosongkan */
