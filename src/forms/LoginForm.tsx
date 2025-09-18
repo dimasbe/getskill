@@ -28,7 +28,7 @@ const LoginForm = () => {
       if (user) {
         setToast({ type: "success", message: `Login berhasil! Selamat datang, ${user.name}` });
 
-        window.location.href = "/dashboard-user";
+        window.location.href = "/dashboard/user";
       } else {
         setToast({ type: "error", message: "Email atau password salah" });
       }

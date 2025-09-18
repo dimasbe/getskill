@@ -218,7 +218,7 @@ const Exam = () => {
                                 <button
                                     onClick={() => {
                                         console.log("Jawaban:", answers);
-                                        navigate(`/course/${slug}/pre-tes/exam/results`);
+                                        navigate(`/course/pre-tes/exam/results/${slug}`);
                                     }}
                                     className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
                                 >

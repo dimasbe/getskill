@@ -88,17 +88,17 @@ const Navbar = () => {
   useEffect(() => {
     if (
       searchTerm.trim() === "" &&
-      location.pathname === "/kursus" &&
+      location.pathname === "/course" &&
       location.search.includes("search=")
     ) {
-      navigate("/kursus", { replace: true });
+      navigate("/course", { replace: true });
     }
   }, [searchTerm, location.pathname, location.search, navigate]);
 
   /** Klik hasil search */
   const handleSearchClick = (keyword: string) => {
     setSearchResults([]);
-    navigate(`/kursus?search=${encodeURIComponent(keyword)}`);
+    navigate(`/course?search=${encodeURIComponent(keyword)}`);
     setFilters((prev) => ({ ...prev, search: keyword }));
   };
 
@@ -112,7 +112,7 @@ const Navbar = () => {
   /** Navigasi otomatis ke /kursus jika pilih kategori */
   useEffect(() => {
     if (filters.categories.length > 0) {
-      navigate(`/kursus?category=${encodeURIComponent(filters.categories[0])}`);
+      navigate(`/course?category=${encodeURIComponent(filters.categories[0])}`);
     }
   }, [filters.categories, navigate]);
 

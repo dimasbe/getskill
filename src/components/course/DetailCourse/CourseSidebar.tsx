@@ -108,7 +108,7 @@ export default function CourseSidebar({ totalModul, totalKuis, price, isFree }: 
         onClick={() => {
           if (isFree) {
             // 👉 kalau gratis langsung arahkan ke halaman kursus
-            navigate(`/course/${slug}/pre-tes`);
+            navigate(`/course/pre-tes/${slug}`);
           } else {
             // 👉 kalau berbayar jalankan logika beli
             handleBuyNow();

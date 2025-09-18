@@ -15,7 +15,7 @@ export default function CourseHeader({ title = "Kursus" }: Props) {
                     <p className="mt-2 text-xs sm:text-xs text-gray-800">
                         <a href="/">Beranda</a>
                         <span className="mx-1">&gt;</span>
-                        <a href="/kursus">Kursus</a>
+                        <a href="/course">Kursus</a>
                         <span className="mx-1">&gt;</span>
                         <span className="text-purple-600">{title}</span>
                     </p>

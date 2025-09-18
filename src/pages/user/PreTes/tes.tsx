@@ -113,26 +113,8 @@ const Tes = () => {
                     <div className="text-center mt-8 mb-10">
                         <button
                             onClick={() => {
-                                navigate(`/course/${slug}/pre-tes/exam`);
+                                navigate(`/course/pre-tes/exam/${slug}`);
                             }}
-                            // onClick={async () => {
-                            //     try {
-                            //         const response = await fetch("/api/exam/submit", {
-                            //             method: "POST",
-                            //             headers: { "Content-Type": "application/json" },
-                            //             body: JSON.stringify({ answers: slug }),
-                            //         });
-
-                            //         if (response.ok) {
-                            //             navigate(`/course/${slug}/pre-tes/result`);
-                            //         } else {
-                            //             alert("Gagal submit ujian, coba lagi!");
-                            //         }
-                            //     } catch (err) {
-                            //         console.error(err);
-                            //         alert("Terjadi kesalahan koneksi.");
-                            //     }
-                            // }}
                             className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg shadow">
                             Mulai Ujian
                         </button>
