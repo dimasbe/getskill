@@ -28,6 +28,8 @@ import PreTes from "../pages/user/PreTes/tes";
 import Exam from "../pages/user/PreTes/exam";
 import TesResults from "../pages/user/PreTes/testResults";
 
+import CourseModulePage from "../pages/user/module/CourseModulePage";
+
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -80,6 +82,9 @@ function RouteChangeLoader() {
         <Route path="/course/pre-tes/:slug" element={<PreTes />} />
         <Route path="/course/pre-tes/exam/:slug" element={<Exam />} />
         <Route path="/course/pre-tes/exam/results/:slug" element={<TesResults />} />
+
+        {/* contoh slug course */}
+        <Route path="/module/:slug" element={<CourseModulePage />} />
 
       </Route>
     </Routes>
