@@ -19,10 +19,18 @@ import UpdatePassword from '../pages/guest/auth/updatepassword';
 import TransactionPage from "../pages/user/transaction/Transaction";
 import TransactionDetailPage from "../pages/user/transaction/TransactionDetail";
 import usePageTitle from "../hooks/public/usePageTitle";
-import DashboardProfile from "../pages/user/Profile/Dashboard_Profile";
 import ContactPage from "../pages/guest/contact/ContactPage";
 import NewsDetail from "../pages/guest/news/NewsDetail";
 import News from "../pages/guest/news/News";
+
+import DashboardPage from "../pages/user/Profile/DashboardPage";
+import CoursePage from "../pages/user/Profile/CoursePage";
+import EventPage from "../pages/user/Profile/EventPage";
+import CertificatePage from "../pages/user/Profile/CertificatePage";
+import ReviewsPage from "../pages/user/Profile/ReviewsPage";
+import TransactionsPage from "../pages/user/Profile/TransactionsPage";
+import ExchangePage from "../pages/user/Profile/ExchangePage";
+import ProfilePage from "../pages/user/Profile/ProfilePage";
 
 import PreTes from "../pages/user/PreTes/tes";
 import Exam from "../pages/user/PreTes/exam";
@@ -78,7 +86,17 @@ function RouteChangeLoader() {
         <Route path="/faq/category/:id" element={<FaqCategoryDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        <Route path="/dashboard/user" element={<DashboardProfile />} />
+        {/* user */}
+        <Route path="/dashboard/user" element={<DashboardPage />} />
+        <Route path="/dashboard/user/course" element={<CoursePage />} />
+        <Route path="/dashboard/user/event" element={<EventPage />} />
+        <Route path="/dashboard/user/certificate" element={<CertificatePage />} />
+        <Route path="/dashboard/user/reviews" element={<ReviewsPage />} />
+        <Route path="/dashboard/user/transaction" element={<TransactionsPage />} />
+        <Route path="/dashboard/user/exchange" element={<ExchangePage />} />
+        <Route path="/dashboard/user/profile" element={<ProfilePage />} />
+
+
         <Route path="/course/pre-tes/:slug" element={<PreTes />} />
         <Route path="/course/pre-tes/exam/:slug" element={<Exam />} />
         <Route path="/course/pre-tes/exam/results/:slug" element={<TesResults />} />
