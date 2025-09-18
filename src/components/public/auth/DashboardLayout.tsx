@@ -1,55 +1,56 @@
-import { NavLink } from "react-router-dom";
-import { FaHome, FaAward, FaRegUser } from "react-icons/fa";
-import { HiOutlineBookOpen } from "react-icons/hi2";
-import { IoBookmarkOutline } from "react-icons/io5";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
-import { TbFileStar, TbLogout } from "react-icons/tb";
-import { FiShoppingBag } from "react-icons/fi";
+import BackgroundShapes from "../../../components/public/BackgroundShapes";
+import SidebarDashboard from "./SidebarDashboard";
 
-const SidebarDashboard = () => {
-  const menuItems = [
-    { to: "dashboard", label: "Dashboard", icon: <FaHome size={18} /> },
-    { to: "kursus", label: "Kursus Saya", icon: <HiOutlineBookOpen size={18} /> },
-    { to: "event", label: "Event Saya", icon: <IoBookmarkOutline size={18} /> },
-    { to: "sertifikat", label: "Sertifikat", icon: <FaAward size={18} /> },
-    { to: "reviews", label: "Reviews", icon: <TbFileStar size={18} /> },
-    { to: "transaksi", label: "Riwayat Transaksi", icon: <FiShoppingBag size={18} /> },
-    { to: "penukaran", label: "Penukaran Hadiah", icon: <FaArrowRightArrowLeft size={18} /> },
-    { to: "profile", label: "Profil Saya", icon: <FaRegUser size={18} /> },
-  ];
+type DashboardLayoutProps = React.PropsWithChildren<{ slug: string }>;
 
-  return (
-    <aside className="w-65 h-118 top-0 bg-white shadow-xl border-3 border-purple-200 rounded-xl p-7">
-      <h2 className="text-xs text-start font-bold text-neutral-400 mb-6">
-        Selamat Datang, Moh Kosim
-      </h2>
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
-      <nav className="space-y-3 font-semibold text-xs">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={({ isActive }) =>
-              `flex items-center gap-2 border-b-2 pb-2 ${
-                isActive
-                  ? "text-purple-600 border-purple-600"
-                  : "text-gray-600 border-gray-200 hover:text-purple-600"
-              }`
-            }
-          >
-            {item.icon} {item.label}
-          </NavLink>
-        ))}
-      </nav>
+    return (
+        <div className="min-h-screen bg-white">
+            {/* Header */}
+            <div className="relative px-6 py-30 bg-gradient-to-r from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
+                <BackgroundShapes />
+            </div>
 
-      <div className="mt-7 text-start text-xs">
-        <h3 className="text-gray-400 font-semibold mb-3">USER</h3>
-        <button className="flex items-center gap-2 text-purple-600 hover:text-yellow-400">
-          <TbLogout size={18} /> Logout
-        </button>
-      </div>
-    </aside>
-  );
+            <div className="relative z-20 -mt-35 max-w-6xl mx-auto h-[200px] bg-white rounded-xl shadow-lg overflow-hidden">
+                {/* Banner */}
+                <img
+                    src="/src/assets/img/no-image/no-image.jpg"
+                    alt="cover"
+                    className="w-full h-60 object-cover"
+                />
+
+                {/* Overlay Konten */}
+                <div className="absolute bottom-5 left-8 flex items-center space-x-4">
+                    {/* Foto Profil */}
+                    <img
+                        src="/src/assets/img/no-image/no-profile.jpeg"
+                        alt="profile"
+                        className="w-25 h-25 rounded-full border-7 border-white shadow-md"
+                    />
+                    {/* Nama & Email */}
+                    <div className="text-start">
+                        <h3 className="text-zinc-500 font-bold text-lg drop-shadow-lg">
+                            Moh Kosim
+                        </h3>
+                        <p className="text-zinc-500 text-sm drop-shadow-lg">
+                            mn.kosim251@gmail.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Profile */}
+            <div className="mt-7 max-w-6xl mx-auto pb-20 bg-white flex">
+                {/* Sidebar */}
+                <SidebarDashboard />
+                
+                {/* Konten */}
+                <div className="flex-1">{children}</div>
+            </div>
+
+        </div>
+    )
 };
 
-export default SidebarDashboard;
+export default DashboardLayout;

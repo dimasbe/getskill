@@ -1,8 +1,16 @@
+import DashboardLayout from "../../../components/public/auth/DashboardLayout";
+
 const EventPage = () => {
     return (
-        <div>
-            <h1>Event Page</h1>
-        </div>
+        <>
+            <DashboardLayout slug="event">
+                <main>
+                    <div>
+                        <h1>Event Page</h1>
+                    </div>
+                </main>
+            </DashboardLayout>
+        </>
     );
 }
 
