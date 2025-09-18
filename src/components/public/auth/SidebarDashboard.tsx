@@ -31,7 +31,7 @@ const SidebarDashboard = () => {
                 <a href="#" className=" text-gray-600 hover:text-purple-600 flex items-center gap-2 border-b-2 pb-2 border-gray-200">
                     <span><FaArrowRightArrowLeft size={18}/></span> Penukaran Hadiah
                 </a>
-                <a href="#" className=" text-purple-600 flex items-center gap-2 ">
+                <a href="#" className=" text-gray-600 hover:text-purple-600 flex items-center gap-2 border-b-2 pb-2 border-gray-200">
                     <span><FaRegUser size={18}/></span> Profil Saya
                 </a>
             </nav>
