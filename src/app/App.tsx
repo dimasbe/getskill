@@ -86,7 +86,7 @@ function RouteChangeLoader() {
         <Route path="/faq/category/:id" element={<FaqCategoryDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        {/* user */}
+{/* user */}
         <Route path="/dashboard/user" element={<DashboardPage />} />
         <Route path="/dashboard/user/course" element={<CoursePage />} />
         <Route path="/dashboard/user/event" element={<EventPage />} />

@@ -1,5 +1,17 @@
+import DashboardLayout from "../../../components/public/auth/DashboardLayout";
+
 const TransactionPage = () => {
-    return <div>TransactionPage</div>
+    return (
+        <>
+        <DashboardLayout slug="transaction">
+            <main>
+                <div>
+                    <h1>Transaction Page</h1>
+                </div>
+            </main>
+        </DashboardLayout>
+        </>
+    )
 };
 
 export default TransactionPage
