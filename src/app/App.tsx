@@ -77,9 +77,9 @@ function RouteChangeLoader() {
         <Route path="/contact" element={<ContactPage />} />
 
         <Route path="/dashboard/user" element={<DashboardProfile />} />
-        <Route path="/course/:slug/pre-tes" element={<PreTes />} />
-        <Route path="/course/:slug/pre-tes/exam" element={<Exam />} />
-        <Route path="/course/:slug/pre-tes/exam/results" element={<TesResults />} />
+        <Route path="/course/pre-tes/:slug" element={<PreTes />} />
+        <Route path="/course/pre-tes/exam/:slug" element={<Exam />} />
+        <Route path="/course/pre-tes/exam/results/:slug" element={<TesResults />} />
 
       </Route>
     </Routes>
