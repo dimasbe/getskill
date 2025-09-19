@@ -2,15 +2,40 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiRefreshCw, FiCopy } from "react-icons/fi";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import type { TransactionDetail } from "../../../features/transactionDetail/transactionDetail";
+import { getTransactionDetail } from "../../../features/transactionDetail/services/transactionDetailService";
 
+//Status Payment
 import unpaidImg from "../../../assets/img/payment-status/unpaid.png";
 import paidImg from "../../../assets/img/payment-status/paid.png";
 import expiredImg from "../../../assets/img/payment-status/expired.png";
 
-import type { TransactionDetail } from "../../../features/transactionDetail/transactionDetail";
-import { getTransactionDetail } from "../../../features/transactionDetail/services/transactionDetailService";
+//Payment Logo
+import BniVaLogo from "../../../../public/images/payments/bni.png";
+import BrivaLogo from "../../../../public/images/payments/bri.png";
+import MandiriLogo from "../../../../public/images/payments/mandiri.png";
+import BcaLogo from "../../../../public/images/payments/bca.png";
+import QrisLogo from "../../../../public/images/payments/qris.jpg";
+import DanaLogo from "../../../../public/images/payments/dana.jpg";
+import ShopeePayLogo from "../../../../public/images/payments/shopeepay.jpg";
+import IndomaretLogo from "../../../../public/images/payments/indomaret.jpg";
+import AlfamaretLogo from "../../../../public/images/payments/alfamart.jpg";
 
+// ----- Mapping Payment Logo -----
+const getPaymentLogo = (name: string) => {
+    if (name.includes("BNI")) return BniVaLogo;
+    if (name.includes("BRI")) return BrivaLogo;
+    if (name.includes("Mandiri")) return MandiriLogo;
+    if (name.includes("BCA")) return BcaLogo;
+    if (name.includes("QRIS")) return QrisLogo;
+    if (name.includes("DANA")) return DanaLogo;
+    if (name.includes("ShopeePay")) return ShopeePayLogo;
+    if (name.includes("Indomaret")) return IndomaretLogo;
+    if (name.includes("Alfamart")) return AlfamaretLogo;
+    return undefined;
+};
 
+// Status config
 const statusConfig: Record<
     "UNPAID" | "PAID" | "EXPIRED",
     { img: string; text: string; color: string }
@@ -42,6 +67,7 @@ const TransactionDetailPage: React.FC = () => {
         "UNPAID" | "PAID" | "EXPIRED" | null
     >(null);
     const [openSection, setOpenSection] = useState<string | null>(null);
+    const logo = transaction?.payment_name ? getPaymentLogo(transaction.payment_name) : undefined;
 
     useEffect(() => {
         if (transactionCode) {
@@ -164,19 +190,25 @@ const TransactionDetailPage: React.FC = () => {
                         </h3>
                     </div>
 
-                    <div className="flex justify-between py-3 border-t border-b border-gray-200 mt-0 mb-4">
+                    <div className="flex justify-between py-3 border-t border-b border-gray-200">
                         <p className="mt-1 text-[10px] md:text-sm text-gray-600">Total Pembayaran</p>
                         <h3 className="text-sm md:text-lg font-bold text-purple-600">
                             <p>Rp {transaction?.amount.toLocaleString("id-ID")}</p>
                         </h3>
                     </div>
 
-                    <div className="mb-4 border-b pb-4">
+                    <div className="mb-4 border-b">
                         <div className="flex justify-between items-center">
                             <p className="text-left text-[10px] md:text-sm text-gray-600 mb-2">Metode Pembayaran</p>
-                            <p className="text-left text-[10px] md:text-sm text-gray-600 mb-2 font-extrabold">
-                                {transaction?.payment_name}
-                            </p>
+                            <div className="flex items-center mb-2">
+                                {logo && (
+                                    <img
+                                        src={logo}
+                                        alt={transaction?.payment_name}
+                                        className="max-h-10 md:max-h-13 lg:max-h-16 xl:max-h-18 2xl:max-h-19 object-contain"
+                                    />
+                                )}
+                            </div>
                         </div>
                     </div>
 
