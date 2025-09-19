@@ -2,7 +2,6 @@ import DashboardLayout from "../../../components/public/auth/DashboardLayout";
 
 const TransactionPage = () => {
     return (
-        <>
         <DashboardLayout slug="transaction">
             <main>
                 <div>
@@ -10,7 +9,6 @@ const TransactionPage = () => {
                 </div>
             </main>
         </DashboardLayout>
-        </>
     )
 };
 

@@ -2,7 +2,6 @@ import DashboardLayout from "../../../components/public/auth/DashboardLayout";
 
 const EventPage = () => {
     return (
-        <>
             <DashboardLayout slug="event">
                 <main>
                     <div>
@@ -10,7 +9,6 @@ const EventPage = () => {
                     </div>
                 </main>
             </DashboardLayout>
-        </>
     );
 }
 

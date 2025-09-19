@@ -2,7 +2,6 @@ import DashboardLayout from "../../../components/public/auth/DashboardLayout"
 
 const CertificatePage = () => {
     return (
-        <>
         <DashboardLayout slug="certificate">
             <main>
                 <div>
@@ -10,7 +9,6 @@ const CertificatePage = () => {
                 </div>
             </main>
         </DashboardLayout>
-        </>
     )
 }
 
