@@ -17,6 +17,7 @@ import defaultimg from "../../../assets/Default-Img.png";
 
 import type { DetailCourse } from "../../../features/course/_course";
 import { fetchCourseDetail } from "../../../features/course/_service/course_service";
+import { checkVoucherCode } from "../../../features/coursevoucher/_service/_coursevoucher_service";
 
 const MySwal = withReactContent(Swal);
 
@@ -61,8 +62,8 @@ const TransactionPage: React.FC = () => {
                 setCourse(data);
                 const price = data.promotional_price ?? data.price;
                 setOrderAmount(price);
-                setFeeService(0);
-                setTotalAmount(price);
+                setFeeService(0); // kalau ada biaya layanan, set di sini
+                setTotalAmount(price + 0); // total awal = harga + biaya layanan
             } catch (error) {
                 console.error("Gagal mengambil detail course:", error);
             } finally {
@@ -73,44 +74,75 @@ const TransactionPage: React.FC = () => {
         loadCourse();
     }, [slug]);
 
-    const handleVoucherCheck = (e: React.FormEvent) => {
+    const handleVoucherCheck = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (voucher === "DISKON50") {
-            setTotalAmount(orderAmount / 2);
-            MySwal.fire({
-                title: "Berhasil!",
-                text: "Voucher berhasil digunakan.",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonText: "OK",
-                buttonsStyling: false, // penting biar custom CSS kepakai
-                customClass: {
-                    popup: "my-swal-popup",
-                    title: "my-swal-title",
-                    htmlContainer: "my-swal-text",
-                    icon: "my-swal-icon",
-                    confirmButton: "my-swal-confirm",
-                },
-            });
-        } else {
+
+        if (!course) return;
+
+        if (!voucher.trim()) {
             MySwal.fire({
                 title: "Oops!",
-                text: "Voucher tidak valid.",
+                text: "Silakan masukkan kode voucher.",
+                icon: "warning",
+                confirmButtonText: "OK",
+            });
+            return;
+        }
+
+        try {
+            const result = await checkVoucherCode(course.slug, voucher);
+
+            if (result.valid) {
+                const discount = result.discount ?? 0;
+
+                // total = harga awal - diskon + biaya layanan
+                const discountedTotal =
+                    orderAmount - (orderAmount * discount) / 100 + feeService;
+
+                setTotalAmount(discountedTotal);
+
+                MySwal.fire({
+                    title: "Berhasil!",
+                    text: `Voucher berhasil digunakan. Diskon ${discount}% diterapkan.`,
+                    icon: "success",
+                    showCancelButton: false,
+                    confirmButtonText: "OK",
+                    buttonsStyling: false,
+                    customClass: {
+                        popup: "my-swal-popup",
+                        title: "my-swal-title",
+                        htmlContainer: "my-swal-text",
+                        icon: "my-swal-icon",
+                        confirmButton: "my-swal-confirm",
+                    },
+                });
+            } else {
+                MySwal.fire({
+                    title: "Oops!",
+                    text: result.reason || "Voucher tidak valid.",
+                    icon: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "Coba Lagi",
+                    buttonsStyling: false,
+                    customClass: {
+                        popup: "my-swal-popup",
+                        title: "my-swal-title",
+                        htmlContainer: "my-swal-text",
+                        icon: "my-swal-icon",
+                        confirmButton: "my-swal-confirm",
+                    },
+                });
+            }
+        } catch (err) {
+            console.error("Voucher check error:", err);
+            MySwal.fire({
+                title: "Error!",
+                text: "Terjadi kesalahan saat memeriksa voucher.",
                 icon: "error",
-                showCancelButton: false,
-                confirmButtonText: "Coba Lagi",
-                buttonsStyling: false,
-                customClass: {
-                    popup: "my-swal-popup",
-                    title: "my-swal-title",
-                    htmlContainer: "my-swal-text",
-                    icon: "my-swal-icon",
-                    confirmButton: "my-swal-confirm",
-                },
+                confirmButtonText: "OK",
             });
         }
     };
-
 
     const handleBuyNow = () => {
         if (!course) return;
@@ -132,7 +164,7 @@ const TransactionPage: React.FC = () => {
             showCancelButton: true,
             confirmButtonText: "Ya",
             cancelButtonText: "Batal",
-            buttonsStyling: false, // supaya CSS custom tombol jalan
+            buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
                 const transactionCode = `TX-${Date.now()}-${Math.floor(
@@ -142,6 +174,7 @@ const TransactionPage: React.FC = () => {
             }
         });
     };
+
 
 
 
@@ -196,7 +229,7 @@ const TransactionPage: React.FC = () => {
                                                     Rp {orderAmount.toLocaleString("id-ID")}
                                                 </p>
                                                 <span className="text-gray-500 text-xs">
-                                                        ({parseFloat(course.rating).toFixed(1)} Reviews)
+                                                    ({parseFloat(course.rating).toFixed(1)} Reviews)
                                                 </span>
                                             </div>
                                         </div>
@@ -255,8 +288,8 @@ const TransactionPage: React.FC = () => {
                                     <button
                                         onClick={() => setOpenSection(openSection === "va" ? null : "va")}
                                         className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === "va"
-                                                ? "bg-blue-50 text-blue-700"
-                                                : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                            ? "bg-blue-50 text-blue-700"
+                                            : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                             }`}
                                     >
                                         <span>Virtual Account</span>
@@ -302,8 +335,8 @@ const TransactionPage: React.FC = () => {
                                     <button
                                         onClick={() => setOpenSection(openSection === "ewallet" ? null : "ewallet")}
                                         className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === "ewallet"
-                                                ? "bg-blue-50 text-blue-700"
-                                                : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                            ? "bg-blue-50 text-blue-700"
+                                            : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                             }`}
                                     >
                                         <span>E-Wallet</span>
@@ -351,8 +384,8 @@ const TransactionPage: React.FC = () => {
                                             setOpenSection(openSection === "minimarket" ? null : "minimarket")
                                         }
                                         className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-sm transition ${openSection === "minimarket"
-                                                ? "bg-blue-50 text-blue-700"
-                                                : "bg-white hover:bg-gray-50 hover:text-yellow-500"
+                                            ? "bg-blue-50 text-blue-700"
+                                            : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                             }`}
                                     >
                                         <span>Mini Market</span>
@@ -399,57 +432,57 @@ const TransactionPage: React.FC = () => {
                             </div>
 
                             {/* Ringkasan pembayaran */}
-                                <div className="lg:col-span-1 space-y-4 text-left">
-                                    {/* Ringkasan pembayaran */}
-                                    {!loading && (
-                                        <div className="bg-white shadow rounded-xl p-6 text-left border border-gray-300">
-                                            <h3 className="text-lg font-semibold mb-5">Pembayaran</h3>
-                                            <form onSubmit={handleVoucherCheck} className="flex gap-3 mb-6">
-                                                <input
-                                                    type="text"
-                                                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                                                    placeholder="Kode Voucher"
-                                                    value={voucher}
-                                                    onChange={(e) => setVoucher(e.target.value)}
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    className="group bg-purple-600 text-white font-semibold text-sm py-2 px-6 rounded-full flex items-center justify-center gap-2 transition-all duration-500 ease-in-out shadow-[3px_3px_0px_black] hover:bg-yellow-400 hover:text-black hover:shadow-none"
-                                                >
-                                                    <span className="transition-colors duration-500 group-hover:text-black">
-                                                        Cek
-                                                    </span>
-                                                </button>
-                                            </form>
-
-                                            <div className="border-t border-gray-300 pt-7 mt-7 space-y-4 text-left text-gray-500 text-sm">
-                                                <div className="flex justify-between">
-                                                    <span>Harga Pesanan</span>
-                                                    <span>Rp {orderAmount.toLocaleString("id-ID")}</span>
-                                                </div>
-                                                <div className="flex justify-between">
-                                                    <span>Biaya Layanan</span>
-                                                    <span>Rp {feeService.toLocaleString("id-ID")}</span>
-                                                </div>
-                                                <div className="border-t border-gray-300 pt-7 mt-10 flex justify-between font-semibold text-gray-500">
-                                                    <span>Total Pesanan</span>
-                                                    <span className="text-lg">
-                                                        Rp {totalAmount.toLocaleString("id-ID")}
-                                                    </span>
-                                                </div>
-                                            </div>
-
+                            <div className="lg:col-span-1 space-y-4 text-left">
+                                {/* Ringkasan pembayaran */}
+                                {!loading && (
+                                    <div className="bg-white shadow rounded-xl p-6 text-left border border-gray-300">
+                                        <h3 className="text-lg font-semibold mb-5">Pembayaran</h3>
+                                        <form onSubmit={handleVoucherCheck} className="flex gap-3 mb-6">
+                                            <input
+                                                type="text"
+                                                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                                                placeholder="Kode Voucher"
+                                                value={voucher}
+                                                onChange={(e) => setVoucher(e.target.value)}
+                                            />
                                             <button
-                                                onClick={handleBuyNow}
-                                                className="group mt-6 w-full rounded-full bg-yellow-400 text-black font-semibold py-3 shadow-[3px_3px_0px_black] transition-all duration-500 ease-in-out hover:bg-purple-600 hover:text-white"
+                                                type="submit"
+                                                className="group bg-purple-600 text-white font-semibold text-sm py-2 px-6 rounded-full flex items-center justify-center gap-2 transition-all duration-500 ease-in-out shadow-[3px_3px_0px_black] hover:bg-yellow-400 hover:text-black hover:shadow-none"
                                             >
-                                                <span className="transition-colors duration-500 group-hover:text-white">
-                                                    Beli Sekarang
+                                                <span className="transition-colors duration-500 group-hover:text-black">
+                                                    Cek
                                                 </span>
                                             </button>
+                                        </form>
+
+                                        <div className="border-t border-gray-300 pt-7 mt-7 space-y-4 text-left text-gray-500 text-sm">
+                                            <div className="flex justify-between">
+                                                <span>Harga Pesanan</span>
+                                                <span>Rp {orderAmount.toLocaleString("id-ID")}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span>Biaya Layanan</span>
+                                                <span>Rp {feeService.toLocaleString("id-ID")}</span>
+                                            </div>
+                                            <div className="border-t border-gray-300 pt-7 mt-10 flex justify-between font-semibold text-gray-500">
+                                                <span>Total Pesanan</span>
+                                                <span className="text-lg">
+                                                    Rp {totalAmount.toLocaleString("id-ID")}
+                                                </span>
+                                            </div>
                                         </div>
-                                    )}
-                                </div>
+
+                                        <button
+                                            onClick={handleBuyNow}
+                                            className="group mt-6 w-full rounded-full bg-yellow-400 text-black font-semibold py-3 shadow-[3px_3px_0px_black] transition-all duration-500 ease-in-out hover:bg-purple-600 hover:text-white"
+                                        >
+                                            <span className="transition-colors duration-500 group-hover:text-white">
+                                                Beli Sekarang
+                                            </span>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         </>
                     )}
                 </div>
