@@ -56,7 +56,6 @@ const TransactionDetailPage: React.FC = () => {
         }
     }, [transactionCode]);
 
-    // tombol cek status (simulasi update status)
     const handleCheckStatus = async () => {
         if (!transactionCode) return;
 
@@ -72,17 +71,18 @@ const TransactionDetailPage: React.FC = () => {
         }
     };
 
-    // copy ke clipboard
     const handleCopy = (text: string) => {
         navigator.clipboard.writeText(text);
     };
 
-    // tombol lanjut pembayaran
     const handlePayment = () => {
-        console.log("Lanjutkan pembayaran untuk:", transaction?.reference);
+        if (transaction?.checkout_url) {
+            window.location.href = transaction.checkout_url;
+        } else {
+            console.error("Checkout URL tidak tersedia untuk transaksi ini.");
+        }
     };
 
-    // tombol kembali
     const handleBack = () => {
         navigate(-1);
     };
@@ -119,7 +119,6 @@ const TransactionDetailPage: React.FC = () => {
                             <div className="h-8 bg-gray-300 rounded w-2/3 mx-auto"></div>
                         </div>
 
-                        {/* Skeleton Instruksi */}
                         <div className="bg-white border border-gray-300 rounded-md shadow-md p-3 space-y-3">
                             <div className="h-5 bg-gray-300 rounded w-1/3"></div>
                             <div className="h-8 bg-gray-300 rounded w-full"></div>
@@ -127,7 +126,6 @@ const TransactionDetailPage: React.FC = () => {
                             <div className="h-8 bg-gray-300 rounded w-full"></div>
                         </div>
 
-                        {/* Skeleton Tombol Kembali */}
                         <div className="flex justify-center">
                             <div className="h-10 bg-gray-300 rounded w-1/2"></div>
                         </div>
@@ -140,7 +138,6 @@ const TransactionDetailPage: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-8 md:px-26 lg:px-29 xl:px-29 2xl:px-34">
             <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Kiri - Rincian */}
                 <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-3">
                     <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                         Rincian Pembayaran
@@ -214,7 +211,15 @@ const TransactionDetailPage: React.FC = () => {
                             <p className="text-[10px] md:text-sm text-gray-600">Bayar Sebelum</p>
                             <p className="text-[10px] md:text-sm font-semibold text-gray-600">
                                 {transaction?.expired_time
-                                    ? new Date(transaction.expired_time * 1000).toLocaleString("id-ID")
+                                    ? (() => {
+                                        const date = new Date(transaction.expired_time * 1000);
+                                        const day = date.getDate();
+                                        const month = date.toLocaleString("id-ID", { month: "long" });
+                                        const year = date.getFullYear();
+                                        const hours = String(date.getHours()).padStart(2, "0");
+                                        const minutes = String(date.getMinutes()).padStart(2, "0");
+                                        return `${day} ${month} ${year} - ${hours}:${minutes}`;
+                                    })()
                                     : "-"}
                             </p>
                         </div>
@@ -236,9 +241,7 @@ const TransactionDetailPage: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Kanan - Status & Instruksi */}
                 <div className="col-span-2 lg:col-span-1 space-y-6">
-                    {/* Status */}
                     <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
                         <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                             Status Pembayaran
@@ -279,7 +282,6 @@ const TransactionDetailPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Instruksi Pembayaran */}
                     <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
                         <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                             Instruksi Pembayaran
@@ -305,7 +307,7 @@ const TransactionDetailPage: React.FC = () => {
                                     </button>
 
                                     {openSection === instruksi.title && (
-                                        <div className="px-3 pb-3 text-sm text-gray-600 space-y-1">
+                                        <div className="px-3 pb-3 text-[13px] text-black space-y-1 text-left">
                                             {instruksi.steps.map((step: string, i: number) => (
                                                 <p key={i} dangerouslySetInnerHTML={{ __html: `${i + 1}. ${step}` }} />
                                             ))}
@@ -316,7 +318,6 @@ const TransactionDetailPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Tombol Kembali */}
                     <div className="flex justify-center">
                         <button
                             onClick={handleBack}
