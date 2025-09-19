@@ -239,7 +239,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-3">
               {/* Icon User ke halaman profile */}
               <Link
-                to="/dashboard/user"
+                to="/dashboard/user/profile"
                 className="flex items-center space-x-2 text-sm font-semibold text-gray-700"
               >
                 <FaUserCircle size={30} />

@@ -2,7 +2,6 @@ import DashboardLayout from "../../../components/public/auth/DashboardLayout"
 
 const ExchangePage = () => {
     return (
-        <>
         <DashboardLayout slug="exchange">
             <main>
                 <div>
@@ -10,7 +9,6 @@ const ExchangePage = () => {
                 </div>
             </main>
         </DashboardLayout>
-        </>
     )
 }
 export default ExchangePage
