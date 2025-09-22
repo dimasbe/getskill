@@ -369,27 +369,42 @@
   box-shadow: none;
 }
 /* Icon */
+/* Base */
 .my-swal-icon {
-  transform: scale(0.8);
-  /* perkecil jadi 80% */
+  transform: scale(0.9);
   margin: 0 auto 12px auto;
-  /* biar tetap center dengan jarak bawah */
 }
 
-/* Kalau mau lebih spesifik tiap icon */
+/* Warna warning */
 .my-swal-icon.swal2-warning {
-  color: #f59e0b;
-  /* kuning */
+  border-color: #f59e0b !important;
+  color: #f59e0b !important;
 }
 
-.my-swal-icon.swal2-success {
-  color: #16a34a;
-  /* hijau */
+/* Warna sukses */
+.my-swal-icon.swal2-success,
+.swal2-icon.swal2-success {
+  border-color: #16a34a !important;
+  color: #16a34a !important;
 }
 
-.my-swal-icon.swal2-error {
-  color: #dc2626;
-  /* merah */
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #16a34a !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid #16a34a !important;
+}
+
+/* Warna error */
+.my-swal-icon.swal2-error,
+.swal2-icon.swal2-error {
+  border-color: #dc2626 !important;
+  color: #dc2626 !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #dc2626 !important;
 }
 
 /* Menyembunyikan scrollbar untuk Chrome, Safari, dan Opera */
