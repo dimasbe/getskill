@@ -19,7 +19,7 @@ export async function fetchCourseVouchers(
     }
 }
 
-// Cek kode voucher langsung ke endpoint /check
+// ✅ checkVoucherCode sudah OK
 export async function checkVoucherCode(
     slug: string,
     code: string
