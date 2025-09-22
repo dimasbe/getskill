@@ -1,19 +1,82 @@
 // ========================
+// COURSE POST TEST (Final Audit / Tugas Akhir Modul)
+// ========================
+export interface CoursePostTestQuestion {
+  id: string;
+  question: string; // HTML string
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  option_e: string;
+}
+
+export interface CoursePostTest {
+  id: string;
+  duration: number; // menit
+  total_question: number;
+  is_submitted: number; // 0 / 1
+  course: {
+    id: string;
+    title: string;
+    slug: string;
+    photo?: string | null;
+  };
+  courseTestQuestions: {
+    id: number;
+    module: { id: string; title: string };
+    question_count: number;
+  }[];
+}
+
+export interface CoursePostTestResponse {
+  paginate: {
+    last_page: number;
+    current_page: number;
+  };
+  data: CoursePostTestQuestion[];
+  course_test: CoursePostTest;
+  user_quiz?: {
+    id: string;
+    quiz_questions: string[];
+    created_at: string;
+  };
+}
+// ========================
 // QUIZ
 // ========================
+export interface UserQuizHistory {
+  id: string;
+  user_id: string;
+  quiz_id: string;
+  module_question_id: string;
+  answer: string;
+  score: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface QuizType {
   id: string;
   module_id: string;
   sub_module_slug_prev: string | null;
   sub_module_slug_next: string | null;
   course_slug: string;
-  rules: string;
+  course_title: string;
+  module_title: string;
+  rules: string; // HTML
   module_slug: string;
   total_question: number;
+  minimum_score: number;
+  duration: number;
   retry_delay: number;
-  user_latest_quiz: unknown | null;
-  user_quiz_me: unknown | null;
+  user_latest_quiz: UserQuizHistory | null;
+  user_quiz_me?: UserQuizHistory;
+  user_quizzes?: UserQuizHistory[];
+  is_submited: boolean | null;
+  created_at: string;
 }
+
 
 // ========================
 // SUBMODULE LIST
@@ -24,18 +87,34 @@ export interface SubModuleType {
   title: string;
   slug: string;
   sub_title: string;
-  is_section?: boolean; // ⬅️ tambahkan ini
 }
-
 
 // ========================
 // MODULE TASK
 // ========================
 export interface ModuleTaskType {
   id: string;
+  module: {
+    id: string;
+    course_id: string;
+    step: number;
+    title: string;
+    slug: string;
+    sub_title: string;
+  };
+  question: string;
+  description: string;
   point: number;
+  total_students: number;
+  highest_score: number | null;
+  lowest_score: number | null;
+  average_score: number | null;
+  submission_task: unknown[];
   is_finish: boolean;
+  course_photo: string;
 }
+
+
 
 // ========================
 // COURSE SUMMARY
@@ -58,7 +137,7 @@ export interface ModuleType {
   sub_title: string;
   course: CourseSummaryType;
   quizzes: QuizType[];
-  quizz_count: number;
+  quiz_count: number;
   module_question_count: number;
   sub_modules: SubModuleType[];
   sub_module_count: number;
@@ -95,6 +174,7 @@ export interface ContentType {
   blocks: ContentBlock[];
   version: string;
 }
+
 // ========================
 // SUBMODULE DETAIL
 // ========================
@@ -104,7 +184,6 @@ export interface SubModuleDetailType {
   course_slug: string;
   module: string;
   step: number;
-  last_step: number;
   title: string;
   slug: string;
   sub_title: string;
