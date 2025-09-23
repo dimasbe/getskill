@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { HiSearch, HiMenu, HiX } from "react-icons/hi";
-import { FaUserCircle } from "react-icons/fa";
+// import { FaUserCircle } from "react-icons/fa";
 import { BsBoxArrowLeft } from "react-icons/bs";
 import { fetchCourses } from "../../../features/course/_service/course_service";
+import { fetchProfile } from "../../../features/user/user_service";
+import type { ProfileData } from "../../../features/user/models";
 import CategoryDropdown from "../../public/CategoryDropdown";
 
 type Course = {
@@ -30,6 +32,7 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<ProfileData | null>(null);
 
   // 🔹 Filter state
   const [filters, setFilters] = useState({
@@ -149,6 +152,22 @@ const Navbar = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+  async function loadProfile() {
+    try {
+      const profile = await fetchProfile();
+      setUser(profile);
+    } catch (err) {
+      console.error("Gagal ambil profile:", err);
+    }
+  }
+
+  if (isLoggedIn) {
+    loadProfile();
+  }
+}, [isLoggedIn]);
+
+
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md 
@@ -240,9 +259,19 @@ const Navbar = () => {
               {/* Icon User ke halaman profile */}
               <Link
                 to="/dashboard/user/profile"
-                className="flex items-center space-x-2 text-sm font-semibold text-gray-700"
+                className="flex items-center gap-2 text-sm font-semibold text-gray-700"
               >
-                <FaUserCircle size={30} />
+                <img
+                  src={
+                    user?.photo
+                      ? user.photo.startsWith("http")
+                        ? user.photo
+                        : `${import.meta.env.VITE_API_URL}/storage/${user.photo}`
+                      : "/src/assets/img/no-image/no-profile.jpeg"
+                  }
+                  alt="profile"
+                  className="w-9 h-9 rounded-full object-cover border"
+                />
               </Link>
 
               {/* Tombol Logout */}
