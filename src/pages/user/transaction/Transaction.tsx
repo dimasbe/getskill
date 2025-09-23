@@ -166,7 +166,7 @@ const TransactionPage: React.FC = () => {
                         title: "my-swal-title",
                         htmlContainer: "my-swal-text",
                         confirmButton: "my-swal-confirm",
-                        icon: "my-swal-icon swal2-error",
+
                     },
                 });
             }
@@ -183,7 +183,7 @@ const TransactionPage: React.FC = () => {
                     title: "my-swal-title",
                     htmlContainer: "my-swal-text",
                     confirmButton: "my-swal-confirm",
-                    icon: "my-swal-icon swal2-error",
+
                 },
             });
         } finally {
@@ -533,9 +533,11 @@ const TransactionPage: React.FC = () => {
                                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                                     className="overflow-hidden"
                                                 >
-                                                    <div className="flex justify-between">
-                                                        <span className="mr-1">Metode Pembayaran</span>
-                                                        <span className="font-medium text-gray-500">{selectedPayment.name}</span>
+                                                    <div className="grid grid-cols-[150px_1fr] gap-y-1 text-sm text-gray-500">
+                                                        <span className="whitespace-nowrap">Metode Pembayaran</span>
+                                                        <span className="font-medium text-gray-500 text-right break-words">
+                                                            {selectedPayment.name}
+                                                        </span>
                                                     </div>
                                                 </motion.div>
                                             )}
@@ -547,8 +549,8 @@ const TransactionPage: React.FC = () => {
                                         </div>
 
                                         {discountAmount > 0 && (
-                                            <div className="flex justify-between text-red-500 font-medium">
-                                                <span>Diskon</span>
+                                            <div className="flex justify-between text-purple-600 font-medium">
+                                                <span>Diskon voucher</span>
                                                 <span>- Rp {discountAmount.toLocaleString("id-ID")}</span>
                                             </div>
                                         )}
@@ -587,7 +589,6 @@ const TransactionPage: React.FC = () => {
                             </div>
                         </div>
                     )}
-
                 </div>
             </div>
         </div>

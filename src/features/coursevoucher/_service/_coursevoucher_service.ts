@@ -4,22 +4,6 @@ import type {
     CourseVoucherCheckResponse,
 } from "../_coursevoucher";
 
-// Ambil list voucher untuk 1 course
-export async function fetchCourseVouchers(
-    slug: string
-): Promise<CourseVoucherResponse | null> {
-    try {
-        const response = await api.get<CourseVoucherResponse>(
-            `/api/course-vouchers/${slug}`
-        );
-        return response.data || null;
-    } catch (error: any) {
-        console.error("Error fetchCourseVouchers:", error.response?.data || error);
-        return null;
-    }
-}
-
-// ✅ checkVoucherCode sudah OK
 export async function checkVoucherCode(
     slug: string,
     code: string
@@ -30,16 +14,30 @@ export async function checkVoucherCode(
             { params: { voucher_code: code } }
         );
 
-        if (response.data.success && response.data.data.valid) {
+        console.log("Raw response checkVoucherCode:", response.data);
+
+        const { success, data, meta } = response.data;
+
+        // ✅ Case 1: API kasih flag valid
+        if (success && data?.valid) {
             return {
                 valid: true,
-                discount: response.data.data.discount,
+                discount: data.discount ?? 0,
             };
         }
 
+        // ✅ Case 2: API tidak ada field valid, tapi meta.message menunjukkan berhasil
+        if (success && meta?.message?.toLowerCase().includes("berhasil")) {
+            return {
+                valid: true,
+                discount: data?.discount ?? 0,
+            };
+        }
+
+        // ❌ Kalau gagal beneran
         return {
             valid: false,
-            reason: response.data.data.reason || response.data.meta.message,
+            reason: data?.reason || meta?.message || "Voucher tidak valid",
         };
     } catch (error: any) {
         console.error("Error checkVoucherCode:", error.response?.data || error);
