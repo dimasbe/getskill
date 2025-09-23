@@ -37,6 +37,7 @@ import Exam from "../pages/user/PreTes/exam";
 import TesResults from "../pages/user/PreTes/testResults";
 
 import CourseModulePage from "../pages/user/module/CourseModulePage";
+import DiscussionPage from "../pages/user/module/discussion/DiscussionPage";
 
 
 function RouteChangeLoader() {
@@ -103,6 +104,7 @@ function RouteChangeLoader() {
 
         {/* contoh slug course */}
         <Route path="/module/:slug" element={<CourseModulePage />} />
+        <Route path="/module/discussion/:slug" element={<DiscussionPage />} />
 
       </Route>
     </Routes>
