@@ -226,7 +226,7 @@ const TransactionPage: React.FC = () => {
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="container mx-auto p-4 px-5 md:px-25 grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
+            <div className="container mx-auto p-4 px-5 md:px-25 grid grid-cols-1 lg:grid-cols-3 gap-3 text-left">
                 {/* Course Section */}
                 <div className="lg:col-span-2">
                     <div className="bg-white shadow rounded-xl p-6 flex flex-col gap-4 text-left border border-gray-300 transition-all duration-500 hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.25)]">
@@ -240,7 +240,6 @@ const TransactionPage: React.FC = () => {
                                         <div className="h-5 bg-gray-200 rounded w-1/4"></div>
                                     </div>
                                 </div>
-                                {/* Skeleton deskripsi */}
                                 <div className="space-y-3">
                                     <div className="h-5 bg-gray-200 rounded w-1/3"></div>
                                     <div className="h-4 bg-gray-200 rounded w-full"></div>
@@ -252,15 +251,15 @@ const TransactionPage: React.FC = () => {
                             course && (
                                 <>
                                     <div className="flex flex-col sm:flex-row items-start gap-4">
-                                        <Link to={`/course/${course.slug}`}>
-                                            <div className="relative aspect-[3/2] w-82 sm:w-48 md:w-56 rounded-lg overflow-hidden bg-gray-100 cursor-pointer">
-                                                <img
-                                                    src={course.photo || defaultimg}
-                                                    alt={course.title}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
-                                        </Link>
+                                            <Link to={`/course/${course.slug}`}>
+                                                <div className="relative w-full sm:max-w-[12rem] md:max-w-[14rem] aspect-[3/2] rounded-lg overflow-hidden bg-gray-100 cursor-pointer">
+                                                    <img
+                                                        src={course.photo || defaultimg}
+                                                        alt={course.title}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            </Link>
 
                                         <div className="text-left -pl-1 sm:pl-6">
                                             <span className="text-xs bg-gray-100 text-black px-2 py-1 rounded-full transition-colors duration-300 hover:bg-purple-600 hover:text-white">
@@ -296,7 +295,6 @@ const TransactionPage: React.FC = () => {
                 {/* Payment Section */}
                 <div className="lg:col-span-1 space-y-4 text-left">
                     {loading ? (
-                        // Skeleton Payment Section
                         <>
                             <div className="bg-white shadow rounded-xl p-4 border border-gray-300 animate-pulse space-y-4">
                                 <div className="h-5 bg-gray-200 rounded w-1/2"></div>
@@ -324,10 +322,9 @@ const TransactionPage: React.FC = () => {
                             </div>
                         </>
                     ) : (
-                        <div className="lg:col-span-1 space-y-6 text-left">
-                            {/* Card: Pilih Metode Pembayaran */}
+                        <div className="lg:col-span-1 space-y-3 text-left">
                                 <div className="bg-white shadow rounded-xl p-4 border border-gray-300">
-                                    <h3 className="text-lg font-semibold mb-4 ml-2">Pilih Metode Pembayaran</h3>
+                                    <h3 className="text-lg font-semibold mb-4 ">Pilih Metode Pembayaran</h3>
 
                                     {/* Virtual Account */}
                                     <div className="border-b border-gray-200">
@@ -418,7 +415,7 @@ const TransactionPage: React.FC = () => {
                                                                         type="radio"
                                                                         name="ewallet"
                                                                         className="accent-blue-600"
-                                                                        checked={selectedPayment?.code === method.code} // ✅ tetap aktif
+                                                                        checked={selectedPayment?.code === method.code}
                                                                         onChange={() => setSelectedPayment(method)}
                                                                     />
                                                                     <img
@@ -473,7 +470,7 @@ const TransactionPage: React.FC = () => {
                                                                         type="radio"
                                                                         name="minimarket"
                                                                         className="accent-blue-600"
-                                                                        checked={selectedPayment?.code === method.code} // ✅ tetap aktif
+                                                                        checked={selectedPayment?.code === method.code}
                                                                         onChange={() => setSelectedPayment(method)}
                                                                     />
                                                                     <img
@@ -491,27 +488,25 @@ const TransactionPage: React.FC = () => {
                                     </div>
                                 </div>
 
-                            {/* Card: Ringkasan Pembayaran */}
-                            <div className="bg-white shadow rounded-xl p-6 text-left border border-gray-300">
+                            <div className="bg-white shadow rounded-xl p-4 text-left border border-gray-300">
                                 <h3 className="text-lg font-semibold mb-5">Pembayaran</h3>
-
                                 {/* form voucher */}
-                                    <form onSubmit={handleVoucherCheck} className="flex gap-3 mb-6">
+                                    <form onSubmit={handleVoucherCheck} className="flex gap-2 mb-6">
                                         <input
                                             type="text"
-                                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm
+                                            className="flex-1 border border-gray-300 rounded-lg -px-2 pl-2 py-2 text-sm
                                             focus:outline-none focus:border-2 focus:border-purple-500
                                             hover:border-2 hover:border-purple-500
-                                            transition-all duration-300"
+                                            transition-all duration-100"
                                             placeholder="Kode Voucher"
                                             value={voucher}
                                             onChange={(e) => setVoucher(e.target.value)}
                                         />
                                         <button
                                             type="submit"
-                                            className="group bg-purple-600 text-white font-semibold text-sm py-1.5 px-4
+                                            className="group bg-purple-600 text-white font-semibold text-sm py-1.5 px-3
                                             rounded-md flex items-center justify-center gap-2
-                                            transition-all duration-300 ease-in-out shadow-[2px_2px_0px_black]
+                                            transition-all duration-1 00 ease-in-out shadow-[2px_2px_0px_black]
                                             hover:bg-yellow-400 hover:text-black hover:shadow-none
                                             active:translate-x-[1px] active:translate-y-[1px]"
                                         >
@@ -562,17 +557,18 @@ const TransactionPage: React.FC = () => {
 
                                         <div className="border-t border-gray-300 pt-7 mt-10 flex justify-between font-semibold text-gray-500">
                                             <span>Total Pesanan</span>
-                                            <span className="text-lg text-black">
+                                            <span className="text-base text-gray-500">
                                                 Rp {totalAmount.toLocaleString("id-ID")}
                                             </span>
                                         </div>
 
                                         {discountAmount > 0 && (
-                                            <div className="flex justify-between text-purple-600 font-medium">
+                                            <div className="flex justify-end gap-2 text-purple-600 font-medium text-sm">
                                                 <span>Hemat</span>
                                                 <span>Rp {discountAmount.toLocaleString("id-ID")}</span>
                                             </div>
                                         )}
+
                                     </div>
 
                                 <button
