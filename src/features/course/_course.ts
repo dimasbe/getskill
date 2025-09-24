@@ -203,62 +203,188 @@ export interface TopRatingCourse {
 }
 
 // PreTes
-export interface PreTest {
+
+export interface DataWrapper {
+  paginate: Paginate;
+  data: CourseData[];
+  course_test: CourseTest;
+  user_quiz: UserQuiz;
+  course: Course;
+}
+
+export interface Paginate {
+  last_page: number;
+  current_page: number;
+}
+
+export interface CourseData {
+  id: string;
+  question: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  option_e: string;
+}
+
+export interface CourseTest {
   id: string;
   duration: number;
-  total_question: number;   
-  is_submitted: number; 
+  total_question: number;
+  is_submitted: number;
+  course: Course;
+  sub_category: string;
+  course_test_id: string;
+  category: string;
+  title: string;
+  sub_title: string;
+  description: string;
+  slug: string;
+  is_premium: number;
+  price: number;
+  promotional_price: number | null;
+  photo: string;
+  modules_count: number;
+  rating: string;
+  course_reviews: [];
+  course_review_count: number;
+  user_courses_count: number;
+  created: string;
+  is_ready: number;
+  courseTestQuestions: CourseTestQuestion[];
+}
 
-   course: {
-    id: string;            
-    user: {              
-      id: string;
-      photo: string | null;
-      name: string;
-      email: string;
-      points: number;
-      phone_number: string;
-      user_courses: string; 
-      total_courses: number;
-      total_reviews: number;
-      course_reviews: string;
-      total_certificate: number;
-      total_course_certificate: number;
-      total_all_certificates: number;
-      course_activities: string;
-      event_activities: string; 
-      address: string;
-      banner: string | null;
-      gender: string;
-      created: string;    
-      is_not_guest: boolean;
-    };
-    sub_category: string;
-    course_test_id: string;
-    category: string;
+export interface Course {
+  id: string;
+  user: User;
+  sub_category: string | SubCategory;
+  course_test_id: string;
+  category: string;
+  title: string;
+  sub_title: string;
+  description: string;
+  slug: string;
+  is_premium: number;
+  price: number;
+  promotional_price: number | null;
+  photo: string;
+  modules_count: number;
+  rating: string;
+  course_reviews: [];
+  course_review_count: number;
+  user_courses_count: number;
+  created: string;
+  is_ready: number;
+}
+
+export interface CourseTestQuestion {
+  id: number;
+  module: {
+    id: string;
     title: string;
-    sub_title: string;
-    description: string;    
-    slug: string;
-    is_premium: number;    
-    price: number;
-    promotional_price: number;
-    photo: string;       
-    modules_count: number;
-    rating: string;        
-    course_reviews: string;
-    course_review_count: number;
-    user_courses_count: number;
-    created: string;       
-    is_ready: number;    
   };
+  question_count: number;
+}
 
-  courseTestQuestions: {
-    id: number;
-    module: {
-      id: string;
-      title: string;
-    };
-    question_count: number;
-  }[];
+export interface User {
+  id: string;
+  photo: string;
+  name: string;
+  email: string;
+  points: number;
+  phone_number: string;
+  user_courses: [];
+  total_courses: number;
+  total_reviews: number;
+  course_reviews: [];
+  total_certificate: number;
+  total_course_certificate: number;
+  total_all_certificates: number;
+  course_activities: [];
+  event_activities: EventActivity[];
+  address: string;
+  banner: string | null;
+  gender: string;
+  created: string;
+  is_not_guest: boolean;
+  role: string;
+}
+
+export interface EventActivity {
+  user: EventUser;
+  event: Event;
+  status: string;
+  reason: string | null;
+}
+
+export interface EventUser {
+  id: string;
+  name: string;
+  email: string;
+  email_verified_at: string;
+  point: number;
+  phone_number: string;
+  gender: string;
+  address: string;
+  photo: string;
+  created_at: string;
+  updated_at: string;
+  banner: string | null;
+  deleted_at: string | null;
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  price: number;
+  location: string | null;
+  map_link: string | null;
+  capacity: number;
+  capacity_left: number;
+  has_certificate: number;
+  is_online: number;
+  is_auto_approve: number;
+  email_content: string;
+  start_date_raw: string;
+  start_date: string;
+  start_hour: string;
+  end_date_raw: string;
+  end_date: string;
+  end_hour: string;
+  eventAttendance: EventAttendance;
+  image: string;
+  event_details: EventDetail[];
+  start_in: string;
+  created_at: string;
+  event_sub_category_id: string | null;
+  event_category_id: string | null;
+}
+
+export interface EventAttendance {
+  id: number;
+  event_id: string;
+  attendance_date: string;
+  attendance_link: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EventDetail {
+  id: number;
+  event_id: string;
+  user: string;
+  start: string;
+  end: string;
+  session: string;
+  created_at: string;
+  updated_at: string;
+  event_date: string;
+}
+
+export interface UserQuiz {
+  id: string;
+  quiz_questions: string[];
+  course: Course;
 }

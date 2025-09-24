@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchPreTest } from "../../../features/course/_service/course_service";
-import type { PreTest } from "../../../features/course/_course";
+import type { CourseTest } from "../../../features/course/_course";
+import HeaderPretes from "../../../components/course/PreTes/HeaderPretes";
 
 
 const Tes = () => {
     const navigate = useNavigate();
     const { slug } = useParams<{ slug: string }>();
 
-    const [pretest, setPretest] = useState<PreTest | null>(null);
+    const [pretest, setPretest] = useState<CourseTest | null>(null);
 
-    // Fetch data pretest ketika komponen mount
-        useEffect(() => {
-        if (!slug) return; // pastikan slug ada
+    useEffect(() => {
+        if (!slug) return;
 
         const loadPretest = async () => {
             try {
                 const data = await fetchPreTest(slug);
+                console.log("Response pretest:", data);
                 setPretest(data);
             } catch (error) {
                 console.error("Gagal load pretest:", error);
@@ -29,17 +30,7 @@ const Tes = () => {
     return (
         <div className="min-h-screen bg-gray-100 mb-15">
             {/* Header */}
-            <div className="bg-gradient-to-br from-purple-500 to-purple-700 py-6 px-6">
-                {pretest ? (
-                <h1 className="text-white font-semibold text-left ml-13 2xl:ml-51 xl:ml-38 lg:ml-23 md:ml-32 sm:ml-15">
-                    Pre Test - {pretest.course.title}
-                </h1>
-                ) : (
-                <h1 className="text-white font-semibold text-left ml-13 2xl:ml-51 xl:ml-38 lg:ml-23 md:ml-32 sm:ml-15">
-                    Pre Test
-                </h1>
-                )}
-            </div>
+            <HeaderPretes />
 
             {/* Main Content */}
             <div className="2xl:max-w-6xl xl:max-w-5xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl max-w-md mx-auto mt-8">
@@ -101,9 +92,9 @@ const Tes = () => {
                     {pretest ? (
                         <ul className="mt-6 text-gray-700 space-y-1 text-left px-5">
                             <li>• Jumlah Soal: {pretest.total_question}</li>
-                            <li>• Syarat Nilai Kelulusan: {pretest.course.is_premium ?? 80}</li>
+                            {/* <li>• Syarat Nilai Kelulusan: </li> */}
                             <li>• Durasi Ujian: {pretest.duration} Menit</li>
-                            <li>• Waktu tunggu ujian ulang: {pretest.is_submitted ?? 1} menit</li>
+                            {/* <li>• Waktu tunggu ujian ulang:  menit</li> */}
                         </ul>
                     ) : (
                         <p className="mt-6 text-gray-500 px-5">Memuat data pretest...</p>
