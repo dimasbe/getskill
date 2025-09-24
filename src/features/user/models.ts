@@ -33,6 +33,18 @@ export interface RegisterPayload {
   password_confirmation: string;
 }
 
+export interface UpdatePasswordPayload {
+  old_password: string;
+  password: string;
+  password_confirmation: string;
+}
+
+export interface DashboardDataCourse {
+  courses_count: number;
+  completed_courses: number;
+  incomplete_courses: number;
+}
+
 // =======================
 // User Profile Interfaces
 // =======================

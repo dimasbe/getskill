@@ -1,7 +1,7 @@
 import api from "../../services/api";
 import axios from "axios";
 import { AxiosError } from "axios";
-import type { User, LoginPayload, RegisterPayload, ProfilData, ProfileData  } from "./models";
+import type { User, LoginPayload, RegisterPayload, ProfilData, ProfileData, UpdatePasswordPayload, DashboardDataCourse  } from "./models";
 
 
 export async function login(payload: LoginPayload): Promise<User | null> {
@@ -37,6 +37,32 @@ export async function register(payload: RegisterPayload) {
     return null;
   }
 }
+
+export async function UpdatePassword(payload: UpdatePasswordPayload) {
+  try {
+    const response = await api.patch("/api/password/update", payload);
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error("Pendaftaran gagal:", error.response?.data || error);
+    } else {
+      console.error("Pendaftaran gagal:", error);
+    }
+    return null;
+  }
+}
+
+export async function DataCourse(): Promise<DashboardDataCourse | null> {
+  try {
+    const response = await api.get("/api/user/stats");
+    return response.data?.data || null;
+  } catch (error) {
+    console.error("Gagal mengambil data dashboard:", error);
+    return null;
+  }
+}
+
+
 
 // Profile
 export async function fetchProfile(): Promise<ProfilData | null> {

@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardLayout from "../../../components/public/auth/DashboardLayout";
-import { fetchProfile, updateProfile } from "../../../features/user/user_service";
+import { fetchProfile, updateProfile, UpdatePassword } from "../../../features/user/user_service";
 import type { ProfilData } from "../../../features/user/models";
 
 const ProfilePage = () => {
@@ -30,6 +31,20 @@ const ProfilePage = () => {
         address: "",
         gender: "",
     });
+
+    const [passwordForm, setPasswordForm] = useState({
+        old_password: "",
+        password: "",
+        password_confirmation: "",
+    });
+
+
+    const [showPassword, setShowPassword] = useState({
+        old: false,
+        new: false,
+        confirm: false,
+    });
+
 
     const [refreshKey, setRefreshKey] = useState(0);
 
@@ -103,6 +118,34 @@ const ProfilePage = () => {
             setShowConfirm(false);
         }
     };
+
+    const handleUpdatePassword = async () => {
+        try {
+            if (passwordForm.password !== passwordForm.password_confirmation) {
+                setErrorMessage("Password baru dan konfirmasi tidak sama.");
+                setShowError(true);
+                return;
+            }
+
+            const result = await UpdatePassword(passwordForm);
+
+            if (result) {
+                setShowSuccess(true);
+                setPasswordForm({ old_password: "", password: "", password_confirmation: "" });
+            } else {
+                setErrorMessage("Gagal update password.");
+                setShowError(true);
+            }
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setErrorMessage(err.message);
+            } else {
+                setErrorMessage("Update password gagal, silakan coba lagi.");
+            }
+            setShowError(true);
+        }
+    };
+
 
 
     return (
@@ -400,46 +443,88 @@ const ProfilePage = () => {
                             <div>
                                 {/* isi Password */}
                                 <div className="grid grid-cols-1 gap-6 text-start text-xs">
+                                    {/* Password Lama */}
                                     <div>
                                         <label className="block text-gray-700 font-bold mb-2">Password Lama</label>
-                                        <input
-                                            type="password"
-                                            placeholder="Password Lama"
-                                            className="w-full border-2 border-purple-200 hover:border-purple-500 
-                 focus:border-purple-600 focus:outline-none rounded-md p-3"
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                type={showPassword.old ? "text" : "password"}
+                                                placeholder="Password Lama"
+                                                className="w-full border-2 border-purple-200 hover:border-purple-500 
+        focus:border-purple-600 focus:outline-none rounded-md p-3 pr-10"
+                                                value={passwordForm.old_password}
+                                                onChange={(e) =>
+                                                    setPasswordForm({ ...passwordForm, old_password: e.target.value })
+                                                }
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword({ ...showPassword, old: !showPassword.old })}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                                            >
+                                                {showPassword.old ? <HiOutlineEye size={18} /> : <HiOutlineEyeOff size={18} />}
+                                            </button>
+                                        </div>
                                     </div>
 
+                                    {/* Password Baru */}
                                     <div>
                                         <label className="block text-gray-700 font-bold mb-2">Password Baru</label>
-                                        <input
-                                            type="password"
-                                            placeholder="Password Baru"
-                                            className="w-full border-2 border-purple-200 hover:border-purple-500 
-                 focus:border-purple-600 focus:outline-none rounded-md p-3"
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                type={showPassword.new ? "text" : "password"}
+                                                placeholder="Password Baru"
+                                                className="w-full border-2 border-purple-200 hover:border-purple-500 
+        focus:border-purple-600 focus:outline-none rounded-md p-3 pr-10"
+                                                value={passwordForm.password}
+                                                onChange={(e) =>
+                                                    setPasswordForm({ ...passwordForm, password: e.target.value })
+                                                }
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword({ ...showPassword, new: !showPassword.new })}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                                            >
+                                                {showPassword.new ? <HiOutlineEye size={18} /> : <HiOutlineEyeOff size={18} />}
+                                            </button>
+                                        </div>
                                     </div>
 
+                                    {/* Konfirmasi Password */}
                                     <div>
                                         <label className="block text-gray-700 font-bold mb-2">Konfirmasi Password</label>
-                                        <input
-                                            type="password"
-                                            placeholder="Re-Type New Password"
-                                            className="w-full border-2 border-purple-200 hover:border-purple-500 
-                 focus:border-purple-600 focus:outline-none rounded-md p-3"
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                type={showPassword.confirm ? "text" : "password"}
+                                                placeholder="Re-Type New Password"
+                                                className="w-full border-2 border-purple-200 hover:border-purple-500 
+        focus:border-purple-600 focus:outline-none rounded-md p-3 pr-10"
+                                                value={passwordForm.password_confirmation}
+                                                onChange={(e) =>
+                                                    setPasswordForm({ ...passwordForm, password_confirmation: e.target.value })
+                                                }
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword({ ...showPassword, confirm: !showPassword.confirm })}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                                            >
+                                                {showPassword.confirm ? <HiOutlineEye size={18} /> : <HiOutlineEyeOff size={18} />}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div className="flex justify-start mt-6">
-                                    <a
-                                        href="#"
+                                    <button
+                                        onClick={handleUpdatePassword}
                                         className="transition-all duration-500 ease-out shadow-[4px_4px_0px_0px_#0B1367]
-               hover:shadow-none active:translate-y-0.5 bg-purple-500 text-white font-bold text-xs 
-               px-6 py-3 rounded-full hover:text-black hover:bg-yellow-400"
+      hover:shadow-none active:translate-y-0.5 bg-purple-500 text-white font-bold text-xs 
+      px-6 py-3 rounded-full hover:text-black hover:bg-yellow-400"
                                     >
                                         Update Password
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         )}
