@@ -4,7 +4,7 @@ import { HiSearch, HiMenu, HiX } from "react-icons/hi";
 // import { FaUserCircle } from "react-icons/fa";
 import { BsBoxArrowLeft } from "react-icons/bs";
 import { fetchCourses } from "../../../features/course/_service/course_service";
-import { fetchProfile } from "../../../features/user/user_service";
+import { fetchProfile, fetchProfileById } from "../../../features/user/user_service";
 import type { ProfileData } from "../../../features/user/models";
 import CategoryDropdown from "../../public/CategoryDropdown";
 
@@ -153,19 +153,34 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-  async function loadProfile() {
-    try {
-      const profile = await fetchProfile();
-      setUser(profile);
-    } catch (err) {
-      console.error("Gagal ambil profile:", err);
-    }
-  }
+    async function loadProfile() {
+      try {
+        // Ambil data login user
+        const profile = await fetchProfile();
+        setUser(profile);
 
-  if (isLoggedIn) {
-    loadProfile();
-  }
-}, [isLoggedIn]);
+        if (profile?.id) {
+          // Simpan id ke localStorage
+          localStorage.setItem("userId", profile.id.toString());
+
+          // Ambil detail lengkap user by id
+          const detail = await fetchProfileById(profile.id);
+          console.log("User detail lengkap:", detail);
+
+          // Kalau mau replace state dengan detail
+          if (detail) {
+            setUser(detail);
+          }
+        }
+      } catch (err) {
+        console.error("Gagal ambil profile:", err);
+      }
+    }
+
+    if (isLoggedIn) {
+      loadProfile();
+    }
+  }, [isLoggedIn]);
 
 
   return (
@@ -270,7 +285,7 @@ const Navbar = () => {
                       : "/src/assets/img/no-image/no-profile.jpeg"
                   }
                   alt="profile"
-                  className="w-9 h-9 rounded-full object-cover border"
+                  className="w-9 h-9 rounded-full object-cover"
                 />
               </Link>
 
