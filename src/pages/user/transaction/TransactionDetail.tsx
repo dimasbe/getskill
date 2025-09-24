@@ -173,7 +173,7 @@ const TransactionDetailPage: React.FC = () => {
                         <div className="flex justify-between items-center mb-2">
                             <p className="text-[10px] md:text-sm text-gray-600">Produk yang dibeli</p>
                         </div>
-                        <h3 className="flex justify-between items-center text-sm md:text-lg font-semibold text-gray-600">
+                        <h3 className="flex justify-between items-center text-[9px] md:text-lg font-semibold text-gray-600">
                             <p>{transaction?.order_items[0].name}</p>
                             <span className="text-purple-600 font-semibold text-xs md:text-md">
                                 <p>Rp {transaction?.amount_received.toLocaleString("id-ID")}</p>
