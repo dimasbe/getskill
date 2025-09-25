@@ -307,9 +307,15 @@ const TransactionDetailPage: React.FC = () => {
                                                     link.download = "qris.png";
                                                     link.click();
                                                 }}
-                                                className="mt-3 bg-yellow-400 px-4 py-2 rounded-md text-[#0A0082] font-semibold hover:bg-[#9425FE] hover:text-white transition"
+                                                className="mt-2 group bg-white text-blue-700 text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
+                                                font-semibold py-3 md:py-3 lg:py-3 xl:py-3 2xl:py-4 w-[310px] md:w-[160px] lg:w-[280px] xl:w-[310px] 2xl:w-[390px]
+                                                rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
+                                                transition-all duration-500 ease-in-out
+                                                border border-blue-700 hover:text-yellow-400 
+                                                active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+                                                focus:outline-none cursor-pointer"
                                             >
-                                                Unduh QRIS
+                                                Unduh Kode QR
                                             </button>
                                         </>
                                     )}
@@ -352,7 +358,7 @@ const TransactionDetailPage: React.FC = () => {
                             <button
                                 onClick={handleCheckStatus}
                                 className="mt-2 group bg-[#9425FE] text-white text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
-                                font-semibold py-3 px-28 md:py-3 lg:py-3 xl:py-3 2xl:py-4 md:px-8 lg:px-24 xl:px-26 2xl:px-36
+                                font-semibold py-3 md:py-3 lg:py-3 xl:py-3 2xl:py-4 w-[310px] md:w-[160px] lg:w-[280px] xl:w-[310px] 2xl:w-[390px]
                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                 transition-all duration-500 ease-in-out
                                 shadow-[4px_4px_0_#0A0082] 
