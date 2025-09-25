@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiRefreshCw, FiCopy } from "react-icons/fi";
+import { QRCodeCanvas } from "qrcode.react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import type { TransactionDetail } from "../../../features/transactionDetail/transactionDetail";
 import { getTransactionDetail } from "../../../features/transactionDetail/services/transactionDetailService";
+import type { TransactionFullDetail } from "../../../features/transactionDetail/transactionFullDetail";
+import { getTransactionFullDetail } from "../../../features/transactionDetail/services/transactionFullDetailService";
 
 //Status Payment
 import unpaidImg from "../../../assets/img/payment-status/unpaid.png";
@@ -58,38 +61,45 @@ const statusConfig: Record<
 };
 
 const TransactionDetailPage: React.FC = () => {
-    const { transactionCode } = useParams<{ transactionCode: string }>();
+    const { reference } = useParams<{ reference: string }>();
     const navigate = useNavigate();
 
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
+    const [fullTransaction, setFullTransaction] = useState<TransactionFullDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [paymentStatus, setPaymentStatus] = useState<
-        "UNPAID" | "PAID" | "EXPIRED" | null
-    >(null);
+    const [paymentStatus, setPaymentStatus] = useState<"UNPAID" | "PAID" | "EXPIRED" | null>(null);
     const [openSection, setOpenSection] = useState<string | null>(null);
     const logo = transaction?.payment_name ? getPaymentLogo(transaction.payment_name) : undefined;
 
     useEffect(() => {
-        if (transactionCode) {
+        if (reference) {
             setIsLoading(true);
-            getTransactionDetail(transactionCode)
-                .then((res) => {
-                    setTransaction(res);
-                    setPaymentStatus(res.status as "UNPAID" | "PAID" | "EXPIRED");
+            Promise.all([
+                getTransactionDetail(reference),
+                getTransactionFullDetail(reference),
+            ])
+                .then(([statusRes, fullRes]) => {
+                    setTransaction(statusRes);
+                    setPaymentStatus(statusRes.status as "UNPAID" | "PAID" | "EXPIRED");
+                    setFullTransaction(fullRes);
                 })
                 .catch(console.error)
                 .finally(() => setIsLoading(false));
         }
-    }, [transactionCode]);
+    }, [reference]);
 
     const handleCheckStatus = async () => {
-        if (!transactionCode) return;
+        if (!reference) return;
 
         setIsLoading(true);
         try {
-            const res = await getTransactionDetail(transactionCode);
-            setTransaction(res);
-            setPaymentStatus(res.status as "UNPAID" | "PAID" | "EXPIRED");
+            const [statusRes, fullRes] = await Promise.all([
+                getTransactionDetail(reference),
+                getTransactionFullDetail(reference),
+            ]);
+            setTransaction(statusRes);
+            setPaymentStatus(statusRes.status as "UNPAID" | "PAID" | "EXPIRED");
+            setFullTransaction(fullRes);
         } catch (error) {
             console.error("Gagal cek status:", error);
         } finally {
@@ -174,7 +184,7 @@ const TransactionDetailPage: React.FC = () => {
                             <p className="text-[10px] md:text-sm text-gray-600">Produk yang dibeli</p>
                         </div>
                         <h3 className="flex justify-between items-center text-[9px] md:text-lg font-semibold text-gray-600">
-                            <p>{transaction?.order_items[0].name}</p>
+                            <p>{fullTransaction?.course?.title}</p>
                             <span className="text-purple-600 font-semibold text-xs md:text-md">
                                 <p>Rp {transaction?.amount_received.toLocaleString("id-ID")}</p>
                             </span>
@@ -278,21 +288,65 @@ const TransactionDetailPage: React.FC = () => {
                         <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
                             Status Pembayaran
                         </h2>
-
                         <div className="flex flex-col items-center text-center">
-                            {paymentStatus && (
+                            {paymentStatus && transaction?.payment_name?.includes("QRIS") ? (
                                 <>
-                                    <img
-                                        src={statusConfig[paymentStatus].img}
-                                        alt="Payment Status"
-                                        className="h-32 object-contain mb-2"
-                                    />
-                                    <h3
-                                        className={`text-xs md:text-sm font-semibold ${statusConfig[paymentStatus].color}`}
-                                    >
-                                        {statusConfig[paymentStatus].text}
-                                    </h3>
+                                    {paymentStatus === "UNPAID" && (
+                                        <>
+                                            <QRCodeCanvas
+                                                value={transaction?.pay_code || transaction?.checkout_url || ""}
+                                                size={200}
+                                                includeMargin={true}
+                                            />
+                                            <button
+                                                onClick={() => {
+                                                    const canvas = document.querySelector("canvas") as HTMLCanvasElement;
+                                                    const url = canvas.toDataURL("image/png");
+                                                    const link = document.createElement("a");
+                                                    link.href = url;
+                                                    link.download = "qris.png";
+                                                    link.click();
+                                                }}
+                                                className="mt-3 bg-yellow-400 px-4 py-2 rounded-md text-[#0A0082] font-semibold hover:bg-[#9425FE] hover:text-white transition"
+                                            >
+                                                Unduh QRIS
+                                            </button>
+                                        </>
+                                    )}
+
+                                    {paymentStatus === "PAID" && (
+                                        <>
+                                            <img src={statusConfig.PAID.img} alt="Sudah Terbayar" className="h-32 mb-2" />
+                                            <h3 className={`text-xs md:text-sm font-semibold ${statusConfig.PAID.color}`}>
+                                                {statusConfig.PAID.text}
+                                            </h3>
+                                        </>
+                                    )}
+
+                                    {paymentStatus === "EXPIRED" && (
+                                        <>
+                                            <img src={statusConfig.EXPIRED.img} alt="Kadaluarsa" className="h-32 mb-2" />
+                                            <h3 className={`text-xs md:text-sm font-semibold ${statusConfig.EXPIRED.color}`}>
+                                                {statusConfig.EXPIRED.text}
+                                            </h3>
+                                        </>
+                                    )}
                                 </>
+                            ) : (
+                                paymentStatus && (
+                                    <>
+                                        <img
+                                            src={statusConfig[paymentStatus].img}
+                                            alt="Payment Status"
+                                            className="h-32 object-contain mb-2"
+                                        />
+                                        <h3
+                                            className={`text-xs md:text-sm font-semibold ${statusConfig[paymentStatus].color}`}
+                                        >
+                                            {statusConfig[paymentStatus].text}
+                                        </h3>
+                                    </>
+                                )
                             )}
 
                             <button

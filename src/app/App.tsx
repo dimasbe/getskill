@@ -76,7 +76,7 @@ function RouteChangeLoader() {
         <Route path="/course" element={<Cursus />} />
         <Route path="/course/:slug" element={<CourseDetail />} />
         <Route path="/transaction/course/:slug" element={<TransactionPage />} />
-        <Route path="/transaction/detail/:transactionCode" element={<TransactionDetailPage />} />
+        <Route path="/transaction/detail/:reference" element={<TransactionDetailPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<EventDetails />} />
         <Route path="/news" element={<News />} />
