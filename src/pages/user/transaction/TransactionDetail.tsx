@@ -38,7 +38,6 @@ const getPaymentLogo = (name: string) => {
     return undefined;
 };
 
-// Status config
 const statusConfig: Record<
     "UNPAID" | "PAID" | "EXPIRED",
     { img: string; text: string; color: string }
@@ -128,7 +127,7 @@ const TransactionDetailPage: React.FC = () => {
             <div className="min-h-screen bg-gray-50 py-8 px-8 md:px-26 lg:px-29 xl:px-29 2xl:px-34 animate-pulse">
                 <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                    {/* Kiri - Skeleton Rincian Pembayaran */}
+                    {/* Skeleton detail transaction */}
                     <div className="col-span-2 bg-white border border-gray-300 rounded-md shadow-md p-3 space-y-4">
                         <div className="h-5 bg-gray-300 rounded w-1/3"></div>
 
@@ -144,7 +143,7 @@ const TransactionDetailPage: React.FC = () => {
                         <div className="h-10 bg-gray-300 rounded w-2/3 mx-auto"></div>
                     </div>
 
-                    {/* Kanan - Skeleton Status & Instruksi */}
+                    {/* Skeleton */}
                     <div className="col-span-2 lg:col-span-1 space-y-6">
 
                         {/* Skeleton Status */}

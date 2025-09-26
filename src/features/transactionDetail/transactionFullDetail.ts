@@ -28,7 +28,7 @@ export interface TransactionFullDetail {
     created_at: string;
     updated_at: string;
 
-    // Relasi
+    
     course?: Course;
     user?: User;
     product?: Product;
