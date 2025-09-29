@@ -1,7 +1,7 @@
 import api from "../../services/api";
 import axios from "axios";
 import { AxiosError } from "axios";
-import type { User, LoginPayload, RegisterPayload, ProfilData, ProfileData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity  } from "./models";
+import type { User, LoginPayload, RegisterPayload, ProfilData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity  } from "./models";
 
 
 export async function login(payload: LoginPayload): Promise<User | null> {
@@ -95,7 +95,7 @@ export async function updateProfile(payload: FormData | ProfilData): Promise<Pro
 }
 
 
-export async function fetchProfileById(id: string): Promise<ProfileData | null> {
+export async function fetchProfileById(id: string): Promise<ProfilData | null> {
   try {
     const response = await api.get(`/api/users/${id}`);
     return response.data?.data || null;

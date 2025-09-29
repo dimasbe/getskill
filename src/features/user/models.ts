@@ -262,40 +262,12 @@ export interface EventDetail {
 }
 
 
-export interface ProfileData {
-  id: string;
-  photo: string | null;
-  name: string;
-  email: string;
-  points: number;
-  phone_number: string;
-  user_courses: UserCourse[];
-  total_courses: number;
-  total_reviews: number;
-  course_reviews: CourseReview[];
-  total_certificate: number;
-  total_course_certificate: number;
-  total_all_certificates: number;
-  course_activities: CourseActivity[];
-  event_activities: EventActivity[];
-  address: string;
-  banner: string | null;
-  gender: Gender;
-  created: string; 
-  is_not_guest: boolean;
-  role: string;
-}
+
 
 export interface Teacher {
   id: string;
   name: string;
   // tambahkan field lain sesuai data real API
-}
-
-export interface UserCourse {
-  id: string;
-  title: string;
-  // tambahkan field lain sesuai struktur API
 }
 
 export interface CourseReview {

@@ -5,7 +5,7 @@ import { HiSearch, HiMenu, HiX } from "react-icons/hi";
 import { BsBoxArrowLeft } from "react-icons/bs";
 import { fetchCourses } from "../../../features/course/_service/course_service";
 import { fetchProfile, fetchProfileById } from "../../../features/user/user_service";
-import type { ProfileData } from "../../../features/user/models";
+import type { ProfilData } from "../../../features/user/models";
 import CategoryDropdown from "../../public/CategoryDropdown";
 
 type Course = {
@@ -32,7 +32,7 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<ProfileData | null>(null);
+  const [user, setUser] = useState<ProfilData | null>(null);
 
   // 🔹 Filter state
   const [filters, setFilters] = useState({
