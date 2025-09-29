@@ -1,6 +1,5 @@
 import api from "../../../services/api";
 import type {
-    CourseVoucherResponse,
     CourseVoucherCheckResponse,
 } from "../_coursevoucher";
 
@@ -18,7 +17,6 @@ export async function checkVoucherCode(
 
         const { success, data, meta } = response.data;
 
-        // ✅ Case 1: API kasih flag valid
         if (success && data?.valid) {
             return {
                 valid: true,
@@ -26,7 +24,6 @@ export async function checkVoucherCode(
             };
         }
 
-        // ✅ Case 2: API tidak ada field valid, tapi meta.message menunjukkan berhasil
         if (success && meta?.message?.toLowerCase().includes("berhasil")) {
             return {
                 valid: true,
@@ -34,7 +31,6 @@ export async function checkVoucherCode(
             };
         }
 
-        // ❌ Kalau gagal beneran
         return {
             valid: false,
             reason: data?.reason || meta?.message || "Voucher tidak valid",

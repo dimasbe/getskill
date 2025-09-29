@@ -311,7 +311,6 @@
   font-size: 16px;
   font-weight: 600;
   color: #1f2937;
-  /* abu gelap */
   margin-top: -15px;
   text-align: center;
 }
@@ -320,7 +319,6 @@
 .my-swal-text {
   font-size: 12px;
   color: #4b5563;
-  /* abu sedang */
   text-align: center;
   line-height: 1.5;
 }
@@ -332,8 +330,7 @@
   font-size: 14px;
   font-weight: 600;
   padding: 10px 20px;
-  border-radius: 9999px;
-  /* rounded-full */
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   box-shadow: 3px 3px 0px black;
@@ -342,7 +339,6 @@
 
 .my-swal-confirm:hover {
   background-color: #facc15;
-  /* ungu */
   color: black;
   box-shadow: none;
 }
@@ -350,12 +346,11 @@
 /* Tombol Batal */
 .my-swal-cancel {
   background-color: #dc2626;
-  /* merah */
   color: white;
   font-size: 14px;
   font-weight: 600;
   padding: 10px 20px;
-  border-radius: 9999px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   margin-left: 8px;
@@ -365,7 +360,6 @@
 
 .my-swal-cancel:hover {
   background-color: #b91c1c;
-  /* merah gelap */
   box-shadow: none;
 }
 /* Icon */
