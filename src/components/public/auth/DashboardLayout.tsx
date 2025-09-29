@@ -18,7 +18,8 @@ const DashboardLayout = ({ children, slug, refreshKey = 0 }: DashboardLayoutProp
                 const baseProfile = await fetchProfile();
                 if (baseProfile?.id) {
                     const detailProfile = await fetchProfileById(baseProfile.id);
-                    setUser(detailProfile || baseProfile);
+                    setUser((detailProfile || baseProfile) as ProfileData);
+
                 }
             } catch (error) {
                 console.error("Gagal memuat profil:", error);

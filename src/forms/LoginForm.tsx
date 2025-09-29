@@ -5,10 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, type LoginFormValues } from "./validation/loginScema";
 import { Checkbox, Button, Toast } from "flowbite-react";
 import { authService } from "../features/user/user_service";
+import { Loader2 } from "lucide-react";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -19,6 +21,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
+    setLoading(true);
     try {
       const user = await authService.login({
         email: data.email,
@@ -35,6 +38,8 @@ const LoginForm = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setToast({ type: "error", message: "Terjadi kesalahan saat login" });
+    } finally {
+      setLoading(false);
     }
 
     setTimeout(() => setToast(null), 20000);
@@ -163,9 +168,17 @@ const LoginForm = () => {
         {/* Tombol Masuk */}
         <Button
           type="submit"
-          className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+          disabled={loading}
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center gap-2"
         >
-          Masuk
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin w-4 h-4" />
+              <span>Memproses...</span>
+            </>
+          ) : (
+            "Masuk"
+          )}
         </Button>
       </form>
     </>

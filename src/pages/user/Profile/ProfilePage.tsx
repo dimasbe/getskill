@@ -146,8 +146,6 @@ const ProfilePage = () => {
         }
     };
 
-
-
     return (
         <DashboardLayout slug="profile" refreshKey={refreshKey}>
             {/* Konten */}
@@ -231,7 +229,7 @@ const ProfilePage = () => {
                                             type="button"
                                             onClick={() => bannerInputRef.current?.click()}
                                             className="absolute transition-all duration-500 ease-out shadow-[3px_3px_0px_0px_#0B1367]
-   hover:shadow-none active:translate-y-0.5 bottom-5 right-7 bg-yellow-400 text-black font-bold text-xs px-6 py-3 border-2 rounded-full hover:text-white hover:bg-purple-600">
+                                                    hover:shadow-none active:translate-y-0.5 bottom-5 right-7 bg-yellow-400 text-black font-bold text-xs px-6 py-3 border-2 rounded-full hover:text-white hover:bg-purple-600">
                                             Edit Cover Photo
                                         </button>
 

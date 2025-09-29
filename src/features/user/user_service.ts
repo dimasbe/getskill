@@ -1,7 +1,7 @@
 import api from "../../services/api";
 import axios from "axios";
 import { AxiosError } from "axios";
-import type { User, LoginPayload, RegisterPayload, ProfilData, ProfileData, UpdatePasswordPayload, DashboardDataCourse  } from "./models";
+import type { User, LoginPayload, RegisterPayload, ProfilData, ProfileData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity  } from "./models";
 
 
 export async function login(payload: LoginPayload): Promise<User | null> {
@@ -109,5 +109,26 @@ export async function fetchProfileById(id: string): Promise<ProfileData | null> 
   }
 }
 
+//Kursus User
+
+export async function fetchUserCourses(page: number = 1): Promise<CourseActivity[]> {
+  try {
+    const response = await api.get(`/api/user-courses?page=${page}`);
+    return response.data?.data?.data || [];
+  } catch (error) {
+    console.error("Gagal mengambil user courses:", error);
+    return [];
+  }
+}
+
+export async function fetchUserEvent(page: number = 1): Promise<EventActivity[]> {
+  try {
+    const response = await api.get(`/api/user-events?page=${page}`);
+    return response.data?.data?.data || [];
+  } catch (error) {
+    console.error("Gagal mengambil user events:", error);
+    return [];
+  }
+}
 
 export const authService = { login, register };
