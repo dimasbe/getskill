@@ -12,6 +12,7 @@ import { fetchCourseDetail } from "../../../features/course/_service/course_serv
 import { checkVoucherCode } from "../../../features/coursevoucher/_service/_coursevoucher_service";
 import { getPaymentChannels } from "../../../features/Payment/_service/payment-channel_service";
 import type { PaymentChannelResponse, PaymentChannel } from "../../../features/Payment/payment-channel";
+import { createTransactionCourse } from "../../../features/transaction/_service/_transaction-create_service";
 
 const MySwal = withReactContent(Swal);
 
@@ -191,7 +192,7 @@ const TransactionPage: React.FC = () => {
         }
     };
 
-    const handleBuyNow = () => {
+    const handleBuyNow = async () => {
         if (!course) return;
 
         MySwal.fire({
@@ -213,15 +214,34 @@ const TransactionPage: React.FC = () => {
             confirmButtonText: "Ya",
             cancelButtonText: "Batal",
             buttonsStyling: false,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                const transactionCode = `TX-${Date.now()}-${Math.floor(
-                    Math.random() * 1000
-                )}`;
-                navigate(`/transaction/detail/${transactionCode}`);
+                // 🔥 panggil API createTransactionCourse
+                const res = await createTransactionCourse(
+                    course.id,     // courseId
+                    course.price,  // coursePrice
+                    "MANDIRIVA",   // paymentMethod
+                    ""             // voucherCode kosong
+                );
+
+                if (res && res.success) {
+                    navigate(`/transaction/detail/${res.data.id}`);
+                } else {
+                    MySwal.fire({
+                        title: "Gagal",
+                        text: res?.meta?.message || "Gagal membuat transaksi.",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                        customClass: {
+                            confirmButton: "my-swal-confirm",
+                        },
+                        buttonsStyling: false,
+                    });
+                }
             }
         });
     };
+
 
 
     return (
@@ -544,7 +564,7 @@ const TransactionPage: React.FC = () => {
                                         </div>
 
                                         {discountAmount > 0 && (
-                                            <div className="flex justify-between text-purple-600 font-medium">
+                                            <div className="flex justify-between ">
                                                 <span>Diskon voucher</span>
                                                 <span>- Rp {discountAmount.toLocaleString("id-ID")}</span>
                                             </div>
