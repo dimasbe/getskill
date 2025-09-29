@@ -43,6 +43,7 @@ export interface DashboardDataCourse {
   courses_count: number;
   completed_courses: number;
   incomplete_courses: number;
+  
 }
 
 // =======================
@@ -56,14 +57,14 @@ export interface ProfilData {
   email: string;
   points: number;
   phone_number: string;
-  user_courses: [];
+  user_courses: CourseUser[];
   total_courses: number;
   total_reviews: number;
   course_reviews: [];
   total_certificate: number;
   total_course_certificate: number;
   total_all_certificates: number;
-  course_activities: [];
+  course_activities: CourseActivity[];
   event_activities: EventActivity[];
   address: string;
   banner: string | null;
@@ -74,6 +75,117 @@ export interface ProfilData {
 }
 
 export type Gender = "laki-laki" | "perempuan";
+
+export interface CourseUser{
+  id: string;
+  user_id: string;
+  course_id: string;
+  sub_module_id: string | null;
+  has_pre_test: number;
+  has_post_test: number;
+  has_downloaded: number;
+}
+
+export interface CourseActivity {
+  user: CourseUserData;
+  course: CourseDetail;
+  total_module: number;
+  total_user: number;
+  study_time: string;
+  study_percentage: number;
+  sub_module: SubModule | null;
+  has_post_test: number;
+  has_pre_test: number;
+  sub_module_slug: string | null;
+  unsubmitted_tasks: number;
+  graded_tasks: number;
+  ungraded_tasks: number;
+  total_sub_module: number;
+  completed_sub_modules: number;
+  sub_module_step: number;
+  max_sub_module_step: number;
+  total_quiz: number;
+  completed_quizzes: number;
+}
+
+// Data user yang sedang ikut course
+export interface CourseUserData {
+  id: string;
+  name: string;
+  email: string;
+  email_verified_at: string;
+  point: number;
+  phone_number: string;
+  gender: Gender;
+  address: string;
+  photo: string;
+  created_at: string;
+  updated_at: string;
+  banner: string | null;
+  deleted_at: string | null;
+}
+
+// Detail course
+export interface CourseDetail {
+  id: string;
+  module_count: number;
+  module_task_count: number;
+  sub_category: SubCategory;
+  title: string;
+  sub_title: string;
+  description: string;
+  is_premium: number;
+  price: number;
+  promotional_price: number | null;
+  slug: string;
+  photo: string;
+  user: TeacherUser;
+  is_ready: number;
+  ratings: number[];
+  rating: number;
+  status: string;
+  step: number | null;
+  course_test_id: string;
+}
+
+// Sub kategori course
+export interface SubCategory {
+  id: number;
+  category_id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Pengajar course
+export interface TeacherUser {
+  id: string;
+  name: string;
+  email: string;
+  email_verified_at: string;
+  point: number;
+  phone_number: string;
+  gender: Gender;
+  address: string;
+  photo: string;
+  created_at: string;
+  updated_at: string;
+  banner: string | null;
+  deleted_at: string | null;
+}
+
+// Sub module (materi/step kursus)
+export interface SubModule {
+  id: string;
+  module_id: string;
+  step: number;
+  title: string;
+  slug: string;
+  sub_title: string;
+  content: string; 
+  created_at: string;
+  updated_at: string;
+}
 
 
 export interface EventActivity {
@@ -169,9 +281,9 @@ export interface ProfileData {
   address: string;
   banner: string | null;
   gender: Gender;
-  created: string; // contoh: "08 September 2025"
+  created: string; 
   is_not_guest: boolean;
-  role: string; // contoh: "guest"
+  role: string;
 }
 
 export interface Teacher {
@@ -198,12 +310,5 @@ export interface CourseActivity {
   activity_type: string;
   description: string;
   created_at: string;
-  // tambahkan field lain sesuai struktur API
-}
-
-export interface EventActivity {
-  id: string;
-  status: string;
-  reason: string | null;
   // tambahkan field lain sesuai struktur API
 }
