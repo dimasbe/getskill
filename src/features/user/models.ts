@@ -43,7 +43,7 @@ export interface DashboardDataCourse {
   courses_count: number;
   completed_courses: number;
   incomplete_courses: number;
-  
+
 }
 
 // =======================
@@ -76,7 +76,7 @@ export interface ProfilData {
 
 export type Gender = "laki-laki" | "perempuan";
 
-export interface CourseUser{
+export interface CourseUser {
   id: string;
   user_id: string;
   course_id: string;
@@ -182,16 +182,29 @@ export interface SubModule {
   title: string;
   slug: string;
   sub_title: string;
-  content: string; 
+  content: string;
   created_at: string;
   updated_at: string;
 }
 
 
+export interface Paginate {
+  last_page: number;
+  current_page: number;
+}
+
+export interface EventPaginateResponse {
+  paginate: Paginate;
+  data: EventActivity[];
+}
+
+
 export interface EventActivity {
+  id: number;
   user: EventUser;
   event: EventData;
-  status: string; 
+  status: "pending" | "accepted" | "canceled" | "declined";
+  event_time_status: string;
   reason: string | null;
 }
 
@@ -227,6 +240,7 @@ export interface EventData {
   email_content: string;
   start_date_raw: string;
   start_date: string;
+  relativeTime: string;
   start_hour: string;
   end_date_raw: string;
   end_date: string;
@@ -261,26 +275,3 @@ export interface EventDetail {
   event_date: string;
 }
 
-
-
-
-export interface Teacher {
-  id: string;
-  name: string;
-  // tambahkan field lain sesuai data real API
-}
-
-export interface CourseReview {
-  id: string;
-  content: string;
-  rating: number;
-  // tambahkan field lain sesuai struktur API
-}
-
-export interface CourseActivity {
-  id: string;
-  activity_type: string;
-  description: string;
-  created_at: string;
-  // tambahkan field lain sesuai struktur API
-}

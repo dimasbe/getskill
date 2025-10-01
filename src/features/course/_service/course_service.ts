@@ -1,5 +1,5 @@
 import api from "../../../services/api";
-import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse, DataWrapper, CourseTest } from "../_course";
+import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse, CourseTest } from "../_course";
 
 // =============================
 // COURSE
@@ -98,32 +98,13 @@ export async function fetchTopRatingCourses(): Promise<TopRatingCourse[]> {
 
 
 // PreTest
-export async function fetchPreTest(slug: string): Promise<CourseTest | null> {
+export async function fetchPreTest(pretestId: string): Promise<CourseTest | null> {
   try {
-    const response = await api.get(`/api/course-tests/${slug}`);
-    return response.data?.data || null; 
-  } catch (error) {
-    console.error("Gagal mengambil data pretest:", error);
-    return null;
-  }
-}
-
-export async function fetchPreTestId(id: string) : Promise<DataWrapper | null> {
-  try {
-    const response = await api.get(`/api/course-pre-test/${id}`);
-    return response.data?.data || null;
+    const response = await api.get(`/api/course-pre-test/${pretestId}`);
+    return response.data?.data?.course_test || null;
   } catch (error) {
     console.error("Gagal mengambil data pretest id:", error);
     return null;
   }
 }
 
-export async function fetchPreTestById(id: string): Promise<DataWrapper | null> {
-  try {
-    const response = await api.get(`/api/course-pre-test/${id}`);
-    return response.data?.data || null;
-  } catch (error) {
-    console.error("Gagal mengambil data pretest by id:", error);
-    throw error;
-  }
-}

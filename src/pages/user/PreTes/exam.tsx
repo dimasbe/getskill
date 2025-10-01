@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchPreTestId, fetchCourseDetail } from "../../../features/course/_service/course_service";
-import type { DataWrapper, CourseData } from "../../../features/course/_course";
+import { fetchPreTest, fetchCourseDetail } from "../../../features/course/_service/course_service";
+import type { CourseTest, CourseData } from "../../../features/course/_course";
 import HeaderPretes from "../../../components/course/PreTes/HeaderPretes";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,7 +9,7 @@ const Exam = () => {
     const navigate = useNavigate();
     const { slug } = useParams<{ slug: string }>();
 
-    const [pretest, setPretest] = useState<DataWrapper | null>(null);
+    const [pretest, setPretest] = useState<CourseTest | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -59,7 +59,7 @@ const Exam = () => {
                 }
 
                 // 2. Ambil pretest pakai id
-                const data = await fetchPreTestId(courseDetail.course_test_id);
+                const data = await fetchPreTest(courseDetail.course_test_id);
                 setPretest(data);
 
             } catch (error) {
@@ -114,7 +114,7 @@ const Exam = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             {/* Header */}
-            <HeaderPretes />
+            <HeaderPretes pretest={pretest} />
 
             {/* Main Content */}
             <div className="2xl:max-w-6xl xl:max-w-5xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl max-w-md mx-auto mt-8">

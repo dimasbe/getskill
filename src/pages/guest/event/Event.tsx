@@ -96,10 +96,9 @@ const Event: React.FC = () => {
           <EventKategory
             loading={loading}
             events={events}
-            onFilter={(filteredEvents) => {
-              setFilteredEvents(filteredEvents);
-            }}
+            onFilter={(filteredEvents) => setFilteredEvents(filteredEvents)}
           />
+
 
         </motion.div>
 

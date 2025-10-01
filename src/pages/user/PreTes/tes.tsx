@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchPreTest } from "../../../features/course/_service/course_service";
+import { fetchCourseDetail, fetchPreTest } from "../../../features/course/_service/course_service";
 import type { CourseTest } from "../../../features/course/_course";
 import HeaderPretes from "../../../components/course/PreTes/HeaderPretes";
 
@@ -10,27 +10,44 @@ const Tes = () => {
     const { slug } = useParams<{ slug: string }>();
 
     const [pretest, setPretest] = useState<CourseTest | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (!slug) return;
 
         const loadPretest = async () => {
+            setLoading(true);
+            setError(null);
+
             try {
-                const data = await fetchPreTest(slug);
-                console.log("Response pretest:", data);
-                setPretest(data);
-            } catch (error) {
-                console.error("Gagal load pretest:", error);
+                const course = await fetchCourseDetail(slug);
+                if (!course?.course_test_id) throw new Error("Pretest ID tidak ditemukan");
+
+                const pretestData = await fetchPreTest(course?.course_test_id);
+                setPretest(pretestData);
+
+            } catch (err: unknown) {
+                console.error("Gagal load pretest:", err);
+
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("Gagal memuat pretest");
+                }
+            } finally {
+                setLoading(false);
             }
         };
 
         loadPretest();
     }, [slug]);
 
+
     return (
         <div className="min-h-screen bg-gray-100 mb-15">
             {/* Header */}
-            <HeaderPretes />
+            <HeaderPretes pretest={pretest} />
 
             {/* Main Content */}
             <div className="2xl:max-w-6xl xl:max-w-5xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl max-w-md mx-auto mt-8">
@@ -89,20 +106,19 @@ const Tes = () => {
                     </div>
 
                     {/* Detail Aturan */}
-                    {pretest ? (
+                    {loading && <p className="mt-6 text-gray-500 px-5">Memuat data pretest...</p>}
+                    {error && <p className="mt-6 text-red-500 px-5">{error}</p>}
+                    {pretest && (
                         <ul className="mt-6 text-gray-700 space-y-1 text-left px-5">
                             <li>• Jumlah Soal: {pretest.total_question}</li>
-                            {/* <li>• Syarat Nilai Kelulusan: </li> */}
                             <li>• Durasi Ujian: {pretest.duration} Menit</li>
-                            {/* <li>• Waktu tunggu ujian ulang:  menit</li> */}
                         </ul>
-                    ) : (
-                        <p className="mt-6 text-gray-500 px-5">Memuat data pretest...</p>
                     )}
 
                     {/* Button */}
                     <div className="text-center mt-8 mb-10">
                         <button
+                            disabled={loading || !!error}
                             onClick={() => {
                                 navigate(`/course/pre-tes/exam/${slug}`);
                             }}
