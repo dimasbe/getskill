@@ -40,22 +40,22 @@ const getPaymentLogo = (name: string) => {
 
 const statusConfig: Record<
     "UNPAID" | "PAID" | "EXPIRED",
-    { img: string; text: string; color: string }
+    { img: string; title?: string; message?: string }
 > = {
     UNPAID: {
         img: unpaidImg,
-        text: "Belum Terbayar",
-        color: "text-red-600",
+        title: "Belum Terbayar",
+        message: "Silakan selesaikan pembayaran sebelum batas waktu",
     },
     PAID: {
         img: paidImg,
-        text: "Sudah Terbayar",
-        color: "text-green-600",
+        title: "Sudah Terbayar",
+        message: "Terima kasih, pembayaran Anda sudah diterima",
     },
     EXPIRED: {
         img: expiredImg,
-        text: "Kadaluarsa",
-        color: "text-gray-500",
+        title: "Transaksi Kadaluarsa",
+        message: "Mohon maaf transaksi telah kadaluarsa",
     },
 };
 
@@ -221,24 +221,28 @@ const TransactionDetailPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="mb-3">
-                        <div className="flex justify-between items-center">
-                            <p className="text-left text-[10px] md:text-sm text-gray-600">
-                                Kode Pembayaran (1 × 24 Jam)
-                            </p>
-                            <div className="flex items-center gap-2">
-                                <p className="text-xs md:text-xl font-mono text-purple-600 font-bold">
-                                    <p>{transaction?.pay_code}</p>
+                    {transaction?.pay_code && (
+                        <div className="mb-3">
+                            <div className="flex justify-between items-center">
+                                <p className="text-left text-[10px] md:text-sm text-gray-600">
+                                    Kode Pembayaran (1 × 24 Jam)
                                 </p>
-                                <button
-                                    onClick={() => transaction?.pay_code && handleCopy(transaction.pay_code)}
-                                    className="p-0.5 md:p-2 rounded-md bg-gray-100 hover:bg-gray-200"
-                                >
-                                    <FiCopy />
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    <p className="text-xs md:text-xl font-mono text-purple-600 font-bold">
+                                        {transaction?.pay_code}
+                                    </p>
+                                    <button
+                                        onClick={() =>
+                                            transaction?.pay_code && handleCopy(transaction.pay_code)
+                                        }
+                                        className="p-0.5 md:p-2 rounded-md bg-gray-100 hover:bg-gray-200"
+                                    >
+                                        <FiCopy />
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     <div className="mb-3">
                         <div className="flex justify-between items-center">
@@ -290,13 +294,23 @@ const TransactionDetailPage: React.FC = () => {
                         <div className="flex flex-col items-center text-center">
                             {paymentStatus && transaction?.payment_name?.includes("QRIS") ? (
                                 <>
+                                    {/* UNPAID dengan QR Code */}
                                     {paymentStatus === "UNPAID" && (
-                                        <>
+                                        <div className="flex flex-col items-center text-center">
                                             <QRCodeCanvas
                                                 value={transaction?.pay_code || transaction?.checkout_url || ""}
                                                 size={200}
                                                 includeMargin={true}
                                             />
+
+                                            {/* Title & Message */}
+                                            <h3 className="text-sm md:text-md font-bold text-black">
+                                                QR Code Pembayaran
+                                            </h3>
+                                            <p className="text-[10px] md:text-xs text-[#9425FE] mt-1 mb-3">
+                                                Menunggu pembayaran
+                                            </p>
+
                                             <button
                                                 onClick={() => {
                                                     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
@@ -306,54 +320,60 @@ const TransactionDetailPage: React.FC = () => {
                                                     link.download = "qris.png";
                                                     link.click();
                                                 }}
-                                                className="mt-2 group bg-white text-blue-700 text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
+                                                className="mt-2 group bg-white text-[#9425FE] text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
                                                 font-semibold py-3 md:py-3 lg:py-3 xl:py-3 2xl:py-4 w-[310px] md:w-[160px] lg:w-[280px] xl:w-[310px] 2xl:w-[390px]
                                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                                 transition-all duration-500 ease-in-out
-                                                border border-blue-700 hover:text-yellow-400 
+                                                border border-[#9425FE] hover:text-yellow-400 
                                                 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                                                 focus:outline-none cursor-pointer"
                                             >
                                                 Unduh Kode QR
                                             </button>
-                                        </>
+                                        </div>
                                     )}
 
-                                    {paymentStatus === "PAID" && (
-                                        <>
-                                            <img src={statusConfig.PAID.img} alt="Sudah Terbayar" className="h-32 mb-2" />
-                                            <h3 className={`text-xs md:text-sm font-semibold ${statusConfig.PAID.color}`}>
-                                                {statusConfig.PAID.text}
-                                            </h3>
-                                        </>
-                                    )}
+                                    {/* PAID & EXPIRED */}
+                                    {paymentStatus !== "UNPAID" && (
+                                        <div className="flex flex-col items-center text-center mt-3">
+                                            <img
+                                                src={statusConfig[paymentStatus].img}
+                                                alt="Payment Status"
+                                                className="h-40 mb-2"
+                                            />
 
-                                    {paymentStatus === "EXPIRED" && (
-                                        <>
-                                            <img src={statusConfig.EXPIRED.img} alt="Kadaluarsa" className="h-32 mb-2" />
-                                            <h3 className={`text-xs md:text-sm font-semibold ${statusConfig.EXPIRED.color}`}>
-                                                {statusConfig.EXPIRED.text}
+                                            <h3 className="text-sm md:text-md font-bold text-black mt-3">
+                                                {statusConfig[paymentStatus].title}
                                             </h3>
-                                        </>
+                                            {statusConfig[paymentStatus].message && (
+                                                <p className="text-[10px] md:text-xs mt-1 mb-3 text-[#9425FE]">
+                                                    {statusConfig[paymentStatus].message}
+                                                </p>
+                                            )}
+                                        </div>
                                     )}
                                 </>
                             ) : (
+                                // Except QRIS
                                 paymentStatus && (
-                                    <>
+                                    <div className="flex flex-col items-center text-center">
                                         <img
                                             src={statusConfig[paymentStatus].img}
                                             alt="Payment Status"
-                                            className="h-32 object-contain mb-2"
+                                            className="h-40 object-contain mb-2"
                                         />
-                                        <h3
-                                            className={`text-xs md:text-sm font-semibold ${statusConfig[paymentStatus].color}`}
-                                        >
-                                            {statusConfig[paymentStatus].text}
+
+                                        <h3 className="text-sm md:text-md font-bold text-black mt-3">
+                                            {statusConfig[paymentStatus].title}
                                         </h3>
-                                    </>
+                                        {statusConfig[paymentStatus].message && (
+                                            <p className="text-[10px] md:text-xs mt-1 mb-3 text-[#9425FE]">
+                                                {statusConfig[paymentStatus].message}
+                                            </p>
+                                        )}
+                                    </div>
                                 )
                             )}
-
                             <button
                                 onClick={handleCheckStatus}
                                 className="mt-2 group bg-[#9425FE] text-white text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
@@ -386,7 +406,7 @@ const TransactionDetailPage: React.FC = () => {
                                             setOpenSection(openSection === instruksi.title ? null : instruksi.title)
                                         }
                                         className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-xs md:text-sm transition ${openSection === instruksi.title
-                                            ? "bg-blue-50 text-blue-700"
+                                            ? "bg-blue-50 text-[#9425FE]"
                                             : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                             }`}
                                     >
