@@ -1,20 +1,26 @@
-// features/transaction/_transaction-create.ts
-export interface TransactionData {
-    user_id: string;
-    event_id?: string | null;
-    course_id?: string | null;
+// services/_transaction-create.ts
+
+// Struktur response sesuai contoh JSON dari backend
+export interface TransactionMeta {
+    code: number;
     status: string;
-    updated_at: string;
-    created_at: string;
-    id: number;
+    message: string;
 }
 
+export interface TransactionData {
+    id: number;
+    user_id: string;
+    event_id?: string;
+    course_id?: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    reference: string;   
+}
+
+
 export interface TransactionResponse {
-    meta: {
-        code: number;
-        status: string;
-        message: string;
-    };
+    meta: TransactionMeta;
     data: TransactionData;
     success: boolean;
 }

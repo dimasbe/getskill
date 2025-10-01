@@ -34,3 +34,12 @@ export interface PaymentChannelResponse {
     };
     success: boolean;
 }
+
+export const flattenPaymentChannels = (res: PaymentChannelResponse): PaymentChannel[] => {
+    return [
+        ...res.data.virtual_account,
+        ...res.data.convenience_store,
+        ...res.data.e_wallet,
+    ];
+};
+

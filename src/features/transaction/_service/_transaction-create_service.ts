@@ -1,35 +1,53 @@
 import api from "../../../services/api";
 import type { TransactionResponse } from "../_transaction-create";
-import { AxiosError } from "axios";
 
-export async function createTransactionCourse(
-    courseId: string,
-    coursePrice: number,
-    paymentMethod: string,
-    voucherCode: string = ""
-): Promise<TransactionResponse | null> {
+/**
+ * Create Transaction API
+ * @param productType
+ * @param id
+ * @param course_price
+ * @param payment_method
+ * @param voucher_code
+ */
+export async function createTransaction(
+    productType: string,
+    id: string,
+    course_price: number,
+    payment_method: string,
+    voucher_code?: string
+): Promise<TransactionResponse> {
+    const url = `/api/transaction-create/${productType}/${id}`;
+
+    // 🔥 bikin params dinamis
+    const params: Record<string, any> = {
+        course_price,
+        payment_method,
+    };
+    if (voucher_code && voucher_code.trim() !== "") {
+        params.voucher_code = voucher_code;
+    }
+
+    // 🔥 ambil token dari localStorage
+    const token = localStorage.getItem("token");
+
     try {
-        const response = await api.get<TransactionResponse>(
-            `/api/transaction-create/course/${courseId}`,
-            {
-                params: {
-                    voucher_code: voucherCode,
-                    payment_method: paymentMethod,
-                    course_price: coursePrice,
-                },
+        const { data } = await api.get<TransactionResponse>(url, {
+            params,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
+            },
+        });
+        return data;
+    } catch (error: any) {
+        console.error("createTransaction error:", error);
+
+        // balikin error dari backend biar keliatan jelas
+        return (
+            error.response?.data || {
+                success: false,
+                meta: { code: 500, status: "error", message: "Request failed" },
             }
         );
-
-        return response.data;
-    } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-            console.error(
-                "Gagal membuat transaksi:",
-                error.response?.data || error.message
-            );
-        } else {
-            console.error("Unexpected error:", error);
-        }
-        return null;
     }
 }
