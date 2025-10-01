@@ -44,10 +44,21 @@ export interface Eventype {
   created_at: string;
   eventAttendance: EventAttendance;
   event_details: EventDetail[];
+  event_category_id: string;
+  event_sub_category_id: string;
+}
 
 
+// Sub kategori event
+export interface EventSubCategory {
+  id: string;
+  event_category_id: string;
+  name: string;
+}
 
-  category: string;
-  subcategory?: string;
-  event_type: "Gratis" | "Berbayar";
+// Kategori event
+export interface EventCategory {
+  id: string;
+  name: string;
+  sub_category: EventSubCategory[];
 }

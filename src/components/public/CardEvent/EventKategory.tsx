@@ -1,23 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SidebarSkeleton from "../../course/PageCourse/SidebarSkeleton";
 
-import type { Eventype } from "../../../features/event/_event";
-// import events from '../../../data/events';
-
-type FiltersState = {
-  categories: string[];
-  priceMin: string;
-  priceMax: string;
-  eventTypes: string[];
-};
-
-type CategoryGroup = {
-  name: string;
-  count: number;
-  subcategories: { name: string; count: number }[];
-};
+import type { Eventype, EventCategory } from "../../../features/event/_event";
+import { fetchEventCategories } from "../../../features/event/_services/eventService";
 
 type EventKategoryProps = {
   loading: boolean;
@@ -25,33 +12,54 @@ type EventKategoryProps = {
   onFilter: (filteredEvents: Eventype[]) => void;
 };
 
+type FiltersState = {
+  categories: string[];
+  eventTypes: string[];
+  priceMin: string;
+  priceMax: string;
+};
+
 const initialFilters: FiltersState = {
   categories: [],
+  eventTypes: [],
   priceMin: "",
   priceMax: "",
-  eventTypes: [],
+};
+
+type CategoryGroup = {
+  id: string;
+  name: string;
+  count: number;
+  subcategories: { id: string; name: string; count: number }[];
 };
 
 const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter }) => {
-  const [openGroups, setOpenGroups] = useState<string[]>(["Art & Design"]);
+  const [openGroups, setOpenGroups] = useState<string[]>([]);
   const [localFilters, setLocalFilters] = useState<FiltersState>(initialFilters);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [categories, setCategories] = useState<EventCategory[]>([]);
+
+  useEffect(() => {
+    fetchEventCategories()
+      .then((data) => setCategories(data))
+      .catch(console.error);
+  }, []);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
-  const toggleGroup = (name: string) => {
+  const toggleGroup = (id: string) => {
     setIsInitialRender(false);
     setOpenGroups((prev) =>
-      prev.includes(name) ? prev.filter((g) => g !== name) : [...prev, name]
+      prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]
     );
   };
 
-  const handleCheckbox = (category: string) => {
+  const handleCheckbox = (subId: string) => {
     setLocalFilters((prev) => {
-      const categories = prev.categories.includes(category)
-        ? prev.categories.filter((c) => c !== category)
-        : [...prev.categories, category];
+      const categories = prev.categories.includes(subId)
+        ? prev.categories.filter((c) => c !== subId)
+        : [...prev.categories, subId];
       return { ...prev, categories };
     });
   };
@@ -66,43 +74,58 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
   };
 
   const CATEGORY_GROUPS: CategoryGroup[] = useMemo(() => {
-    const groups: Record<string, Record<string, number>> = {};
-    events.forEach((e) => {
-      const sub = e.subcategory ?? e.category;
-      if (!groups[e.category]) groups[e.category] = {};
-      groups[e.category][sub] = (groups[e.category][sub] || 0) + 1;
+    return categories.map((cat) => {
+      const subcategories = cat.sub_category.map((sub) => {
+        const count = events.filter((e) => e.event_sub_category_id === sub.id).length;
+        return { id: sub.id, name: sub.name, count };
+      });
+      const catCount =
+        subcategories.reduce((sum, s) => sum + s.count, 0) ||
+        events.filter((e) => e.event_category_id === cat.id).length;
+
+      return {
+        id: cat.id,
+        name: cat.name,
+        count: catCount,
+        subcategories,
+      };
     });
-    return Object.entries(groups).map(([name, subs]) => ({
-      name,
-      count: Object.values(subs).reduce((a, b) => a + b, 0),
-      subcategories: Object.entries(subs).map(([subName, count]) => ({ name: subName, count })),
-    }));
-  }, [events]);
+  }, [categories, events]);
 
-  const applyFilters = () => {
-    let filtered = events;
+  const applyFilters = useCallback(
+    (allEvents: Eventype[]) => {
+      let filtered = allEvents;
 
-    // Filter kategori/subkategori
-    if (localFilters.categories.length > 0) {
-      filtered = filtered.filter((event) =>
-        localFilters.categories.includes(event.subcategory ?? event.category)
-      );
-    }
+      if (localFilters.categories.length > 0) {
+        filtered = filtered.filter((event) =>
+          localFilters.categories.includes(event.event_sub_category_id || event.event_category_id)
+        );
+      }
 
-    // Filter jenis event
-    if (localFilters.eventTypes.length > 0) {
-      filtered = filtered.filter((event) =>
-        localFilters.eventTypes.includes(event.event_type)
-      );
-    }
+      if (localFilters.eventTypes.length > 0) {
+        filtered = filtered.filter((event) => {
+          const type = event.has_certificate === 0 ? "Gratis" : "Berbayar";
+          return localFilters.eventTypes.includes(type);
+        });
+      }
 
-    // Filter harga
-    const min = Number(localFilters.priceMin) || 0;
-    const max = Number(localFilters.priceMax) || Infinity;
-    filtered = filtered.filter((event) => event.price >= min && event.price <= max);
+      const min = localFilters.priceMin ? Number(localFilters.priceMin) : 0;
+      const max = localFilters.priceMax ? Number(localFilters.priceMax) : Infinity;
+      filtered = filtered.filter((event) => event.price >= min && event.price <= max);
 
-    onFilter(filtered);
+      onFilter(filtered);
+    },
+    [localFilters, onFilter]
+  );
+
+  useEffect(() => {
+    applyFilters(events);
+  }, [events, applyFilters]);
+
+  const handleApplyClick = () => {
+    applyFilters(events);
   };
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -118,9 +141,8 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
     return <SidebarSkeleton />;
   }
 
-  const freeCount = events.filter(e => e.event_type === "Gratis").length;
-  const paidCount = events.filter(e => e.event_type === "Berbayar").length;
-
+  const freeCount = events.filter((e) => e.has_certificate === 0).length;
+  const paidCount = events.filter((e) => e.has_certificate === 1).length;
 
   const renderSidebarContent = () => (
     <div className="flex flex-col self-start font-sans w-full 2xl:w-60 xl:w-50 lg:w-50 space-y-5">
@@ -131,17 +153,17 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
             Kategori
           </h3>
           <div className="space-y-2 ml-1">
-            {CATEGORY_GROUPS.map((event) => (
-              <div key={event.name}>
+            {CATEGORY_GROUPS.map((cat) => (
+              <div key={cat.id}>
                 <button
                   className="flex items-center justify-between w-full text-left font-normal text-gray-700 px-2 py-2 rounded-lg hover:bg-gray-50 focus:outline-none text-[13px]"
-                  onClick={() => toggleGroup(event.name)}
+                  onClick={() => toggleGroup(cat.id)}
                 >
                   <div className="flex items-center gap-1 text-[13px]">
-                    <span>{event.name}</span>
-                    <span className="text-gray-400 text-[11px]">({event.count})</span>
+                    <span>{cat.name}</span>
+                    <span className="text-gray-400 text-[11px]">({cat.count})</span>
                   </div>
-                  {openGroups.includes(event.name) ? (
+                  {openGroups.includes(cat.id) ? (
                     <ChevronUp size={12} className="text-gray-400" />
                   ) : (
                     <ChevronDown size={12} className="text-gray-400" />
@@ -149,7 +171,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
                 </button>
 
                 <AnimatePresence initial={!isInitialRender}>
-                  {openGroups.includes(event.name) && event.subcategories.length > 0 && (
+                  {openGroups.includes(cat.id) && cat.subcategories.length > 0 && (
                     <motion.div
                       key="subcategories"
                       initial={isInitialRender ? false : { height: 0, opacity: 0 }}
@@ -158,21 +180,21 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       <div className="pl-5 pr-3 pt-2 space-y-1">
-                        {event.subcategories.map((subcategory) => (
+                        {cat.subcategories.map((sub) => (
                           <label
-                            key={subcategory.name}
+                            key={sub.id}
                             className="flex items-center gap-2 cursor-pointer text-[12px] text-gray-600"
                           >
                             <input
                               type="checkbox"
                               className="accent-purple-600 w-3 h-3 rounded"
-                              checked={localFilters.categories.includes(subcategory.name)}
-                              onChange={() => handleCheckbox(subcategory.name)}
-                              disabled={subcategory.count === 0}
+                              checked={localFilters.categories.includes(sub.id)}
+                              onChange={() => handleCheckbox(sub.id)}
+                              disabled={sub.count === 0}
                             />
-                            <span className="flex-1 text-left">{subcategory.name}</span>
+                            <span className="flex-1 text-left">{sub.name}</span>
                             <span className="text-gray-400 text-[11px]">
-                              ({subcategory.count})
+                              ({sub.count})
                             </span>
                           </label>
                         ))}
@@ -245,10 +267,11 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
             </div>
           </div>
         </div>
+
         {/* Tombol Terapkan */}
         <div className="pt-2 flex-shrink-0 max-w-[190px] 2xl:max-w-[230px] xl:max-w-[190px] lg:max-w-[190px] md:max-w-[230px] sm:max-w-[190px] mb-2">
           <button
-            onClick={applyFilters}
+            onClick={handleApplyClick}
             className="px-4 py-2  rounded-full font-semibold font-sans text-black
                        transition-all duration-200 ease-out w-full text-center
                        bg-[#FBBF24] shadow-[4px_4px_0px_0px_#0B1367]
@@ -297,7 +320,7 @@ const EventKategory: React.FC<EventKategoryProps> = ({ loading, events, onFilter
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold">Filter</h2>

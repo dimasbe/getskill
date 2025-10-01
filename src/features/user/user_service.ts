@@ -1,7 +1,7 @@
 import api from "../../services/api";
 import axios from "axios";
 import { AxiosError } from "axios";
-import type { User, LoginPayload, RegisterPayload, ProfilData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity  } from "./models";
+import type { User, LoginPayload, RegisterPayload, ProfilData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity, EventPaginateResponse  } from "./models";
 
 
 export async function login(payload: LoginPayload): Promise<User | null> {
@@ -110,7 +110,6 @@ export async function fetchProfileById(id: string): Promise<ProfilData | null> {
 }
 
 //Kursus User
-
 export async function fetchUserCourses(page: number = 1): Promise<CourseActivity[]> {
   try {
     const response = await api.get(`/api/user-courses?page=${page}`);
@@ -121,6 +120,7 @@ export async function fetchUserCourses(page: number = 1): Promise<CourseActivity
   }
 }
 
+//Event User
 export async function fetchUserEvent(page: number = 1): Promise<EventActivity[]> {
   try {
     const response = await api.get(`/api/user-events?page=${page}`);
@@ -128,6 +128,36 @@ export async function fetchUserEvent(page: number = 1): Promise<EventActivity[]>
   } catch (error) {
     console.error("Gagal mengambil user events:", error);
     return [];
+  }
+}
+
+export async function fetchEventPending(): Promise<EventPaginateResponse> {
+  try {
+    const res = await api.get(`/api/user-event-by-panes/pending`);
+    return res.data?.data ?? { paginate: { last_page: 1, current_page: 1 }, data: [] };
+  } catch (err) {
+    console.error("Gagal ambil event pending:", err);
+    return { paginate: { last_page: 1, current_page: 1 }, data: [] };
+  }
+}
+
+export async function fetchEventFollowed(): Promise<EventPaginateResponse> {
+  try {
+    const res = await api.get(`/api/user-event-by-panes/followed`);
+    return res.data?.data ?? { paginate: { last_page: 1, current_page: 1 }, data: [] };
+  } catch (err) {
+    console.error("Gagal ambil event diikuti:", err);
+    return { paginate: { last_page: 1, current_page: 1 }, data: [] };
+  }
+}
+
+export async function fetchEventHistory(): Promise<EventPaginateResponse> {
+  try {
+    const res = await api.get(`/api/user-event-by-panes/history`);
+    return res.data?.data ?? { paginate: { last_page: 1, current_page: 1 }, data: [] };
+  } catch (err) {
+    console.error("Gagal ambil event history:", err);
+    return { paginate: { last_page: 1, current_page: 1 }, data: [] };
   }
 }
 
