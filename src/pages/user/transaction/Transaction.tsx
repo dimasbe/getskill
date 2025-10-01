@@ -12,7 +12,7 @@ import { fetchCourseDetail } from "../../../features/course/_service/course_serv
 import { checkVoucherCode } from "../../../features/coursevoucher/_service/_coursevoucher_service";
 import { getPaymentChannels } from "../../../features/Payment/_service/payment-channel_service";
 import type { PaymentChannelResponse, PaymentChannel } from "../../../features/Payment/payment-channel";
-import { createTransactionCourse } from "../../../features/transaction/_service/_transaction-create_service";
+import { createTransaction } from "../../../features/transaction/_service/_transaction-create_service";
 
 const MySwal = withReactContent(Swal);
 
@@ -195,12 +195,25 @@ const TransactionPage: React.FC = () => {
     const handleBuyNow = async () => {
         if (!course) return;
 
+        if (!selectedPayment) {
+            MySwal.fire({
+                title: "Oops!",
+                text: "Silakan pilih metode pembayaran terlebih dahulu.",
+                icon: "warning",
+                confirmButtonText: "OK",
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: "my-swal-confirm",
+                },
+            });
+            return;
+        }
+
         MySwal.fire({
             title: "Apakah Anda yakin ingin membeli kursus ini?",
             text: course.title,
             icon: "warning",
             width: "420px",
-
             customClass: {
                 popup: "my-swal-popup",
                 title: "my-swal-title",
@@ -209,23 +222,26 @@ const TransactionPage: React.FC = () => {
                 confirmButton: "my-swal-confirm",
                 cancelButton: "my-swal-cancel",
             },
-
             showCancelButton: true,
             confirmButtonText: "Ya",
             cancelButtonText: "Batal",
             buttonsStyling: false,
         }).then(async (result) => {
-            if (result.isConfirmed) {
-                // 🔥 panggil API createTransactionCourse
-                const res = await createTransactionCourse(
-                    course.id,     // courseId
-                    course.price,  // coursePrice
-                    "MANDIRIVA",   // paymentMethod
-                    ""             // voucherCode kosong
+            if (!result.isConfirmed) return;
+
+            try {
+                const res = await createTransaction(
+                    "course",
+                    course.id,
+                    totalAmount,
+                    selectedPayment.code,
+                    voucher || ""
                 );
 
-                if (res && res.success) {
-                    navigate(`/transaction/detail/${res.data.id}`);
+                if (res?.success && res.meta?.code === 200) {
+                    // 🔥 redirect pakai reference, bukan id
+                    const reference = res.data.reference;
+                    navigate(`/transaction/detail/${reference}`, { state: res.data });
                 } else {
                     MySwal.fire({
                         title: "Gagal",
@@ -238,10 +254,21 @@ const TransactionPage: React.FC = () => {
                         buttonsStyling: false,
                     });
                 }
+            } catch (err) {
+                console.error("handleBuyNow error:", err);
+                MySwal.fire({
+                    title: "Error",
+                    text: "Terjadi kesalahan saat memproses transaksi.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                    customClass: {
+                        confirmButton: "my-swal-confirm",
+                    },
+                    buttonsStyling: false,
+                });
             }
         });
     };
-
 
 
     return (
