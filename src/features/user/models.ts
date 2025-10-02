@@ -206,6 +206,7 @@ export interface EventActivity {
   status: "pending" | "accepted" | "canceled" | "declined";
   event_time_status: string;
   reason: string | null;
+  created_at: string;
 }
 
 export interface EventUser {
