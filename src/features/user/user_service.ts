@@ -1,7 +1,7 @@
 import api from "../../services/api";
 import axios from "axios";
 import { AxiosError } from "axios";
-import type { User, LoginPayload, RegisterPayload, ProfilData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity, EventPaginateResponse  } from "./models";
+import type { User, LoginPayload, RegisterPayload, ProfilData, UpdatePasswordPayload, DashboardDataCourse, CourseActivity, EventActivity, EventPaginateResponse } from "./models";
 
 
 export async function login(payload: LoginPayload): Promise<User | null> {
@@ -160,5 +160,24 @@ export async function fetchEventHistory(): Promise<EventPaginateResponse> {
     return { paginate: { last_page: 1, current_page: 1 }, data: [] };
   }
 }
+
+
+export async function cancelUserEvent(id: number, reason: string): Promise<EventActivity> {
+  try {
+    const res = await api.patch(`/api/user-events/${id}/cancel`, {
+      status: "canceled",
+      reason
+    });
+    return res.data?.data as EventActivity;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Cancel Event error:", error.response?.data);
+    } else {
+      console.error("Cancel Event error:", error);
+    }
+    throw error;
+  }
+}
+
 
 export const authService = { login, register };

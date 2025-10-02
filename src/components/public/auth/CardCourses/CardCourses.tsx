@@ -115,7 +115,7 @@ const CardCourses = ({
                     </div>
 
                     {/* Judul */}
-                    <h3 className="text-sm font-semibold line-clamp-2 min-h-[50px] mb-1">
+                    <h3 className="text-sm font-semibold line-clamp-3 min-h-[50px] mb-1">
                         <a className="inline bg-[linear-gradient(black,black),linear-gradient(black,black)]
                           bg-[length:0%_2px,0_2px]
                           bg-[position:100%_100%,0_100%]
