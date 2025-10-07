@@ -208,7 +208,8 @@ export interface DataWrapper {
   paginate: Paginate;
   data: CourseData[];
   course_test: CourseTest;
-  user_quiz: TestResult;
+  user_quiz: UserQuiz | null;
+  test_result: TestResult | null;
   course: Course;
 }
 
@@ -258,7 +259,7 @@ export interface Course {
   id: string;
   user: User;
   sub_category: string | SubCategory;
-  course_test_id: string;
+  course_test_id: TestResult | null;
   category: string;
   title: string;
   sub_title: string;
@@ -383,6 +384,13 @@ export interface EventDetail {
   event_date: string;
 }
 
+export interface UserQuiz {
+  id: string;
+  quiz_questions: string[];
+  created_at: string;
+}
+
+
 export interface TestResult {
   id: string;
   user_id: string;
@@ -397,7 +405,7 @@ export interface TestResult {
   total_correct: number;
   total_question: number;
   questions: Question[];
-  course_slug: string;
+  course_slug: string
   updated_at: string;
   course: Course;
 }

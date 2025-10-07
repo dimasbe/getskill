@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchCourseDetail, fetchPreTest } from "../../../features/course/_service/course_service";
-import type { CourseTest } from "../../../features/course/_course";
+import type { DataWrapper } from "../../../features/course/_course";
 import HeaderPretes from "../../../components/course/PreTes/HeaderPretes";
 
 
@@ -9,7 +9,7 @@ const Tes = () => {
     const navigate = useNavigate();
     const { slug } = useParams<{ slug: string }>();
 
-    const [pretest, setPretest] = useState<CourseTest | null>(null);
+    const [pretest, setPretest] = useState<DataWrapper | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -110,8 +110,8 @@ const Tes = () => {
                     {error && <p className="mt-6 text-red-500 px-5">{error}</p>}
                     {pretest && (
                         <ul className="mt-6 text-gray-700 space-y-1 text-left px-5">
-                            <li>• Jumlah Soal: {pretest.total_question}</li>
-                            <li>• Durasi Ujian: {pretest.duration} Menit</li>
+                            <li>• Jumlah Soal: {pretest.course_test.total_question}</li>
+                            <li>• Durasi Ujian: {pretest.course_test.duration} Menit</li>
                         </ul>
                     )}
 
