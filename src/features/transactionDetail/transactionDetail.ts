@@ -38,3 +38,8 @@ export interface TransactionDetail {
     order_items: OrderItem[];
     instructions: PaymentInstruction[];
 }
+
+export interface CancelTransactionResponse {
+    success: boolean;
+    message: string;
+}
