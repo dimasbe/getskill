@@ -7,6 +7,16 @@ export interface EventAttendance {
   updated_at: string;
 }
 
+export interface Event {
+  pagination: PaginateEvent;
+  data: Eventype[];
+}
+
+export interface PaginateEvent {
+  last_page: number;
+  current_page: number;
+}
+
 export interface EventDetail {
   id: number;
   event_id: string;

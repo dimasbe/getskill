@@ -210,7 +210,19 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
 
       {/* Pagination */}
       <div className="flex justify-center mt-10">
-        <div className="flex gap-3 mb-10">
+        <div className="flex items-center gap-3">
+          <motion.button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            whileTap={{ scale: 0.9 }}
+            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors duration-300 ${currentPage === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+              }`}
+          >
+            Prev
+          </motion.button>
+
           {Array.from({ length: totalPages }).map((_, index) => {
             const page = index + 1;
             const isActive = page === currentPage;
@@ -226,7 +238,7 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
                     : "none",
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className={`w-8 h-8 rounded-full text-sm font-medium transition-colors duration-300 ease-in-out ${isActive
+                className={`w-8 h-8 rounded-full text-sm font-medium transition-colors duration-300 ${isActive
                   ? "bg-purple-600 text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-purple-100"
                   }`}
@@ -235,6 +247,18 @@ const EventCardGrid: React.FC<EventCardGridProps> = ({
               </motion.button>
             );
           })}
+
+          <motion.button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            whileTap={{ scale: 0.9 }}
+            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors duration-300 ${currentPage === totalPages
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+              }`}
+          >
+            Next
+          </motion.button>
         </div>
       </div>
     </div>

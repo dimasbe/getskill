@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchPreTest, fetchCourseDetail } from "../../../features/course/_service/course_service";
-import type { CourseTest, CourseData } from "../../../features/course/_course";
+import { fetchPreTest, fetchCourseDetail, submitPreTest, fetchPreTestResult } from "../../../features/course/_service/course_service";
+import type { DataWrapper, CourseData } from "../../../features/course/_course";
 import HeaderPretes from "../../../components/course/PreTes/HeaderPretes";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,20 +9,28 @@ const Exam = () => {
     const navigate = useNavigate();
     const { slug } = useParams<{ slug: string }>();
 
-    const [pretest, setPretest] = useState<CourseTest | null>(null);
+    const [pretest, setPretest] = useState<DataWrapper | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [answers, setAnswers] = useState<Record<string, string>>({});
-    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [answer, setAnswers] = useState<Record<string, string>>({});
     const [showConfirm, setShowConfirm] = useState(false);
     const [timeLeft, setTimeLeft] = useState(0);
+    const [isTimerStarted, setIsTimerStarted] = useState(false);
 
     useEffect(() => {
-        if (pretest?.course_test?.duration) {
-            // convert menit → detik
+        if (pretest?.course_test.duration && !isTimerStarted) {
             setTimeLeft(pretest.course_test.duration * 60);
+            setIsTimerStarted(true);
         }
-    }, [pretest]);
+    }, [pretest, isTimerStarted]);
+
+    useEffect(() => {
+        if (timeLeft === 0 && isTimerStarted) {
+            alert("Waktu pre tes sudah habis!");
+            navigate(`/course/pre-tes/exam/results/${slug}`);
+        }
+    }, [timeLeft, isTimerStarted, navigate, slug]);
+
 
     useEffect(() => {
         if (timeLeft <= 0) return;
@@ -99,16 +107,62 @@ const Exam = () => {
     }
 
     const totalQuestions = pretest.course_test.total_question;
-    const answeredCount = currentQuestion + 1;
-    const question: CourseData = pretest.data[currentQuestion];
+    const currentPage = pretest?.paginate?.current_page || 1;
+    const lastPage = pretest?.paginate?.last_page || 1;
+    const answeredCount = pretest.paginate?.current_page || 1;
+    const question: CourseData = pretest.data[0];
 
     // handler pilih jawaban
-    const handleAnswer = (questionId: string, value: string) => {
+    const handleAnswer = (value: string, pageNumber: number) => {
         setAnswers((prev) => ({
             ...prev,
-            [questionId]: value,
+            [pageNumber]: value,
         }));
     };
+
+    const handlePageChange = async (page: number) => {
+        if (!slug) return;
+        try {
+            setLoading(true);
+            const courseDetail = await fetchCourseDetail(slug);
+
+            if (!courseDetail?.course_test_id) return;
+
+            const data = await fetchPreTest(`${courseDetail.course_test_id}?page=${page}`);
+            setPretest(data);
+        } catch (error) {
+            console.error("Gagal pindah soal:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const handlerPageSubmit = async () => {
+        if (!slug || !pretest.user_quiz) return;
+
+        try {
+            // 1️⃣ Kirim jawaban
+            const result = await submitPreTest(pretest.user_quiz.id, answer);
+
+            // 2️⃣ Jika sukses, ambil hasil tes
+            if (result?.success) {
+                const testResult = await fetchPreTestResult(pretest.user_quiz.id);
+
+                if (testResult) {
+                    // 3️⃣ Arahkan ke halaman hasil sambil membawa data hasil
+                    navigate(`/course/pre-tes/exam/results/${slug}`, { state: { testResult } });
+                } else {
+                    alert("Gagal memuat hasil pre test.");
+                }
+            }
+
+        } catch (err) {
+            console.error("Gagal submit:", err);
+            alert("Gagal submit jawaban!");
+        }
+    };
+
 
 
     return (
@@ -131,11 +185,11 @@ const Exam = () => {
                 </div>
 
                 {/* Card Exam */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-20">
                     {/* Kolom kiri (Soal Ujian) */}
-                    <div className="md:col-span-3 bg-white rounded-lg shadow p-8">
+                    <div className="md:col-span-3 bg-white rounded-lg shadow p-8 flex flex-col justify-between h-full">
                         <h2 className="text-gray-800 text-start font-semibold mb-4">
-                            {currentQuestion + 1}.{" "}
+                            {currentPage}.{" "}
                             <span dangerouslySetInnerHTML={{ __html: question.question }} />
                         </h2>
 
@@ -151,8 +205,9 @@ const Exam = () => {
                                             type="radio"
                                             name={`q-${question.id}`}
                                             value={key}
-                                            checked={answers[question.id] === key}
-                                            onChange={() => handleAnswer(question.id, key)}
+                                            onChange={() => handleAnswer(key, currentPage)}
+                                            checked={answer[currentPage] === key}
+
                                             className="w-5 h-5 accent-purple-600"
                                         />
                                         <span
@@ -165,49 +220,62 @@ const Exam = () => {
                             )}
                         </div>
 
-                        <div className="border-t-3 border-gray-200 mt-8"></div>
-
                         {/* Navigasi */}
-                        <div className="flex justify-between mt-6 ">
-                            <button
-                                disabled={currentQuestion === 0}
-                                onClick={() => setCurrentQuestion((prev) => prev - 1)}
-                                className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50"
-                            >
-                                ← Kembali
-                            </button>
-                            <button
-                                disabled={currentQuestion === totalQuestions - 1}
-                                onClick={() => setCurrentQuestion((prev) => prev + 1)}
-                                className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50"
-                            >
-                                Selanjutnya →
-                            </button>
+                        <div className="flex justify-between mt-auto pt-6 sticky border-t border-gray-200">
+                            {/* Tombol Kembali hanya muncul mulai dari soal nomor 2 */}
+                            {currentPage > 1 && (
+                                <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
+                                >
+                                    ← Kembali
+                                </button>
+                            )}
+
+                            {/* Spacer agar tombol Selanjutnya tetap di kanan */}
+                            <div className="flex-1" />
+
+                            {/* Tombol Selanjutnya hanya muncul jika belum di halaman terakhir */}
+                            {currentPage < lastPage && (
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
+                                >
+                                    Selanjutnya →
+                                </button>
+                            )}
                         </div>
                     </div>
 
                     {/* Kolom kanan (Sidebar) */}
-                    <div className="bg-white rounded-lg shadow p-8 flex flex-col justify-between">
+                    <div className="bg-white rounded-lg shadow p-8 flex flex-col justify-between self-start">
                         <div>
                             <h3 className="text-lg text-start font-semibold text-gray-800 mb-3">Soal Ujian</h3>
 
                             {/* Nomor soal */}
                             <div className="grid grid-cols-4 gap-2 mb-6">
-                                {pretest.data.map((_, i: number) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => setCurrentQuestion(i)}
-                                        className={`w-10 h-10 flex items-center justify-center rounded-lg border-3 font-semibold 
-                      ${currentQuestion === i
-                                                ? "bg-purple-700 text-white border-purple-700"
-                                                : answers[pretest.data[i].id]
-                                                    ? "bg-purple-700 border-purple-700 text-white"
-                                                    : "text-purple-700 border-purple-700 hover:text-white hover:bg-purple-700"
-                                            }`}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                ))}
+                                {Array.from({ length: totalQuestions }).map((_, i) => {
+                                    const pageNumber = i + 1;
+                                    const isActive = currentPage === pageNumber;
+                                    const isAnswered = answer[pageNumber] !== undefined;
+
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => handlePageChange(pageNumber)}
+                                            className={`w-10 h-10 flex items-center justify-center rounded-lg border-2 font-semibold
+                                                        ${isActive
+                                                    ? "bg-purple-700 text-white border-purple-700"
+                                                    : isAnswered
+                                                        ? "bg-green-500 text-white border-green-500"
+                                                        : "text-purple-700 border-purple-700 hover:text-white hover:bg-purple-700"
+                                                }`}
+                                        >
+                                            {pageNumber}
+                                        </button>
+                                    );
+                                })}
+
                             </div>
                             <div>
                                 <p className="text-sm text-start text-gray-600 mb-5">
@@ -255,10 +323,7 @@ const Exam = () => {
                                     No
                                 </button>
                                 <button
-                                    onClick={() => {
-                                        console.log("Jawaban:", answers);
-                                        navigate(`/course/pre-tes/exam/results/${slug}`);
-                                    }}
+                                    onClick={() => handlerPageSubmit()}
                                     className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
                                 >
                                     Yes

@@ -38,6 +38,7 @@ import TesResults from "../pages/user/PreTes/testResults";
 
 import CourseModulePage from "../pages/user/module/CourseModulePage";
 import DiscussionPage from "../pages/user/module/discussion/DiscussionPage";
+import ForumDiscussionPage from "../pages/user/module/discussion/ForumDiscussionPage";
 import TaskDetailPage from "../pages/user/module/task/TaskDetailPage";
 
 
@@ -106,6 +107,7 @@ function RouteChangeLoader() {
         {/* contoh slug course */}
         <Route path="/module/:slug" element={<CourseModulePage />} />
         <Route path="/module/discussion/:slug" element={<DiscussionPage />} />
+        <Route path="/module/discussion/forum/:slug" element={<ForumDiscussionPage />} />
         <Route path="/tasks/:id" element={<TaskDetailPage />} />
 
       </Route>
