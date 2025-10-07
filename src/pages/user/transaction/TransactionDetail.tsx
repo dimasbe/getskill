@@ -408,12 +408,12 @@ const TransactionDetailPage: React.FC = () => {
                             {transaction?.payment_name?.includes("QRIS") && paymentStatus === "UNPAID" && (
                                 <button
                                     onClick={handleCancelPayment}
-                                    className="mt-2 group bg-red-600 text-white text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
+                                    className="mt-2 group bg-[#9425FE] text-white text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
                                     font-semibold py-3 md:py-3 lg:py-3 xl:py-3 2xl:py-4 w-[310px] md:w-[160px] lg:w-[280px] xl:w-[310px] 2xl:w-[390px]
                                     rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                     transition-all duration-500 ease-in-out
-                                    shadow-[4px_4px_0_#7f1d1d] 
-                                    hover:bg-yellow-400 hover:shadow-none
+                                    shadow-[4px_4px_0_#0A0082] 
+                                    hover:bg-red-600 hover:shadow-none
                                     active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                                     focus:outline-none cursor-pointer"
                                 >
