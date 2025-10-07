@@ -5,10 +5,8 @@ export async function fetchDivisions(): Promise<Division[]> {
     try {
         const response = await api.get("/api/industrial-class");
 
-        // Log full response untuk debug
         console.log("📌 Full API response:", response.data);
 
-        // Ambil array divisions dari response
         const divisions: Division[] = response.data.data?.divisions ?? [];
 
         if (!Array.isArray(divisions)) {

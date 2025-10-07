@@ -1,5 +1,3 @@
-// src/types/payment-channel.ts
-
 export interface Fee {
     flat: number;
     percent: number | string;
