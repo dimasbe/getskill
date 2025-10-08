@@ -40,6 +40,8 @@ import CourseModulePage from "../pages/user/module/CourseModulePage";
 import DiscussionPage from "../pages/user/module/discussion/DiscussionPage";
 import ForumDiscussionPage from "../pages/user/module/discussion/ForumDiscussionPage";
 import TaskDetailPage from "../pages/user/module/task/TaskDetailPage";
+import QuizPage from "../pages/user/module/quiztes/QuizPage";
+import QuizResultPage from "../pages/user/module/quiztes/QuizResultPage";
 
 
 function RouteChangeLoader() {
@@ -109,6 +111,8 @@ function RouteChangeLoader() {
         <Route path="/module/discussion/:slug" element={<DiscussionPage />} />
         <Route path="/module/discussion/forum/:slug" element={<ForumDiscussionPage />} />
         <Route path="/tasks/:id" element={<TaskDetailPage />} />
+        <Route path="/quiz/:id" element={<QuizPage />} />
+        <Route path="/quiz-result/:id" element={<QuizResultPage />} />
 
       </Route>
     </Routes>

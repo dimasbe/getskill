@@ -727,14 +727,16 @@ function MainContent({
 
                 <div className="mt-10 text-right">
                   <button
+                    onClick={() => navigate(`/quiz/${quiz.id}`)}
                     className="px-3 py-2 rounded-full font-semibold font-sans text-[13px] text-white
-               transition-all duration-200 ease-out w-full sm:w-auto text-center
-               bg-purple-600 shadow-[4px_4px_0px_0px_#0B1367]
-               hover:bg-[#FBBF24] hover:text-black hover:shadow-none
-               active:translate-y-0.5"
+  transition-all duration-200 ease-out w-full sm:w-auto text-center
+  bg-purple-600 shadow-[4px_4px_0px_0px_#0B1367]
+  hover:bg-[#FBBF24] hover:text-black hover:shadow-none
+  active:translate-y-0.5"
                   >
                     Mulai Quiz
                   </button>
+
                 </div>
 
                 {/* GANTI BAGIAN INI */}
@@ -768,14 +770,16 @@ function MainContent({
                               </td>
                               <td className="border border-gray-800 px-4 py-2 text-center">
                                 <button
+                                  onClick={() => navigate(`/quiz-result/${history.id}`)}
                                   className="px-3 py-1 rounded-full font-semibold font-sans text-white
-                transition-all duration-200 ease-out text-center
-                bg-purple-600 shadow-[3px_3px_0px_0px_#0B1367]
-                hover:bg-[#FBBF24] hover:text-black hover:shadow-none
-                active:translate-y-0.5"
+  transition-all duration-200 ease-out text-center
+  bg-purple-600 shadow-[3px_3px_0px_0px_#0B1367]
+  hover:bg-[#FBBF24] hover:text-black hover:shadow-none
+  active:translate-y-0.5"
                                 >
                                   Lihat Detail
                                 </button>
+
                               </td>
                             </tr>
                           ))}
