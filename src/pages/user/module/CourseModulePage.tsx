@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate  } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ChevronUp, Download } from "lucide-react";
 import {
   fetchModules,
@@ -7,7 +7,7 @@ import {
   fetchQuizDetail,
   fetchModuleTasks,
   fetchCoursePostTest,
-  fetchUserCourseActivities,
+  fetchUserQuizResult
 } from "../../../features/module/_service/module_service";
 import type {
   ModuleType,
@@ -17,6 +17,7 @@ import type {
   QuizType,
   ModuleTaskType,
   CoursePostTest,
+  UserQuizResult
 } from "../../../features/module/_module";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,6 +25,10 @@ export default function CourseModulePage() {
   const { slug } = useParams<{ slug: string }>();
 
   /** ================== STATE ================== **/
+  const [userQuizResults, setUserQuizResults] = useState<UserQuizResult[]>([]);
+  const [loadingUserQuizResults, setLoadingUserQuizResults] = useState(false);
+  const [errorUserQuizResults, setErrorUserQuizResults] = useState<string | null>(null);
+
   const [modules, setModules] = useState<ModuleType[]>([]);
   const [openModules, setOpenModules] = useState<number[]>([]);
 
@@ -69,20 +74,6 @@ export default function CourseModulePage() {
     };
     loadModules();
   }, [slug]);
-
-  /** ================== EFFECT: Debug Activities ================== */
-  useEffect(() => {
-    const loadActivities = async () => {
-      try {
-        const res = await fetchUserCourseActivities();
-        console.log("📌 User Course Activities:", res);
-      } catch (err) {
-        console.error("❌ Gagal fetch activities", err);
-      }
-    };
-    loadActivities();
-  }, []);
-
   /** ================== NAVIGATION FUNCTIONS ================== */
   const getCurrentIndices = (subSlug: string) => {
     for (let i = 0; i < modules.length; i++) {
@@ -123,6 +114,22 @@ export default function CourseModulePage() {
   };
 
   /** ================== HANDLER ================== */
+
+  /** ================== FUNGSI UNTUK AMBIL USER QUIZ RESULTS ================== */
+  const loadUserQuizResults = async (quizSlug: string) => {
+    setLoadingUserQuizResults(true);
+    setErrorUserQuizResults(null);
+    try {
+      const results = await fetchUserQuizResult(quizSlug);
+      setUserQuizResults(results);
+    } catch (err) {
+      console.error("❌ Gagal fetch user quiz results:", err);
+      setErrorUserQuizResults("Gagal memuat riwayat quiz");
+      setUserQuizResults([]);
+    } finally {
+      setLoadingUserQuizResults(false);
+    }
+  };
   const toggleModule = (idx: number) => {
     setOpenModules((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
@@ -166,6 +173,13 @@ export default function CourseModulePage() {
       const data = await fetchQuizDetail(quizSlug);
       setQuiz(data);
       setActiveQuizId(quizId ?? null);
+
+      // RESET USER QUIZ RESULTS SEBELUM LOAD YANG BARU
+      setUserQuizResults([]);
+      setErrorUserQuizResults(null);
+
+      // LOAD USER QUIZ RESULTS DARI ENDPOINT BARU
+      await loadUserQuizResults(quizSlug);
 
       setActiveTaskId(null);
       setActiveSub(null);
@@ -253,6 +267,10 @@ export default function CourseModulePage() {
         errorTask={errorTask}
         loadingPostTest={loadingPostTest}
         errorPostTest={errorPostTest}
+        // TAMBAHKAN PROPS BARU
+        userQuizResults={userQuizResults}
+        loadingUserQuizResults={loadingUserQuizResults}
+        errorUserQuizResults={errorUserQuizResults}
         loadSubmodule={loadSubmodule}
         navigateToQuizOrTask={navigateToQuizOrTask}
         navigateToNextModule={navigateToNextModule}
@@ -469,6 +487,10 @@ type MainContentProps = {
   errorTask: string | null;
   loadingPostTest: boolean;
   errorPostTest: string | null;
+  // TAMBAHKAN PROPS BARU
+  userQuizResults: UserQuizResult[];
+  loadingUserQuizResults: boolean;
+  errorUserQuizResults: string | null;
   loadSubmodule: (subSlug: string) => void;
   navigateToQuizOrTask: () => void;
   navigateToNextModule: () => void;
@@ -490,6 +512,10 @@ function MainContent({
   errorTask,
   loadingPostTest,
   errorPostTest,
+  // TAMBAHKAN PARAMETER BARU
+  userQuizResults,
+  loadingUserQuizResults,
+  errorUserQuizResults,
   loadSubmodule,
   navigateToQuizOrTask,
   navigateToNextModule,
@@ -497,6 +523,7 @@ function MainContent({
   currentSubModuleIndex,
   modules,
 }: MainContentProps) {
+  // ... kode yang lain tetap sama
   const navigate = useNavigate();
 
   if (loadingContent) {
@@ -710,61 +737,74 @@ function MainContent({
                   </button>
                 </div>
 
-                {quiz.user_quizzes && (
-  <div className="mt-8">
-    <div className="overflow-x-auto rounded-lg shadow">
-      <table className="w-full text-sm border border-gray-800 border-separate border-spacing-0 rounded-lg overflow-hidden">
-        <thead className="bg-purple-600 text-white">
-          <tr>
-            <th className="border border-gray-800 px-4 py-2 text-center">Tanggal</th>
-            <th className="border border-gray-800 px-4 py-2 text-center">Nilai</th>
-            <th className="border border-gray-800 px-4 py-2 text-center">Status</th>
-            <th className="border border-gray-800 px-4 py-2 text-center">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(Array.isArray(quiz.user_quizzes)
-            ? quiz.user_quizzes
-            : [quiz.user_quizzes]
-          ).map((history) => (
-            <tr key={history.id} className="hover:bg-gray-50">
-              <td className="border border-gray-800 px-4 py-2 text-center">
-                {new Date(history.created_at).toLocaleString("id-ID", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </td>
-              <td className="border border-gray-800 px-4 py-2 text-center">
-                {history.score.toFixed(1)}
-              </td>
-              <td className="border border-gray-800 px-4 py-2 text-center">
-                {history.score >= quiz.minimum_score ? (
-                  <span className="text-green-600 font-semibold">Lulus</span>
-                ) : (
-                  <span className="text-red-500 font-semibold">Tidak Lulus</span>
-                )}
-              </td>
-              <td className="border border-gray-800 px-4 py-2 text-center">
-                <button
-                  className="px-3 py-1 rounded-full font-semibold font-sans text-white
+                {/* GANTI BAGIAN INI */}
+                {userQuizResults.length > 0 && (
+                  <div className="mt-8">
+                    <div className="overflow-x-auto rounded-lg shadow">
+                      <table className="w-full text-sm border border-gray-800 border-separate border-spacing-0 rounded-lg overflow-hidden">
+                        <thead className="bg-purple-600 text-white">
+                          <tr>
+                            <th className="border border-gray-800 px-4 py-2 text-center">Tanggal</th>
+                            <th className="border border-gray-800 px-4 py-2 text-center">Nilai</th>
+                            <th className="border border-gray-800 px-4 py-2 text-center">Status</th>
+                            <th className="border border-gray-800 px-4 py-2 text-center">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {userQuizResults.map((history) => (
+                            <tr key={history.id} className="hover:bg-gray-50">
+                              <td className="border border-gray-800 px-4 py-2 text-center">
+                                {history.updated}
+                              </td>
+                              <td className="border border-gray-800 px-4 py-2 text-center">
+                                {history.score}
+                              </td>
+                              <td className="border border-gray-800 px-4 py-2 text-center">
+                                {history.status === "Lulus" ? (
+                                  <span className="text-green-600 font-semibold">Lulus</span>
+                                ) : (
+                                  <span className="text-red-500 font-semibold">Tidak Lulus</span>
+                                )}
+                              </td>
+                              <td className="border border-gray-800 px-4 py-2 text-center">
+                                <button
+                                  className="px-3 py-1 rounded-full font-semibold font-sans text-white
                 transition-all duration-200 ease-out text-center
                 bg-purple-600 shadow-[3px_3px_0px_0px_#0B1367]
                 hover:bg-[#FBBF24] hover:text-black hover:shadow-none
                 active:translate-y-0.5"
-                >
-                  Lihat Detail
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-)}
+                                >
+                                  Lihat Detail
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAMBAHKAN LOADING STATE */}
+                {loadingUserQuizResults && (
+                  <div className="mt-8 text-center">
+                    <p>Memuat riwayat quiz...</p>
+                  </div>
+                )}
+
+                {/* TAMBAHKAN ERROR STATE */}
+                {errorUserQuizResults && (
+                  <div className="mt-8 text-center text-red-500">
+                    <p>{errorUserQuizResults}</p>
+                  </div>
+                )}
+
+                {/* TAMBAHKAN STATE JIKA TIDAK ADA DATA */}
+                {!loadingUserQuizResults && userQuizResults.length === 0 && !errorUserQuizResults && (
+                  <div className="mt-8 text-center text-gray-500">
+                    <p>Belum ada riwayat quiz</p>
+                  </div>
+                )}
 
                 {/* Navigasi */}
                 <div className="flex justify-between mt-25">
@@ -865,15 +905,15 @@ function MainContent({
                             <div className="flex items-center justify-center gap-2">
                               {/* Tombol Detail */}
                               <button
-  className="px-4 py-1.5 rounded-xl font-medium font-sans text-white
+                                className="px-4 py-1.5 rounded-xl font-medium font-sans text-white
     transition-all duration-200 ease-out
     bg-purple-600 shadow-[2px_2px_0px_0px_#0B1367]
     hover:bg-[#FBBF24] hover:text-black hover:shadow-none
     active:translate-y-0.5"
-  onClick={() => navigate(`/tasks/${task.module.id}`)}
->
-  Detail
-</button>
+                                onClick={() => navigate(`/tasks/${task.module.id}`)}
+                              >
+                                Detail
+                              </button>
 
                               {/* Tombol Download */}
                               <button
@@ -928,24 +968,24 @@ function MainContent({
   }
 
   /** Default */
-return (
-  <main className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50 to-gray-100">
-    <div className="flex flex-col items-center justify-center h-full text-center px-4">
-      {/* Icon semangat */}
-      <div className="flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-purple-100 shadow-md">
-        <BookOpen className="w-12 h-12 text-purple-600" />
-      </div>
+  return (
+    <main className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50 to-gray-100">
+      <div className="flex flex-col items-center justify-center h-full text-center px-4">
+        {/* Icon semangat */}
+        <div className="flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-purple-100 shadow-md">
+          <BookOpen className="w-12 h-12 text-purple-600" />
+        </div>
 
-      {/* Teks motivasi */}
-      <h2 className="text-2xl font-bold text-purple-700 mb-2">
-        Semangat Belajar! 🚀
-      </h2>
-      <p className="text-gray-600 text-lg max-w-md">
-        Pilih modul di sidebar untuk memulai perjalanan belajarmu.  
-        <span className="font-medium text-purple-600"> Semangat mengerjakan materi! 💪</span>
-      </p>
-    </div>
-  </main>
-);
+        {/* Teks motivasi */}
+        <h2 className="text-2xl font-bold text-purple-700 mb-2">
+          Semangat Belajar! 🚀
+        </h2>
+        <p className="text-gray-600 text-lg max-w-md">
+          Pilih modul di sidebar untuk memulai perjalanan belajarmu.
+          <span className="font-medium text-purple-600"> Semangat mengerjakan materi! 💪</span>
+        </p>
+      </div>
+    </main>
+  );
 
 }
