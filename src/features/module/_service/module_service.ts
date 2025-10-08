@@ -1,5 +1,5 @@
 import api from "../../../services/api";
-import type { ModuleType, SubModuleDetailType, QuizType, ModuleTaskType, CoursePostTestResponse,UserCourseActivitiesResponse,SubModule, QuizResponse } from "../_module";
+import type { ModuleType, SubModuleDetailType, QuizType, ModuleTaskType, CoursePostTestResponse,QuizResponse, UserQuizResult, UserQuizResultResponse} from "../_module";
 
 // Ambil semua module dari course
 export async function fetchModules(courseSlug: string): Promise<ModuleType[]> {
@@ -56,30 +56,13 @@ export async function fetchCoursePostTest(courseTestId: string): Promise<CourseP
   }
 }
 
-// Ambil daftar aktivitas user per course
-export async function fetchUserCourseActivities(): Promise<UserCourseActivitiesResponse> {
+// Ambil hasil kuis user berdasarkan slug module
+export async function fetchUserQuizResult(slugModule: string): Promise<UserQuizResult[]> {
   try {
-    const response = await api.get(`/api/user-course-activities`);
-    return response.data;
+    const response = await api.get<UserQuizResultResponse>(`/api/user-quizzes/${slugModule}`);
+    return response.data.data || [];
   } catch (error) {
-    console.error("Gagal mengambil user course activities:", error);
-    throw error;
-  }
-}
-
-// Ambil progress belajar user di satu submodule
-export async function fetchUserProgres(
-  slug: string,
-  subModuleId: string // ini sebaiknya id dari submodule
-): Promise<SubModule> {
-  try {
-    const response = await api.put<SubModule>(
-      `/api/user-courses/${slug}/${subModuleId}`,
-      {}
-    );
-    return response.data;
-  } catch (error) {
-    console.error("❌ Error fetching user course:", error);
+    console.error(`❌ Gagal mengambil hasil kuis user untuk module ${slugModule}:`, error);
     throw error;
   }
 }

@@ -1,121 +1,4 @@
 // ========================
-// USER COURSE ACTIVITIES
-// ========================
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  email_verified_at: string | null;
-  point: number;
-  phone_number: string;
-  gender: string;
-  address: string;
-  photo: string | null;
-  created_at: string;
-  updated_at: string;
-  banner: string | null;
-}
-
-// Sub Category Type
-export interface SubCategory {
-  id: number;
-  category_id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}
-
-// Course Owner Type
-export interface CourseOwner {
-  id: string;
-  name: string;
-  email: string;
-  email_verified_at: string | null;
-  point: number;
-  phone_number: string;
-  gender: string;
-  address: string;
-  photo: string | null;
-  created_at: string;
-  updated_at: string;
-  banner: string | null;
-}
-
-// Course Type
-export interface Course {
-  id: string;
-  module_count: number;
-  module_task_count: number;
-  sub_category: SubCategory;
-  title: string;
-  sub_title: string;
-  description: string;
-  is_premium: number;
-  price: number;
-  promotional_price: number | null;
-  slug: string;
-  photo: string;
-  user: CourseOwner;
-  is_ready: number;
-  ratings?: number[];
-  rating: number;
-  status: string;
-  step: number | null;
-  course_test_id: string;
-}
-
-// Sub Module Type
-export interface SubModule {
-  id: string;
-  module_id: string;
-  step: number;
-  title: string;
-  slug: string;
-  sub_title: string;
-  content: string;
-  created_at: string;
-  updated_at: string;
-}
-
-// UserCourseActivity Type
-export interface UserCourseActivity {
-  user: User;
-  course: Course;
-  total_module: number;
-  total_user: number;
-  study_time: string;
-  study_percentage: number;
-  sub_module: SubModule;
-  has_post_test:  number | boolean;
-  has_pre_test: number | boolean;
-  sub_module_slug: string;
-  unsubmitted_tasks: number;
-  graded_tasks: number;
-  ungraded_tasks: number;
-  total_sub_module: number;
-  completed_sub_modules: number;
-  sub_module_step: number;
-  max_sub_module_step: number;
-  total_quiz: number;
-  completed_quizzes: number;
-  _debug_has_post_test_raw: number;
-  _debug_has_post_test_type: string;
-}
-
-// Meta Type
-export interface Meta {
-  code: number;
-  status: string;
-  message: string;
-}
-
-// API Response Type
-export interface UserCourseActivitiesResponse {
-  meta: Meta;
-  data: UserCourseActivity[];
-}
-// ========================
 // COURSE POST TEST (Final Audit / Tugas Akhir Modul)
 // ========================
 export interface CoursePostTestQuestion {
@@ -137,7 +20,6 @@ export interface CoursePostTest {
     id: string;
     title: string;
     slug: string;
-    user: CourseOwner;
     sub_category: string;
     category: string;
     rating: string;
@@ -340,4 +222,24 @@ export interface SubModuleDetailType {
   last_step: number;
   prev: string | null;
   next: string | null;
+}
+// ========================
+// USER QUIZ
+// ========================
+
+export interface UserQuizResult {
+  id: string;
+  updated: string; 
+  score: string;
+  status: string;   
+}
+
+export interface UserQuizResultResponse {
+  meta: {
+    code: number;
+    status: string;
+    message: string;
+  };
+  data: UserQuizResult[];
+  success: boolean;
 }
