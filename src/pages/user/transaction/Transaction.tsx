@@ -242,7 +242,7 @@ const TransactionPage: React.FC = () => {
                 );
 
                 if (res?.success && res.meta?.code === 200) {
-                    const reference = res.data.reference;
+                    const reference = res.data.transaction.reference;
                     navigate(`/transaction/detail/${reference}`, { state: res.data });
                 } else {
                     MySwal.fire({

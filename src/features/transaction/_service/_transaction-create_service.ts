@@ -1,7 +1,6 @@
 import api from "../../../services/api";
 import type { TransactionResponse } from "../_transaction-create";
 
-
 export async function createTransaction(
     productType: string,
     id: string,
@@ -11,7 +10,6 @@ export async function createTransaction(
 ): Promise<TransactionResponse> {
     const url = `/api/transaction-create/${productType}/${id}`;
 
-
     const params: Record<string, any> = {
         course_price,
         payment_method,
@@ -19,7 +17,6 @@ export async function createTransaction(
     if (voucher_code && voucher_code.trim() !== "") {
         params.voucher_code = voucher_code;
     }
-
 
     const token = localStorage.getItem("token");
 
@@ -32,9 +29,7 @@ export async function createTransaction(
             },
         });
 
-       
         console.log("createTransaction response:", data);
-
         return data;
     } catch (error: any) {
         console.error("createTransaction error:", error);
@@ -44,12 +39,11 @@ export async function createTransaction(
                 success: false,
                 meta: { code: 500, status: "error", message: "Request failed" },
                 data: {
-                    id: 0,
-                    reference: "",
-                    user_id: "",
-                    status: "FAILED",
-                    created_at: "",
-                    updated_at: "",
+                    transaction: {
+                        id: "",
+                        user_id: "",
+                    },
+                    voucher: null,
                 },
             }
         );
