@@ -13,7 +13,7 @@ export async function getTransactionDetail(reference: string): Promise<Transacti
 
 export async function cancelTransaction(reference: string): Promise<{ success: boolean; message: string }> {
   try {
-    const response = await api.post(`/api/transaction/${reference}/cancel`);
+    const response = await api.patch(`/api/transaction/${reference}/cancel`);
     return {
       success: response.data?.success ?? false,
       message: response.data?.meta?.message ?? "Gagal membatalkan transaksi",

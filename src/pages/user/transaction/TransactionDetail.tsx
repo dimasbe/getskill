@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FiRefreshCw, FiCopy } from "react-icons/fi";
 import { QRCodeCanvas } from "qrcode.react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import type { TransactionDetail } from "../../../features/transactionDetail/transactionDetail";
 import { getTransactionDetail } from "../../../features/transactionDetail/services/transactionDetailService";
 import type { TransactionFullDetail } from "../../../features/transactionDetail/transactionFullDetail";
@@ -13,6 +15,7 @@ import { cancelTransaction } from "../../../features/transactionDetail/services/
 import unpaidImg from "../../../assets/img/payment-status/unpaid.png";
 import paidImg from "../../../assets/img/payment-status/paid.png";
 import expiredImg from "../../../assets/img/payment-status/expired.png";
+import canceledImg from "../../../assets/img/payment-status/canceled.png";
 
 //Payment Logo
 import BniVaLogo from "../../../../public/images/payments/bni.png";
@@ -24,6 +27,8 @@ import DanaLogo from "../../../../public/images/payments/dana.jpg";
 import ShopeePayLogo from "../../../../public/images/payments/shopeepay.jpg";
 import IndomaretLogo from "../../../../public/images/payments/indomaret.jpg";
 import AlfamaretLogo from "../../../../public/images/payments/alfamart.jpg";
+
+const MySwal = withReactContent(Swal);
 
 // ----- Mapping Payment Logo -----
 const getPaymentLogo = (name: string) => {
@@ -40,23 +45,28 @@ const getPaymentLogo = (name: string) => {
 };
 
 const statusConfig: Record<
-    "UNPAID" | "PAID" | "EXPIRED",
+    "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED",
     { img: string; title?: string; message?: string }
 > = {
     UNPAID: {
         img: unpaidImg,
         title: "Belum Terbayar",
-        message: "Silakan selesaikan pembayaran sebelum batas waktu",
+        message: "Silakan menyelesaikan pembayaran",
     },
     PAID: {
         img: paidImg,
-        title: "Sudah Terbayar",
-        message: "Terima kasih, pembayaran Anda sudah diterima",
+        title: "Pembayaran Berhasil",
+        message: "Terima kasih, pembayaran Anda telah berhasil",
     },
     EXPIRED: {
         img: expiredImg,
         title: "Transaksi Kadaluarsa",
-        message: "Mohon maaf transaksi telah kadaluarsa",
+        message: "Mohon maaf transaksi Anda telah kadaluarsa",
+    },
+    CANCELLED: {
+        img: canceledImg,
+        title: "Pembayaran Dibatalkan",
+        message: "Transaksi Anda berhasil dibatalkan",
     },
 };
 
@@ -67,7 +77,7 @@ const TransactionDetailPage: React.FC = () => {
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
     const [fullTransaction, setFullTransaction] = useState<TransactionFullDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [paymentStatus, setPaymentStatus] = useState<"UNPAID" | "PAID" | "EXPIRED" | null>(null);
+    const [paymentStatus, setPaymentStatus] = useState<"UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | null>(null);
     const [openSection, setOpenSection] = useState<string | null>(null);
     const logo = transaction?.payment_name ? getPaymentLogo(transaction.payment_name) : undefined;
 
@@ -109,16 +119,72 @@ const TransactionDetailPage: React.FC = () => {
 
     const handleCancelPayment = async () => {
         if (!reference) return;
-        setIsLoading(true);
-        try {
-            const res = await cancelTransaction(reference);
-            alert(res.message); // bisa diganti modal / toast
-            await handleCheckStatus(); // refresh status setelah cancel
-        } catch (error) {
-            console.error("Gagal membatalkan transaksi:", error);
-        } finally {
-            setIsLoading(false);
-        }
+
+        MySwal.fire({
+            title: "Batalkan Pembayaran?",
+            text: "Apakah Anda yakin ingin membatalkan transaksi ini?",
+            icon: "warning",
+            width: "420px",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Batalkan",
+            cancelButtonText: "Tidak",
+            buttonsStyling: false,
+            customClass: {
+                popup: "my-swal-popup",
+                title: "my-swal-title",
+                icon: "my-swal-icon",
+                htmlContainer: "my-swal-text",
+                confirmButton: "my-swal-confirm",
+                cancelButton: "my-swal-cancel",
+            },
+        }).then(async (result) => {
+            if (!result.isConfirmed) return;
+
+            setIsLoading(true);
+            try {
+                const res = await cancelTransaction(reference);
+
+                if (res?.message?.toLowerCase().includes("dibatalkan")) {
+                    setPaymentStatus("CANCELLED");
+                }
+
+                await MySwal.fire({
+                    title: "Berhasil!",
+                    text: res.message || "Transaksi berhasil dibatalkan.",
+                    icon: "success",
+                    width: "420px",
+                    confirmButtonText: "OK",
+                    buttonsStyling: false,
+                    customClass: {
+                        popup: "my-swal-popup",
+                        title: "my-swal-title",
+                        icon: "my-swal-icon",
+                        htmlContainer: "my-swal-text",
+                        confirmButton: "my-swal-confirm",
+                    },
+                });
+            } catch (error) {
+                console.error("Gagal membatalkan transaksi:", error);
+
+                MySwal.fire({
+                    title: "Gagal!",
+                    text: "Terjadi kesalahan saat membatalkan transaksi.",
+                    icon: "error",
+                    width: "420px",
+                    confirmButtonText: "OK",
+                    buttonsStyling: false,
+                    customClass: {
+                        popup: "my-swal-popup",
+                        title: "my-swal-title",
+                        icon: "my-swal-icon",
+                        htmlContainer: "my-swal-text",
+                        confirmButton: "my-swal-confirm",
+                    },
+                });
+            } finally {
+                setIsLoading(false);
+            }
+        });
     };
 
     const handleCopy = (text: string) => {
