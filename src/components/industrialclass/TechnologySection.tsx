@@ -62,13 +62,14 @@ const TechnologySection: React.FC = () => {
           {/* Left side - Image */}
           <div className="w-full lg:w-5/12 xl:w-4/12 2xl:w-3/12 flex justify-center lg:justify-start relative lg:-ml-6 md:px-6 xl:ml-10 2xl:ml-12">
             <div
-              className="absolute bg-orange-50 hidden sm:block"
+              className="absolute bg-orange-50 hidden sm:block
+             sm:w-[40vw] sm:h-[25vw] sm:top-[20px] sm:left-[50px]
+             md:w-[67vw] md:h-[45vw] md:top-[20px] md:left-[50px]
+             lg:w-[37vw] lg:h-[24vw] lg:top-[10px] lg:left-[-35px]
+             "
               style={{
-                width: "clamp(220px, 41vw, 460px)",
-                height: "clamp(140px, 25vw, 300px)",
                 borderRadius: "50%",
                 transform: "rotate(-3deg)",
-                left: "-20px",
               }}
             ></div>
 
