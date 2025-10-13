@@ -200,8 +200,9 @@ const TransactionDetailPage: React.FC = () => {
     };
 
     const handleBack = () => {
-        navigate(-1);
+        navigate('/dashboard/user/transaction');
     };
+
 
     if (isLoading) {
         return (
@@ -461,11 +462,11 @@ const TransactionDetailPage: React.FC = () => {
                                                 font-semibold py-3 md:py-3 lg:py-3 xl:py-3 2xl:py-4 w-[310px] md:w-[160px] lg:w-[280px] xl:w-[310px] 2xl:w-[390px]
                                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                                 transition-all duration-500 ease-in-out
-                                                border border-[#9425FE] hover:text-yellow-500 
+                                                border border-[#9425FE] hover:text-yellow-400 
                                                 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                                                 focus:outline-none cursor-pointer"
                             >
-                                <span className="flex items-center gap-2 transition-colors duration-500 group-hover:text-yellow-500">
+                                <span className="flex items-center gap-2 transition-colors duration-500 group-hover:text-yellow-400">
                                     <FiRefreshCw />
                                     Cek Status
                                 </span>
@@ -478,7 +479,7 @@ const TransactionDetailPage: React.FC = () => {
                                     rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                     transition-all duration-500 ease-in-out
                                     shadow-[4px_4px_0_#0A0082] 
-                                    hover:bg-yellow-500 hover:shadow-none
+                                    hover:bg-yellow-400 hover:text-[#0A0082] hover:shadow-none
                                     active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                                     focus:outline-none cursor-pointer"
                                 >
