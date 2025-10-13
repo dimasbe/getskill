@@ -16,6 +16,7 @@ import unpaidImg from "../../../assets/img/payment-status/unpaid.png";
 import paidImg from "../../../assets/img/payment-status/paid.png";
 import expiredImg from "../../../assets/img/payment-status/expired.png";
 import canceledImg from "../../../assets/img/payment-status/canceled.png";
+import failedImg from "../../../assets/img/payment-status/failed.png";
 
 //Payment Logo
 import BniVaLogo from "../../../../public/images/payments/bni.png";
@@ -30,7 +31,6 @@ import AlfamaretLogo from "../../../../public/images/payments/alfamart.jpg";
 
 const MySwal = withReactContent(Swal);
 
-// ----- Mapping Payment Logo -----
 const getPaymentLogo = (name: string) => {
     if (name.includes("BNI")) return BniVaLogo;
     if (name.includes("BRI")) return BrivaLogo;
@@ -45,7 +45,7 @@ const getPaymentLogo = (name: string) => {
 };
 
 const statusConfig: Record<
-    "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED",
+    "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | "FAILED",
     { img: string; title?: string; message?: string }
 > = {
     UNPAID: {
@@ -68,6 +68,21 @@ const statusConfig: Record<
         title: "Pembayaran Dibatalkan",
         message: "Transaksi Anda berhasil dibatalkan",
     },
+    FAILED: {
+        img: failedImg,
+        title: "Transaksi Dibatalkan",
+        message: "Transaksi Anda telah dibatalkan",
+    },
+};
+
+const getFailedTransaction = (ref: string) => {
+    const saved = localStorage.getItem(`failed_${ref}`);
+    if (!saved) return null;
+    try {
+        return JSON.parse(saved);
+    } catch {
+        return null;
+    }
 };
 
 const TransactionDetailPage: React.FC = () => {
@@ -77,38 +92,55 @@ const TransactionDetailPage: React.FC = () => {
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
     const [fullTransaction, setFullTransaction] = useState<TransactionFullDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [paymentStatus, setPaymentStatus] = useState<"UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | null>(null);
+    const [paymentStatus, setPaymentStatus] = useState<
+        "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | "FAILED" | null
+    >(null);
     const [openSection, setOpenSection] = useState<string | null>(null);
-    const logo = transaction?.payment_name ? getPaymentLogo(transaction.payment_name) : undefined;
 
     useEffect(() => {
         if (reference) {
             setIsLoading(true);
-            Promise.all([
-                getTransactionDetail(reference),
-                getTransactionFullDetail(reference),
-            ])
+            Promise.all([getTransactionDetail(reference), getTransactionFullDetail(reference)])
                 .then(([statusRes, fullRes]) => {
                     setTransaction(statusRes);
-                    setPaymentStatus(statusRes.status as "UNPAID" | "PAID" | "EXPIRED");
                     setFullTransaction(fullRes);
+
+                    const failed = getFailedTransaction(reference);
+                    if (failed?.status === "FAILED") {
+                        setPaymentStatus("FAILED");
+                    } else {
+                        setPaymentStatus(statusRes.status as "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED");
+                    }
                 })
                 .catch(console.error)
                 .finally(() => setIsLoading(false));
         }
     }, [reference]);
 
+    const displayTransaction =
+        paymentStatus === "FAILED" && reference
+            ? getFailedTransaction(reference) || transaction
+            : transaction;
+
+    const logo = displayTransaction?.payment_name ? getPaymentLogo(displayTransaction.payment_name) : undefined;
+
     const handleCheckStatus = async () => {
         if (!reference) return;
-
         setIsLoading(true);
         try {
             const [statusRes, fullRes] = await Promise.all([
                 getTransactionDetail(reference),
                 getTransactionFullDetail(reference),
             ]);
+
+            const failed = getFailedTransaction(reference);
+            if (failed?.status === "FAILED") {
+                setPaymentStatus("FAILED");
+            } else {
+                setPaymentStatus(statusRes.status as "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED");
+            }
+
             setTransaction(statusRes);
-            setPaymentStatus(statusRes.status as "UNPAID" | "PAID" | "EXPIRED");
             setFullTransaction(fullRes);
         } catch (error) {
             console.error("Gagal cek status:", error);
@@ -120,7 +152,7 @@ const TransactionDetailPage: React.FC = () => {
     const handleCancelPayment = async () => {
         if (!reference) return;
 
-        MySwal.fire({
+        const result = await MySwal.fire({
             title: "Batalkan Pembayaran?",
             text: "Apakah Anda yakin ingin membatalkan transaksi ini?",
             icon: "warning",
@@ -137,72 +169,71 @@ const TransactionDetailPage: React.FC = () => {
                 confirmButton: "my-swal-confirm",
                 cancelButton: "my-swal-cancel",
             },
-        }).then(async (result) => {
-            if (!result.isConfirmed) return;
-
-            setIsLoading(true);
-            try {
-                const res = await cancelTransaction(reference);
-
-                if (res?.message?.toLowerCase().includes("dibatalkan")) {
-                    setPaymentStatus("CANCELLED");
-                }
-
-                await MySwal.fire({
-                    title: "Berhasil!",
-                    text: res.message || "Transaksi berhasil dibatalkan.",
-                    icon: "success",
-                    width: "420px",
-                    confirmButtonText: "OK",
-                    buttonsStyling: false,
-                    customClass: {
-                        popup: "my-swal-popup",
-                        title: "my-swal-title",
-                        icon: "my-swal-icon",
-                        htmlContainer: "my-swal-text",
-                        confirmButton: "my-swal-confirm",
-                    },
-                });
-            } catch (error) {
-                console.error("Gagal membatalkan transaksi:", error);
-
-                MySwal.fire({
-                    title: "Gagal!",
-                    text: "Terjadi kesalahan saat membatalkan transaksi.",
-                    icon: "error",
-                    width: "420px",
-                    confirmButtonText: "OK",
-                    buttonsStyling: false,
-                    customClass: {
-                        popup: "my-swal-popup",
-                        title: "my-swal-title",
-                        icon: "my-swal-icon",
-                        htmlContainer: "my-swal-text",
-                        confirmButton: "my-swal-confirm",
-                    },
-                });
-            } finally {
-                setIsLoading(false);
-            }
         });
+
+        if (!result.isConfirmed) return;
+
+        setIsLoading(true);
+        try {
+            const res = await cancelTransaction(reference);
+
+            if (res?.message?.toLowerCase().includes("dibatalkan")) {
+                setPaymentStatus("CANCELLED");
+                const failedData = {
+                    status: "FAILED",
+                    voucher: displayTransaction?.voucher || "Rp 0",
+                    amount_received: displayTransaction?.amount_received || 0,
+                    amount: displayTransaction?.amount || 0,
+                    payment_name: displayTransaction?.payment_name || "-",
+                    course: displayTransaction?.course || {},
+                };
+                localStorage.setItem(`failed_${reference}`, JSON.stringify(failedData));
+            }
+
+            await MySwal.fire({
+                title: "Berhasil!",
+                text: res.message || "Transaksi berhasil dibatalkan.",
+                icon: "success",
+                width: "420px",
+                confirmButtonText: "OK",
+                buttonsStyling: false,
+                customClass: {
+                    popup: "my-swal-popup",
+                    title: "my-swal-title",
+                    icon: "my-swal-icon",
+                    htmlContainer: "my-swal-text",
+                    confirmButton: "my-swal-confirm",
+                },
+            });
+        } catch (error) {
+            console.error("Gagal membatalkan transaksi:", error);
+            MySwal.fire({
+                title: "Gagal!",
+                text: "Terjadi kesalahan saat membatalkan transaksi.",
+                icon: "error",
+                width: "420px",
+                confirmButtonText: "OK",
+                buttonsStyling: false,
+                customClass: {
+                    popup: "my-swal-popup",
+                    title: "my-swal-title",
+                    icon: "my-swal-icon",
+                    htmlContainer: "my-swal-text",
+                    confirmButton: "my-swal-confirm",
+                },
+            });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleCopy = (text: string) => {
         navigator.clipboard.writeText(text);
     };
 
-    const handlePayment = () => {
-        if (transaction?.checkout_url) {
-            window.location.href = transaction.checkout_url;
-        } else {
-            console.error("Checkout URL tidak tersedia untuk transaksi ini.");
-        }
-    };
-
     const handleBack = () => {
         navigate('/dashboard/user/transaction');
     };
-
 
     if (isLoading) {
         return (
@@ -267,7 +298,9 @@ const TransactionDetailPage: React.FC = () => {
                         <h3 className="flex justify-between items-center text-[9px] md:text-lg font-semibold text-gray-600">
                             <p>{fullTransaction?.course?.title}</p>
                             <span className="text-purple-600 font-semibold text-xs md:text-md">
-                                <p>Rp {transaction?.amount_received.toLocaleString("id-ID")}</p>
+                                <p>
+                                    Rp {displayTransaction?.amount_received ? displayTransaction.amount_received.toLocaleString("id-ID") : "0"}
+                                </p>
                             </span>
                         </h3>
                     </div>
@@ -277,14 +310,16 @@ const TransactionDetailPage: React.FC = () => {
                             Voucher Diskon
                         </p>
                         <h3 className="text-xs md:text-sm font-medium text-purple-600">
-                            - Rp 0
+                            - {displayTransaction?.voucher || "Rp 0"}
                         </h3>
                     </div>
 
                     <div className="flex justify-between py-3 border-t border-b border-gray-200">
                         <p className="mt-1 text-[10px] md:text-sm text-gray-600">Total Pembayaran</p>
                         <h3 className="text-sm md:text-lg font-bold text-purple-600">
-                            <p>Rp {transaction?.amount.toLocaleString("id-ID")}</p>
+                            <p>
+                                Rp {displayTransaction?.amount ? Number(displayTransaction.amount).toLocaleString("id-ID") : "0"}
+                            </p>
                         </h3>
                     </div>
 
@@ -295,7 +330,7 @@ const TransactionDetailPage: React.FC = () => {
                                 {logo && (
                                     <img
                                         src={logo}
-                                        alt={transaction?.payment_name}
+                                        alt={displayTransaction?.payment_name}
                                         className="max-h-10 md:max-h-13 lg:max-h-16 xl:max-h-18 2xl:max-h-19 object-contain"
                                     />
                                 )}
@@ -303,7 +338,7 @@ const TransactionDetailPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {transaction?.pay_code && (
+                    {displayTransaction?.pay_code && (
                         <div className="mb-3">
                             <div className="flex justify-between items-center">
                                 <p className="text-left text-[10px] md:text-sm text-gray-600">
@@ -311,11 +346,11 @@ const TransactionDetailPage: React.FC = () => {
                                 </p>
                                 <div className="flex items-center gap-2">
                                     <p className="text-xs md:text-xl font-mono text-purple-600 font-bold">
-                                        {transaction?.pay_code}
+                                        {displayTransaction.pay_code}
                                     </p>
                                     <button
                                         onClick={() =>
-                                            transaction?.pay_code && handleCopy(transaction.pay_code)
+                                            (displayTransaction?.pay_code) && handleCopy(displayTransaction.pay_code)
                                         }
                                         className="p-0.5 md:p-2 rounded-md bg-gray-100 hover:bg-gray-200"
                                     >
@@ -351,21 +386,6 @@ const TransactionDetailPage: React.FC = () => {
                             </p>
                         </div>
                     </div>
-
-                    <button
-                        onClick={handlePayment}
-                        className="mt-18 md:mt-10 lg:mt-18 group bg-[#9425FE] text-white text-xs md:text-xs lg:text-xs xl:text-xs 2xl:text-md font-semibold py-3 px-21 md:py-3 lg:py-3 xl:py-4 2xl:py-4 md:px-4 lg:px-5 xl:px-6 2xl:px-7
-                        rounded-full flex items-center justify-center mx-auto md:mx-0 gap-2
-                        transition-all duration-500 ease-in-out
-                        shadow-[4px_4px_0_#0A0082] 
-                        hover:bg-yellow-400 hover:shadow-none
-                        active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
-                        focus:outline-none cursor-pointer"
-                    >
-                        <span className="transition-colors duration-500 group-hover:text-[#0A0082]">
-                            Lanjutkan Pembayaran
-                        </span>
-                    </button>
                 </div>
 
                 <div className="col-span-2 lg:col-span-1 space-y-6">
