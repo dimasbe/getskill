@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { BookOpen, ChevronDown, ChevronUp, Download } from "lucide-react";
 import {
   fetchModules,
@@ -22,7 +22,23 @@ import type {
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function CourseModulePage() {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  /** ================== DETEKSI ROUTE TYPE YANG STABIL ================== **/
+  const getRouteType = useCallback(() => {
+    const path = location.pathname;
+    
+    if (path.includes('/submodule/')) return 'SUBMODULE';
+    if (path.includes('/quiz/')) return 'QUIZ';
+    if (path.includes('/task/')) return 'TASK';
+    if (path.includes('/final-audit')) return 'FINAL_AUDIT';
+    if (path.includes('/module/') && params.moduleIndex) return 'MODULE_OVERVIEW';
+    return 'LEGACY'; // Route lama /module/:slug
+  }, [location.pathname, params.moduleIndex]);
+
+  const [routeType, setRouteType] = useState(getRouteType());
 
   /** ================== STATE ================== **/
   const [userQuizResults, setUserQuizResults] = useState<UserQuizResult[]>([]);
@@ -59,64 +75,55 @@ export default function CourseModulePage() {
   const [loadingPostTest, setLoadingPostTest] = useState(false);
   const [errorPostTest, setErrorPostTest] = useState<string | null>(null);
 
-  /** ================== EFFECT: Ambil semua modul ================== */
+  // PERBAIKAN: Handle undefined case untuk courseSlug
+  const courseSlug = 
+    params.courseSlug || 
+    (routeType === 'LEGACY' ? params.slug : null) || 
+    null;
+
+  /** ================== USE REF UNTUK BREAK CIRCULAR DEPENDENCIES ================== */
+  const modulesRef = useRef<ModuleType[]>([]);
+  const courseSlugRef = useRef<string | null>(null);
+  const hasFetchedModulesRef = useRef(false);
+
+  // Update refs ketika state berubah
   useEffect(() => {
-    if (!slug) return;
-    const loadModules = async () => {
-      try {
-        const data = await fetchModules(slug);
-        setModules(data);
-      } catch (err) {
-        console.error("❌ Gagal fetch modules:", err);
-      } finally {
-        setLoadingModules(false);
-      }
-    };
-    loadModules();
-  }, [slug]);
-  /** ================== NAVIGATION FUNCTIONS ================== */
-  const getCurrentIndices = (subSlug: string) => {
-    for (let i = 0; i < modules.length; i++) {
-      for (let j = 0; j < modules[i].sub_modules.length; j++) {
-        if (modules[i].sub_modules[j].slug === subSlug) {
-          return { moduleIndex: i, subModuleIndex: j };
-        }
-      }
-    }
-    return { moduleIndex: null, subModuleIndex: null };
-  };
+    modulesRef.current = modules;
+  }, [modules]);
 
-  const navigateToQuizOrTask = () => {
-    if (currentModuleIndex === null) return;
-    const currentModule = modules[currentModuleIndex];
+  useEffect(() => {
+    courseSlugRef.current = courseSlug;
+  }, [courseSlug]);
 
-    if (currentModule.quizzes.length > 0) {
-      loadQuiz(currentModule.quizzes[0].module_slug, currentModule.quizzes[0].id);
-    } else if (currentModule.module_tasks.length > 0) {
-      loadTask(currentModule.id, currentModule.module_tasks[0].id);
-    }
-  };
+  // ✅ Update routeType ketika location berubah
+  useEffect(() => {
+    setRouteType(getRouteType());
+  }, [getRouteType]);
 
-  const navigateToNextModule = () => {
-    if (currentModuleIndex === null || currentModuleIndex >= modules.length - 1) return;
+  /** ================== URL GENERATOR FUNCTIONS ================== */
+  const generateSubmoduleUrl = useCallback((submoduleSlug: string) => {
+    if (!courseSlug) return '#';
+    return `/course/${courseSlug}/submodule/${submoduleSlug}`;
+  }, [courseSlug]);
 
-    const nextModuleIndex = currentModuleIndex + 1;
-    const nextModule = modules[nextModuleIndex];
-    toggleModule(nextModuleIndex);
+  const generateQuizUrl = useCallback((quizSlug: string) => {
+    if (!courseSlug) return '#';
+    return `/course/${courseSlug}/quiz/${quizSlug}`;
+  }, [courseSlug]);
 
-    if (nextModule.sub_modules.length > 0) {
-      loadSubmodule(nextModule.sub_modules[0].slug);
-    } else if (nextModule.quizzes.length > 0) {
-      loadQuiz(nextModule.quizzes[0].module_slug, nextModule.quizzes[0].id);
-    } else if (nextModule.module_tasks.length > 0) {
-      loadTask(nextModule.id, nextModule.module_tasks[0].id);
-    }
-  };
+  const generateTaskUrl = useCallback((moduleId: string) => {
+    if (!courseSlug) return '#';
+    return `/course/${courseSlug}/task/${moduleId}`;
+  }, [courseSlug]);
 
-  /** ================== HANDLER ================== */
+  const generateFinalAuditUrl = useCallback(() => {
+    if (!courseSlug) return '#';
+    return `/course/${courseSlug}/final-audit`;
+  }, [courseSlug]);
 
-  /** ================== FUNGSI UNTUK AMBIL USER QUIZ RESULTS ================== */
-  const loadUserQuizResults = async (quizSlug: string) => {
+  /** ================== HANDLER FUNCTIONS (WRAPPED IN useCallback) ================== */
+
+  const loadUserQuizResults = useCallback(async (quizSlug: string) => {
     setLoadingUserQuizResults(true);
     setErrorUserQuizResults(null);
     try {
@@ -129,14 +136,16 @@ export default function CourseModulePage() {
     } finally {
       setLoadingUserQuizResults(false);
     }
-  };
-  const toggleModule = (idx: number) => {
+  }, []);
+
+  const toggleModule = useCallback((idx: number) => {
     setOpenModules((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
-  };
+  }, []);
 
-  const loadSubmodule = async (subSlug: string) => {
+  /** ================== PERBAIKI LOADSUBMODULE - HAPUS DEPENDENCY modules ================== */
+  const loadSubmodule = useCallback(async (subSlug: string) => {
     setLoadingContent(true);
     try {
       const data = await fetchSubModule(subSlug);
@@ -150,9 +159,23 @@ export default function CourseModulePage() {
         setParsedContent(null);
       }
 
-      const indices = getCurrentIndices(subSlug);
-      setCurrentModuleIndex(indices.moduleIndex);
-      setCurrentSubModuleIndex(indices.subModuleIndex);
+      // Gunakan modulesRef.current daripada modules state
+      let moduleIndex: number | null = null;
+      let subModuleIndex: number | null = null;
+      
+      for (let i = 0; i < modulesRef.current.length; i++) {
+        for (let j = 0; j < modulesRef.current[i].sub_modules.length; j++) {
+          if (modulesRef.current[i].sub_modules[j].slug === subSlug) {
+            moduleIndex = i;
+            subModuleIndex = j;
+            break;
+          }
+        }
+        if (moduleIndex !== null) break;
+      }
+
+      setCurrentModuleIndex(moduleIndex);
+      setCurrentSubModuleIndex(subModuleIndex);
 
       // Reset state lain
       setActiveTaskId(null);
@@ -165,14 +188,14 @@ export default function CourseModulePage() {
     } finally {
       setLoadingContent(false);
     }
-  };
+  }, []);
 
-  const loadQuiz = async (quizSlug: string, quizId?: string) => {
+  const loadQuiz = useCallback(async (quizSlug: string) => {
     setLoadingQuiz(true);
     try {
       const data = await fetchQuizDetail(quizSlug);
       setQuiz(data);
-      setActiveQuizId(quizId ?? null);
+      setActiveQuizId(data.id ?? null);
 
       // RESET USER QUIZ RESULTS SEBELUM LOAD YANG BARU
       setUserQuizResults([]);
@@ -192,14 +215,14 @@ export default function CourseModulePage() {
     } finally {
       setLoadingQuiz(false);
     }
-  };
+  }, [loadUserQuizResults]);
 
-  const loadTask = async (moduleId: string, taskId?: string) => {
+  const loadTask = useCallback(async (moduleId: string) => {
     setLoadingTask(true);
     try {
       const data = await fetchModuleTasks(moduleId);
       setTasks(data);
-      setActiveTaskId(taskId ?? moduleId);
+      setActiveTaskId(moduleId);
 
       setActiveQuizId(null);
       setActiveSub(null);
@@ -212,9 +235,13 @@ export default function CourseModulePage() {
     } finally {
       setLoadingTask(false);
     }
-  };
+  }, []);
 
-  const loadPostTest = async (courseTestId: string) => {
+  /** ================== PERBAIKI LOADPOSTTEST - HAPUS DEPENDENCY modules ================== */
+  const loadPostTest = useCallback(async () => {
+    const courseTestId = modulesRef.current[0]?.course?.course_test_id;
+    if (!courseTestId) return;
+
     setLoadingPostTest(true);
     try {
       const data = await fetchCoursePostTest(courseTestId);
@@ -225,14 +252,227 @@ export default function CourseModulePage() {
       setTasks([]);
       setActiveQuizId(null);
       setErrorPostTest(null);
-      setCurrentModuleIndex(-1); // -1 = post test
+      setCurrentModuleIndex(-1);
     } catch (err) {
       console.error("❌ Gagal fetch Final Audit:", err);
       setErrorPostTest("Gagal memuat Final Audit");
     } finally {
       setLoadingPostTest(false);
     }
-  };
+  }, []);
+
+  /** ================== PERBAIKI NAVIGATETOQUIZORTASK - HAPUS DEPENDENCIES ================== */
+  const navigateToQuizOrTask = useCallback(() => {
+    if (currentModuleIndex === null || !courseSlugRef.current) return;
+    
+    const currentModule = modulesRef.current[currentModuleIndex];
+
+    if (currentModule.quizzes.length > 0) {
+      navigate(`/course/${courseSlugRef.current}/quiz/${currentModule.quizzes[0].module_slug}`);
+    } else if (currentModule.module_tasks.length > 0) {
+      navigate(`/course/${courseSlugRef.current}/task/${currentModule.id}`);
+    }
+  }, [currentModuleIndex, navigate]);
+
+  /** ================== HELPER FUNCTIONS ================== **/
+  const findModuleIndexBySubmoduleSlug = useCallback((modulesData: ModuleType[], submoduleSlug: string): number => {
+    for (let i = 0; i < modulesData.length; i++) {
+      const found = modulesData[i].sub_modules.find(sub => sub.slug === submoduleSlug);
+      if (found) return i;
+    }
+    return -1;
+  }, []);
+
+  const findModuleIndexByQuizSlug = useCallback((modulesData: ModuleType[], quizSlug: string): number => {
+    for (let i = 0; i < modulesData.length; i++) {
+      const found = modulesData[i].quizzes.find(quiz => quiz.module_slug === quizSlug);
+      if (found) return i;
+    }
+    return -1;
+  }, []);
+
+  const findModuleIndexById = useCallback((modulesData: ModuleType[], moduleId: string): number => {
+    return modulesData.findIndex(module => module.id === moduleId);
+  }, []);
+
+  /** ================== HANDLEROUTEAUTONAVIGATION UNTUK INITIAL LOAD ================== */
+  const handleRouteAutoNavigation = useCallback((modulesData: ModuleType[]) => {
+    if (!modulesData.length) return;
+
+    let submoduleSlug: string | undefined;
+    let quizSlug: string | undefined;
+    let moduleId: string | undefined;
+    let moduleIndex: number;
+    let courseTestId: string | undefined;
+
+    switch (routeType) {
+      case 'SUBMODULE':
+        submoduleSlug = params.submoduleSlug;
+        if (submoduleSlug) {
+          loadSubmodule(submoduleSlug);
+          const foundModuleIndex = findModuleIndexBySubmoduleSlug(modulesData, submoduleSlug);
+          if (foundModuleIndex !== -1) {
+            toggleModule(foundModuleIndex);
+          }
+        }
+        break;
+        
+      case 'QUIZ':
+        quizSlug = params.quizSlug;
+        if (quizSlug) {
+          loadQuiz(quizSlug);
+          const foundModuleIndex = findModuleIndexByQuizSlug(modulesData, quizSlug);
+          if (foundModuleIndex !== -1) {
+            toggleModule(foundModuleIndex);
+          }
+        }
+        break;
+        
+      case 'TASK':
+        moduleId = params.moduleId;
+        if (moduleId) {
+          loadTask(moduleId);
+          const foundModuleIndex = findModuleIndexById(modulesData, moduleId);
+          if (foundModuleIndex !== -1) {
+            toggleModule(foundModuleIndex);
+          }
+        }
+        break;
+        
+      case 'FINAL_AUDIT':
+        courseTestId = modulesData[0]?.course?.course_test_id;
+        if (courseTestId) {
+          loadPostTest();
+          setOpenModules(prev => [...prev, -1]);
+        }
+        break;
+        
+      case 'MODULE_OVERVIEW':
+        moduleIndex = parseInt(params.moduleIndex || '0');
+        if (!isNaN(moduleIndex) && modulesData[moduleIndex]) {
+          toggleModule(moduleIndex);
+          if (modulesData[moduleIndex].sub_modules.length > 0) {
+            loadSubmodule(modulesData[moduleIndex].sub_modules[0].slug);
+          }
+        }
+        break;
+        
+      case 'LEGACY':
+        if (modulesData.length > 0) {
+          toggleModule(0);
+          if (modulesData[0].sub_modules.length > 0) {
+            loadSubmodule(modulesData[0].sub_modules[0].slug);
+          }
+        }
+        break;
+    }
+  }, [
+    routeType, 
+    params.submoduleSlug, 
+    params.quizSlug, 
+    params.moduleId, 
+    params.moduleIndex,
+    findModuleIndexBySubmoduleSlug,
+    findModuleIndexByQuizSlug,
+    findModuleIndexById,
+    loadSubmodule,
+    loadQuiz,
+    loadTask,
+    loadPostTest,
+    toggleModule
+  ]);
+
+  /** ================== EFFECT: AMBIL MODULES HANYA SEKALI ================== */
+  useEffect(() => {
+    if (!courseSlug || hasFetchedModulesRef.current) return;
+    
+    const loadModules = async () => {
+      try {
+        const data = await fetchModules(courseSlug);
+        setModules(data);
+        hasFetchedModulesRef.current = true;
+        
+        handleRouteAutoNavigation(data);
+      } catch (err) {
+        console.error("❌ Gagal fetch modules:", err);
+      } finally {
+        setLoadingModules(false);
+      }
+    };
+    
+    loadModules();
+  }, [courseSlug, handleRouteAutoNavigation]);
+
+  /** ================== EFFECT: HANDLE ROUTE CHANGES UNTUK NAVIGASI KONTEN ================== */
+  const handleRouteNavigation = useCallback(() => {
+    if (modules.length === 0) return;
+    
+    const path = location.pathname;
+    
+    if (path.includes('/submodule/')) {
+      const subSlug = params.submoduleSlug;
+      if (subSlug) {
+        loadSubmodule(subSlug);
+        const foundModuleIndex = findModuleIndexBySubmoduleSlug(modules, subSlug);
+        if (foundModuleIndex !== -1) {
+          toggleModule(foundModuleIndex);
+        }
+      }
+    } else if (path.includes('/quiz/')) {
+      const quizSlug = params.quizSlug;
+      if (quizSlug) {
+        loadQuiz(quizSlug);
+        const foundModuleIndex = findModuleIndexByQuizSlug(modules, quizSlug);
+        if (foundModuleIndex !== -1) {
+          toggleModule(foundModuleIndex);
+        }
+      }
+    } else if (path.includes('/task/')) {
+      const moduleId = params.moduleId;
+      if (moduleId) {
+        loadTask(moduleId);
+        const foundModuleIndex = findModuleIndexById(modules, moduleId);
+        if (foundModuleIndex !== -1) {
+          toggleModule(foundModuleIndex);
+        }
+      }
+    } else if (path.includes('/final-audit')) {
+      loadPostTest();
+      setOpenModules(prev => [...prev, -1]);
+    } else if (path.includes('/module/') && params.moduleIndex) {
+      const index = parseInt(params.moduleIndex || '0');
+      if (!isNaN(index) && modules[index]) {
+        toggleModule(index);
+        const firstSub = modules[index]?.sub_modules[0];
+        if (firstSub) loadSubmodule(firstSub.slug);
+      }
+    } else if (routeType === 'LEGACY' && modules.length > 0) {
+      toggleModule(0);
+      if (modules[0].sub_modules.length > 0) {
+        loadSubmodule(modules[0].sub_modules[0].slug);
+      }
+    }
+  }, [
+    location.pathname,
+    modules,
+    params.submoduleSlug,
+    params.quizSlug,
+    params.moduleId,
+    params.moduleIndex,
+    routeType,
+    findModuleIndexBySubmoduleSlug,
+    findModuleIndexByQuizSlug,
+    findModuleIndexById,
+    loadSubmodule,
+    loadQuiz,
+    loadTask,
+    loadPostTest,
+    toggleModule
+  ]);
+
+  useEffect(() => {
+    handleRouteNavigation();
+  }, [handleRouteNavigation]);
 
   return (
     <div className="flex">
@@ -244,13 +484,13 @@ export default function CourseModulePage() {
         postTest={postTest}
         loadingModules={loadingModules}
         toggleModule={toggleModule}
-        loadSubmodule={loadSubmodule}
-        loadTask={loadTask}
-        loadQuiz={loadQuiz}
-        loadPostTest={loadPostTest}
         activeQuizId={activeQuizId}
         activeTaskId={activeTaskId}
         setActiveTaskId={setActiveTaskId}
+        generateSubmoduleUrl={generateSubmoduleUrl}
+        generateQuizUrl={generateQuizUrl}
+        generateTaskUrl={generateTaskUrl}
+        generateFinalAuditUrl={generateFinalAuditUrl}
       />
 
       {/* Main Content */}
@@ -267,21 +507,21 @@ export default function CourseModulePage() {
         errorTask={errorTask}
         loadingPostTest={loadingPostTest}
         errorPostTest={errorPostTest}
-        // TAMBAHKAN PROPS BARU
         userQuizResults={userQuizResults}
         loadingUserQuizResults={loadingUserQuizResults}
         errorUserQuizResults={errorUserQuizResults}
-        loadSubmodule={loadSubmodule}
         navigateToQuizOrTask={navigateToQuizOrTask}
-        navigateToNextModule={navigateToNextModule}
         currentModuleIndex={currentModuleIndex}
         currentSubModuleIndex={currentSubModuleIndex}
         modules={modules}
+        generateSubmoduleUrl={generateSubmoduleUrl}
+        generateFinalAuditUrl={generateFinalAuditUrl}
       />
     </div>
   );
 }
-/** ================== SIDEBAR COMPONENT ================== */
+
+/** ================== UPDATED SIDEBAR COMPONENT ================== */
 type SidebarProps = {
   modules: ModuleType[];
   openModules: number[];
@@ -289,13 +529,13 @@ type SidebarProps = {
   postTest: CoursePostTest | null;
   loadingModules: boolean;
   toggleModule: (idx: number) => void;
-  loadSubmodule: (subSlug: string) => void;
-  loadPostTest: (courseTestId: string) => void;
-  loadQuiz: (quizSlug: string, quizId?: string) => void;
   activeQuizId: string | null;
-  loadTask: (moduleId: string, taskId?: string) => void;
   activeTaskId: string | null;
   setActiveTaskId: (id: string | null) => void;
+  generateSubmoduleUrl: (subSlug: string) => string;
+  generateQuizUrl: (quizSlug: string) => string;
+  generateTaskUrl: (moduleId: string) => string;
+  generateFinalAuditUrl: () => string;
 };
 
 function Sidebar({
@@ -307,13 +547,34 @@ function Sidebar({
   activeSub,
   loadingModules,
   toggleModule,
-  loadSubmodule,
-  loadTask,
-  loadQuiz,
-  loadPostTest,
+  generateSubmoduleUrl,
+  generateQuizUrl,
+  generateTaskUrl,
+  generateFinalAuditUrl,
 }: SidebarProps) {
-  // Cek apakah course memiliki Final Audit
+  const navigate = useNavigate();
+  
   const hasFinalAudit = modules.length > 0 && modules[0].course?.course_test_id;
+
+  const handleSubmoduleClick = (subSlug: string) => {
+    navigate(generateSubmoduleUrl(subSlug));
+  };
+
+  const handleQuizClick = (quizSlug: string) => {
+    navigate(generateQuizUrl(quizSlug));
+  };
+
+  const handleTaskClick = (moduleId: string) => {
+    navigate(generateTaskUrl(moduleId));
+  };
+
+  const handleFinalAuditClick = () => {
+    navigate(generateFinalAuditUrl());
+  };
+
+  const handleModuleClick = (idx: number) => {
+    toggleModule(idx);
+  };
 
   return (
     <aside className="w-80 bg-white h-screen sticky top-0 overflow-y-auto scrollbar-hide">
@@ -332,9 +593,8 @@ function Sidebar({
 
                 return (
                   <li key={mod.id}>
-                    {/* Header modul */}
                     <button
-                      onClick={() => toggleModule(idx)}
+                      onClick={() => handleModuleClick(idx)}
                       className={`flex justify-between items-center w-full px-5 py-3 text-sm font-sans transition-colors border-b border-gray-200
                         ${isOpen ? "text-purple-600" : "text-gray-800 hover:text-purple-600"}`}
                     >
@@ -346,7 +606,6 @@ function Sidebar({
                       )}
                     </button>
 
-                    {/* Isi modul */}
                     <AnimatePresence initial={false}>
                       {isOpen && (
                         <motion.div
@@ -357,14 +616,13 @@ function Sidebar({
                           className="overflow-hidden"
                         >
                           <ul className="bg-gray-50">
-                            {/* Submodules */}
                             {mod.sub_modules.map((sub) => {
                               const isActive = activeSub?.id === sub.id;
 
                               return (
                                 <li key={sub.id}>
                                   <button
-                                    onClick={() => loadSubmodule(sub.slug)}
+                                    onClick={() => handleSubmoduleClick(sub.slug)}
                                     className={`flex justify-between items-center w-full px-6 py-2 text-xs
                                       ${isActive
                                         ? "text-green-600 font-bold"
@@ -377,15 +635,14 @@ function Sidebar({
                               );
                             })}
 
-                            {/* Tugas */}
                             {mod.module_tasks.length > 0 && (
                               <li>
                                 <button
                                   onClick={() => {
-                                    loadTask(mod.id, mod.module_tasks[0].id);
-                                    setActiveTaskId(mod.module_tasks[0].id);
+                                    handleTaskClick(mod.id);
+                                    setActiveTaskId(mod.id);
                                   }}
-                                  className={`flex justify-between items-center w-full px-6 py-2 text-xs ${activeTaskId === mod.module_tasks[0].id
+                                  className={`flex justify-between items-center w-full px-6 py-2 text-xs ${activeTaskId === mod.id
                                     ? "font-bold text-green-600"
                                     : "text-gray-700 hover:bg-purple-50"
                                     }`}
@@ -396,15 +653,13 @@ function Sidebar({
                               </li>
                             )}
 
-
-                            {/* Quiz */}
                             {mod.quizzes.map((quiz) => {
                               const isActiveQuiz = activeQuizId === quiz.id;
 
                               return (
                                 <li key={quiz.id}>
                                   <button
-                                    onClick={() => loadQuiz(quiz.module_slug, quiz.id)}
+                                    onClick={() => handleQuizClick(quiz.module_slug)}
                                     className={`flex justify-between items-center w-full px-6 py-2 text-xs
           ${isActiveQuiz
                                         ? "text-green-600 font-bold"
@@ -416,7 +671,6 @@ function Sidebar({
                                 </li>
                               );
                             })}
-
                           </ul>
                         </motion.div>
                       )}
@@ -426,7 +680,6 @@ function Sidebar({
               })}
             </ul>
 
-            {/* Final Audit / Post Test */}
             {hasFinalAudit && (
               <li>
                 <button
@@ -454,7 +707,7 @@ function Sidebar({
                       <ul className="bg-gray-50">
                         <li>
                           <button
-                            onClick={() => loadPostTest(modules[0].course.course_test_id!)}
+                            onClick={handleFinalAuditClick}
                             className="flex justify-between items-center w-full px-6 py-2 text-xs text-gray-700 hover:bg-purple-50"
                           >
                             <span className="truncate">Tugas Akhir</span>
@@ -473,7 +726,7 @@ function Sidebar({
   );
 }
 
-/** ================== MAIN CONTENT COMPONENT ================== */
+/** ================== UPDATED MAIN CONTENT COMPONENT ================== */
 type MainContentProps = {
   activeSub: SubModuleDetailType | null;
   parsedContent: ContentType | null;
@@ -487,16 +740,15 @@ type MainContentProps = {
   errorTask: string | null;
   loadingPostTest: boolean;
   errorPostTest: string | null;
-  // TAMBAHKAN PROPS BARU
   userQuizResults: UserQuizResult[];
   loadingUserQuizResults: boolean;
   errorUserQuizResults: string | null;
-  loadSubmodule: (subSlug: string) => void;
   navigateToQuizOrTask: () => void;
-  navigateToNextModule: () => void;
   currentModuleIndex: number | null;
   currentSubModuleIndex: number | null;
   modules: ModuleType[];
+  generateSubmoduleUrl: (subSlug: string) => string;
+  generateFinalAuditUrl: () => string;
 };
 
 function MainContent({
@@ -512,19 +764,51 @@ function MainContent({
   errorTask,
   loadingPostTest,
   errorPostTest,
-  // TAMBAHKAN PARAMETER BARU
   userQuizResults,
   loadingUserQuizResults,
   errorUserQuizResults,
-  loadSubmodule,
   navigateToQuizOrTask,
-  navigateToNextModule,
   currentModuleIndex,
   currentSubModuleIndex,
   modules,
+  generateSubmoduleUrl,
+  generateFinalAuditUrl,
 }: MainContentProps) {
-  // ... kode yang lain tetap sama
   const navigate = useNavigate();
+
+  const handleNextSubmodule = () => {
+    if (activeSub?.next) {
+      navigate(generateSubmoduleUrl(activeSub.next));
+    }
+  };
+
+  const handlePrevSubmodule = () => {
+    if (activeSub?.prev) {
+      navigate(generateSubmoduleUrl(activeSub.prev));
+    }
+  };
+
+  const handleBackToLastSubmodule = () => {
+    if (currentModuleIndex !== null) {
+      const module = modules[currentModuleIndex];
+      if (module.sub_modules.length > 0) {
+        const lastSubmodule = module.sub_modules[module.sub_modules.length - 1];
+        navigate(generateSubmoduleUrl(lastSubmodule.slug));
+      }
+    }
+  };
+
+  const handleNavigateToNextModule = () => {
+    if (currentModuleIndex !== null && currentModuleIndex < modules.length - 1) {
+      // Navigasi ke submodule pertama dari modul berikutnya
+      const nextModule = modules[currentModuleIndex + 1];
+      if (nextModule.sub_modules.length > 0) {
+        navigate(generateSubmoduleUrl(nextModule.sub_modules[0].slug));
+      }
+    } else if (currentModuleIndex === modules.length - 1) {
+      navigate(generateFinalAuditUrl());
+    }
+  };
 
   if (loadingContent) {
     return (
@@ -536,11 +820,9 @@ function MainContent({
     );
   }
 
-  /** Konten Final Audit */
   if (postTest) {
     return (
       <main className="flex-1 overflow-y-auto bg-gray-100">
-        {/* Banner Judul Kursus */}
         <div className="bg-purple-600 text-white px-10 py-3">
           <h1 className="text-[15px] font-medium font-sans text-justify mt-2">
             Final Audit: {postTest.course.title}
@@ -577,11 +859,9 @@ function MainContent({
     );
   }
 
-  /** Konten Submodule */
   if (activeSub) {
     return (
       <main className="flex-1 overflow-y-auto bg-gray-100">
-        {/* Banner Judul Kursus */}
         <div className="bg-purple-600 text-white px-10 py-3">
           <h1 className="text-[15px] font-medium font-sans text-justify mt-2">{activeSub.course_title}</h1>
         </div>
@@ -593,7 +873,6 @@ function MainContent({
               {activeSub.sub_title}
             </p>
 
-            {/* Konten */}
             <div className="prose prose-sm max-w-none leading-relaxed text-left space-y-4">
               {parsedContent?.blocks?.map((block: ContentBlock) => {
                 if (block.type === "paragraph") {
@@ -648,11 +927,10 @@ function MainContent({
               })}
             </div>
 
-            {/* Navigasi */}
             <div className="flex justify-between mt-10">
               {activeSub.prev ? (
                 <button
-                  onClick={() => loadSubmodule(activeSub.prev!)}
+                  onClick={handlePrevSubmodule}
                   className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition-colors"
                 >
                   ← Sebelumnya
@@ -668,19 +946,28 @@ function MainContent({
                       onClick={navigateToQuizOrTask}
                       className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700 transition-colors"
                     >
-                      selanjutnya
+                      Selanjutnya
                     </button>
                   )}
 
                 {activeSub.next ? (
                   <button
-                    onClick={() => loadSubmodule(activeSub.next!)}
+                    onClick={handleNextSubmodule}
                     className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700 transition-colors"
                   >
                     Selanjutnya →
                   </button>
                 ) : (
-                  <span />
+                  currentModuleIndex !== null && 
+                  currentSubModuleIndex !== null &&
+                  modules[currentModuleIndex].sub_modules.length === currentSubModuleIndex + 1 && (
+                    <button
+                      onClick={handleNavigateToNextModule}
+                      className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+                    >
+                      Lanjut ke Modul Berikutnya →
+                    </button>
+                  )
                 )}
               </div>
             </div>
@@ -690,11 +977,9 @@ function MainContent({
     );
   }
 
-  /** Konten Quiz */
   if (quiz) {
     return (
       <main className="flex-1 overflow-y-auto bg-gray-100">
-        {/* Banner Judul Kursus */}
         <div className="bg-purple-600 text-white px-10 py-3">
           <h1 className="text-[15px] font-medium font-sans text-justify mt-2">
             Quiz: {quiz.module_title}
@@ -711,13 +996,11 @@ function MainContent({
               <p className="text-red-500">{errorQuiz}</p>
             ) : (
               <>
-                {/* Aturan */}
                 <div
                   className="text-sm text-gray-700 mb-6 prose prose-sm max-w-none text-left"
                   dangerouslySetInnerHTML={{ __html: quiz.rules }}
                 />
 
-                {/* Info tambahan */}
                 <ul className="text-sm text-gray-800 space-y-1 mb-6 text-left">
                   <li>Jumlah Soal: {quiz.total_question}</li>
                   <li>Syarat Nilai Kelulusan: {quiz.minimum_score}</li>
@@ -736,10 +1019,8 @@ function MainContent({
                   >
                     Mulai Quiz
                   </button>
-
                 </div>
 
-                {/* GANTI BAGIAN INI */}
                 {userQuizResults.length > 0 && (
                   <div className="mt-8">
                     <div className="overflow-x-auto rounded-lg shadow">
@@ -779,7 +1060,6 @@ function MainContent({
                                 >
                                   Lihat Detail
                                 </button>
-
                               </td>
                             </tr>
                           ))}
@@ -789,52 +1069,37 @@ function MainContent({
                   </div>
                 )}
 
-                {/* TAMBAHKAN LOADING STATE */}
                 {loadingUserQuizResults && (
                   <div className="mt-8 text-center">
                     <p>Memuat riwayat quiz...</p>
                   </div>
                 )}
 
-                {/* TAMBAHKAN ERROR STATE */}
                 {errorUserQuizResults && (
                   <div className="mt-8 text-center text-red-500">
                     <p>{errorUserQuizResults}</p>
                   </div>
                 )}
 
-                {/* TAMBAHKAN STATE JIKA TIDAK ADA DATA */}
                 {!loadingUserQuizResults && userQuizResults.length === 0 && !errorUserQuizResults && (
                   <div className="mt-8 text-center text-gray-500">
                     <p>Belum ada riwayat quiz</p>
                   </div>
                 )}
 
-                {/* Navigasi */}
                 <div className="flex justify-between mt-25">
                   <button
-                    onClick={() => {
-                      // Kembali ke submodul terakhir dari modul ini
-                      if (currentModuleIndex !== null) {
-                        const module = modules[currentModuleIndex];
-                        if (module.sub_modules.length > 0) {
-                          loadSubmodule(
-                            module.sub_modules[module.sub_modules.length - 1].slug
-                          );
-                        }
-                      }
-                    }}
+                    onClick={handleBackToLastSubmodule}
                     className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition-colors"
                   >
                     ← Kembali
                   </button>
 
-                  {/* Tombol untuk lanjut ke modul berikutnya */}
                   <button
-                    onClick={navigateToNextModule}
+                    onClick={handleNavigateToNextModule}
                     className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700 transition-colors"
                   >
-                    selanjutnya
+                    Lanjut ke Modul Berikutnya
                   </button>
                 </div>
               </>
@@ -845,11 +1110,9 @@ function MainContent({
     );
   }
 
-  /** Konten Tugas */
   if (tasks.length > 0) {
     return (
       <main className="flex-1 overflow-y-auto bg-gray-100">
-        {/* Header Ungu */}
         <div className="bg-purple-600 text-white px-10 py-3">
           <h1 className="text-[15px] font-medium font-sans text-justify mt-2">
             Tugas {tasks[0]?.module.title}
@@ -860,7 +1123,6 @@ function MainContent({
           <div className="max-w-full mx-auto bg-white p-8 rounded-lg shadow-sm">
             <h1 className="text-lg font-bold mb-4 text-left">Aturan</h1>
 
-            {/* Aturan Tugas */}
             <div className="mb-7">
               <ul className="list-decimal list-inside text-left text-sm text-gray-700 space-y-2">
                 <li>Dikerjakan secara individu</li>
@@ -907,7 +1169,6 @@ function MainContent({
                           </td>
                           <td className="border border-gray-800 px-4 py-2 text-center">
                             <div className="flex items-center justify-center gap-2">
-                              {/* Tombol Detail */}
                               <button
                                 className="px-4 py-1.5 rounded-xl font-medium font-sans text-white
     transition-all duration-200 ease-out
@@ -919,7 +1180,6 @@ function MainContent({
                                 Detail
                               </button>
 
-                              {/* Tombol Download */}
                               <button
                                 className="w-9 h-9 flex items-center justify-center rounded-xl text-white
       bg-purple-600 shadow-[2px_2px_0px_0px_#0B1367]
@@ -937,30 +1197,19 @@ function MainContent({
                   </table>
                 </div>
 
-
-                {/* Navigasi */}
                 <div className="flex justify-between mt-25">
                   <button
-                    onClick={() => {
-                      // Kembali ke submodul terakhir dari modul ini
-                      if (currentModuleIndex !== null) {
-                        const module = modules[currentModuleIndex];
-                        if (module.sub_modules.length > 0) {
-                          loadSubmodule(module.sub_modules[module.sub_modules.length - 1].slug);
-                        }
-                      }
-                    }}
+                    onClick={handleBackToLastSubmodule}
                     className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition-colors"
                   >
                     ← Kembali
                   </button>
 
-                  {/* Tombol untuk lanjut ke modul berikutnya */}
                   <button
-                    onClick={navigateToNextModule}
+                    onClick={handleNavigateToNextModule}
                     className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700 transition-colors"
                   >
-                    selanjutnya
+                    Lanjut ke Modul Berikutnya
                   </button>
                 </div>
               </>
@@ -971,16 +1220,13 @@ function MainContent({
     );
   }
 
-  /** Default */
   return (
     <main className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="flex flex-col items-center justify-center h-full text-center px-4">
-        {/* Icon semangat */}
         <div className="flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-purple-100 shadow-md">
           <BookOpen className="w-12 h-12 text-purple-600" />
         </div>
 
-        {/* Teks motivasi */}
         <h2 className="text-2xl font-bold text-purple-700 mb-2">
           Semangat Belajar! 🚀
         </h2>
@@ -991,5 +1237,4 @@ function MainContent({
       </div>
     </main>
   );
-
 }
