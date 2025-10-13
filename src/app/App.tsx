@@ -107,7 +107,12 @@ function RouteChangeLoader() {
         <Route path="/course/pre-tes/exam/results/:id" element={<TesResults />} />
 
         {/* contoh slug course */}
-        <Route path="/course/module/:slug" element={<CourseModulePage />} />
+        <Route path="/module/:slug" element={<CourseModulePage />} />
+        <Route path="/course/:courseSlug/module/:moduleIndex" element={<CourseModulePage />} />
+        <Route path="/course/:courseSlug/submodule/:submoduleSlug" element={<CourseModulePage />} />
+        <Route path="/course/:courseSlug/quiz/:quizSlug" element={<CourseModulePage />} />
+        <Route path="/course/:courseSlug/task/:moduleId" element={<CourseModulePage />} />
+        <Route path="/course/:courseSlug/final-audit" element={<CourseModulePage />} />
         <Route path="/module/discussion/:slug" element={<DiscussionPage />} />
         <Route path="/module/discussion/forum/:slug" element={<ForumDiscussionPage />} />
         <Route path="/tasks/:id" element={<TaskDetailPage />} />

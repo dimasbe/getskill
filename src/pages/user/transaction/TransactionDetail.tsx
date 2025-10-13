@@ -10,6 +10,8 @@ import { getTransactionDetail } from "../../../features/transactionDetail/servic
 import type { TransactionFullDetail } from "../../../features/transactionDetail/transactionFullDetail";
 import { getTransactionFullDetail } from "../../../features/transactionDetail/services/transactionFullDetailService";
 import { cancelTransaction } from "../../../features/transactionDetail/services/transactionDetailService";
+import { getPaymentChannels } from "../../../features/Payment/_service/payment-channel_service";
+import type { PaymentChannel } from "../../../features/Payment/payment-channel";
 
 //Status Payment
 import unpaidImg from "../../../assets/img/payment-status/unpaid.png";
@@ -18,31 +20,7 @@ import expiredImg from "../../../assets/img/payment-status/expired.png";
 import canceledImg from "../../../assets/img/payment-status/canceled.png";
 import failedImg from "../../../assets/img/payment-status/failed.png";
 
-//Payment Logo
-import BniVaLogo from "../../../../public/images/payments/bni.png";
-import BrivaLogo from "../../../../public/images/payments/bri.png";
-import MandiriLogo from "../../../../public/images/payments/mandiri.png";
-import BcaLogo from "../../../../public/images/payments/bca.png";
-import QrisLogo from "../../../../public/images/payments/qris.jpg";
-import DanaLogo from "../../../../public/images/payments/dana.jpg";
-import ShopeePayLogo from "../../../../public/images/payments/shopeepay.jpg";
-import IndomaretLogo from "../../../../public/images/payments/indomaret.jpg";
-import AlfamaretLogo from "../../../../public/images/payments/alfamart.jpg";
-
 const MySwal = withReactContent(Swal);
-
-const getPaymentLogo = (name: string) => {
-    if (name.includes("BNI")) return BniVaLogo;
-    if (name.includes("BRI")) return BrivaLogo;
-    if (name.includes("Mandiri")) return MandiriLogo;
-    if (name.includes("BCA")) return BcaLogo;
-    if (name.includes("QRIS")) return QrisLogo;
-    if (name.includes("DANA")) return DanaLogo;
-    if (name.includes("ShopeePay")) return ShopeePayLogo;
-    if (name.includes("Indomaret")) return IndomaretLogo;
-    if (name.includes("Alfamart")) return AlfamaretLogo;
-    return undefined;
-};
 
 const statusConfig: Record<
     "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | "FAILED",
@@ -88,6 +66,7 @@ const getFailedTransaction = (ref: string) => {
 const TransactionDetailPage: React.FC = () => {
     const { reference } = useParams<{ reference: string }>();
     const navigate = useNavigate();
+    const [paymentChannels, setPaymentChannels] = useState<PaymentChannel[]>([]);
     const [copiedText, setCopiedText] = useState<string | null>(null);
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
     const [fullTransaction, setFullTransaction] = useState<TransactionFullDetail | null>(null);
@@ -98,10 +77,19 @@ const TransactionDetailPage: React.FC = () => {
     useEffect(() => {
         if (reference) {
             setIsLoading(true);
-            Promise.all([getTransactionDetail(reference), getTransactionFullDetail(reference)])
-                .then(([statusRes, fullRes]) => {
+            Promise.all([
+                getTransactionDetail(reference),
+                getTransactionFullDetail(reference),
+                getPaymentChannels(),
+            ])
+                .then(([statusRes, fullRes, channelRes]) => {
                     setTransaction(statusRes);
                     setFullTransaction(fullRes);
+                    setPaymentChannels([
+                        ...channelRes.data.virtual_account,
+                        ...channelRes.data.convenience_store,
+                        ...channelRes.data.e_wallet,
+                    ]);
 
                     const failed = getFailedTransaction(reference);
                     if (failed?.status === "FAILED") {
@@ -120,7 +108,13 @@ const TransactionDetailPage: React.FC = () => {
             ? getFailedTransaction(reference) || transaction
             : transaction;
 
-    const logo = displayTransaction?.payment_name ? getPaymentLogo(displayTransaction.payment_name) : undefined;
+    const matchedChannel = paymentChannels.find(
+        (ch) =>
+            ch.name.toLowerCase() === displayTransaction?.payment_name?.toLowerCase() ||
+            ch.code.toLowerCase() === displayTransaction?.payment_name?.toLowerCase()
+    );
+
+    const logo = matchedChannel?.icon_url;
 
     const handleCheckStatus = async () => {
         if (!reference) return;
@@ -296,9 +290,9 @@ const TransactionDetailPage: React.FC = () => {
                         <div className="flex justify-between items-center mb-2">
                             <p className="text-[10px] md:text-sm text-gray-600">Produk yang dibeli</p>
                         </div>
-                        <h3 className="flex justify-between items-center text-[9px] md:text-lg font-semibold text-gray-600">
+                        <h3 className="flex justify-between items-center text-[12px] md:text-lg font-semibold text-gray-600">
                             <p>{fullTransaction?.course?.title}</p>
-                            <span className="text-purple-600 font-semibold text-xs md:text-md">
+                            <span className="text-purple-600 font-semibold text-[10px] md:text-[15px] lg:text-md">
                                 <p>
                                     Rp {displayTransaction?.amount_received ? displayTransaction.amount_received.toLocaleString("id-ID") : "0"}
                                 </p>
@@ -316,8 +310,8 @@ const TransactionDetailPage: React.FC = () => {
                     </div>
 
                     <div className="flex justify-between py-3 border-t border-b border-gray-200">
-                        <p className="mt-1 text-[10px] md:text-sm text-gray-600">Total Pembayaran</p>
-                        <h3 className="text-sm md:text-lg font-bold text-purple-600">
+                        <p className="mt-0 md:mt-1 text-[10px] md:text-sm text-gray-600">Total Pembayaran</p>
+                        <h3 className="text-[10px] md:text-lg lg:text-md xl:text-lg 2xl:text-lg font-bold text-purple-600">
                             <p>
                                 Rp {displayTransaction?.amount ? Number(displayTransaction.amount).toLocaleString("id-ID") : "0"}
                             </p>
@@ -326,13 +320,13 @@ const TransactionDetailPage: React.FC = () => {
 
                     <div className="mb-4 border-b">
                         <div className="flex justify-between items-center">
-                            <p className="text-left text-[10px] md:text-sm text-gray-600 mb-2">Metode Pembayaran</p>
-                            <div className="flex items-center mb-2">
+                            <p className="mt-2 lg:mt-1 text-left text-[10px] md:text-sm text-gray-600 mb-2">Metode Pembayaran</p>
+                            <div className="flex items-center mt-2 mb-2">
                                 {logo && (
                                     <img
                                         src={logo}
                                         alt={displayTransaction?.payment_name}
-                                        className="max-h-10 md:max-h-13 lg:max-h-16 xl:max-h-18 2xl:max-h-19 object-contain"
+                                        className="max-h-4 md:max-h-6 lg:max-h-7 xl:max-h-8 2xl:max-h-10 object-contain"
                                     />
                                 )}
                             </div>
