@@ -476,21 +476,23 @@ const TransactionDetailPage: React.FC = () => {
                                     </div>
                                 )
                             )}
-                            <button
-                                onClick={handleCheckStatus}
-                                className="mt-2 group bg-white text-[#9425FE] text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
+                            {paymentStatus !== "FAILED" && (
+                                <button
+                                    onClick={handleCheckStatus}
+                                    className="mt-2 group bg-white text-[#9425FE] text-xs md:text-xs lg:text-xs xl:text-sm 2xl:text-md 
                                                 font-semibold py-3 md:py-3 lg:py-3 xl:py-3 2xl:py-4 w-[310px] md:w-[160px] lg:w-[280px] xl:w-[310px] 2xl:w-[390px]
                                                 rounded-md flex items-center justify-center mx-auto md:mx-0 gap-2
                                                 transition-all duration-500 ease-in-out
                                                 border border-[#9425FE] hover:text-yellow-400 
                                                 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
                                                 focus:outline-none cursor-pointer"
-                            >
-                                <span className="flex items-center gap-2 transition-colors duration-500 group-hover:text-yellow-400">
-                                    <FiRefreshCw />
-                                    Cek Status
-                                </span>
-                            </button>
+                                >
+                                    <span className="flex items-center gap-2 transition-colors duration-500 group-hover:text-yellow-400">
+                                        <FiRefreshCw />
+                                        Cek Status
+                                    </span>
+                                </button>
+                            )}
                             {paymentStatus === "UNPAID" && (
                                 <button
                                     onClick={handleCancelPayment}
@@ -509,41 +511,42 @@ const TransactionDetailPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
-                        <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
-                            Instruksi Pembayaran
-                        </h2>
-
-                        <div className="flex flex-col gap-2">
-                            {transaction?.instructions?.map((instruksi, idx) => (
-                                <div key={idx}>
-                                    <button
-                                        onClick={() =>
-                                            setOpenSection(openSection === instruksi.title ? null : instruksi.title)
-                                        }
-                                        className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-xs md:text-sm transition ${openSection === instruksi.title
-                                            ? "bg-blue-50 text-[#9425FE]"
-                                            : "bg-white hover:bg-gray-50 hover:text-yellow-500"
-                                            }`}
-                                    >
-                                        <span>{instruksi.title}</span>
-                                        <ChevronDownIcon
-                                            className={`w-3 h-3 md:w-5 md:h-5 transition-transform duration-300 stroke-[1.5] ${openSection === instruksi.title ? "rotate-180" : "rotate-0"
+                    {paymentStatus !== "FAILED" && (
+                        <div className="bg-white rounded-md shadow-md p-3 border border-gray-300">
+                            <h2 className="text-left text-sm md:text-md font-semibold text-gray-800 mb-4">
+                                Instruksi Pembayaran
+                            </h2>
+                            <div className="flex flex-col gap-2">
+                                {transaction?.instructions?.map((instruksi, idx) => (
+                                    <div key={idx}>
+                                        <button
+                                            onClick={() =>
+                                                setOpenSection(openSection === instruksi.title ? null : instruksi.title)
+                                            }
+                                            className={`w-full flex justify-between items-center px-3 py-2 text-left font-medium text-xs md:text-sm transition ${openSection === instruksi.title
+                                                ? "bg-blue-50 text-[#9425FE]"
+                                                : "bg-white hover:bg-gray-50 hover:text-yellow-500"
                                                 }`}
-                                        />
-                                    </button>
+                                        >
+                                            <span>{instruksi.title}</span>
+                                            <ChevronDownIcon
+                                                className={`w-3 h-3 md:w-5 md:h-5 transition-transform duration-300 stroke-[1.5] ${openSection === instruksi.title ? "rotate-180" : "rotate-0"
+                                                    }`}
+                                            />
+                                        </button>
 
-                                    {openSection === instruksi.title && (
-                                        <div className="px-3 pb-3 text-[13px] text-black space-y-1 text-left">
-                                            {instruksi.steps.map((step: string, i: number) => (
-                                                <p key={i} dangerouslySetInnerHTML={{ __html: `${i + 1}. ${step}` }} />
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                        {openSection === instruksi.title && (
+                                            <div className="px-3 pb-3 text-[13px] text-black space-y-1 text-left">
+                                                {instruksi.steps.map((step: string, i: number) => (
+                                                    <p key={i} dangerouslySetInnerHTML={{ __html: `${i + 1}. ${step}` }} />
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <div className="flex justify-center">
                         <button
