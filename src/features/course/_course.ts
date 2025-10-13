@@ -1,6 +1,7 @@
 // =============================
 // COURSE UTAMA
 // =============================
+
 export interface Course {
   id: string;
   title: string;
@@ -16,6 +17,7 @@ export interface Course {
 
   rating: string;
   modules_count: number;
+  course_reviews: [];
   course_review_count: number;
   user_courses_count: number;
 
@@ -42,57 +44,8 @@ export interface CourseReview {
   created_at: string;
   updated_at: string;
 
-  // Relasi ke Course
-  course: {
-    id: string;
-    sub_category_id: number;
-    user_id: string;
-    title: string;
-    sub_title: string;
-    slug: string;
-    description: string;
-    photo: string;
-
-    is_premium: number;
-    is_ready: number;
-    price: number;
-    promotional_price: number;
-
-    created_at: string;
-    updated_at: string;
-
-    sub_category: {
-      id: number;
-      category_id: number;
-      name: string;
-      created_at: string;
-      updated_at: string;
-
-      category: {
-        id: number;
-        name: string;
-        created_at: string;
-        updated_at: string;
-      };
-    };
-  };
-
-  // Relasi ke User
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    email_verified_at: string | null;
-    point: number;
-    phone_number: string;
-    gender: string;
-    address: string;
-    photo: string;
-    banner: string;
-
-    created_at: string;
-    updated_at: string;
-  };
+  course: Course;
+  user: User;
 }
 
 // =============================
@@ -147,7 +100,7 @@ export interface DetailCourse {
   user_courses_count: number;
 
   // Status user
-  user_course: string | null;
+  user_course: User_Course | null;
   completed: string | null;
   course_test_id: string;
   is_admin: boolean;
@@ -156,6 +109,21 @@ export interface DetailCourse {
   sub_category: string | SubCategory;
 
   created: string;
+}
+
+
+export interface User_Course {
+  id: string;
+  course_id: string;
+  user_id: string;
+  sub_module_id: string | null;
+  has_pre_test: number;
+  has_post_test: number;
+  has_downloaded: number;
+  created_at: string;
+  updated_at: string;
+  sub_module: SubModule | null;
+  course: Course;
 }
 
 // =============================
@@ -255,28 +223,6 @@ export interface CourseTest {
   courseTestQuestions: CourseTestQuestion[];
 }
 
-export interface Course {
-  id: string;
-  user: User;
-  sub_category: string | SubCategory;
-  course_test_id: TestResult | null;
-  category: string;
-  title: string;
-  sub_title: string;
-  description: string;
-  slug: string;
-  is_premium: number;
-  price: number;
-  promotional_price: number | null;
-  photo: string;
-  modules_count: number;
-  rating: string;
-  course_reviews: [];
-  course_review_count: number;
-  user_courses_count: number;
-  created: string;
-  is_ready: number;
-}
 
 export interface CourseTestQuestion {
   id: number;
@@ -294,7 +240,7 @@ export interface User {
   email: string;
   points: number;
   phone_number: string;
-  user_courses: [];
+  user_courses: User_Course[];
   total_courses: number;
   total_reviews: number;
   course_reviews: [];
