@@ -88,13 +88,11 @@ const getFailedTransaction = (ref: string) => {
 const TransactionDetailPage: React.FC = () => {
     const { reference } = useParams<{ reference: string }>();
     const navigate = useNavigate();
-
+    const [copiedText, setCopiedText] = useState<string | null>(null);
     const [transaction, setTransaction] = useState<TransactionDetail | null>(null);
     const [fullTransaction, setFullTransaction] = useState<TransactionFullDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [paymentStatus, setPaymentStatus] = useState<
-        "UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | "FAILED" | null
-    >(null);
+    const [paymentStatus, setPaymentStatus] = useState<"UNPAID" | "PAID" | "EXPIRED" | "CANCELLED" | "FAILED" | null>(null);
     const [openSection, setOpenSection] = useState<string | null>(null);
 
     useEffect(() => {
@@ -228,7 +226,10 @@ const TransactionDetailPage: React.FC = () => {
     };
 
     const handleCopy = (text: string) => {
-        navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text).then(() => {
+            setCopiedText(text);
+            setTimeout(() => setCopiedText(null), 1200);
+        });
     };
 
     const handleBack = () => {
@@ -344,7 +345,7 @@ const TransactionDetailPage: React.FC = () => {
                                 <p className="text-left text-[10px] md:text-sm text-gray-600">
                                     Kode Pembayaran (1 × 24 Jam)
                                 </p>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 relative">
                                     <p className="text-xs md:text-xl font-mono text-purple-600 font-bold">
                                         {displayTransaction.pay_code}
                                     </p>
@@ -356,6 +357,13 @@ const TransactionDetailPage: React.FC = () => {
                                     >
                                         <FiCopy />
                                     </button>
+                                    {copiedText === displayTransaction?.pay_code && (
+                                        <span
+                                            className="absolute top-[-25px] right-0 bg-gray-100 text-black text-[10px] md:text-xs px-2 py-1 rounded-md"
+                                        >
+                                            Berhasil disalin!
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </div>
