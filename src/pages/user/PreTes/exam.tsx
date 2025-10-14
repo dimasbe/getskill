@@ -18,8 +18,6 @@ const Exam = () => {
     const [timeLeft, setTimeLeft] = useState(0);
     const [isTimerStarted, setIsTimerStarted] = useState(false);
     const [showIncomplete, setShowIncomplete] = useState(false);
-    //tambah
-
 
     // Ambil dari localStorage (persist data)
     useEffect(() => {
@@ -34,7 +32,7 @@ const Exam = () => {
                 localStorage.removeItem("pretest_answers");
             }
         }
-        
+
         if (savedTime) {
             setTimeLeft(parseInt(savedTime, 10));
             setIsTimerStarted(true);
@@ -175,9 +173,9 @@ const Exam = () => {
         setAnswers((prev) => {
             const updated = {
                 ...prev,
-                [String(pageNumber)]: value, // pakai string key
+                [String(pageNumber)]: value,
             };
-            localStorage.setItem("pretest_answers", JSON.stringify(updated)); // langsung simpan di sini
+            localStorage.setItem("pretest_answers", JSON.stringify(updated));
             return updated;
         });
     };
@@ -212,7 +210,7 @@ const Exam = () => {
 
         const allAnswered = orderedAnswers.every((a) => a !== "null");
         if (!allAnswered) {
-            // ✅ Pastikan modal konfirmasi tertutup sebelum munculkan modal incomplete
+
             setShowConfirm(false);
             setTimeout(() => setShowIncomplete(true), 200);
             return;
@@ -224,6 +222,9 @@ const Exam = () => {
                 localStorage.removeItem("pretest_answers");
                 localStorage.removeItem("pretest_timeLeft");
                 const testResult = await fetchPreTestResult(pretest.user_quiz.id);
+                console.log("Submit dengan ID:", pretest.user_quiz.id);
+
+
                 navigate(`/course/pre-tes/exam/results/${pretest.user_quiz.id}`, {
                     state: { testResult },
                 });
@@ -255,9 +256,9 @@ const Exam = () => {
                 </div>
 
                 {/* Card Exam */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-20">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 pb-20">
                     {/* Kolom kiri (Soal Ujian) */}
-                    <div className="md:col-span-3 bg-white rounded-lg shadow p-8 flex flex-col justify-between h-full">
+                    <div className="lg:col-span-3 bg-white rounded-lg shadow p-8 flex flex-col justify-between h-full">
                         <div className="flex items-start gap-2 mb-4">
                             <span className="text-gray-800 font-semibold">{currentPage}.</span>
                             <div
@@ -327,7 +328,7 @@ const Exam = () => {
                             <h3 className="text-lg text-start font-semibold text-gray-800 mb-3">Soal Ujian</h3>
 
                             {/* Nomor soal */}
-                            <div className="grid grid-cols-4 gap-2 mb-6">
+                            <div className="grid grid-cols-7 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-10 2xl:gap-2 xl:gap-2 lg:gap-3 mb-6">
                                 {Array.from({ length: totalQuestions }).map((_, i) => {
                                     const pageNumber = i + 1;
                                     const isActive = currentPage === pageNumber;
@@ -341,7 +342,7 @@ const Exam = () => {
                                                         ${isActive
                                                     ? "bg-purple-700 text-white border-purple-700"
                                                     : isAnswered
-                                                        ? "bg-green-500 text-white border-green-500"
+                                                        ? "bg-purple-300 text-white border-purple-700"
                                                         : "text-purple-700 border-purple-700 hover:text-white hover:bg-purple-700"
                                                 }`}
                                         >

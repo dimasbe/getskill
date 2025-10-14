@@ -1,5 +1,5 @@
 import api from "../../../services/api";
-import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse, DataWrapper, TestResult } from "../_course";
+import type { Course, Category, SubCategory, DetailCourse, TopCourse, TopRatingCourse, DataWrapper, TestResult, CourseActivity  } from "../_course";
 
 // =============================
 // COURSE
@@ -123,11 +123,20 @@ export async function submitPreTest(user_course_test_id: string | number, answer
   }
 }
 
-
 // Hasil PreTesty
 export async function fetchPreTestResult(id: string): Promise<TestResult | null> {
   try {
     const response = await api.get(`/api/course-test-statistic/${id}`);
+    return response.data?.data || null;
+  } catch (error) {
+    console.error("Gagal mengambil data pretest id:", error);
+    return null;
+  }
+}
+
+export async function fetchNavigate(slug: string): Promise<CourseActivity | null> {
+  try {
+    const response = await api.post(`/api/student/lesson-start/${slug}`);
     return response.data?.data || null;
   } catch (error) {
     console.error("Gagal mengambil data pretest id:", error);
