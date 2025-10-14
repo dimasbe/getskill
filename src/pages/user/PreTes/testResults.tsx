@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Check, X } from "lucide-react";
-import { fetchPreTestResult } from "../../../features/course/_service/course_service";
+import { fetchPreTestResult, fetchNavigate } from "../../../features/course/_service/course_service";
 import type { TestResult } from "../../../features/course/_course";
 
 const TesResults = () => {
     const navigate = useNavigate();
-    const { id} = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>();
 
     const [result, setResult] = useState<TestResult | null>(null);
     const [loading, setLoading] = useState(true);
@@ -61,13 +61,26 @@ const TesResults = () => {
         );
     }
 
-    const handlePageModule = () => {
-        if (!result?.course?.slug) {
-            alert("Slug modul tidak ditemukan!");
-            return;
+    const handlePageModule = async () => {
+        if (!result?.course_slug) return;
+
+        try {
+            setLoading(true);
+            const data = await fetchNavigate(result.course_slug);
+
+            if (!data?.sub_module?.slug) {
+                setError("Modul belum tersedia atau belum siap.");
+                return;
+            }
+            navigate(`/module/${data.sub_module.slug}`);
+        } catch (err) {
+            console.error("Gagal memulai modul:", err);
+            setError("Gagal memulai modul.");
+        } finally {
+            setLoading(false);
         }
-        navigate(`/course/module/${result.course.slug}`);
     };
+
 
     return (
         <div className="min-h-screen bg-gray-100 mb-15">

@@ -59,6 +59,13 @@ export interface Quiz {
 export interface SubModule {
   id: string;
   title: string;
+  content: string;
+  step: number;
+  module_id: string;
+  slug: string;
+  sub_title: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Module {
@@ -247,7 +254,7 @@ export interface User {
   total_certificate: number;
   total_course_certificate: number;
   total_all_certificates: number;
-  course_activities: [];
+  course_activities: CourseActivity[];
   event_activities: EventActivity[];
   address: string;
   banner: string | null;
@@ -255,6 +262,30 @@ export interface User {
   created: string;
   is_not_guest: boolean;
   role: string;
+}
+
+export interface CourseActivity {
+  user: User;
+  course: Course;
+  total_module: number;
+  total_user: number;
+  study_time: string;
+  study_percentage: number;
+  sub_module: SubModule;
+  has_post_test: number;
+  has_pre_test: number;
+  sub_module_slug: string;
+  unsubmitted_tasks: number;
+  graded_tasks: number;
+  ungraded_tasks: number;
+  total_sub_module: number;
+  completed_sub_modules: number;
+  sub_module_step: number;
+  max_sub_module_step: number;
+  total_quiz: number;
+  completed_quizzes: number;
+  _debug_has_post_test_raw: number;
+  _debug_has_post_test_type: string;
 }
 
 export interface EventActivity {
