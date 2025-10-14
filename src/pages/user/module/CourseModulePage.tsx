@@ -46,7 +46,16 @@ export default function CourseModulePage() {
   const [errorUserQuizResults, setErrorUserQuizResults] = useState<string | null>(null);
 
   const [modules, setModules] = useState<ModuleType[]>([]);
-  const [openModules, setOpenModules] = useState<number[]>([]);
+  
+  // ✅ PERBAIKAN: Gunakan localStorage untuk persist openModules
+  const [openModules, setOpenModules] = useState<number[]>(() => {
+    // Ambil dari localStorage saat initial render
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('course-open-modules');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
 
   const [activeSub, setActiveSub] = useState<SubModuleDetailType | null>(null);
   const [parsedContent, setParsedContent] = useState<ContentType | null>(null);
@@ -95,6 +104,13 @@ export default function CourseModulePage() {
     courseSlugRef.current = courseSlug;
   }, [courseSlug]);
 
+  // ✅ PERBAIKAN: Simpan openModules ke localStorage setiap kali berubah
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('course-open-modules', JSON.stringify(openModules));
+    }
+  }, [openModules]);
+
   // ✅ Update routeType ketika location berubah
   useEffect(() => {
     setRouteType(getRouteType());
@@ -138,10 +154,39 @@ export default function CourseModulePage() {
     }
   }, []);
 
+  // ✅ PERBAIKAN: toggleModule dengan auto-open module yang aktif
   const toggleModule = useCallback((idx: number) => {
     setOpenModules((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
+  }, []);
+
+  // ✅ FUNGSI BARU: Untuk membuka module secara otomatis tanpa toggle
+  const openModule = useCallback((idx: number) => {
+    setOpenModules((prev) =>
+      prev.includes(idx) ? prev : [...prev, idx]
+    );
+  }, []);
+
+  /** ================== HELPER FUNCTIONS ================== **/
+  const findModuleIndexBySubmoduleSlug = useCallback((modulesData: ModuleType[], submoduleSlug: string): number => {
+    for (let i = 0; i < modulesData.length; i++) {
+      const found = modulesData[i].sub_modules.find(sub => sub.slug === submoduleSlug);
+      if (found) return i;
+    }
+    return -1;
+  }, []);
+
+  const findModuleIndexByQuizSlug = useCallback((modulesData: ModuleType[], quizSlug: string): number => {
+    for (let i = 0; i < modulesData.length; i++) {
+      const found = modulesData[i].quizzes.find(quiz => quiz.module_slug === quizSlug);
+      if (found) return i;
+    }
+    return -1;
+  }, []);
+
+  const findModuleIndexById = useCallback((modulesData: ModuleType[], moduleId: string): number => {
+    return modulesData.findIndex(module => module.id === moduleId);
   }, []);
 
   /** ================== PERBAIKI LOADSUBMODULE - HAPUS DEPENDENCY modules ================== */
@@ -177,6 +222,11 @@ export default function CourseModulePage() {
       setCurrentModuleIndex(moduleIndex);
       setCurrentSubModuleIndex(subModuleIndex);
 
+      // ✅ PERBAIKAN: Auto-open parent module ketika submodule aktif
+      if (moduleIndex !== null) {
+        openModule(moduleIndex);
+      }
+
       // Reset state lain
       setActiveTaskId(null);
       setActiveQuizId(null);
@@ -188,7 +238,7 @@ export default function CourseModulePage() {
     } finally {
       setLoadingContent(false);
     }
-  }, []);
+  }, [openModule]);
 
   const loadQuiz = useCallback(async (quizSlug: string) => {
     setLoadingQuiz(true);
@@ -209,13 +259,19 @@ export default function CourseModulePage() {
       setTasks([]);
       setPostTest(null);
       setErrorQuiz(null);
+
+      // ✅ PERBAIKAN: Auto-open parent module ketika quiz aktif
+      const moduleIndex = findModuleIndexByQuizSlug(modulesRef.current, quizSlug);
+      if (moduleIndex !== -1) {
+        openModule(moduleIndex);
+      }
     } catch (err) {
       console.error("❌ Gagal fetch quiz:", err);
       setErrorQuiz("Gagal memuat quiz");
     } finally {
       setLoadingQuiz(false);
     }
-  }, [loadUserQuizResults]);
+  }, [loadUserQuizResults, openModule, findModuleIndexByQuizSlug]); // ✅ TAMBAHKAN findModuleIndexByQuizSlug
 
   const loadTask = useCallback(async (moduleId: string) => {
     setLoadingTask(true);
@@ -229,13 +285,19 @@ export default function CourseModulePage() {
       setQuiz(null);
       setPostTest(null);
       setErrorTask(null);
+
+      // ✅ PERBAIKAN: Auto-open parent module ketika task aktif
+      const moduleIndex = findModuleIndexById(modulesRef.current, moduleId);
+      if (moduleIndex !== -1) {
+        openModule(moduleIndex);
+      }
     } catch (err) {
       console.error("❌ Gagal fetch tugas:", err);
       setErrorTask("Gagal memuat tugas");
     } finally {
       setLoadingTask(false);
     }
-  }, []);
+  }, [openModule, findModuleIndexById]); // ✅ TAMBAHKAN findModuleIndexById
 
   /** ================== PERBAIKI LOADPOSTTEST - HAPUS DEPENDENCY modules ================== */
   const loadPostTest = useCallback(async () => {
@@ -253,13 +315,16 @@ export default function CourseModulePage() {
       setActiveQuizId(null);
       setErrorPostTest(null);
       setCurrentModuleIndex(-1);
+
+      // ✅ PERBAIKAN: Auto-open final audit section
+      openModule(-1);
     } catch (err) {
       console.error("❌ Gagal fetch Final Audit:", err);
       setErrorPostTest("Gagal memuat Final Audit");
     } finally {
       setLoadingPostTest(false);
     }
-  }, []);
+  }, [openModule]);
 
   /** ================== PERBAIKI NAVIGATETOQUIZORTASK - HAPUS DEPENDENCIES ================== */
   const navigateToQuizOrTask = useCallback(() => {
@@ -273,27 +338,6 @@ export default function CourseModulePage() {
       navigate(`/course/${courseSlugRef.current}/task/${currentModule.id}`);
     }
   }, [currentModuleIndex, navigate]);
-
-  /** ================== HELPER FUNCTIONS ================== **/
-  const findModuleIndexBySubmoduleSlug = useCallback((modulesData: ModuleType[], submoduleSlug: string): number => {
-    for (let i = 0; i < modulesData.length; i++) {
-      const found = modulesData[i].sub_modules.find(sub => sub.slug === submoduleSlug);
-      if (found) return i;
-    }
-    return -1;
-  }, []);
-
-  const findModuleIndexByQuizSlug = useCallback((modulesData: ModuleType[], quizSlug: string): number => {
-    for (let i = 0; i < modulesData.length; i++) {
-      const found = modulesData[i].quizzes.find(quiz => quiz.module_slug === quizSlug);
-      if (found) return i;
-    }
-    return -1;
-  }, []);
-
-  const findModuleIndexById = useCallback((modulesData: ModuleType[], moduleId: string): number => {
-    return modulesData.findIndex(module => module.id === moduleId);
-  }, []);
 
   /** ================== HANDLEROUTEAUTONAVIGATION UNTUK INITIAL LOAD ================== */
   const handleRouteAutoNavigation = useCallback((modulesData: ModuleType[]) => {
@@ -312,7 +356,7 @@ export default function CourseModulePage() {
           loadSubmodule(submoduleSlug);
           const foundModuleIndex = findModuleIndexBySubmoduleSlug(modulesData, submoduleSlug);
           if (foundModuleIndex !== -1) {
-            toggleModule(foundModuleIndex);
+            openModule(foundModuleIndex); // ✅ Ganti toggleModule dengan openModule
           }
         }
         break;
@@ -323,7 +367,7 @@ export default function CourseModulePage() {
           loadQuiz(quizSlug);
           const foundModuleIndex = findModuleIndexByQuizSlug(modulesData, quizSlug);
           if (foundModuleIndex !== -1) {
-            toggleModule(foundModuleIndex);
+            openModule(foundModuleIndex); // ✅ Ganti toggleModule dengan openModule
           }
         }
         break;
@@ -334,7 +378,7 @@ export default function CourseModulePage() {
           loadTask(moduleId);
           const foundModuleIndex = findModuleIndexById(modulesData, moduleId);
           if (foundModuleIndex !== -1) {
-            toggleModule(foundModuleIndex);
+            openModule(foundModuleIndex); // ✅ Ganti toggleModule dengan openModule
           }
         }
         break;
@@ -343,14 +387,14 @@ export default function CourseModulePage() {
         courseTestId = modulesData[0]?.course?.course_test_id;
         if (courseTestId) {
           loadPostTest();
-          setOpenModules(prev => [...prev, -1]);
+          openModule(-1); // ✅ Ganti setOpenModules dengan openModule
         }
         break;
         
       case 'MODULE_OVERVIEW':
         moduleIndex = parseInt(params.moduleIndex || '0');
         if (!isNaN(moduleIndex) && modulesData[moduleIndex]) {
-          toggleModule(moduleIndex);
+          openModule(moduleIndex); // ✅ Ganti toggleModule dengan openModule
           if (modulesData[moduleIndex].sub_modules.length > 0) {
             loadSubmodule(modulesData[moduleIndex].sub_modules[0].slug);
           }
@@ -359,7 +403,7 @@ export default function CourseModulePage() {
         
       case 'LEGACY':
         if (modulesData.length > 0) {
-          toggleModule(0);
+          openModule(0); // ✅ Ganti toggleModule dengan openModule
           if (modulesData[0].sub_modules.length > 0) {
             loadSubmodule(modulesData[0].sub_modules[0].slug);
           }
@@ -379,7 +423,7 @@ export default function CourseModulePage() {
     loadQuiz,
     loadTask,
     loadPostTest,
-    toggleModule
+    openModule // ✅ Ganti toggleModule dengan openModule
   ]);
 
   /** ================== EFFECT: AMBIL MODULES HANYA SEKALI ================== */
@@ -415,7 +459,7 @@ export default function CourseModulePage() {
         loadSubmodule(subSlug);
         const foundModuleIndex = findModuleIndexBySubmoduleSlug(modules, subSlug);
         if (foundModuleIndex !== -1) {
-          toggleModule(foundModuleIndex);
+          openModule(foundModuleIndex); // ✅ Ganti toggleModule dengan openModule
         }
       }
     } else if (path.includes('/quiz/')) {
@@ -424,7 +468,7 @@ export default function CourseModulePage() {
         loadQuiz(quizSlug);
         const foundModuleIndex = findModuleIndexByQuizSlug(modules, quizSlug);
         if (foundModuleIndex !== -1) {
-          toggleModule(foundModuleIndex);
+          openModule(foundModuleIndex); // ✅ Ganti toggleModule dengan openModule
         }
       }
     } else if (path.includes('/task/')) {
@@ -433,21 +477,21 @@ export default function CourseModulePage() {
         loadTask(moduleId);
         const foundModuleIndex = findModuleIndexById(modules, moduleId);
         if (foundModuleIndex !== -1) {
-          toggleModule(foundModuleIndex);
+          openModule(foundModuleIndex); // ✅ Ganti toggleModule dengan openModule
         }
       }
     } else if (path.includes('/final-audit')) {
       loadPostTest();
-      setOpenModules(prev => [...prev, -1]);
+      openModule(-1); // ✅ Ganti setOpenModules dengan openModule
     } else if (path.includes('/module/') && params.moduleIndex) {
       const index = parseInt(params.moduleIndex || '0');
       if (!isNaN(index) && modules[index]) {
-        toggleModule(index);
+        openModule(index); // ✅ Ganti toggleModule dengan openModule
         const firstSub = modules[index]?.sub_modules[0];
         if (firstSub) loadSubmodule(firstSub.slug);
       }
     } else if (routeType === 'LEGACY' && modules.length > 0) {
-      toggleModule(0);
+      openModule(0); // ✅ Ganti toggleModule dengan openModule
       if (modules[0].sub_modules.length > 0) {
         loadSubmodule(modules[0].sub_modules[0].slug);
       }
@@ -467,7 +511,7 @@ export default function CourseModulePage() {
     loadQuiz,
     loadTask,
     loadPostTest,
-    toggleModule
+    openModule // ✅ Ganti toggleModule dengan openModule
   ]);
 
   useEffect(() => {
@@ -520,7 +564,6 @@ export default function CourseModulePage() {
     </div>
   );
 }
-
 /** ================== UPDATED SIDEBAR COMPONENT ================== */
 type SidebarProps = {
   modules: ModuleType[];
