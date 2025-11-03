@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Check, X } from "lucide-react";
-import { fetchQuizResult, checkCourseFinished } from "../../../../features/module/quiztes/_service/quiz_service";
-import { fetchQuizDetail } from "../../../../features/module/_service/module_service";
+import { fetchQuizResult } from "../../../../features/module/quiztes/_service/quiz_service";
+import { fetchQuizDetail } from "../../../../features/module/_service/module_service"; // Import service baru
 import type { QuizResult, QuizResultResponse } from "../../../../features/module/quiztes/_quiz";
-import type { CourseStatusResponse } from "../../../../features/module/quiztes/_quiz";
 import type { QuizType } from "../../../../features/module/_module";
-import imgBook from "../../../../assets/img/book.png";
-import QuizResultSkeleton from "./QuizResultSkeleton";
 
 const QuizResultPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,8 +14,18 @@ const QuizResultPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
-  const [headerMessage, setHeaderMessage] = useState<string>("");
-  const [courseTitle, setCourseTitle] = useState<string>("");
+
+  // Fungsi untuk mendapatkan detail quiz berdasarkan module_slug
+  const loadQuizDetail = useCallback(async (moduleSlug: string) => {
+    try {
+      const detail: QuizType = await fetchQuizDetail(moduleSlug);
+      setQuizDetail(detail);
+      return detail;
+    } catch (error) {
+      console.error("Gagal memuat detail quiz:", error);
+      return null;
+    }
+  }, []);
 
   // Ambil detail quiz
   const loadQuizDetail = useCallback(async (moduleSlug: string) => {
@@ -39,40 +45,28 @@ const QuizResultPage: React.FC = () => {
       setError("ID quiz tidak valid");
       return;
     }
-
+    
     try {
       setLoading(true);
       setError(null);
-
-      // Fetch hasil quiz
       const response: QuizResultResponse = await fetchQuizResult(id);
-      if (response.meta.code !== 200) throw new Error(response.meta.message);
-      setResult(response.data);
-
-      const courseStatus: CourseStatusResponse = await checkCourseFinished(id);
-      const courseFinished = courseStatus?.data?.status === "finished";
-      setCourseTitle(courseStatus?.data?.course?.title || "");
-
-      // Tentukan pesan header berdasarkan hasil quiz
-      if (response.data.status === "Lulus" || Number(response.data.score) >= 70 || courseFinished) {
-        setHeaderMessage("🎉 Selamat, Anda berhasil menyelesaikan quiz!");
-      } else {
-        setHeaderMessage("😔 Maaf, kamu belum berhasil menyelesaikan quiz");
+      
+      if (response.meta.code !== 200) {
+        throw new Error(response.meta.message);
       }
-
-      // Ambil detail quiz untuk navigasi
+      
+      setResult(response.data);
+      
+      // Load detail quiz untuk mendapatkan course_slug dan quiz_slug
       if (response.data.module_slug) {
         await loadQuizDetail(response.data.module_slug);
       }
-    } catch (err) {
-      console.error("Gagal memuat hasil quiz:", err);
-      setError("Gagal memuat hasil quiz.");
     } finally {
       setLoading(false);
     }
   }, [id, loadQuizDetail]);
 
-  // Navigasi ke halaman quiz ulang
+  // Fungsi untuk handle navigasi ke halaman quiz
   const handleNavigateToQuiz = async () => {
     if (!quizDetail) {
       console.error("Detail quiz tidak tersedia");
@@ -81,6 +75,8 @@ const QuizResultPage: React.FC = () => {
 
     try {
       setIsNavigating(true);
+      
+      // Navigasi ke route: /course/:courseSlug/quiz/:quizSlug
       navigate(`/course/${quizDetail.course_slug}/quiz/${quizDetail.module_slug}`);
     } catch (error) {
       console.error("Gagal navigasi:", error);
@@ -90,34 +86,45 @@ const QuizResultPage: React.FC = () => {
     }
   };
 
+  // Fallback navigation jika quizDetail tidak tersedia
   const handleFallbackNavigation = () => {
-    if (result?.module_slug) navigate(`/module/${result.module_slug}`);
-    else navigate(-1);
+    if (result?.module_slug) {
+      navigate(`/module/${result.module_slug}`);
+    } else {
+      navigate(-1); // Kembali ke halaman sebelumnya
+    }
   };
 
   useEffect(() => {
     loadResult();
   }, [loadResult]);
 
-  if (loading) {
-  return <QuizResultSkeleton />;
-}
-
-  if (error) {
+  if (loading)
+    return <div className="p-6 text-center text-gray-600">Memuat hasil quiz...</div>;
+  if (error)
     return (
-      <div className="min-h-screen flex items-center justify-center dark:bg-[#141427]">
-        <p className="text-xl font-semibold text-red-500">{error}</p>
+      <div className="p-6 text-center">
+        <div className="text-red-500 mb-4">{error}</div>
+        <button 
+          onClick={() => navigate(-1)}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Kembali
+        </button>
       </div>
     );
-  }
-
-  if (!result) {
+  if (!result) 
     return (
-      <div className="min-h-screen flex items-center justify-center dark:bg-[#141427]">
-        <p className="text-xl font-semibold text-gray-700">Data hasil tes tidak ditemukan.</p>
+      <div className="p-6 text-center">
+        <p className="text-gray-500 mb-4">Data hasil quiz tidak ditemukan.</p>
+        <button 
+          onClick={() => navigate(-1)}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Kembali
+        </button>
       </div>
     );
-  }
 
   const date = new Date(result.updated_at).toLocaleString("id-ID", {
     weekday: "long",
@@ -151,6 +158,15 @@ const QuizResultPage: React.FC = () => {
             <p className="text-white mt-1 sm:text-base md:text-base">
               Hasil test anda akan tampilan dibawah ini
             </p>
+            <p><strong>Jumlah Soal :</strong> {result.total_question}</p>
+            <p><strong>Soal Benar :</strong> {result.total_correct}</p>
+            <p><strong>Soal Salah :</strong> {result.total_fault}</p>
+            {quizDetail && (
+              <>
+                <p><strong>Course :</strong> {quizDetail.course_title}</p>
+                <p><strong>Module :</strong> {quizDetail.module_title}</p>
+              </>
+            )}
           </div>
           <div className="flex justify-center md:justify-end w-full md:w-auto">
             <img
@@ -168,34 +184,43 @@ const QuizResultPage: React.FC = () => {
             <div className="bg-white rounded-lg shadow p-6 dark:bg-[#0D0D1A] dark:border-2 dark:border-white transition-colors duration-500">
               <h2 className="text-2xl font-semibold mb-4 text-start">Hasil Test</h2>
 
-              <div className="text-sm text-black space-y-4 dark:text-white">
-                <div className="text-start">
-                  <span className="font-semibold mb-2 block">Tanggal Quiz</span>
-                  <p className="text-purple-600 dark:text-purple-500">{date}</p>
-                </div>
-                <div className="grid grid-cols-[100px_20px_1fr] gap-x-2">
-                  <span className="text-black font-semibold text-start dark:text-white">Jumlah Soal</span>
-                  <span>:</span>
-                  <span className="text-gray-600 text-end dark:text-white">{result.total_question} Soal</span>
-                </div>
+            {/* Tombol Navigasi yang Diupdate */}
+            <button
+              onClick={quizDetail ? handleNavigateToQuiz : handleFallbackNavigation}
+              disabled={isNavigating}
+              className="mt-3 w-full bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-gray-800 font-medium py-2 rounded border-b-4 border-yellow-700 transition-colors"
+            >
+              {isNavigating ? "Memuat..." : "Kembali ke Quiz"}
+            </button>
 
-                <div className="grid grid-cols-[100px_20px_1fr] gap-x-2">
-                  <span className="text-black font-semibold text-start dark:text-white">Soal Benar</span>
-                  <span>:</span>
-                  <span className="text-gray-600 text-end dark:text-white">{result.total_correct} Soal</span>
-                </div>
+            {/* Tombol alternatif untuk kembali ke course */}
+            {quizDetail && (
+              <button
+                onClick={() => navigate(`/course/${quizDetail.course_slug}`)}
+                className="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded transition-colors"
+              >
+                Kembali ke Course
+              </button>
+            )}
+          </div>
+        </div>
 
-                <div className="grid grid-cols-[100px_20px_1fr] gap-x-2">
-                  <span className="text-black font-semibold text-start dark:text-white">Soal Salah</span>
-                  <span>:</span>
-                  <span className="text-gray-600 text-end dark:text-white">{result.total_fault} Soal</span>
-                </div>
-              </div>
-
-              {/* Nilai Ujian */}
-              <div className="text-center my-7">
-                <p className="text-black font-semibold mb-3 dark:text-white">Nilai Quiz</p>
-                <p className="text-6xl font-semibold text-purple-600 border-purple-200">{Math.round(Number(result.score))}</p>
+        {/* Panel Kanan - Question List */}
+        <div className="md:w-2/3 p-6 space-y-5 bg-gray-50">
+          {result.questions.map((q, index) => (
+            <div
+              key={index}
+              className="relative p-5 rounded-lg border border-gray-200 bg-white shadow-sm"
+            >
+              {/* Status Benar / Salah */}
+              <div
+                className={`absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full ${
+                  q.correct
+                    ? "bg-purple-100 text-purple-700 border border-purple-300"
+                    : "bg-red-100 text-red-600 border border-red-300"
+                }`}
+              >
+                {q.correct ? "✓ Benar" : "✗ Salah"}
               </div>
 
               {/* Status Lulus/Tidak Lulus */}
@@ -223,87 +248,37 @@ const QuizResultPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Card Hasil Soal (Kanan) */}
-          <div className="space-y-6">
-            {result.questions.map((q, idx) => {
-              const isCorrect = q.correct;
-              return (
-                <div key={q.question + idx} className="bg-white rounded-lg shadow p-7 dark:bg-[#0D0D1A] dark:border-2 dark:border-white transition-colors duration-500">
-                  {/* Header Soal dengan Layout yang Lebih Baik */}
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
-                    {/* Soal - Layout diperbaiki untuk teks panjang */}
-                    <div className="text-start flex-1 min-w-0">
-                      <h3 className="font-semibold flex items-start gap-2">
-                        <span className="flex-shrink-0 mt-0.5">{idx + 1}.</span>
-                        <span 
-                          className="break-words overflow-hidden text-justify leading-relaxed"
-                          dangerouslySetInnerHTML={{ __html: q.question }} 
-                        />
-                      </h3>
-                    </div>
+              {/* Pilihan */}
+              <div className="space-y-2 mt-2">
+                {["a", "b", "c", "d", "e"].map((key) => {
+                  const optionKey = `option_${key}` as keyof typeof q;
+                  const value = q[optionKey];
+                  const isUserAnswer = q.user_answer === `option_${key}`;
+                  const isCorrectAnswer = q.correct_answer === `option_${key}`;
 
-                    {/* Status Badge */}
-                    <span
-                      className={`inline-flex items-center gap-2 rounded-lg py-1 px-3 text-sm font-semibold flex-shrink-0 w-fit sm:w-auto
-                                  ${isCorrect ? "bg-purple-100 text-purple-600 dark:bg-purple-950" : "bg-red-100 text-red-600 dark:bg-red-950"}`}
+                  if (!value) return null;
+
+                  return (
+                    <div
+                      key={key}
+                      className={`p-3 rounded-md border transition-colors ${
+                        isCorrectAnswer
+                          ? "bg-green-50 border-green-500 text-green-800"
+                          : isUserAnswer && !isCorrectAnswer
+                          ? "bg-red-50 border-red-500 text-red-800"
+                          : "bg-gray-50 border-gray-200 text-gray-700"
+                      }`}
                     >
-                      {isCorrect ? (
-                        <>
-                          <Check className="w-4 h-4 flex-shrink-0" />
-                          <span>Benar</span>
-                        </>
-                      ) : (
-                        <>
-                          <X className="w-4 h-4 flex-shrink-0" />
-                          <span>Salah</span>
-                        </>
-                      )}
-                    </span>
-                  </div>
-
-                  {/* Pilihan Jawaban dengan Layout yang Lebih Baik */}
-                  <div className="mt-4 space-y-3 text-sm">
-                    {["option_a", "option_b", "option_c", "option_d", "option_e"].map((opt) => {
-                      const optionText = q[opt as keyof typeof q] as string;
-                      const isUserAnswer = q.user_answer === opt;
-
-                      if (!optionText) return null;
-
-                      return (
-                        <label
-                          key={opt}
-                          className={`flex items-start space-x-3 p-3 rounded-lg transition-colors duration-200 border
-                                  ${isUserAnswer
-                                      ? isCorrect
-                                        ? "bg-purple-50 dark:bg-purple-900/30 border-purple-300 dark:border-purple-700 text-purple-800 dark:text-purple-200 font-semibold"
-                                        : "bg-red-50 dark:bg-red-900/30 border-red-300 dark:border-red-700 text-red-800 dark:text-red-200 font-semibold"
-                                      : "text-gray-700 dark:text-white border-gray-200 dark:border-gray-600"
-                                  }`}
-                        >
-                          <input
-                            type="radio"
-                            disabled
-                            checked={isUserAnswer}
-                            className={`relative appearance-none w-5 h-5 rounded-full mt-0.5 flex-shrink-0
-                                      border-2 border-purple-600 cursor-pointer
-                                      transition-all duration-200
-                                      before:content-[''] before:absolute before:inset-[3px] 
-                                      before:rounded-full before:bg-transparent
-                                      checked:before:bg-purple-600
-                                      dark:border-purple-500 dark:checked:before:bg-purple-600`}
-                          />
-                          <span 
-                            className="break-words overflow-hidden text-justify leading-relaxed flex-1"
-                            dangerouslySetInnerHTML={{ __html: optionText }} 
-                          />
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                      <div className="flex items-start">
+                        <span className="font-medium mr-2">{key.toUpperCase()}.</span>
+                        <div dangerouslySetInnerHTML={{ __html: String(value) }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
