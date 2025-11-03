@@ -27,6 +27,19 @@ const QuizResultPage: React.FC = () => {
     }
   }, []);
 
+  // Ambil detail quiz
+  const loadQuizDetail = useCallback(async (moduleSlug: string) => {
+    try {
+      const detail: QuizType = await fetchQuizDetail(moduleSlug);
+      setQuizDetail(detail);
+      return detail;
+    } catch (error) {
+      console.error("Gagal memuat detail quiz:", error);
+      return null;
+    }
+  }, []);
+
+  // Ambil hasil quiz dan status kelulusan
   const loadResult = useCallback(async () => {
     if (!id) {
       setError("ID quiz tidak valid");
@@ -124,32 +137,26 @@ const QuizResultPage: React.FC = () => {
   });
 
   return (
-    <main className="flex flex-col items-center bg-gray-100 min-h-screen py-8">
+    <div className="min-h-screen bg-gray-100 pb-15 dark:bg-[#141427] transition-colors duration-500">
       {/* Header */}
-      <div className="bg-purple-700 text-white rounded-t-lg w-[95%] md:w-[80%] p-6 flex items-center justify-between shadow">
-        <div>
-          <h2 className="text-sm uppercase opacity-80">Test Selesai</h2>
-          <h1 className="text-xl font-bold">Selamat anda telah menyelesaikan test</h1>
-          <p className="text-xs opacity-90 mt-1">
-            Hasil test anda akan ditampilkan di bawah ini
-          </p>
-        </div>
-        <img
-          src="/assets/quiz-result-illustration.svg"
-          alt="quiz"
-          className="hidden md:block w-40"
-        />
+      <div className="bg-gradient-to-br from-purple-500 to-purple-700 py-6 px-6">
+        <h1 className="text-white font-semibold text-left ml-13 2xl:ml-51 xl:ml-38 lg:ml-23 md:ml-32 sm:ml-15">
+          Quiz - {courseTitle || "Tanpa Judul"}
+        </h1>
       </div>
 
-      {/* Main Content */}
-      <div className="bg-white shadow-md w-[95%] md:w-[80%] rounded-b-lg flex flex-col md:flex-row">
-        {/* Panel Kiri */}
-        <div className="md:w-1/3 border-r p-6">
-          <h3 className="font-semibold text-gray-700 mb-2">Hasil Test</h3>
-          <div className="text-sm space-y-1 text-gray-600">
-            <p>
-              <strong>Tanggal Ujian</strong><br />
-              <span className="text-blue-600">{date}</span>
+      <div className="2xl:max-w-6xl xl:max-w-5xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl max-w-md mx-auto mt-8">
+        {/* Card Intro */}
+        <div className="relative min-h-37 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row items-center md:items-center justify-between">
+          <div className="text-left px-5 mb-4 md:mb-0 md:flex-1">
+            <h3 className="text-xl font-semibold text-white">
+              Test selesai
+            </h3>
+            <h2 className="text-2xl font-bold text-white">
+              {headerMessage || "Selamat anda telah menyelesaikan test"}
+            </h2>
+            <p className="text-white mt-1 sm:text-base md:text-base">
+              Hasil test anda akan tampilan dibawah ini
             </p>
             <p><strong>Jumlah Soal :</strong> {result.total_question}</p>
             <p><strong>Soal Benar :</strong> {result.total_correct}</p>
@@ -161,22 +168,21 @@ const QuizResultPage: React.FC = () => {
               </>
             )}
           </div>
+          <div className="flex justify-center md:justify-end w-full md:w-auto">
+            <img
+              src={imgBook}
+              alt="Ilustrasi Ujian"
+              className="w-80 sm:w-80 md:w-60 mx-8 mt-6 md:mt-0 2xl:absolute xl:absolute lg:absolute 2xl:right-2 2xl:-bottom-0 xl:right-2 xl:-bottom-0 lg:right-2 lg:-bottom-0"
+            />
+          </div>
+        </div>
 
-          <div className="mt-6 text-center">
-            <p className="font-semibold text-gray-700">Nilai Ujian</p>
-            <p className="text-4xl font-bold text-purple-700 mt-1">{result.score}</p>
-
-            <div className="mt-4 border-t pt-4">
-              {result.status === "Lulus" ? (
-                <button className="w-full bg-green-600 text-white font-medium py-2 rounded">
-                  Selamat Anda Lulus
-                </button>
-              ) : (
-                <button className="w-full bg-red-600 text-white font-medium py-2 rounded">
-                  Maaf Anda Tidak Lulus
-                </button>
-              )}
-            </div>
+        {/* Main Content */}
+        <div className="2xl:max-w-6xl xl:max-w-5xl lg:max-w-5xl md:max-w-2xl sm:max-w-xl max-w-md mx-auto mt-8 grid grid-cols-1 2xl:grid-cols-[0.7fr_2fr] xl:grid-cols-[0.7fr_2fr] lg:grid-cols-3 items-start gap-6">
+          {/* Card Hasil (Kiri) */}
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg shadow p-6 dark:bg-[#0D0D1A] dark:border-2 dark:border-white transition-colors duration-500">
+              <h2 className="text-2xl font-semibold mb-4 text-start">Hasil Test</h2>
 
             {/* Tombol Navigasi yang Diupdate */}
             <button
@@ -217,11 +223,30 @@ const QuizResultPage: React.FC = () => {
                 {q.correct ? "✓ Benar" : "✗ Salah"}
               </div>
 
-              {/* Soal */}
-              <p
-                className="font-medium text-gray-800 mb-3"
-                dangerouslySetInnerHTML={{ __html: `${index + 1}. ${q.question}` }}
-              />
+              {/* Status Lulus/Tidak Lulus */}
+              <div className="mb-4">
+                {result.status === "Lulus" ? (
+                  <button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-colors duration-200">
+                    Selamat Anda Lulus
+                  </button>
+                ) : (
+                  <button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition-colors duration-200">
+                    Maaf Anda Tidak Lulus
+                  </button>
+                )}
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <button
+                onClick={quizDetail ? handleNavigateToQuiz : handleFallbackNavigation}
+                disabled={isNavigating}
+                className="w-full bg-yellow-400 shadow-[4px_4px_0px_0px_#0B1367] hover:bg-purple-600 hover:shadow-none active:translate-y-0.5 transition-all duration-200 ease-out text-white font-semibold py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isNavigating ? "Memuat..." : "Selesai"}
+              </button>
+            </div>
+          </div>
 
               {/* Pilihan */}
               <div className="space-y-2 mt-2">
@@ -256,7 +281,7 @@ const QuizResultPage: React.FC = () => {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

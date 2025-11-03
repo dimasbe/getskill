@@ -4,7 +4,7 @@ import GuestLayout from './route/GuestLayout';
 import LandingPage from "../pages/guest/dashboard/Dashboard";
 import Course from "../pages/guest/Course/CoursePage";
 import Event from '../pages/guest/event/Event';
-import KelasIndustri from '../pages/guest/kelasindustri/KelasIndustri';
+import KelasIndustri from '../pages/guest/industrialclass/industrialclass';
 import FaqPage from "../pages/guest/faq/FaqPage";
 import FaqDetailPage from "../pages/guest/faq/FaqDetailPage";
 import FaqCategoryDetailPage from "../pages/guest/faq/FaqCategoryDetailPage";
@@ -43,6 +43,8 @@ import TaskDetailPage from "../pages/user/module/task/TaskDetailPage";
 import QuizPage from "../pages/user/module/quiztes/QuizPage";
 import QuizResultPage from "../pages/user/module/quiztes/QuizResultPage";
 
+import { Toaster } from "react-hot-toast";
+
 
 function RouteChangeLoader() {
   const location = useLocation();
@@ -52,12 +54,21 @@ function RouteChangeLoader() {
   usePageTitle();
 
   useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     setAnimateOut(false);
 
     const timer = setTimeout(() => {
       setAnimateOut(true);
-      setTimeout(() => setLoading(false), 200);
+      setTimeout(() => setLoading(false), 800);
     }, 300);
 
     return () => clearTimeout(timer);
@@ -111,7 +122,7 @@ function RouteChangeLoader() {
         <Route path="/course/:courseSlug/module/:moduleIndex" element={<CourseModulePage />} />
         <Route path="/course/:courseSlug/submodule/:submoduleSlug" element={<CourseModulePage />} />
         <Route path="/course/:courseSlug/quiz/:quizSlug" element={<CourseModulePage />} />
-        <Route path="/course/:courseSlug/task/:moduleId" element={<CourseModulePage />} />
+        <Route path="/course/:courseSlug/task/:moduleSlug" element={<CourseModulePage />} />
         <Route path="/course/:courseSlug/final-audit" element={<CourseModulePage />} />
         <Route path="/module/discussion/:slug" element={<DiscussionPage />} />
         <Route path="/module/discussion/forum/:slug" element={<ForumDiscussionPage />} />
@@ -127,6 +138,7 @@ function RouteChangeLoader() {
 function App() {
   return (
     <Router>
+      <Toaster position="top-center" reverseOrder={false} />
       <RouteChangeLoader />
     </Router>
   );
