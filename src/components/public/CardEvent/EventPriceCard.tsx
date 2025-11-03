@@ -5,30 +5,56 @@ import { GraduationCap } from "lucide-react";
 import { Card } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import type { Eventype } from "../../../features/event/_event";
+
 import certificateIcon from "../../../../public/images/icon/course_icon05.svg";
+import certificateIconWhite from "../../../../public/images/icon/course_icon05_white.svg";
 
+// =========================
+// Data: Logo Pembayaran
+// =========================
+import BRI from "../../../../public/images/payments/bri.png";
+import BNI from "../../../../public/images/payments/bni.png";
+import BCA from "../../../../public/images/payments/bca.png";
+import DANA from "../../../../public/images/payments/dana.jpg";
+import GOPAY from "../../../../public/images/payments/gopay.png";
+import Mandiri from "../../../../public/images/payments/mandiri.png";
+import OVO from "../../../../public/images/payments/ovo.png";
+import VISA from "../../../../public/images/payments/visa.png";
+import Mastercard from "../../../../public/images/payments/mastercard.jpeg";
+import Alfamart from "../../../../public/images/payments/alfamart.jpg";
+import Indomaret from "../../../../public/images/payments/indomaret.jpg";
+import BJB from "../../../../public/images/payments/bank bjb.png";
+import AstraPay from "../../../../public/images/payments/astra pay.jpeg";
+import BSI from "../../../../public/images/payments/bnk bsi.jpg";
+import JCB from "../../../../public/images/payments/jcb.jpeg";
+import LinkAja from "../../../../public/images/payments/link aja.jpg";
+import PermataBank from "../../../../public/images/payments/permata bank.jpg";
+import ShopeePay from "../../../../public/images/payments/shopeepay.jpg";
+import QRIS from "../../../../public/images/payments/qris.jpg";
 
+// =========================
 // Daftar Logo Pembayaran
+// =========================
 const paymentLogos = [
-  { name: "BRI", src: "/public/images/payments/bri.png" },
-  { name: "BNI", src: "/public/images/payments/bni.png" },
-  { name: "BCA", src: "/public/images/payments/bca.png" },
-  { name: "DANA", src: "/public/images/payments/dana.jpg" },
-  { name: "GOPAY", src: "/public/images/payments/gopay.png" },
-  { name: "Mandiri", src: "/public/images/payments/mandiri.png" },
-  { name: "OVO", src: "/public/images/payments/ovo.png" },
-  { name: "VISA", src: "/public/images/payments/visa.png" },
-  { name: "Mastercard", src: "/public/images/payments/mastercard.jpeg" },
-  { name: "Alfamart", src: "/public/images/payments/alfamart.jpg" },
-  { name: "Indomaret", src: "/public/images/payments/indomaret.jpg" },
-  { name: "BJB", src: "/public/images/payments/bank bjb.png" },
-  { name: "Astra Pay", src: "/public/images/payments/astra pay.jpeg" },
-  { name: "BSI", src: "/public/images/payments/bnk bsi.jpg" },
-  { name: "JCB", src: "/public/images/payments/jcb.jpeg" },
-  { name: "Link Aja", src: "/public/images/payments/link aja.jpg" },
-  { name: "Permata Bank", src: "/public/images/payments/permata bank.jpg" },
-  { name: "Shopee Pay", src: "/public/images/payments/shopee pay.jpg" },
-  { name: "QRIS", src: "/public/images/payments/qris.jpg" },
+  { name: "BRI", src: BRI },
+  { name: "BNI", src: BNI },
+  { name: "BCA", src: BCA },
+  { name: "DANA", src: DANA },
+  { name: "GOPAY", src: GOPAY },
+  { name: "Mandiri", src: Mandiri },
+  { name: "OVO", src: OVO },
+  { name: "VISA", src: VISA },
+  { name: "Mastercard", src: Mastercard },
+  { name: "Alfamart", src: Alfamart },
+  { name: "Indomaret", src: Indomaret },
+  { name: "BJB", src: BJB },
+  { name: "Astra Pay", src: AstraPay },
+  { name: "BSI", src: BSI },
+  { name: "JCB", src: JCB },
+  { name: "Link Aja", src: LinkAja },
+  { name: "Permata Bank", src: PermataBank },
+  { name: "Shopee Pay", src: ShopeePay },
+  { name: "QRIS", src: QRIS },
 ];
 
 
@@ -49,7 +75,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
   };
 
   return (
-    <Card className="shadow-lg border border-gray-200 overflow-hidden z-10 rounded-2xl">
+    <Card className="shadow-lg border border-gray-200 overflow-hidden z-10 rounded-2xl dark:bg-[#0D0D1A] transition-colors duration-500">
       {/* Header Harga */}
       <div className="bg-purple-600 text-white px-6 rounded-xl shadow-2xl py-5">
         <p className="text-sm">Harga Masuk</p>
@@ -59,7 +85,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
       </div>
 
       {/* Isi Konten */}
-      <div className="p-5 space-y-5 text-sm text-gray-700">
+      <div className="p-5 space-y-5 text-sm text-gray-700 dark:text-white">
         {/* Informasi Event */}
         <div>
           <h1 className="text-lg font-semibold mb-3">Informasi Event :</h1>
@@ -67,7 +93,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
             {/* Tanggal */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2">
-                <BsCalendar2Event size={20} className="text-gray-600" />
+                <BsCalendar2Event size={20} className="text-gray-600 dark:text-white" />
                 <span className="font-medium">Tanggal Mulai</span>
               </div>
               <span>
@@ -81,7 +107,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
 
             <div className="flex justify-between items-center border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2">
-                <BsCalendar2X size={20} className="text-gray-600" />
+                <BsCalendar2X size={20} className="text-gray-600 dark:text-white" />
                 <span className="font-medium">Tanggal Berakhir</span>
               </div>
               <span>
@@ -96,7 +122,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
             {/* Waktu */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2">
-                <FiClock size={20} className="text-gray-600" />
+                <FiClock size={20} className="text-gray-600 dark:text-white" />
                 <span className="font-medium">Waktu Mulai</span>
               </div>
               <span>{event.start_hour} WIB</span>
@@ -105,7 +131,20 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
             {/* Sertifikat */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2">
-                <img src={certificateIcon} alt="Sertifikat" className="w-5 h-5 opacity-80" />
+                {/* Light Mode Icon */}
+                <img
+                  src={certificateIcon}
+                  alt="Sertifikat"
+                  className="w-5 h-5 opacity-80 dark:hidden"
+                />
+
+                {/* Dark Mode Icon */}
+                <img
+                  src={certificateIconWhite}
+                  alt="Sertifikat"
+                  className="w-5 h-5 opacity-80 hidden dark:block"
+                />
+
                 <span className="font-medium">Sertifikat</span>
               </div>
               <span>{event.has_certificate ? "Online Certificate" : "Include"}</span>
@@ -114,7 +153,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
             {/* Kuota */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2">
-                <GraduationCap size={20} className="text-gray-600" />
+                <GraduationCap size={20} className="text-gray-600 dark:text-white" />
                 <span className="font-medium">Total Kuota</span>
               </div>
               <span>{event.capacity - event.capacity_left}/{event.capacity}</span>
@@ -132,7 +171,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
             {event.is_online === 1 ? (
               // Jika Online → Tampilkan Platform
               <>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-400 dark:text-gray-300">
                   LIVE at{" "}
                   <a
                     href={event.map_link ?? "#"}
@@ -145,12 +184,12 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
                     <FiExternalLink size={15} className=" text-purple-500" />
                   </a>
                 </p>
-                <p className="text-gray-500 font-semibold">Online</p>
+                <p className="text-gray-500 font-semibold dark:text-white">Online</p>
               </>
             ) : (
               // Jika Offline → Tampilkan Lokasi
               <>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-400 dark:text-gray-300">
                   Lokasi:{" "}
                   <a
                     href={event.map_link ?? "#"}
@@ -161,8 +200,8 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
                     <span className="truncate">{event.location ?? "Lihat Lokasi"}</span>
                     <FiExternalLink size={15} className=" text-purple-500 " />
                   </a>
-                </p>
-                <p className="text-gray-500 font-semibold">Offline</p>
+                </p> 
+                <p className="text-gray-500 font-semibold dark:text-white">Offline</p>
               </>
             )}
           </div>
@@ -176,7 +215,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
               <div
                 key={logo.name}
                 className="border border-gray-200 rounded-lg p-1 flex items-center justify-center w-12 h-10 
-                         transition-transform duration-300 hover:scale-110 hover:shadow-md hover:border-purple-400"
+                         transition-transform duration-300 hover:scale-110 hover:shadow-md hover:border-purple-400 dark:bg-white"
               >
                 <img
                   src={logo.src}
@@ -223,7 +262,7 @@ const EventPriceCard: React.FC<{ event: Eventype; eventIsOver: boolean }> = ({
                 key={index}
                 href={item.url}
                 rel="noopener noreferrer"
-                className={`bg-gray-200 p-2 rounded-full text-gray-400 text-lg 
+                className={`bg-gray-200 p-2 rounded-full text-gray-400 text-lg dark:bg-[#2C004F] dark:text-white
                           transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md ${item.color}`}
               >
                 {item.icon}
