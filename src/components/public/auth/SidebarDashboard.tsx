@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaHome, FaAward, FaRegUser } from "react-icons/fa";
+import { FileTerminal } from "lucide-react";
+import { FaHome, FaAward, FaRegUser, FaCalendarAlt } from "react-icons/fa";
+import { MdOutlineMeetingRoom } from "react-icons/md";
 import { HiOutlineBookOpen } from "react-icons/hi2";
 import { IoBookmarkOutline } from "react-icons/io5";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import { FaArrowRightArrowLeft, FaChartLine, FaCreditCard } from "react-icons/fa6";
 import { TbFileStar, TbLogout } from "react-icons/tb";
+import { GoShield } from "react-icons/go";
 import { FiShoppingBag } from "react-icons/fi";
-import { classindustry } from "../../../assets/img/logo/logo_class_industri1.png";
+import classindustry from "../../../assets/img/logo/logo_class_industri1.png";
+import classindustrydark from "../../../assets/img/logo/logo_class_industri2.png";
+import { HiChevronDown } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
 
 import type { ProfilData } from "../../../features/user/models";
 import { fetchProfile, fetchProfileById } from "../../../features/user/user_service";
@@ -18,9 +24,18 @@ interface SidebarDashboardProps {
   refreshKey?: number;
 }
 
+type MenuItem =
+  | { to: string; label: string; icon: React.ReactElement }
+  | {
+    label: string;
+    icon: React.ReactElement;
+    submenu: { to: string; label: string; icon: React.ReactElement }[];
+  };
+
 const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 0 }) => {
   const [user, setUser] = useState<ProfilData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isIndustryOpen, setIsIndustryOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,16 +56,56 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
     loadProfile();
   }, [slug, refreshKey]);
 
-  const menuItems = [
+  const baseMenu: MenuItem[] = [
     { to: "/dashboard/user", label: "Dashboard", icon: <FaHome size={18} /> },
     { to: "/dashboard/user/course", label: "Kursus Saya", icon: <HiOutlineBookOpen size={18} /> },
     { to: "/dashboard/user/event", label: "Event Saya", icon: <IoBookmarkOutline size={18} /> },
+  ];
+
+  const studentIndustryMenu: MenuItem = {
+    label: "Kelas Industri",
+    icon: (
+      <>
+        <img
+          src={classindustry}
+          alt="Kelas Industri"
+          className="w-4.5 h-auto dark:hidden"
+        />
+
+        <img
+          src={classindustrydark}
+          alt="Kelas Industri Dark"
+          className="w-4.5 h-auto hidden dark:block"
+        />
+      </>
+    ),
+    submenu: [
+      { to: "/dashboard/user/classes", label: "Kelas", icon: <MdOutlineMeetingRoom size={16} /> },
+      { to: "/dashboard/user/challenges", label: "Tantangan", icon: <FileTerminal size={16} /> },
+      { to: "/dashboard/user/schedule", label: "Jadwal", icon: <FaCalendarAlt size={16} /> },
+      { to: "/dashboard/user/rating", label: "Peringkat", icon: <FaChartLine size={16} /> },
+      { to: "/dashboard/user/payment", label: "Pembayaran", icon: <FaCreditCard size={16} /> },
+      { to: "/dashboard/user/sop-student", label: "SOP", icon: <GoShield size={16} /> },
+    ],
+  };
+
+  const additionalMenu: MenuItem[] = [
     { to: "/dashboard/user/certificate", label: "Sertifikat", icon: <FaAward size={18} /> },
     { to: "/dashboard/user/reviews", label: "Reviews", icon: <TbFileStar size={18} /> },
     { to: "/dashboard/user/transaction", label: "Riwayat Transaksi", icon: <FiShoppingBag size={18} /> },
     { to: "/dashboard/user/exchange", label: "Penukaran Hadiah", icon: <FaArrowRightArrowLeft size={18} /> },
     { to: "/dashboard/user/profile", label: "Profil Saya", icon: <FaRegUser size={18} /> },
   ];
+
+  const menuItems: MenuItem[] =
+    user?.role === "student"
+      ? [...baseMenu, studentIndustryMenu, ...additionalMenu]
+      : [...baseMenu, ...additionalMenu];
+
+  const hasSubmenu = (item: MenuItem): item is Extract<MenuItem, { submenu: { to: string; label: string; icon: React.ReactElement }[] }> => {
+    return "submenu" in item;
+  };
+
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -114,21 +169,69 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
               <h3 className="text-gray-400 text-start text-[10px] font-semibold mb-3 dark:text-white">
                 DASHBOARD
               </h3>
-              {menuItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === "/dashboard/user"}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 border-b-2 pb-2 ${isActive
-                      ? "text-purple-600 border-purple-600 dark:text-purple-400 dark:border-purple-400"
-                      : "text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
-                    }`
-                  }
-                >
-                  {item.icon} {item.label}
-                </NavLink>
-              ))}
+              {menuItems.map((item) =>
+                hasSubmenu(item) ? (
+                  <div key={item.label}>
+                    <button
+                      onClick={() => setIsIndustryOpen(!isIndustryOpen)}
+                      className="flex items-center justify-between w-full border-b-2 pb-2 text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
+                    >
+                      <div className="flex items-center gap-2">
+                        {item.icon} {item.label}
+                      </div>
+                      <motion.div
+                        animate={{ rotate: isIndustryOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <HiChevronDown size={18} />
+                      </motion.div>
+                    </button>
+
+                    <AnimatePresence>{isIndustryOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.35, ease: "easeInOut" }}
+                        className="ml-5 mt-4 space-y-2 overflow-hidden"
+                      >
+                        {item.submenu.map(
+                          (sub: { to: string; label: string; icon: React.ReactElement }) => (
+                            <NavLink
+                              key={sub.to}
+                              to={sub.to}
+                              className={({ isActive }) =>
+                                `flex items-center gap-2 border-b pb-3 ${isActive
+                                  ? "text-purple-600 border-purple-600 dark:text-purple-400 dark:border-purple-400"
+                                  : "text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
+                                }`
+                              }
+                              onClick={() => setIsIndustryOpen(false)}
+                            >
+                              {sub.icon} {sub.label}
+                            </NavLink>
+                          )
+                        )}
+                      </motion.div>
+                    )}</AnimatePresence>
+
+                  </div>
+                ) : (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    end={item.to === "/dashboard/user"}
+                    className={({ isActive }) =>
+                      `flex items-center gap-2 border-b-2 pb-2 ${isActive
+                        ? "text-purple-600 border-purple-600 dark:text-purple-400 dark:border-purple-400"
+                        : "text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
+                      }`
+                    }
+                  >
+                    {item.icon} {item.label}
+                  </NavLink>
+                )
+              )}
             </nav>
 
             {/* Logout */}

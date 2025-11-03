@@ -43,6 +43,14 @@ import TaskDetailPage from "../pages/user/module/task/TaskDetailPage";
 import QuizPage from "../pages/user/module/quiztes/QuizPage";
 import QuizResultPage from "../pages/user/module/quiztes/QuizResultPage";
 
+{/* class industri */}
+import Class from "../pages/user/Profile/ClassIndustry/Class";
+import SOP from "../pages/user/Profile/ClassIndustry/SOP";
+import Rating from "../pages/user/Profile/ClassIndustry/Rating";
+import Challenges from "../pages/user/Profile/ClassIndustry/Challenges";
+import Payment from "../pages/user/Profile/ClassIndustry/Payment";
+import Schedule from "../pages/user/Profile/ClassIndustry/Schedule";
+
 import { Toaster } from "react-hot-toast";
 
 
@@ -112,6 +120,13 @@ function RouteChangeLoader() {
         <Route path="/dashboard/user/exchange" element={<ExchangePage />} />
         <Route path="/dashboard/user/profile" element={<ProfilePage />} />
 
+        {/* class industri */}
+        <Route path="/dashboard/user/classes" element={<Class />} />
+        <Route path="/dashboard/user/challenges" element={<Challenges />} />
+        <Route path="/dashboard/user/schedule" element={<Schedule />} />
+        <Route path="/dashboard/user/rating" element={<Rating />} />
+        <Route path="/dashboard/user/payment" element={<Payment />} />
+        <Route path="/dashboard/user/sop-student" element={<SOP />} />
 
         <Route path="/course/pre-tes/:slug" element={<PreTes />} />
         <Route path="/course/pre-tes/exam/:slug" element={<Exam />} />
@@ -128,7 +143,7 @@ function RouteChangeLoader() {
         <Route path="/module/discussion/forum/:slug" element={<ForumDiscussionPage />} />
         <Route path="/tasks/:id" element={<TaskDetailPage />} />
         <Route path="/quiz/:id" element={<QuizPage />} />
-        <Route path="/quiz-result/:id" element={<QuizResultPage />} />
+        <Route path="/quiz-result/:id" element={<QuizResultPage />} />z
 
       </Route>
     </Routes>
