@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import manfaatImg from "../../assets/img/others/manfaatid.png";
+import manfaatImgDark from "../../assets/kelasindustri/FIx 1.png";
 import type { Division } from "../../features/IndustrialClass/industrialclass";
 import { fetchDivisions } from "../../features/IndustrialClass/services/industrialclass_services";
 
@@ -58,6 +59,17 @@ const IndustrialClassSection: React.FC = () => {
                 alt="Manfaat Kelas Industri"
                 className="w-[85%] sm:w-[70%] md:w-[85%] lg:w-auto lg:max-w-[345px] xl:max-w-[355px] 2xl:max-w-[400px] h-auto object-contain relative z-10 dark:hidden transition-opacity duration-500"
               />
+              {/* Dark Mode Image */}
+              <img
+                src={manfaatImgDark}
+                alt="Manfaat Kelas Industri Dark"
+                className="hidden dark:block w-[85%] sm:w-[70%] md:w-[85%] lg:w-auto
+  l             g:max-w-[345px] xl:max-w-[340px] 2xl:max-w-[375px]
+                h-auto object-contain relative z-10 transition-opacity duration-500
+                rounded-[50%] mt-21 ml-1"
+              />
+
+
             </div>
           </div>
 
