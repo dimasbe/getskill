@@ -56,6 +56,16 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
     loadProfile();
   }, [slug, refreshKey]);
 
+  useEffect(() => {
+    const savedState = localStorage.getItem("isIndustryOpen");
+    if (savedState === "true") setIsIndustryOpen(true);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isIndustryOpen", String(isIndustryOpen));
+  }, [isIndustryOpen]);
+
+
   const baseMenu: MenuItem[] = [
     { to: "/dashboard/user", label: "Dashboard", icon: <FaHome size={18} /> },
     { to: "/dashboard/user/course", label: "Kursus Saya", icon: <HiOutlineBookOpen size={18} /> },
@@ -201,12 +211,11 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
                               key={sub.to}
                               to={sub.to}
                               className={({ isActive }) =>
-                                `flex items-center gap-2 border-b pb-3 ${isActive
+                                `flex items-center gap-2 border-b pb-2 ${isActive
                                   ? "text-purple-600 border-purple-600 dark:text-purple-400 dark:border-purple-400"
                                   : "text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
                                 }`
                               }
-                              onClick={() => setIsIndustryOpen(false)}
                             >
                               {sub.icon} {sub.label}
                             </NavLink>
