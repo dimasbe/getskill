@@ -165,36 +165,68 @@ export default function CourseSidebar({
     }
   };
 
-  const renderActionButton = () => {
-    const handlePageModule = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  // Fungsi untuk melihat materi
+  const handleViewMaterial = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const data = await fetchNavigate(slug!);
-        if (!data?.sub_module?.slug) {
-          setError("Modul belum tersedia atau belum siap.");
-          return;
-        }
-
-        navigate(`/module/${data.sub_module.slug}`);
-      } catch (err) {
-        console.error("Gagal memulai modul:", err);
-        setError("Gagal memulai modul.");
-      } finally {
-        setLoading(false);
+      const data = await fetchNavigate(slug!);
+      if (!data?.sub_module?.slug) {
+        setError("Modul belum tersedia atau belum siap.");
+        return;
       }
-    };
 
-    // Jika sudah selesai post-test
+      navigate(`/module/${data.sub_module.slug}`);
+    } catch (err) {
+      console.error("Gagal memulai modul:", err);
+      setError("Gagal memulai modul.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fungsi untuk mengunduh sertifikat
+  const handleDownloadCertificate = () => {
+    // Navigasi ke halaman sertifikat kursus
+    navigate(`/courses/certificates/${slug}`);
+  };
+
+  const renderActionButton = () => {
+    // Jika sudah selesai post-test - TAMPILKAN DUA TOMBOL
     if (hasPosttestDone) {
       return (
-        <button
-          disabled
-          className="my-6 w-full bg-purple-600 text-white font-medium py-2.5 px-4 rounded-full shadow-md"
-        >
-          Kursus Selesai
-        </button>
+        <div className="space-y-3 my-6">
+          {/* Tombol Lihat Materi */}
+          <button
+            onClick={handleViewMaterial}
+            disabled={loadingModule}
+            className={`w-full relative group overflow-hidden font-sans font-semibold text-sm py-2.5 px-4 rounded-full flex items-center justify-center gap-2 border transition-all duration-500 ease-in-out shadow-[3px_3px_0px_0px_rgba(0,0,0,0.6)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-0.5 ${loadingModule
+                ? "bg-gray-400 border-gray-400 cursor-not-allowed text-white"
+                : "bg-white border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white dark:bg-[#0D0D1A] dark:hover:bg-purple-600"
+              }`}
+          >
+            {loadingModule ? (
+              "Memuat..."
+            ) : (
+              <>
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+                <span className="relative z-10">Lihat Materi →</span>
+              </>
+            )}
+          </button>
+
+          {/* Tombol Unduh Sertifikat */}
+          <button
+            onClick={handleDownloadCertificate}
+            className="w-full relative group overflow-hidden font-sans font-semibold text-sm py-2.5 px-4 rounded-full flex items-center justify-center gap-2 border transition-all duration-500 ease-in-out shadow-[3px_3px_0px_0px_rgba(0,0,0,0.6)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-0.5 bg-white border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white dark:bg-[#0D0D1A] dark:hover:bg-purple-600"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+            <span className="relative z-10">Unduh Sertifikat →</span>
+          </button>
+
+          {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}
+        </div>
       );
     }
 
@@ -203,19 +235,24 @@ export default function CourseSidebar({
       return (
         <>
           <button
-            onClick={handlePageModule}
+            onClick={handleViewMaterial}
             disabled={loadingModule}
-            className={`my-6 w-full ${loadingModule
-              ? "bg-purple-600 cursor-not-allowed"
-              : "bg-white border border-purple-600 hover:bg-purple-600 dark:bg-[#0D0D1A] dark:hover:bg-purple-600"
-              } text-purple-600 text-xs hover:text-white font-medium py-2.5 px-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg`}
+            className={`my-6 w-full relative group overflow-hidden font-sans font-semibold text-sm py-2.5 px-4 rounded-full flex items-center justify-center gap-2 border transition-all duration-500 ease-in-out shadow-[3px_3px_0px_0px_rgba(0,0,0,0.6)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-0.5 ${loadingModule
+                ? "bg-gray-400 border-gray-400 cursor-not-allowed text-white"
+                : "bg-white border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white dark:bg-[#0D0D1A] dark:hover:bg-purple-600"
+              }`}
           >
-            {loadingModule ? "Memuat Modul..." : "Lanjutkan Belajar →"}
+            {loadingModule ? (
+              "Memuat Modul..."
+            ) : (
+              <>
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+                <span className="relative z-10">Lanjutkan Belajar →</span>
+              </>
+            )}
           </button>
 
-          {error && (
-            <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}
         </>
       );
     }
@@ -225,9 +262,10 @@ export default function CourseSidebar({
       return (
         <button
           onClick={() => navigate(`/course/pre-tes/exam/${slug}`)}
-          className="my-6 w-full text-xs bg-white border border-purple-600 hover:bg-purple-600 text-purple-600 hover:text-white dark:bg-[#0D0D1A] dark:hover:bg-purple-600 font-medium py-2.5 px-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
+          className="my-6 w-full relative group overflow-hidden font-sans font-semibold text-sm py-2.5 px-4 rounded-full flex items-center justify-center gap-2 border transition-all duration-500 ease-in-out shadow-[3px_3px_0px_0px_rgba(0,0,0,0.6)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-0.5 bg-white border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white dark:bg-[#0D0D1A] dark:hover:bg-purple-600"
         >
-          Lanjutkan Pre-Test →
+          <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-700 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+          <span className="relative z-10">Lanjutkan Pre-Test →</span>
         </button>
       );
     }
@@ -261,8 +299,6 @@ export default function CourseSidebar({
       </button>
     );
   };
-
-
 
   // =========================
   // Konten Sidebar
