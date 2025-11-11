@@ -34,7 +34,7 @@ const DashboardLayout = ({ children, slug, refreshKey = 0 }: DashboardLayoutProp
     }, [slug, refreshKey]);
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#141427] transition-colors duration-500">
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-500">
             {/* Header */}
             <div className="relative px-6 py-30 bg-gradient-to-r dark:bg-[#0D0D1A] dark:bg-none from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
                 <BackgroundShapes />
