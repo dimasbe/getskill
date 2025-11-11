@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+import backgroundClass from "../../assets/img/others/bgclassindustrial.png";
 import peopleBanner from "../../assets/img/others/peoplebanner.png";
 import shape from "../../assets/img/others/shape.png";
 import bannerShape01 from "../../assets/img/banner/banner_shape01.svg";
@@ -11,6 +12,7 @@ const HeroSection: React.FC = () => {
       className="relative overflow-hidden bg-cover bg-center transition-colors duration-500
                  py-2 md:py-12 lg:py-31 xl:py-6 2xl:py-4
                  bg-white text-gray-800 dark:bg-[#0D0D1A] dark:text-white"
+      style={{ backgroundImage: `url(${backgroundClass})` }}
     >
       <div
         className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-22
