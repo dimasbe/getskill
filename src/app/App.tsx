@@ -23,7 +23,7 @@ import ContactPage from "../pages/guest/contact/ContactPage";
 import NewsDetail from "../pages/guest/news/NewsDetail";
 import News from "../pages/guest/news/News";
 
-import DashboardPage from "../pages/user/Profile/DashboardPage";
+import DashboardControler from "../components/public/auth/DashboardControler";
 import CoursePage from "../pages/user/Profile/CoursePage";
 import EventPage from "../pages/user/Profile/EventPage";
 import CertificatePage from "../pages/user/Profile/CertificatePage";
@@ -117,7 +117,7 @@ function RouteChangeLoader() {
         <Route path="/contact" element={<ContactPage />} />
 
         {/* user */}
-        <Route path="/dashboard/user" element={<DashboardPage />} />
+        <Route path="/dashboard/user" element={<DashboardControler />} />
         <Route path="/dashboard/user/course" element={<CoursePage />} />
         <Route path="/dashboard/user/event" element={<EventPage />} />
         <Route path="/dashboard/user/certificate" element={<CertificatePage />} />
