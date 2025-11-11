@@ -43,7 +43,7 @@ import TaskDetailPage from "../pages/user/module/task/TaskDetailPage";
 import QuizPage from "../pages/user/module/quiztes/QuizPage";
 import QuizResultPage from "../pages/user/module/quiztes/QuizResultPage";
 
-{/* class industri */}
+{/* class industri */ }
 import Class from "../pages/user/Profile/ClassIndustry/Class";
 import SOP from "../pages/user/Profile/ClassIndustry/SOP";
 import Rating from "../pages/user/Profile/ClassIndustry/Rating";
@@ -52,6 +52,8 @@ import Payment from "../pages/user/Profile/ClassIndustry/Payment";
 import Schedule from "../pages/user/Profile/ClassIndustry/Schedule";
 import CertificateDetailPage from "../components/course/DetailCourse/CertificateDetailPage";
 import EventCertificatePage from "../components/public/CardEvent/EventCertificatePage";
+import PaymentCheckout from '../pages/user/Profile/ClassIndustry/Payment/PaymentCheckout';
+import PaymentDetail from '../pages/user/Profile/ClassIndustry/Payment/PaymentDetail';
 
 import { Toaster } from "react-hot-toast";
 
@@ -101,7 +103,7 @@ function RouteChangeLoader() {
         <Route path="/course" element={<Course />} />
         <Route path="/course/:slug" element={<CourseDetail />} />
         <Route path="/courses/certificates/:slug" element={<CertificateDetailPage />} />
-        <Route path="/transaction/course/:slug" element={<TransactionPage />} />
+        <Route path="/transaction/:slug" element={<TransactionPage />} />
         <Route path="/transaction/detail/:reference" element={<TransactionDetailPage />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:slug" element={<EventDetails />} />
@@ -135,6 +137,9 @@ function RouteChangeLoader() {
         <Route path="/course/pre-tes/:slug" element={<PreTes />} />
         <Route path="/course/pre-tes/exam/:slug" element={<Exam />} />
         <Route path="/course/pre-tes/exam/results/:id" element={<TesResults />} />
+
+        <Route path="/dashboard/user/payment-checkout" element={<PaymentCheckout />} />
+        <Route path="/dashboard/user/payment-detail/:reference" element={<PaymentDetail />} />
 
         {/* slug course */}
         <Route path="/module/:slug" element={<CourseModulePage />} />
