@@ -9,16 +9,28 @@ import { FaArrowRightArrowLeft, FaChartLine, FaCreditCard } from "react-icons/fa
 import { TbFileStar, TbLogout } from "react-icons/tb";
 import { GoShield } from "react-icons/go";
 import { FiShoppingBag } from "react-icons/fi";
+import { IoMdLock, IoMdUnlock } from "react-icons/io";
+
+
 import classindustry from "../../../assets/img/logo/logo_class_industri1.png";
 import classindustrydark from "../../../assets/img/logo/logo_class_industri2.png";
 import { HiChevronDown } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 
-import type { ProfilData } from "../../../features/user/models";
-import { fetchProfile, fetchProfileById } from "../../../features/user/user_service";
+import { toast } from "react-hot-toast";
+
+// import type { ProfilData } from "../../../features/user/models";
+// import { fetchProfile, fetchProfileById } from "../../../features/user/user_service";
 
 import noProfile from "../../../assets/img/no-image/no-profile.jpeg";
 
+interface ProfilData {
+  id: number;
+  name: string;
+  email: string;
+  photo?: string;
+  is_locked: boolean;
+}
 interface SidebarDashboardProps {
   slug?: string;
   refreshKey?: number;
@@ -39,22 +51,42 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const baseProfile = await fetchProfile();
-        if (baseProfile?.id) {
-          const detailProfile = await fetchProfileById(baseProfile.id);
-          setUser(detailProfile || baseProfile);
-        }
-      } catch (error) {
-        console.error("Gagal memuat profil:", error);
-      } finally {
-        setLoading(false);
-      }
+    const dummyUser: ProfilData = {
+      id: 1,
+      name: "Paspradawu",
+      email: "paspradawu@example.com",
+      photo: "",
+
+      is_locked: true,
     };
 
-    loadProfile();
+    setTimeout(() => {
+      setUser(dummyUser);
+      setLoading(false);
+    }, 800);
   }, [slug, refreshKey]);
+
+  // useEffect(() => {
+  //   const loadProfile = async () => {
+  //     try {
+  //       const baseProfile = await fetchProfile();
+  //       if (baseProfile?.id) {
+  //         const detailProfile = await fetchProfileById(baseProfile.id);
+  //         const dummyLocked = true;
+  //         setUser({
+  //           ...(detailProfile || baseProfile),
+  //           is_locked: dummyLocked,
+  //         } as ProfilData & { is_locked: boolean });
+  //       }
+  //     } catch (error) {
+  //       console.error("Gagal memuat profil:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadProfile();
+  // }, [slug, refreshKey]);
 
   useEffect(() => {
     const savedState = localStorage.getItem("isIndustryOpen");
@@ -107,10 +139,26 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
     { to: "/dashboard/user/profile", label: "Profil Saya", icon: <FaRegUser size={18} /> },
   ];
 
-  const menuItems: MenuItem[] =
-    user?.role === "student"
-      ? [...baseMenu, studentIndustryMenu, ...additionalMenu]
-      : [...baseMenu, ...additionalMenu];
+  // const menuItems: MenuItem[] =
+  //   user?.role === "student"
+  //     ? [...baseMenu, studentIndustryMenu, ...additionalMenu]
+  //     : [...baseMenu, ...additionalMenu];
+
+  const menuItems: MenuItem[] = [
+    ...baseMenu,
+    studentIndustryMenu,
+    ...additionalMenu,
+  ];
+
+  const lockedSubmenus = [
+    "/dashboard/user/classes",
+    "/dashboard/user/challenges",
+    "/dashboard/user/schedule",
+    "/dashboard/user/rating",
+    "/dashboard/user/sop-student",
+  ];
+
+
 
   const hasSubmenu = (item: MenuItem): item is Extract<MenuItem, { submenu: { to: string; label: string; icon: React.ReactElement }[] }> => {
     return "submenu" in item;
@@ -174,7 +222,6 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
           </div>
         ) : (
           <>
-            {/* Menu */}
             <nav className="space-y-3 font-semibold text-xs">
               <h3 className="text-gray-400 text-start text-[10px] font-semibold mb-3 dark:text-white">
                 DASHBOARD
@@ -184,46 +231,85 @@ const SidebarDashboard: React.FC<SidebarDashboardProps> = ({ slug, refreshKey = 
                   <div key={item.label}>
                     <button
                       onClick={() => setIsIndustryOpen(!isIndustryOpen)}
-                      className="flex items-center justify-between w-full border-b-2 pb-2 text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
+                      className={`flex items-center justify-between w-full border-b-2 pb-2 ${user?.is_locked
+                        ? "text-gray-600 hover:text-purple-600 dark:text-white dark:hover:text-purple-400"
+                        : "text-gray-600 hover:text-purple-600 dark:text-white dark:hover:text-purple-400"
+                        } border-gray-200 dark:border-white`}
                     >
                       <div className="flex items-center gap-2">
-                        {item.icon} {item.label}
+                        {item.icon}
+                        {item.label}
                       </div>
                       <motion.div
                         animate={{ rotate: isIndustryOpen ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
+                        className="mr-2"
                       >
                         <HiChevronDown size={18} />
                       </motion.div>
                     </button>
 
-                    <AnimatePresence>{isIndustryOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.35, ease: "easeInOut" }}
-                        className="ml-5 mt-4 space-y-2 overflow-hidden"
-                      >
-                        {item.submenu.map(
-                          (sub: { to: string; label: string; icon: React.ReactElement }) => (
-                            <NavLink
-                              key={sub.to}
-                              to={sub.to}
-                              className={({ isActive }) =>
-                                `flex items-center gap-2 border-b pb-2 ${isActive
-                                  ? "text-purple-600 border-purple-600 dark:text-purple-400 dark:border-purple-400"
-                                  : "text-gray-600 border-gray-200 hover:text-purple-600 dark:text-white dark:border-white dark:hover:text-purple-400"
-                                }`
-                              }
-                            >
-                              {sub.icon} {sub.label}
-                            </NavLink>
-                          )
-                        )}
-                      </motion.div>
-                    )}</AnimatePresence>
+                    <AnimatePresence>
+                      {isIndustryOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.35, ease: "easeInOut" }}
+                          className="ml-5 mt-4 space-y-2 overflow-hidden"
+                        >
+                          {item.submenu.map((sub) => {
+                            const isSubLocked =
+                              user?.is_locked && lockedSubmenus.some((path) => sub.to.startsWith(path));
 
+                            const showLockIcon = lockedSubmenus.includes(sub.to);
+
+                            return (
+                              <NavLink
+                                key={sub.to}
+                                to={isSubLocked ? "#" : sub.to}
+                                onClick={(e) => {
+                                  if (isSubLocked) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    toast.error(
+                                      "Fitur ini dikunci. Selesaikan pembayaran minimal 70% untuk membuka akses."
+                                    );
+                                  }
+                                }}
+                                className={({ isActive }) => {
+                                  if (isSubLocked) {
+                                    return "flex items-center justify-between border-b pb-2 text-gray-400 cursor-not-allowed border-gray-200 dark:border-white";
+                                  }
+                                  if (isActive) {
+                                    return "flex items-center justify-between border-b pb-2 text-purple-600 border-purple-600 dark:text-purple-400 dark:border-purple-400";
+                                  }
+                                  return "flex items-center justify-between border-b pb-2 text-gray-600 hover:text-purple-600 border-gray-200 dark:text-white dark:border-white dark:hover:text-purple-400";
+                                }}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <span className={isSubLocked ? "text-gray-400" : ""}>{sub.icon}</span>
+                                  <span>{sub.label}</span>
+                                </div>
+
+                                {showLockIcon && (
+                                  <>
+                                    {isSubLocked ? (
+                                      <IoMdLock className="text-gray-400 opacity-70 w-4 h-4 mr-2" />
+                                    ) : (
+                                      <IoMdUnlock className="text-gray-600 dark:text-white opacity-70 w-4 h-4 mr-2" />
+                                    )}
+                                  </>
+                                )}
+                              </NavLink>
+                            );
+
+                          })}
+
+
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ) : (
                   <NavLink

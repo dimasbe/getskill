@@ -5,6 +5,7 @@ import type { ProfilData } from "../../../features/user/models";
 import BackgroundShapes from "../../../components/public/BackgroundShapes";
 import SidebarDashboard from "./SidebarDashboard";
 
+import { Toaster } from "react-hot-toast";
 import noImage from "../../../assets/img/no-image/no-image.jpg";
 
 type DashboardLayoutProps = React.PropsWithChildren<{ slug: string; refreshKey?: number }>;
@@ -34,7 +35,7 @@ const DashboardLayout = ({ children, slug, refreshKey = 0 }: DashboardLayoutProp
     }, [slug, refreshKey]);
 
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-500">
+        <div className="min-h-screen bg-white dark:bg-[#141427] transition-colors duration-500">
             {/* Header */}
             <div className="relative px-6 py-30 bg-gradient-to-r dark:bg-[#0D0D1A] dark:bg-none from-indigo-100 via-stone-100 to-fuchsia-100 overflow-hidden">
                 <BackgroundShapes />
@@ -73,6 +74,7 @@ const DashboardLayout = ({ children, slug, refreshKey = 0 }: DashboardLayoutProp
 
                 {/* Konten */}
                 <div className="flex-1">{children}</div>
+                <Toaster position="top-right" reverseOrder={false} />
             </div>
 
         </div>
